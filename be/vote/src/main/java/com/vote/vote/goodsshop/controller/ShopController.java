@@ -8,7 +8,7 @@ public class ShopController {
 
 	@RequestMapping("/shop/index")
 	public String index() {
-		return "shop/imdex";
+		return "shop/index";
 	}
 
 	@RequestMapping("/shop/cart")

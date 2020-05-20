@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ShopController {
 
-	@RequestMapping("/shop")
+	@RequestMapping("/shop/index")
 	public String index() {
-		return "shop/shop_main";
+		return "shop/imdex";
+	}
+
+	@RequestMapping("/shop/cart")
+	public String cart() {
+		return "shop/cart";
 	}
 }

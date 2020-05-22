@@ -1,77 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<script src="http://localhost:4000/socket.io/socket.io.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<style>
-form {
-	background: #000;
-	padding: 3px;
-	position: fixed;
-	bottom: 0;
-	width: 136%;
-}
-
-form input {
-	border: 0;
-	padding: 10px;
-	margin-right: 0.5%;
-}
-
-form button {
-	width: 9%;
-	background: rgb(130, 224, 255);
-	border: none;
-	padding: 10px;
-}
-
-#messages {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	height: 390px;
-	overflow-y: scroll;
-}
-
-#messages li {
-	padding: 5px 10px;
-}
-
-#messages li:nth-child(odd) {
-	background: #eee;
-}
-</style>
-<script>
-	$(document).ready(function() {
-		$(function() {
-			var socket = io("http://localhost:4000");
-			$('form').submit(function(e) {
-				e.preventDefault(); // prevents page reloading
-				socket.emit('chat message', $('#m').val());
-				$('#m').val('');
-				return false;
-			});
-			socket.on('chat message', function(msg) {
-				$('#messages').append($('<li>').text(msg));
-			});
-		});
-		
-		$(function() {
-			$(".c_h").click(function(e) {
-				if ($(".chat_container").is(":visible")) {
-					$(".c_h .right_c .mini").text("+")
-				} else {
-					$(".c_h .right_c .mini").text("-")
-				}
-				$(".chat_container").slideToggle("slow");
-				return false
-			});
-		});
-//		const $messageTextBox = $('#messages');
-// 		$messageTextBox.scrollTop($messageTextBox[0].scrollHeight); 
-	});
-</script>
-
-<style>
 .l_c_h {
 	width: 300px;
 	position: fixed;
@@ -79,7 +5,8 @@ form button {
 	right: 0px;
 	border-radius: 3px;
 	z-index: 5000;
-	display: block;
+    display: block;
+    background-color: rgb(182, 140, 221);
 }
 
 .l_c_h .c_h {
@@ -91,7 +18,7 @@ form button {
 }
 
 .l_c_h .left_c {
-	color: #0e6fee;
+	color: #ffffff;
 	width: 150px;
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -128,7 +55,8 @@ form button {
 	/*        display:none;*/
 	padding: 30px 0px;
 	height: 400px;
-	font-size: 12px;
+    font-size: 12px;
+    background-color: rgb(182, 140, 221);
 }
 
 .chat_container .chat_entry {
@@ -306,33 +234,80 @@ form button {
 .logout img {
 	margin-top: 8px;
 }
-</style>
+form {
+	background: #f0e0fb;
+	padding: 3px;
+	position: fixed;
+	bottom: 0;
+	width: 136%;
+}
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-</head>
+form input {
+	/* border: 0;
+	padding: 10px;
+    margin-right: 0.5%; */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
+		rgba(102, 175, 233, 0.6);
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
+		rgba(102, 175, 233, 0.6);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px
+		rgba(102, 175, 233, 0.6);
+	outline: 0 none;
+    border-color: #66afe9;
+    width: 295px;
+}
 
-<body>
-	<div class="l_c_h">
-		<div class="c_h">
-			<div class="left_c">
-				<div class="left right_c left_icons">
-					<a href="#" class="mini" style="font-size: 23px;">+</a>
-				</div>
-				<div class="left center_icons">RIRO CHAT !</div>
-			</div>
-		</div>
-		<div class="chat_container" style="display: none;">
-			<ul id="messages"></ul>
-			<form action="">
-				<input id="m" autocomplete="off" />
-				<button>Send</button>
-			</form>
-		</div>
-	</div>
+form button {
+	/* width: 9%;
+	background: rgb(130, 224, 255);
+	border: none;
+    padding: 10px; */
+    padding: 5px 12px;
+	margin-bottom: 0;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 0px;
+	color: #fff;
+	/*background-color: #DD4A4A;*/
+	background-color: #2dc3e8 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    visibility: collapse;
+}
 
-</body>
+#messages {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	height: 330px;
+	overflow-y: auto;
 
-</html>
+}
+
+#messages li {
+    padding: 5px 10px;
+	background-color: #f1ddfe;
+	
+}
+
+#messages li:nth-child(odd) {
+	background: #e6e6fa;
+}
+
+ul {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+ul::-webkit-scrollbar {
+    display: none;
+}

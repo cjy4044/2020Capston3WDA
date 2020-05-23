@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},~{::script},'서비스 신청')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+
+<body>
+  
+    <content>
+        <form method="post" action="/auth/register">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div id="proRegIndex"></div> 
+        </form>
+        
+        <script src="../assets/proRegIndex.js"></script>
+    
+   </content>
+ 
+    <script>
+    function test(){
+        alert("submit2");
+    }
+    
+    
+		</script>
+	
+
+</body>
+ 
+</html>

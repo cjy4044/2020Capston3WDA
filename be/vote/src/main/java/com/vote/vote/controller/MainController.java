@@ -33,4 +33,22 @@ public class MainController {
 	// 	// System.out.println("/ --> home");
 	// 	return "contact";
 	// }
+	
+	@RequestMapping("/proRegIndex")
+	public String proRegIndex() {
+		
+		return "role/proRegIndex";
+	}
+	
+	@RequestMapping("/proReg")
+	public String proReg() {
+		
+		return "role/proReg";
+	}
+	
+	@RequestMapping("/api/customers")
+	public String test() {
+		
+		return "role/test";
+	}
 }

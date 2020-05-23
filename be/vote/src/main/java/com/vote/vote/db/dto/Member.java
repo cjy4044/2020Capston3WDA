@@ -56,6 +56,16 @@ public class Member{
     @Column(nullable=true)
     private int point;
    
+    @Column(nullable=true)
+    private String role;
+    
+    public void setRole(String role){
+        this.role = role;
+    }
+    public String getRole(){
+        return this.role;
+    }
+    
     public void setNo(int no){
         this.no = no;
     }

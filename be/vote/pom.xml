@@ -172,6 +172,14 @@
 			<artifactId>fe</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<!-- 부트스트랩 -->
+		<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>bootstrap</artifactId>
+		<version>3.3.5</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

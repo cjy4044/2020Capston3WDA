@@ -1,79 +1,64 @@
 package com.vote.vote.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.List;
 
 import com.vote.vote.db.dto.Member;
-import com.vote.vote.db.dto.Vote;
-import com.vote.vote.db.dto.Voter;
-import com.kenai.jffi.Array;
-import com.vote.vote.db.dto.Candidate;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CandidateJpaRepository;
+import com.vote.vote.repository.CustomMemberRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.VoteJpaRepository;
 import com.vote.vote.repository.VoterJpaRepository;
+import com.vote.vote.service.BoardService;
 import com.vote.vote.service.StorageService;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 //페이징
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/userProfile")
 public class UserProfileController {
 
-	@Autowired  
-	private StorageService storageService; 
-
 	@Autowired
-	private MemberJpaRepository MemberRepository;
+	private CustomMemberRepository customRepository;
+	
 
-	@Autowired
-	private VoteJpaRepository voteRepository;
-
-	@Autowired
-	private CandidateJpaRepository candidateRepository;
-
-	@Autowired 
-	private VoterJpaRepository voterRepository;
-
-
-	public Klaytn klaytn = new Klaytn();
 
 	@RequestMapping(value={"","/"}, method=RequestMethod.GET)
-	public String index(@PageableDefault Pageable pageable) {
+	public String index() {
 
 		return "userProfile/index";
 	}
 	@RequestMapping(value={"/axios","/axios/"})
 	@ResponseBody
-	public JSONArray indexAxios(Principal user){
+	public JSONArray indexAxios(Principal user, @PageableDefault Pageable pageable, Model model){
+			
+		List<Member> members = customRepository.findAll(pageable);
+	
+		long count = customRepository.CountAll();
 
-		ArrayList<Vote> votes = voteRepository.findAll();
-		ArrayList<Member> members = MemberRepository.findAll();
+		System.out.println("pageable : " + pageable);
+
+		System.out.println("getOffset : " + pageable.getOffset());
+
+		// Page<Member> members = boardService.getBoardList(pageable);
+		// model.addAttribute("boardList", members);
+//		ArrayList<Member> members = MemberRepository.findAll();
+//		long count = MemberRepository.CountAll();
+//		long count2 = MemberRepository.CountAll("username","안녕");
 		
+//		System.out.println("count:"+count);
+//		System.out.println("count2:"+count2);
 		JSONArray json = new JSONArray();
 
 		for( Member member : members){
@@ -94,7 +79,7 @@ public class UserProfileController {
 			
 			json.add(memberData);
 		}
-
+		json.add(count);
 				
 		return json;
 	}

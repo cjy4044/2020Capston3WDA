@@ -131,6 +131,7 @@ main div.ani{
     
 }
 
+
 footer {
 /*    position: absolute;*/
     display: flex !important;
@@ -227,7 +228,11 @@ contents div.contents{
     margin: auto;
 /*    background-color: aquamarine;*/
 }
-
+contents div.side{
+    max-width: 300px;
+    margin: auto;
+    background-color: aquamarine;
+}
 .img_div{
     position: absolute;
     margin-right: 10px;

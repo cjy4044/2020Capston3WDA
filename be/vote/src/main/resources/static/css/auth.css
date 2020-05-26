@@ -1,27 +1,55 @@
-body{
-    margin: auto;
-    max-width: 1200px;
-    min-width: 800px;
+.register_table{
+    /* background: red; */
+    margin:auto;
 }
-.title{
-    font-weight: 1000;
-    font-size: 30px;
+.register_input{
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;    
+    margin-top: 20px;
+}
+.addr_input{
+    border-radius: 5px;
+    width: 50px;
+    font-size: 20px;
+    padding: 10px;    
+    margin-top: 20px;
+}
+.register_birth{
+    float: left;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;    
+    margin-top: 20px;
+    width:200px;
+}
+.register_left_td{
+    float: left;
+    font-size: 20px;
+    
+}
+.register_right_td{
+    float: left;
     margin-left: 50px;
-    margin-top: 46px;
+    font-size: 20px;
+    
 }
-.title a{
-    color:black;
-    text-decoration: none;
+
+.check_button{
+    margin-top: 15px;
+    margin-left: 10px;
+    background-color:#3498DB;
+    font-size: 15px;
+    color:white;
+    padding: 10px;
+    border-radius: 10px;
 }
-.subTitle{
-    text-align: center;
-    font-weight: 1000;
-    font-size: 35px;
-}
-nav{
-    margin-bottom: 20px;
-}
-main{
-    background-color:antiquewhite;
-    height: 600px;
+.submit_button{
+    background-color:#3498DB;
+    font-size: 15px;
+    color:white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;    
+    
 }

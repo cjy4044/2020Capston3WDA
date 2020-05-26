@@ -11,9 +11,10 @@ public class PrdCategory {
     @Id
     @Column(nullable = false)
     private int category_id;
+    @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
+    
     public int getCategory_id() {
         return this.category_id;
     }

@@ -8,30 +8,30 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRODUCT")
-public class EntityPrd {
+public class Prd {
 
     @Id
     @Column(nullable = false)
     private int PRODUCT_ID;
-    @Column
+    @Column(nullable = true)
     private int PROGRAM_ID;
-    @Column
+    @Column(nullable = true)
     private int CATEGORY_ID;
-    @Column
+    @Column(nullable = true)
     private String P_NAME;
-    @Column
+    @Column(nullable = true)
     private int P_PRICE;
-    @Column
+    @Column(nullable = true)
     private String P_CONTENT;
-    @Column
+    @Column(nullable = true)
     private String P_DETAIL;
-    @Column
+    @Column(nullable = true)
     private String P_UPLOAD;
-    @Column
+    @Column(nullable = true)
     private String P_STATE;
-    @Column
+    @Column(nullable = true)
     private String P_ENDDATE;
-    @Column
+    @Column(nullable = true)
     private int P_MANAGER;
 
     public int getPRODUCT_ID() {

@@ -1,5 +1,6 @@
 package com.vote.vote.goodsshop.controller;
 
+import com.vote.vote.repository.Asdf;
 import com.vote.vote.repository.PrdCateDJpaRepository;
 import com.vote.vote.repository.PrdJpaRepository;
 
@@ -15,12 +16,14 @@ public class ShopController {
 	PrdJpaRepository prdRepository;
 	@Autowired
 	PrdCateDJpaRepository prdCateDJpaRepository;
+	@Autowired
+	Asdf asdf;
 	@RequestMapping("/shop/index")
 	public String index(Model model) {
 
 		
-
-		model.addAttribute("cate1", prdCateDJpaRepository.findCategory_dByCategory(1));
+		System.out.println(asdf.asdf());
+		
 		model.addAttribute("cate2", prdCateDJpaRepository.findCategory_dByCategory(2));
 		model.addAttribute("cate3", prdCateDJpaRepository.findCategory_dByCategory(3));
 		model.addAttribute("cate4", prdCateDJpaRepository.findCategory_dByCategory(4));

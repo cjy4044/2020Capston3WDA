@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/auth/oauth2/**").permitAll()
 			// .antMatchers("/posts/**").hasRole("USER")
 			.antMatchers("/home").hasRole("USER")
-//			.antMatchers("/").hasAnyRole("USER","ADMIN")
+			//.antMatchers("/").hasAnyRole("USER","ADMIN")
 			// user 권한만 접근 가능.     
 			.antMatchers("/logout").permitAll()     
 			.anyRequest().authenticated() // 로그인 체크함.     

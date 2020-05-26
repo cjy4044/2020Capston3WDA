@@ -34,10 +34,7 @@ public class MainController {
 	// 	return "contact";
 	// }
 
-	@RequestMapping("/proRegIndex")
-	public String proRegIndex() {
-		
-		
-		return "role/proRegIndex";
-	}
+
+	
+	
 }

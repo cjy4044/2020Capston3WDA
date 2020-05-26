@@ -16,41 +16,45 @@ public class Company{
     private int id; //사업자번호 10자리
     
     @Column(name="r_id",nullable=false)
-    private int r_id;
+    private int rid;
 
-    @Column(nullable=false)
-    private String c_name;
+    @Column(name="c_name",nullable=false)
+    private String cname;
     
-    @Column(nullable=false)
-    private String c_content;
+    @Column(name="c_content",nullable=false)
+    private String ccontent;
     
-    @Column(nullable=false)
-    private String c_reader;
+    @Column(name="c_reader",nullable=false)
+    private String creader;
     
-    @Column(nullable=false)
-    private String c_phone;
+    @Column(name="c_phone",nullable=false)
+    private String cphone;
     
-    @Column(nullable=false)
-    private String c_program;
+    @Column(name="c_program",nullable=false)
+    private String cprogram;
   
-    @Column(nullable=false)
-    private String c_category;
+    @Column(name="c_category",nullable=false)
+    private String ccategory;
     
-    @Column(nullable=false)
-    private String c_startdate;
+    @Column(name="c_startdate",nullable=false)
+    private String cstartdate;
     
-    @Column(nullable=false)
-    private String c_enddate;
+    @Column(name="c_enddate",nullable=false)
+    private String cenddate;
     
-    @Column(nullable=false) //지출가능예산
-    private int c_budget;
+    @Column(name="c_budget",nullable=false) //지출가능예산
+    private int cbudget;
     
-    @Column(nullable=false) 
-    private String c_confirm;
+    @Column(name="c_confirm",nullable=false)
+    private String cconfirm;
   
     
 
-  public int getId() {
+
+
+
+
+	public int getId() {
 		return id;
 	}
 
@@ -58,206 +62,242 @@ public class Company{
 
 
 
-	public void setId(int c_id) {
-		this.id = c_id;
-	}
-
-//    public int getC_id() {
-//		return c_id;
-//	}
-//
-//
-//
-//
-//
-//	public void setC_id(int c_id) {
-//		this.c_id = c_id;
-//	}
 
 
-
-
-
-	public int getR_id() {
-		return r_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
 
 
 
-	public void setR_id(int r_id) {
-		this.r_id = r_id;
+
+
+	public int getRid() {
+		return rid;
 	}
 
 
 
 
 
-	public String getC_name() {
-		return c_name;
+
+
+	public void setRid(int rid) {
+		this.rid = rid;
 	}
 
 
 
 
 
-	public void setC_name(String c_name) {
-		this.c_name = c_name;
+
+
+	public String getCname() {
+		return cname;
 	}
 
 
 
 
 
-	public String getC_content() {
-		return c_content;
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
 	}
 
 
 
 
 
-	public void setC_content(String c_content) {
-		this.c_content = c_content;
+
+
+	public String getCcontent() {
+		return ccontent;
 	}
 
 
 
 
 
-	public String getC_reader() {
-		return c_reader;
+
+
+	public void setCcontent(String ccontent) {
+		this.ccontent = ccontent;
 	}
 
 
 
 
 
-	public void setC_reader(String c_reader) {
-		this.c_reader = c_reader;
+
+
+	public String getCreader() {
+		return creader;
 	}
 
 
 
 
 
-	public String getC_phone() {
-		return c_phone;
+
+
+	public void setCreader(String creader) {
+		this.creader = creader;
 	}
 
 
 
 
 
-	public void setC_phone(String c_phone) {
-		this.c_phone = c_phone;
+
+
+	public String getCphone() {
+		return cphone;
 	}
 
 
 
 
 
-	public String getC_program() {
-		return c_program;
+
+
+	public void setCphone(String cphone) {
+		this.cphone = cphone;
 	}
 
 
 
 
 
-	public void setC_program(String c_program) {
-		this.c_program = c_program;
+
+
+	public String getCprogram() {
+		return cprogram;
 	}
 
 
 
 
 
-	public String getC_category() {
-		return c_category;
+
+
+	public void setCprogram(String cprogram) {
+		this.cprogram = cprogram;
 	}
 
 
 
 
 
-	public void setC_category(String c_category) {
-		this.c_category = c_category;
+
+
+	public String getCcategory() {
+		return ccategory;
 	}
 
 
 
 
 
-	public String getC_startdate() {
-		return c_startdate;
+
+
+	public void setCcategory(String ccategory) {
+		this.ccategory = ccategory;
 	}
 
 
 
 
 
-	public void setC_startdate(String c_startdate) {
-		this.c_startdate = c_startdate;
+
+
+	public String getCstartdate() {
+		return cstartdate;
 	}
 
 
 
 
 
-	public String getC_enddate() {
-		return c_enddate;
+
+
+	public void setCstartdate(String cstartdate) {
+		this.cstartdate = cstartdate;
 	}
 
 
 
 
 
-	public void setC_enddate(String c_enddate) {
-		this.c_enddate = c_enddate;
+
+
+	public String getCenddate() {
+		return cenddate;
 	}
 
 
 
 
 
-	public int getC_budget() {
-		return c_budget;
+
+
+	public void setCenddate(String cenddate) {
+		this.cenddate = cenddate;
 	}
 
 
 
 
 
-	public void setC_budget(int c_budget) {
-		this.c_budget = c_budget;
+
+
+	public int getCbudget() {
+		return cbudget;
 	}
 
 
 
 
 
-	public String getC_confirm() {
-		return c_confirm;
+
+
+	public void setCbudget(int cbudget) {
+		this.cbudget = cbudget;
 	}
 
 
 
 
 
-	public void setC_confirm(String c_confirm) {
-		this.c_confirm = c_confirm;
+
+
+	public String getCconfirm() {
+		return cconfirm;
 	}
+
+
+
+
+
+
+
+	public void setCconfirm(String cconfirm) {
+		this.cconfirm = cconfirm;
+	}
+
+
 
 
 
 
 
 	public String toString(){
-        return "c_id["+id+"] r_id["+r_id+"] c_name["+c_name+"] c_content[ "+c_content+"] c_reader[ "+c_reader+
-        		"] c_phone["+c_phone+"] c_program["+c_program+"] c_category[ "+c_category+
-        		"] c_startdate[ "+c_startdate+"] c_enddate["+c_enddate+"] c_budget["+c_budget+"] c_confirm["+c_confirm+"]";
+        return "c_id["+id+"] r_id["+rid+"] c_name["+cname+"] c_content[ "+ccontent+"] c_reader[ "+creader+
+        		"] c_phone["+cphone+"] c_program["+cprogram+"] c_category["+ccategory+
+        		"] c_startdate["+cstartdate+"] c_enddate["+cenddate+"] c_budget["+cbudget+"] c_confirm["+cconfirm+"]";
         
 	}
 	

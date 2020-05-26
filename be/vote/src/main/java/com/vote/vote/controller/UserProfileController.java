@@ -45,14 +45,6 @@ public class UserProfileController {
 
 		System.out.println("getOffset : " + pageable.getOffset());
 
-		// Page<Member> members = boardService.getBoardList(pageable);
-		// model.addAttribute("boardList", members);
-//		ArrayList<Member> members = MemberRepository.findAll();
-//		long count = MemberRepository.CountAll();
-//		long count2 = MemberRepository.CountAll("username","안녕");
-		
-//		System.out.println("count:"+count);
-//		System.out.println("count2:"+count2);
 		JSONArray json = new JSONArray();
 
 		for( Member member : members){

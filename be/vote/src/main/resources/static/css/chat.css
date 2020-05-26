@@ -234,7 +234,7 @@
 .logout img {
 	margin-top: 8px;
 }
-form {
+#chatform {
 	background: #f0e0fb;
 	padding: 3px;
 	position: fixed;
@@ -242,7 +242,7 @@ form {
 	width: 136%;
 }
 
-form input {
+#chatinput {
 	/* border: 0;
 	padding: 10px;
     margin-right: 0.5%; */
@@ -257,12 +257,12 @@ form input {
     width: 295px;
 }
 
-form button {
+#chatbutton {
 	/* width: 9%;
 	background: rgb(130, 224, 255);
 	border: none;
     padding: 10px; */
-    padding: 5px 12px;
+    /* padding: 5px 12px;
 	margin-bottom: 0;
 	font-size: 12px;
 	font-weight: normal;
@@ -278,10 +278,10 @@ form button {
 	background-image: none;
 	border: 1px solid transparent;
 	border-radius: 0px;
-	color: #fff;
+	color: #fff; */
 	/*background-color: #DD4A4A;*/
-	background-color: #2dc3e8 !important;
-    font-family: Arial, Helvetica, sans-serif;
+	/* background-color: #2dc3e8 !important;
+    font-family: Arial, Helvetica, sans-serif; */
     visibility: collapse;
 }
 

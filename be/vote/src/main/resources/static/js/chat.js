@@ -1,10 +1,10 @@
 $(document).ready(function() {
     $(function() {
         var socket = io("http://localhost:4000");
-        $('form').submit(function(e) {
+        $('#chatform').submit(function(e) {
             e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
+            socket.emit('chat message', $('#chatinput').val());
+            $('#chatinput').val('');
             return false;
         });
         socket.on('chat message', function(msg) {
@@ -24,9 +24,4 @@ $(document).ready(function() {
             return false
         });
     });
-    // var objDiv = document.getElementById("messages"); 
-    // objDiv.scrollTop = objDiv.scrollHeight;
-   
-//		const $messageTextBox = $('#messages');
-// 		$messageTextBox.scrollTop($messageTextBox[0].scrollHeight); 
 });

@@ -223,10 +223,11 @@ nav div.dropMenuactive .drop {
 contents{
 }
 contents div.contents{
-    max-width: 1200px;
+   /* max-width: 1200px; */
     margin: auto;
 /*    background-color: aquamarine;*/
 }
+
 
 .img_div{
     position: absolute;
@@ -240,3 +241,5 @@ contents div.contents{
     border-radius: 30px;
     vertical-align: bottom;
 }
+
+.haveProgram{text-align: center;}  

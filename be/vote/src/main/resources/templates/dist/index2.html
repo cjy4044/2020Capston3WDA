@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},~{::script},'회원정보')}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'내 정보')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 </head>
 
 <body>
@@ -14,7 +12,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'회원정보')}">
 	{   //사이드바 필요할시 스타일활성해주는 것
 		 $(".sideon").attr('class','glyphicon glyphicon-menu-hamburger');
 		 $(".btn2").attr('class','btn'); 
-	
+			
 		//사이드바메뉴 추가
 	    $("#side").append("<li><a href='/'>Home</a></li>");
 	    $("#side").append("<li><a href='/'>차</a></li>");
@@ -25,9 +23,9 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'회원정보')}">
 	}  
 	</script>
     <content>
-       <div id="userIndex"></div>
-        <script src="/assets/profileIndex.js"></script>
+        <div id="userIndex"></div>
+        <script src="/assets/userInfo.js"></script>
     </content>
+  
 </body>
- 
 </html>

@@ -141,8 +141,8 @@ public class AuthController {
         user2.setID(userInfo.get("id").toString());
         user2.setPASSWORD(userInfo.get("id").toString());
         user2.setNAME(userInfo.get("name").toString());
-//        user2.setROLE(userInfo.get("role").toString());
-//        user2.setR_ID(userInfo.get(""));
+        user2.setROLE(user.getRole());
+        user2.setR_ID(user.getNo());
         if(userInfo.get("img")!=null){
             user2.setIMG(userInfo.get("img").toString());
         }else{

@@ -56,7 +56,8 @@
 	padding: 30px 0px;
 	height: 400px;
     font-size: 12px;
-    background-color: rgb(182, 140, 221);
+	background-color: rgb(182, 140, 221);
+	display: none;
 }
 
 .chat_container .chat_entry {
@@ -234,6 +235,10 @@
 .logout img {
 	margin-top: 8px;
 }
+
+.mini{
+	font-size: 23px;
+}
 #chatform {
 	background: #f0e0fb;
 	padding: 3px;
@@ -254,7 +259,7 @@
 		rgba(102, 175, 233, 0.6);
 	outline: 0 none;
     border-color: #66afe9;
-    width: 295px;
+	width: 295px;
 }
 
 #chatbutton {

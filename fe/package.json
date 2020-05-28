@@ -31,6 +31,7 @@
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/polyfill": "^7.8.3",
     "@babel/runtime": "^7.8.4",
+    "@bit/jakeprins.react-milkshake.card": "0.0.16",
     "@bit/primefaces.primereact.chart": "^3.1.8",
     "@bit/react-bootstrap.react-bootstrap.button": "^1.0.0",
     "@bit/react-bootstrap.react-bootstrap.card": "^1.0.0",

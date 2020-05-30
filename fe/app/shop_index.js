@@ -22,59 +22,8 @@ class CategoryFrame extends React.Component {
         )
     }
 }
-class Row extends React.Component {
-    render() {
-        return (
-            <div className="row">
-                <div className="col-sm-3">
-                    <Left_Sidebar></Left_Sidebar>
-                </div>
 
-                <div className="col-sm-9 padding-right">
-                    <NewItem></NewItem>
-                    <Cate_tab></Cate_tab>
 
-                    <div className="recommended_items">
-                        <h2 className="title text-center">recommended items</h2>
-
-                        <div id="recommended-item-carousel" className="carousel slide" data-ride="carousel">
-                            <div className="carousel-inner">
-                                <div className="item active">
-                                    <SimpleItem></SimpleItem>
-                                    <SimpleItem></SimpleItem>
-                                    <SimpleItem></SimpleItem>
-                                    <SimpleItem></SimpleItem>
-                                </div>
-                                <div className="item">
-                                    <SimpleItem></SimpleItem>
-                                    <SimpleItem></SimpleItem>
-                                    <SimpleItem></SimpleItem>
-                                    <SimpleItem></SimpleItem>
-                                </div>
-                            </div>
-                            <a className="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                                <i className="fa fa-angle-left"></i>
-                            </a>
-                            <a className="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                                <i className="fa fa-angle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        )
-    }
-}
-class Container extends React.Component {
-    render() {
-        return (
-            <div className="container">
-                <Row></Row>
-            </div>
-        )
-    }
-}
 class Item extends React.Component {
     render() {
         return (
@@ -356,6 +305,60 @@ class Cate_tab extends React.Component {
     }
 }
 
+class Row extends React.Component {
+    render() {
+        return (
+            <div className="row">
+                <div className="col-sm-3">
+                    <Left_Sidebar></Left_Sidebar>
+                </div>
+
+                <div className="col-sm-9 padding-right">
+                    <NewItem></NewItem>
+                    <Cate_tab></Cate_tab>
+
+                    <div className="recommended_items">
+                        <h2 className="title text-center">recommended items</h2>
+
+                        <div id="recommended-item-carousel" className="carousel slide" data-ride="carousel">
+                            <div className="carousel-inner">
+                                <div className="item active">
+                                    <SimpleItem></SimpleItem>
+                                    <SimpleItem></SimpleItem>
+                                    <SimpleItem></SimpleItem>
+                                    <SimpleItem></SimpleItem>
+                                </div>
+                                <div className="item">
+                                    <SimpleItem></SimpleItem>
+                                    <SimpleItem></SimpleItem>
+                                    <SimpleItem></SimpleItem>
+                                    <SimpleItem></SimpleItem>
+                                </div>
+                            </div>
+                            <a className="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                <i className="fa fa-angle-left"></i>
+                            </a>
+                            <a className="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                <i className="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        )
+    }
+}
+
+class Container extends React.Component {
+    render() {
+        return (
+            <div className="container">
+                <Row></Row>
+            </div>
+        )
+    }
+}
 class Section extends React.Component {
 
     render() {

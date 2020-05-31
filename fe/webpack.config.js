@@ -39,7 +39,8 @@ module.exports = {
     layout: path.join(__dirname,'./app/layout/layout.jsx'),
     userInfo: path.join(__dirname,'./app/userInfo/userIndex.jsx'),
     shop_index: path.join(__dirname, './app/shop_index.js'),
-    
+    votePreShow: path.join(__dirname,'./app/vote/votePreShow.jsx'),
+    voteEndShow: path.join(__dirname,'./app/vote/voteEndShow.jsx')
 
   },
   output: {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, link, content,script)">
+
+<head>
+	<title th:replace="${title}"></title>
+	<!-- 각 파일들 개별 추가 항목 -->
+	<th:block th:replace="${link}"></th:block>
+	<!-- 공통파일 -->
+	<script src="http://localhost:4000/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<link href="/css/chat.css" rel="stylesheet">
+	<script src="/js/chat.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/prettyPhoto.css" rel="stylesheet">
+	<link href="css/price-range.css" rel="stylesheet">
+	<link href="css/animate.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	<link href="/css/top.css" rel="stylesheet">
+	
+
+
+	<!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+	<header id="header"></header><!--/header-->
+    <section th:replace="${content}"></section>
+    <footer id="footer"></footer><!--/Footer-->  
+	<th:block th:replace="${script}" ></th:block>
+	
+</body>
+
+<script src="/assets/shop_layout.js"></script>
+<script src="/assets/shop_chat.js"></script>
+<script src="/assets/shop_index.js"></script>
+<script src="/assets/shop_cart.js"></script>
+</html>

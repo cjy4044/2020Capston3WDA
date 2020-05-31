@@ -19,6 +19,7 @@
                     <img  th:if="${#authentication.principal.img}" th:src="${#authentication.principal.img}" width="25" height="25">
                     <img th:unless="${#authentication.principal.img}" src="/img/defaultProfile.png" width="25" height="25">
                 </div>
+                 
                 <span sec:authentication="principal.name"></span><span> 님</span> 
                 <a></a>
                 <form class="top_form"action="/logout" method="post">
@@ -26,6 +27,9 @@
                     <a href="/userInfo">내 정보 및 관리 </a>&nbsp;
                     <input type="submit" value="로그아웃">                    
                 </form>
+                <span sec:authentication="principal.ROLE"></span><span>권한번호</span> 
+                <span sec:authentication="principal.R_ID"></span><span>사용자번호</span> 
+                
             </th:block>
 
             <th:block sec:authorize="! isAuthenticated()">
@@ -72,17 +76,19 @@
                         </div>
 
                     </div>
-
-                    <div class="dropMenu">
+                    <a href="/vote">
+                        <div>투표</div>
+                    </a>
+                    <!-- <div class="dropMenu">
                         <a href="#">
-                            <div href="#">투표</div>
+                            <div href="/vote">투표</div>
                         </a>
                         <div class="drop">
-                            <a href="#">시작전투표</a>
+                            <a href="/vote/pre">시작전투표</a>
                             <a href="/vote">진행중인 투표</a>
-                            <a href="#">마감된 투표</a>
+                            <a href="/vote/end">마감된 투표</a>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="dropMenu">
                         <a href="#">
                             <div href="#">커뮤니티</div>
@@ -133,7 +139,7 @@
             <a href="#">
                 <div>이용약관</div>
             </a>
-            <a href="#">
+            <a href="/proRegIndex">
                 <div>관리자</div>
             </a>
         </div>

@@ -37,10 +37,19 @@ module.exports = {
     voteShow: path.join(__dirname,'./app/vote/voteShow.jsx'),
     voteResult: path.join(__dirname,'./app/vote/voteResult.jsx'),
     layout: path.join(__dirname,'./app/layout/layout.jsx'),
+<<<<<<< HEAD
     userInfo: path.join(__dirname,'./app/userInfo/userIndex.jsx'),
     shop_index: path.join(__dirname, './app/shop_index.js'),
     votePreShow: path.join(__dirname,'./app/vote/votePreShow.jsx'),
     voteEndShow: path.join(__dirname,'./app/vote/voteEndShow.jsx')
+=======
+    userInfo: path.join(__dirname,'./app/userInfo/userInfo.jsx'),
+    profileIndex: path.join(__dirname,'./app/userInfo/profileIndex.jsx'),
+    allCompany: path.join(__dirname,'./app/userInfo/allCompany.jsx'),
+    proRegIndex: path.join(__dirname,'./app/programRegister/proRegIndex.js'),
+    modal: path.join(__dirname,'./app/programRegister/modal.jsx')
+    
+>>>>>>> jaeyoung
 
   },
   output: {

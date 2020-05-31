@@ -56,6 +56,16 @@ public class Member{
     @Column(nullable=true)
     private int point;
    
+    @Column(nullable=true)
+    private String role;
+    
+    public void setRole(String role){
+        this.role = role;
+    }
+    public String getRole(){
+        return this.role;
+    }
+    
     public void setNo(int no){
         this.no = no;
     }
@@ -87,10 +97,13 @@ public class Member{
         return this.gender;
     }
     public void setBirth(String birth){
+    	//System.out.println(birth.getClass().getName());
         this.birth = birth;
     }
     public String getBirth(){
-        return this.birth;
+    	String str = this.birth;
+    	String[] split = str.split(" ");
+     	return split[0];
     }
     public void setNickname(String nickname){
         this.nickname = nickname;
@@ -104,7 +117,7 @@ public class Member{
     public String getProfile(){
         return this.profile;
     }
-    public void setPhone(String Phone){
+    public void setPhone(String phone){
         this.phone = phone;
     }
     public String getPhone(){
@@ -129,10 +142,14 @@ public class Member{
         return this.addr2;
     }
 
-    public void setPoint(int Point){
+    public void setPoint(int point){
         this.point = point;
     }
     public int getPoint(){
         return this.point;
+    }
+
+    public String toString(){
+        return "no["+no+"] userid["+userid+"] password["+password+"] name[ "+name+"] gender[ "+gender+"] birth["+birth+"] nickname["+nickname+"] phone[ "+phone+"] addr[ "+addr+"] addr2["+addr2+"] profile["+profile+"]";
     }
 }

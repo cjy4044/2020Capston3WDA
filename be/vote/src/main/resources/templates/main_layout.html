@@ -11,8 +11,10 @@ th:fragment="layout(content,js,title)">
     <script type="text/javascript" th:replace="${js}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
-
+ 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+ 	<script  src="/js/script.js"></script>
+ 	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'><link rel="stylesheet" href="/css/style.css">
+ 	
     <title>RIRO</title>
 
 </head>
@@ -79,16 +81,10 @@ th:fragment="layout(content,js,title)">
 
                     </div>
 
-                    <div class="dropMenu">
-                        <a href="#">
-                            <div href="#">투표</div>
-                        </a>
-                        <div class="drop">
-                            <a href="#">시작전투표</a>
-                            <a href="/vote">진행중인 투표</a>
-                            <a href="#">마감된 투표</a>
-                        </div>
-                    </div>
+                    <a href="/vote">
+                        <div>투표</div>
+                    </a>
+
                     <div class="dropMenu">
                         <a href="#">
                             <div href="#">커뮤니티</div>
@@ -114,11 +110,40 @@ th:fragment="layout(content,js,title)">
         </div>
 
     </header>
+    
+	<div id="wrapper" class="menuDisplayed">
+    <!-- Sidebar  <div th:text="${side}"></div>-->
+    
+    <div id="sidebar-wrapper">
+      <ul id="side" class="sidebar-nav">
+
+      </ul>
+    </div>
+    <!-- partial:index.partial.html -->
+
+  
     <contents>
-        <div class="contents">
-            <div th:replace="${content}"></div>
+    
+    <div class="contents" id="sideon2"> <!-- Page Content -->
+    
+    <div id="page-content-wrapper">
+    
+      <div class="container-fluid">
+        <div class="row">
+        <a href="#" class="btn2" id="menu-toggle"><span class="sideon"></span></a>
+          <div class="col-lg-12">
+            
+           <div th:replace="${content}"></div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+          	  
+       		 </div>
     </contents>
+      <!-- Page Content -->
+    
     <footer>
         <div class="option">
             <a href="#">

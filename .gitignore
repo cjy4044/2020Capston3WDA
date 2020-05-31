@@ -1,6 +1,8 @@
 # Compiled source #
 ###################
 fe/node_modules/*
+node_modules/*
+*.md
  
 # Packages #
 ############

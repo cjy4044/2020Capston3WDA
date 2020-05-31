@@ -5,17 +5,7 @@ main {
     width: auto;
     min-height: 270px;
     margin: 100px;
-    /* position: absolute;
- 	left: 250px; */
     /* text-align: center; */
 /*    align 은 컨텐츠에 알맞게 수정*/
     
 }
-/* .test{
-	min-height: 270px;
-	width: 250px;
-    background-color:gray;
-    position: absolute;
- 	left: 0;
-
-} */

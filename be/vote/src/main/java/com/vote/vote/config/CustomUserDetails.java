@@ -15,24 +15,6 @@ public class CustomUserDetails implements UserDetails{
     private String IMG;
 	private String AUTHORITY;
 	private boolean ENABLED;
-	private int R_ID;
-	private String ROLE;
-
-	public String getROLE() {
-		return ROLE;
-	}
-
-	public void setROLE(String role) {
-		ROLE = role;
-	}
-
-	public int getR_ID() {
-		return R_ID;
-	}
-
-	public void setR_ID(int r_id) {
-		R_ID = r_id;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

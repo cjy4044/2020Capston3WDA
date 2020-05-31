@@ -45,9 +45,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         user2.setIMG(entityUser.getProfile());
         user2.setNAME(entityUser.getName());
         user2.setAUTHORITY("USER");
-        user2.setR_ID(entityUser.getNo());
-        user2.setROLE(entityUser.getRole());
-        System.out.println("세션사용자정보"+entityUser.toString());
         //  = (CustomUserDetails)usert;
         
         // user.setIMG("img");

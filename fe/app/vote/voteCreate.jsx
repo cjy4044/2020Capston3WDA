@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-// import ColorButton from '../items/colorButton';
-// import ColorButton from '../items/colorButton.jsx';
+const regeneratorRuntime = require("regenerator-runtime");
+const axios = require('axios');
+
 class VoteCreate extends React.Component {
 
   
@@ -54,6 +55,22 @@ class VoteCreate extends React.Component {
         
       }
     }
+    async componentDidMount(){    
+      let {data} = await axios.get('/vote/program/axios');
+      console.log(data);
+      
+      var select  = document.getElementById("program_select");
+      
+      data.map((program,index)=>{
+        var option = document.createElement("option");
+        option.value = program.id;
+        option.text = program.name;
+        if(index == 0)
+          option.defaultSelected = true;
+        select.appendChild(option);
+      })
+            
+  }
 
     render() {
         return (
@@ -84,6 +101,18 @@ class VoteCreate extends React.Component {
                   <option value="8">8</option>
                   <option value="9">9</option>
                   <option value="10">10</option>
+<<<<<<< HEAD
+                </select>
+                <div>대표 이미지</div>
+                <input type="file" name="thumbnail" required/><br/>  
+                <br/><br/>
+
+                <div>프로그램</div>
+                <select id="program_select"  name="program_id" required>                
+                </select>
+                <br/><br/>
+
+=======
                 </select>
                 <div>대표 이미지</div>
                 <input type="file" name="thumbnail" required/><br/>  
@@ -96,6 +125,7 @@ class VoteCreate extends React.Component {
                   <option value=""></option>
                   <option value=""></option>
                 </select>
+>>>>>>> jaeyoung
                 <div>1 번</div>
                   이미지 첨부: <input type="file" name="file" required/><br/>  
                   <input type="text" name="name" required/><br/>
@@ -107,7 +137,7 @@ class VoteCreate extends React.Component {
                   <div id="input_data_event">
                   </div>
                 </div>
-
+{/* asd */}
               <br/><br/><br/>
               <div>
                 <a href="/vote">목록</a>

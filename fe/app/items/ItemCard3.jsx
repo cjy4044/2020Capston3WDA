@@ -20,5 +20,9 @@ class ItemCard3 extends Component{
         
     }
 }
+<<<<<<< HEAD
+// asdasdasd
+=======
 
+>>>>>>> jaeyoung
 export default ItemCard3

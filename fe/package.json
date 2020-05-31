@@ -5,9 +5,11 @@
   "main": "./app",
   "proxy": "localhost:8000",
   "scripts": {
+    "start": "npm-run-all --parallel start:**",
+    "start:webpack": "node_modules/.bin/webpack-dev-server --open",
+    "start:chatserver": "node ./servers/server.js",
     "build": "webpack",
-    "watch": "webpack --watch",
-    "start": "node_modules/.bin/webpack-dev-server --open"
+    "watch": "webpack --watch"
   },
   "author": "",
   "license": "ISC",
@@ -30,20 +32,18 @@
     "@babel/polyfill": "^7.8.3",
     "@babel/runtime": "^7.8.4",
     "@bit/jakeprins.react-milkshake.card": "0.0.16",
-    "@bit/nexxtway.react-rainbow.button": "^1.10.0",
-    "@bit/nexxtway.react-rainbow.card": "^1.10.0",
     "@bit/primefaces.primereact.chart": "^3.1.8",
     "@bit/react-bootstrap.react-bootstrap.button": "^1.0.0",
     "@bit/react-bootstrap.react-bootstrap.card": "^1.0.0",
     "@bit/react-bootstrap.react-bootstrap.internal.style-links": "^1.0.0",
-    "@material-ui/core": "^4.10.0",
-    "@material-ui/lab": "^4.0.0-alpha.54",
     "axios": "^0.19.2",
     "bit": "^1.0.20",
-    "bootstrap": "^4.4.1",
-    "jquery": "^3.5.1",
+    "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
+    "npm-run-all": "^4.1.5",
     "react": "^16.0.0",
     "react-bootstrap": "^1.0.0-beta.16",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "socket.io": "^2.3.0"
   }
 }

@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+.vote_option_div{
+
+}
+=======
+>>>>>>> jaeyoung
 .vote_option_div div{
     display: inline;
 }
@@ -17,7 +23,11 @@
     color:purple;
 }
 
+<<<<<<< HEAD
+/* asd */
+=======
 
+>>>>>>> jaeyoung
 /* voteIdexItem 에서 부르는 ItemCard2vertical 의 크기 */
 .vote_index_item{
     display: inline-block;
@@ -33,4 +43,41 @@
 .voteState:hover{
     color:rgba(221, 44, 192, 1);
 }
+<<<<<<< HEAD
+.type:hover{
+    color:rgba(221, 44, 192, 1);
+}
+.program:hover{
+    color:rgba(221, 44, 192, 1);
+}
 
+.MuiPagination-root{
+    align-self: center;
+    align-content: center;
+}
+
+.vote_options_select_div{
+    display: grid;
+    margin-left: 100px;
+    grid-template-columns: 70% 30%;
+}
+
+.search_vote{
+
+}
+.voteItem{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.pagingCenter{
+    margin-top: 20px;
+}
+.pagingCenter nav{ 
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}
+=======
+
+>>>>>>> jaeyoung

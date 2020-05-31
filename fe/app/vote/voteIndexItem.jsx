@@ -1,6 +1,10 @@
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
+<<<<<<< HEAD
+import ItemCard3 from '../items/itemCard3_big.jsx';
+=======
 import ItemCard3 from '../items/ItemCard3.jsx';
+>>>>>>> jaeyoung
 import './voteIndex.css';
 import { Pagination } from '@material-ui/lab';
 
@@ -12,6 +16,10 @@ class VoteIndex extends Component {
         super(props);
         this.state = { data: [] };
         // this.url = this.props.url;
+<<<<<<< HEAD
+        // asds
+=======
+>>>>>>> jaeyoung
     }
 
     // async componentDidMount(){
@@ -28,14 +36,22 @@ class VoteIndex extends Component {
     // }
     render() {
         const { data } = this.props;
+<<<<<<< HEAD
+        // console.log(this.props);
+=======
         console.log(this.props);
+>>>>>>> jaeyoung
         return data.map((vote,index)=>{
             return (
                 <div key={'div'+index} className="vote_index_item">
                     <a href={"/vote/"+vote.id}>
                         <ItemCard3 img={vote.thumbnail} title={vote.title}/>
                     </a>
+<<<<<<< HEAD
+                    {/* <a href={'/vote/result/'+vote.id}>실시간 투표 결과</a> */}
+=======
                     <a href={'/vote/result/'+vote.id}>실시간 투표 결과</a>
+>>>>>>> jaeyoung
                 </div>
             )
         })

@@ -23,6 +23,8 @@ class ItemCard extends Component {
 						<Button variant="primary" onClick={this.props.event}>투표하기</Button>
 					</Card.Body>
 				</Card>
+				
+				
 			</div>
 		)
 	}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="be/vote/.mvn/wrapper"/>
+	<classpathentry kind="src" path="be/vote/src/main/java"/>
+	<classpathentry kind="src" path="be/vote/src/test/java"/>
+	<classpathentry excluding="oauth2/|O2/|social/" kind="src" path="save file"/>
+	<classpathentry kind="src" path="save file/O2"/>
+	<classpathentry kind="src" path="save file/oauth2"/>
+	<classpathentry kind="src" path="save file/social"/>
+	<classpathentry kind="lib" path="be/vote/target/vote-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="fe/target/fe-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="be/vote/target/classes"/>
+</classpath>

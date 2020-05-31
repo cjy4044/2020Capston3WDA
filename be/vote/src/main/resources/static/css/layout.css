@@ -5,6 +5,7 @@ main {
     width: auto;
     min-height: 270px;
     margin: 100px;
+    /* margin-bottom: 50px; */
     /* position: absolute;
  	left: 250px; */
     /* text-align: center; */
@@ -18,4 +19,13 @@ main {
     position: absolute;
  	left: 0;
 
+} */
+
+#page-content-wrapper{
+    margin-bottom: 100px;
+}
+
+/* #page-content-wrapper
+{
+    padding-left: 15px !important;
 } */

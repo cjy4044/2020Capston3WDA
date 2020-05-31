@@ -1,6 +1,6 @@
 # Compiled source #
 ###################
-node_modules
+fe/node_modules/*
  
 # Packages #
 ############

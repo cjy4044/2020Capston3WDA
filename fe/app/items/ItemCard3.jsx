@@ -20,5 +20,5 @@ class ItemCard3 extends Component{
         
     }
 }
-
+// asdasdasd
 export default ItemCard3

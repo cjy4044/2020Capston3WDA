@@ -16,3 +16,17 @@ node_modules/*
  
 # OS generated files #
 ######################
+fe/node_modules/.cache/babel-loader/c1a84fadcc5a3f4c571cf9b10e6bf362.json.gz
+fe/node_modules/.cache/babel-loader/d0ac8f5bb3bae3e2b9b1180f6b1d4ce7.json.gz
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/home.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/layout.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/login.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/register.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/tt.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/userInfo.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/voteCreate.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/voteEndShow.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/voteIndex.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/votePreShow.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/voteResult.js
+fe/target/classes/META-INF/resources/webjars/fe/1.0.0/voteShow.js

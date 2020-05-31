@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ItemCard2 from '../items/itemCard2.jsx';
 import VoteResult from './voteResult.jsx'
 import './votePreShow.css'
@@ -11,6 +12,10 @@ import ItemCard from '../items/itemCard.jsx';
 import ItemCard2 from '../items/ItemCard2.jsx';
 import './voteShow.css'
 >>>>>>> jaeyoung
+=======
+import ItemCard from '../items/itemCard.jsx';
+import './voteShow.css'
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
 =======
 import ItemCard from '../items/itemCard.jsx';
 import './voteShow.css'
@@ -28,6 +33,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 class VoteShow extends React.Component {
     constructor(props){
         super(props);
+<<<<<<< HEAD
 <<<<<<< HEAD
     }
     
@@ -123,6 +129,16 @@ class Show extends React.Component{
         this.setState({votes});
         // console.log(this.state);
 >>>>>>> parent of 877a2626... Merge branch 'minseok'
+=======
+        this.state = { votes: [] };
+    }
+
+    async componentDidMount(){
+        let {data : votes} = await axios.get('/vote/axios/'+param);
+        
+        this.setState({votes});
+        // console.log(this.state);
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
         
     }
 
@@ -145,10 +161,13 @@ class Show extends React.Component{
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     setDate(){
         // console.log("set")
         var start = this.state.date.startTime;
         var end = this.state.date.endTime;
+=======
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
 =======
 >>>>>>> parent of 877a2626... Merge branch 'minseok'
 
@@ -174,6 +193,7 @@ function Show(){
                 <div><a href="/vote">목록으로 가기</a></div>
                 <VoteShow/>
                 
+<<<<<<< HEAD
 <<<<<<< HEAD
                 <div className="list_a_tag"><a href="/vote">목록</a></div>
                 <div className="div_center"><h3>{title}</h3></div>
@@ -209,6 +229,8 @@ function Show(){
                 <div><h3>{title}</h3></div>
                 <VoteShow votes={this.state.votes} event={this.sendSelect}/>                
 >>>>>>> jaeyoung
+=======
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
 =======
 >>>>>>> parent of 877a2626... Merge branch 'minseok'
             </div>

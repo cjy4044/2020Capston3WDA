@@ -7,11 +7,15 @@ class VoteIndex extends Component {
     constructor(props){
         super(props);
 <<<<<<< HEAD
+<<<<<<< HEAD
         this.state = { data: [] };
 <<<<<<< HEAD
         this.options = {type: 1,page : 1, size : 6, sort : "id", count: 1, program: 0};
         this.url = "/vote/axios?page="+(this.options.page-1)+"&size="+this.options.size+"&sort="+this.options.sort+"&state="+this.options.type+"&program="+this.options.program;
         // 
+=======
+        this.state = { title: [] };
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
 =======
         this.state = { title: [] };
 >>>>>>> parent of 877a2626... Merge branch 'minseok'
@@ -34,6 +38,7 @@ class VoteIndex extends Component {
                 </div>
             )
         })
+<<<<<<< HEAD
 <<<<<<< HEAD
     }
     async getVoteItemWithOptionPaging(){
@@ -155,6 +160,20 @@ class Index extends Component{
                 <Pagination count={this.options.count} page={this.options.page} onChange={this.pageClick.bind(this)}/>
 >>>>>>> jaeyoung
 =======
+                Vote
+                <div>
+                    <a href="/vote/create">투표 생성</a>
+                </div>
+                <br/><br/><br/>
+                <VoteIndex/>
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
+=======
+      }
+}
+class Index extends Component{
+    render(){
+        return(
+            <div>
                 Vote
                 <div>
                     <a href="/vote/create">투표 생성</a>

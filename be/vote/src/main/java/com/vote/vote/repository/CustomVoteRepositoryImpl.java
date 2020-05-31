@@ -34,12 +34,17 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     @Override
+<<<<<<< HEAD
     public List<Vote> customFindVotes(String time, Pageable page, int state, int program){//시간
+=======
+    public List<Vote> customFindVotes(String time, String state, Pageable page){//시간
+>>>>>>> jaeyoung
         JPAQueryFactory query = new JPAQueryFactory(em);
 
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
+<<<<<<< HEAD
         if (state == -1){
             System.out.println("전체 투표");
         }// 투표 목록 선택 안했으면,
@@ -52,10 +57,25 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
             booleanBuilder.and(vote.endTime.loe(time)); // 종료시간 =< 현재시간
         }
         else{// state == 1
+=======
+        if (state.isEmpty()){
+            System.out.println("전체 투표");
+        }// 투표 목록 선택 안했으면,
+        else if(state.equals("0")){//시작전 투표
+            System.out.println("시작 전 투표");
+            booleanBuilder.and(vote.startTime.gt(time));// 시작시간 > 현재시간
+        }
+        else if(state.equals("2")){// 마감된 투표
+            System.out.println("마감된 투표");
+            booleanBuilder.and(vote.endTime.loe(time)); // 종료시간 =< 현재시간
+        }
+        else{
+>>>>>>> jaeyoung
             System.out.println("현재 투표 투표");
             booleanBuilder.and(vote.startTime.loe(time)).and(vote.endTime.gt(time));
         }
 
+<<<<<<< HEAD
         if(program == 0){
             System.out.println("전체 프로그램");
         }else{
@@ -68,6 +88,11 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
         count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
     
         
+=======
+        List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).where(booleanBuilder).fetch();
+
+        count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
+>>>>>>> jaeyoung
 
        
         return voteList;

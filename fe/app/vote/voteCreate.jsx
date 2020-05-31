@@ -101,6 +101,7 @@ class VoteCreate extends React.Component {
                   <option value="8">8</option>
                   <option value="9">9</option>
                   <option value="10">10</option>
+<<<<<<< HEAD
                 </select>
                 <div>대표 이미지</div>
                 <input type="file" name="thumbnail" required/><br/>  
@@ -111,6 +112,20 @@ class VoteCreate extends React.Component {
                 </select>
                 <br/><br/>
 
+=======
+                </select>
+                <div>대표 이미지</div>
+                <input type="file" name="thumbnail" required/><br/>  
+                <br/><br/><br/>
+                <div>프로그램</div>
+                <select id="program_selet" defaultvalue={'1'} name="program_id">
+                  <option value="1">검정고무신</option>
+                  <option value="">미스트롯</option>
+                  <option value=""></option>
+                  <option value=""></option>
+                  <option value=""></option>
+                </select>
+>>>>>>> jaeyoung
                 <div>1 번</div>
                   이미지 첨부: <input type="file" name="file" required/><br/>  
                   <input type="text" name="name" required/><br/>

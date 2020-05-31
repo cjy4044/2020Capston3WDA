@@ -1,9 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
+<<<<<<< HEAD
 import ItemCard2 from '../items/itemCard2.jsx';
 import VoteResult from './voteResult.jsx'
 import './votePreShow.css'
 import './css/voteDoShow.css'
+=======
+import ItemCard from '../items/itemCard.jsx';
+import ItemCard2 from '../items/ItemCard2.jsx';
+import './voteShow.css'
+>>>>>>> jaeyoung
 const axios = require('axios');
 
 var url = document.location.href;
@@ -38,6 +44,7 @@ class Show extends React.Component{
 
     constructor(props){
         super(props);
+<<<<<<< HEAD
         this.state = { votes: [], title: "",program:{img:"검정고무신.png",name:"검정고무신"},date:{startTime:"000",endTime:"0000"}};
         this.aa = "aaa";
         this.edTime;//종료 시간
@@ -47,11 +54,16 @@ class Show extends React.Component{
         this.divStTime;// 투표기간 표시 ( 시작날짜 )
         this.divEdTime;// 투표기간 표시 ( 마감 날짜 )
 
+=======
+        this.state = { votes: [], title: ""};
+        this.aa = "aaa";
+>>>>>>> jaeyoung
     }
 
     async componentDidMount(){
         let {data} = await axios.get('/vote/axios/'+param);
         // console.log(data[0]);
+<<<<<<< HEAD
         this.setState({votes : data[0], title : data[1], program:data[2], date : data[3]});
         console.log(data);
 
@@ -91,6 +103,10 @@ class Show extends React.Component{
         // console.log(m);
         // document.all.timer.innerHTML = m;   // div 영역에 보여줌 
         document.getElementById("circleTimer").innerHTML = m
+=======
+        this.setState({votes : data[0], title : data[1]});
+        // console.log(this.state);
+>>>>>>> jaeyoung
         
         if (this.rmTime <= 0) {      
             // 시간이 종료 되었으면..
@@ -120,6 +136,7 @@ class Show extends React.Component{
         
 
     }
+<<<<<<< HEAD
     setDate(){
         // console.log("set")
         var start = this.state.date.startTime;
@@ -164,6 +181,16 @@ class Show extends React.Component{
                     </div>
                 </div>
                      
+=======
+    render(){
+        const {title} = this.state.title
+        return(
+            <div>
+                <h2>투표</h2>
+                <div><a href="/vote">목록으로 가기</a></div>
+                <div><h3>{title}</h3></div>
+                <VoteShow votes={this.state.votes} event={this.sendSelect}/>                
+>>>>>>> jaeyoung
             </div>
         )
     }

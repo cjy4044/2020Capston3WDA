@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 .vote_option_div{
 
 }
+=======
+>>>>>>> jaeyoung
 .vote_option_div div{
     display: inline;
 }
@@ -20,7 +23,11 @@
     color:purple;
 }
 
+<<<<<<< HEAD
 /* asd */
+=======
+
+>>>>>>> jaeyoung
 /* voteIdexItem 에서 부르는 ItemCard2vertical 의 크기 */
 .vote_index_item{
     display: inline-block;
@@ -36,6 +43,7 @@
 .voteState:hover{
     color:rgba(221, 44, 192, 1);
 }
+<<<<<<< HEAD
 .type:hover{
     color:rgba(221, 44, 192, 1);
 }
@@ -70,3 +78,6 @@
     text-align: center;
     justify-content: center;
 }
+=======
+
+>>>>>>> jaeyoung

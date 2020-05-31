@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+<<<<<<< HEAD
+=======
+import com.google.gson.Gson;
+>>>>>>> jaeyoung
 import com.vote.vote.db.dto.Candidate;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Program;
@@ -62,12 +66,27 @@ public class VoteController {
 	@Autowired
 	private CustomVoteRepository customVoteRepository;
 
+<<<<<<< HEAD
 	@Autowired
 	private ProgramJpaRepository programJpaRepository;
 
 
 	public Klaytn klaytn = new Klaytn();
 
+=======
+
+	public Klaytn klaytn = new Klaytn();
+
+	
+
+	@ResponseBody
+	@RequestMapping(value={"/tttttt","/tttttt"}, method=RequestMethod.GET)
+	public JSONObject ttttt( Pageable page) { 
+		JSONObject json = new JSONObject();
+		json.put("page", page);
+		return json;
+	}
+>>>>>>> jaeyoung
 
 	//  투표 메인
 	@RequestMapping(value={"","/"}, method=RequestMethod.GET)
@@ -79,6 +98,7 @@ public class VoteController {
 	// 투표 메인 페이지 axios
 	@RequestMapping(value={"/axios","/axios/"})
 	@ResponseBody
+<<<<<<< HEAD
 	public JSONArray indexMainAxios(Principal user,Pageable page,
 	 int state,
 	 int program){
@@ -112,6 +132,37 @@ public class VoteController {
 	}
 
 
+=======
+	public JSONArray indexMainAxios(Principal user, @Nullable String state, Pageable page){
+		System.out.println("투표 메인페이지");
+		String nowTime = getNowTime();
+		String type = "1";
+		System.out.println("state:"+state);
+		System.out.println("현재시각"+nowTime);
+		if(state != null)
+			type = state;
+		
+		
+		// List<Vote> votes = customVoteRepositoy.customFindVotes(nowTime,type,page);
+		List<Vote> votes = customVoteRepository.customFindVotes(nowTime,type,page);
+		long count = customVoteRepository.getFindVotesCount();
+
+		JSONArray json = createVoteList(votes);
+		
+		json.add(json.size(),count);
+
+		return json;
+	}
+
+	public String getNowTime(){
+		Date time = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+		String nowTime = format.format(time);
+		return nowTime;
+	}
+
+
+>>>>>>> jaeyoung
 	public JSONArray createVoteList(List<Vote> votes){
 		JSONArray json = new JSONArray();
 
@@ -161,7 +212,10 @@ public class VoteController {
 		@RequestParam(name="startTime") String startTime,
 		@RequestParam(name="endTime") String endTime,
 		@RequestParam(name="thumbnail") MultipartFile thumbnail,
+<<<<<<< HEAD
 		@RequestParam(name="program_id") int programId,
+=======
+>>>>>>> jaeyoung
 		Principal user
 	){
 		
@@ -189,7 +243,10 @@ public class VoteController {
 		data.setStartTime(startTime_set);
 		data.setEndTIme(endTime_set);
 		data.setThumbnail(thumbnailPath);
+<<<<<<< HEAD
 		data.setProgram_id(programId);
+=======
+>>>>>>> jaeyoung
         voteRepository.saveAndFlush(data);
         
         
@@ -248,6 +305,7 @@ public class VoteController {
 
 	@RequestMapping(value={"/{voteId}","/{voteId}/"})
 	public String show(Model model, @PathVariable("voteId") int voteId){
+<<<<<<< HEAD
 		Vote vote = voteRepository.findById(voteId);
 		Long time = Long.parseLong(getNowTime());
 		
@@ -260,6 +318,9 @@ public class VoteController {
 			model.addAttribute("type", 2);
 		}
 		// 진행중인 투표
+=======
+		model.addAttribute("test", "aaaa");
+>>>>>>> jaeyoung
 		return "vote/show";
 	}
 
@@ -283,9 +344,13 @@ public class VoteController {
         // for(int i=0; i<candidateList.size();i++){
         //     names.add(candidateList.get(i).getName());
         //     imgs.add(candidateList.get(i).getImg());
+<<<<<<< HEAD
 		// }
 		
 
+=======
+        // }
+>>>>>>> jaeyoung
 
 		for(int i=0; i<candidateList.size();i++){
 			JSONObject item = new JSONObject();
@@ -297,17 +362,25 @@ public class VoteController {
 		Vote vote = voteRepository.findById(voteId);
 		voteInfo.put("title",vote.getTitle());
 
+<<<<<<< HEAD
 		Program program = programJpaRepository.findById(vote.getProgram_id());
 
 		JSONObject date = new JSONObject();
 		date.put("startTime", vote.getStartTime());
 		date.put("endTime", vote.getEndTime());
+=======
+>>>>>>> jaeyoung
 
 		JSONArray result = new JSONArray();
 		result.add(0, array);
 		result.add(1, voteInfo);
+<<<<<<< HEAD
 		result.add(2, program);
 		result.add(3, date);
+=======
+		
+
+>>>>>>> jaeyoung
 			
 		return result;
 	}
@@ -325,7 +398,11 @@ public class VoteController {
 		Voter voter = voterRepository.findByVoteIdAndUserId(voteId, user.getName());
 		Vote vote = voteRepository.findById(voteId);
 		String nowTime = getNowTime();
+<<<<<<< HEAD
 		if(!(Long.parseLong(nowTime) >= vote.getLongStartTime() && Long.parseLong(nowTime)<vote.getLongEndTime())){
+=======
+		if(!(Long.parseLong(nowTime) >= Long.parseLong(vote.getStartTime()) && Long.parseLong(nowTime)<Long.parseLong(vote.getEndTime()))){
+>>>>>>> jaeyoung
 			result.put("message","해당 투표는 현재 진행중이지 않습니다.");
 		}
 		else if(voter != null){// 유권자일 경우

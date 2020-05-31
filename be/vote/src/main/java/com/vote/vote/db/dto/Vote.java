@@ -42,8 +42,13 @@ public class Vote{
     @Column
     private String thumbNail;
 
+<<<<<<< HEAD
     @Column(nullable=true)
     private int program_id;
+=======
+    // @Column(nullable = true)
+    // private int program_id;
+>>>>>>> jaeyoung
 
 
     public int getId(){
@@ -71,6 +76,7 @@ public class Vote{
     public String getThumbnail(){
         return thumbNail;
     }
+<<<<<<< HEAD
     public int getProgram_id(){
         return this.program_id;
     }
@@ -80,6 +86,11 @@ public class Vote{
     public Long getLongEndTime(){
         return Long.parseLong(this.endTime.replaceAll("[^0-9]",""));
     }
+=======
+    // public int getProgram_id(){
+    //     return this.program_id;
+    // }
+>>>>>>> jaeyoung
 
     public void setId(int id){
         this.id = id;
@@ -105,8 +116,14 @@ public class Vote{
     public void setThumbnail(String thumbNail){
         this.thumbNail = thumbNail;
     }
+<<<<<<< HEAD
     public void setProgram_id(int program_id){
         this.program_id = program_id;
     }
+=======
+    // public void setProgram_id(int program_id){
+    //     this.program_id = program_id;
+    // }
+>>>>>>> jaeyoung
 
 }

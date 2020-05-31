@@ -137,7 +137,7 @@ class VoteCreate extends React.Component {
                   <div id="input_data_event">
                   </div>
                 </div>
-{/* asd */}
+
               <br/><br/><br/>
               <div>
                 <a href="/vote">목록</a>

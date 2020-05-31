@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ItemCard2 from '../items/itemCard2.jsx';
 import VoteResult from './voteResult.jsx'
 import './votePreShow.css'
@@ -10,6 +11,10 @@ import ItemCard from '../items/itemCard.jsx';
 import ItemCard2 from '../items/ItemCard2.jsx';
 import './voteShow.css'
 >>>>>>> jaeyoung
+=======
+import ItemCard from '../items/itemCard.jsx';
+import './voteShow.css'
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
 const axios = require('axios');
 
 var url = document.location.href;
@@ -23,6 +28,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 class VoteShow extends React.Component {
     constructor(props){
         super(props);
+<<<<<<< HEAD
     }
     
     render() {
@@ -107,21 +113,22 @@ class Show extends React.Component{
         this.setState({votes : data[0], title : data[1]});
         // console.log(this.state);
 >>>>>>> jaeyoung
+=======
+        this.state = { votes: [] };
+    }
+
+    async componentDidMount(){
+        let {data : votes} = await axios.get('/vote/axios/'+param);
         
-        if (this.rmTime <= 0) {      
-            // 시간이 종료 되었으면..
-            clearInterval(interval);   // 타이머 해제
-            alert("투표가 마감되었습니다.");
-        }else{
-            this.rmTime = this.rmTime - 1000; // 남은시간 -1초
-        }
+        this.setState({votes});
+        // console.log(this.state);
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
+        
     }
 
     sendSelect(index){
         const select  =  {"select" : index+1}
         console.log(select);
-        if(!confirm("해당 후보에 투표하시겠습니까?")) return;
-        
 
         axios.post('/vote/axios/'+param, select)
         .then((response)=>{
@@ -137,26 +144,37 @@ class Show extends React.Component{
 
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     setDate(){
         // console.log("set")
         var start = this.state.date.startTime;
         var end = this.state.date.endTime;
+=======
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
 
-        this.divStTime = start.substr(0,4)+"-"+start.substr(4,2)+"-"+start.substr(6,2)+" "+start. substr(8,2)+":"+start.substr(10,2);
-        this.divEdTime = end.substr(0,4)+"-"+end.substr(4,2)+"-"+end.substr(6,2)+" "+end. substr(8,2)+":"+end.substr(10,2);
 
+    render() {
+        const { votes } = this.state
+        console.log(votes);
+        return votes.map((vote,index)=>{
+            if (vote.name != 0){
+                return (
+                    <div key={vote.name+index} className="card_div"> 
+                        <ItemCard key={vote.img} img={vote.img} name={vote.name} event={this.sendSelect.bind(this,index)}/>  
+                    </div>
+                )
+            }
+        })
     }
-    render(){
-        const {title} = this.state.title
-        this.setDate();
+}
+
+function Show(){
         return(
-            <div id="itemTopDiv">
-                <div className="topDiv">
-                    <h2>투표</h2>
-                    <div id="circleTimer"className="circle">투표 진행중</div>
-                    {/* https://basketdeveloper.tistory.com/4 */}
-                </div>
+            <div>
+                <div><a href="/vote">목록으로 가기</a></div>
+                <VoteShow/>
                 
+<<<<<<< HEAD
                 <div className="list_a_tag"><a href="/vote">목록</a></div>
                 <div className="div_center"><h3>{title}</h3></div>
                 <div id="voteDate">
@@ -191,10 +209,10 @@ class Show extends React.Component{
                 <div><h3>{title}</h3></div>
                 <VoteShow votes={this.state.votes} event={this.sendSelect}/>                
 >>>>>>> jaeyoung
+=======
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
             </div>
         )
-    }
-        
 }
 
 ReactDOM.render(<Show/>,document.getElementById('voteShow'));

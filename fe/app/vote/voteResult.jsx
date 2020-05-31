@@ -102,10 +102,9 @@ class Result extends Component{
         )
     }
 }
-// sadsa
-// asd
-// ReactDOM.render(<Result/>,document.getElementById('voteResult'));
-export default VoteResult
+
+
+ReactDOM.render(<Result/>,document.getElementById('voteResult'));
 
 
 

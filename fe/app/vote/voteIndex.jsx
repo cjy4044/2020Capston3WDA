@@ -1,41 +1,40 @@
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
-import VoteIndex from './voteIndexItem.jsx';
-import './voteIndex.css';
-import { Pagination } from '@material-ui/lab';
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
 
-
-class Index extends Component{
+class VoteIndex extends Component {
     constructor(props){
         super(props);
+<<<<<<< HEAD
         this.state = { data: [] };
 <<<<<<< HEAD
         this.options = {type: 1,page : 1, size : 6, sort : "id", count: 1, program: 0};
         this.url = "/vote/axios?page="+(this.options.page-1)+"&size="+this.options.size+"&sort="+this.options.sort+"&state="+this.options.type+"&program="+this.options.program;
         // 
+=======
+        this.state = { title: [] };
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
     }
+
     async componentDidMount(){
-        this.getVoteItemWithOptionPaging();
+        let {data : title} = await axios.get('/vote/axios');
 
-        let {data} = await axios.get('/vote/program/axios')
-        var parentsDiv = document.getElementById("program_option")
-
-        const programOptionTitle = document.createElement("div");
-        programOptionTitle.innerHTML = "프로그램 ▶ "
-        parentsDiv.appendChild(programOptionTitle);
-        data.map((program,index)=>{
-            var div = document.createElement("div");
-
-            div.innerHTML = program.name;
-            div.className = "voteState program"
-            div.title= program.id
-
-            div.onclick = this.clickProgramName.bind(this,program.id);
-
-            parentsDiv.appendChild(div);
+        this.setState({title});
+        
+    }
+    render() {
+        const { title } = this.state;
+        return title.map((tt,index)=>{
+            return (
+                <div key={'div'+index}>
+                    <a href={"/vote/"+tt.id} key={index}>{tt.title}</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href={'/vote/result/'+tt.id}>실시간 투표 결과</a>
+                </div>
+            )
         })
+<<<<<<< HEAD
     }
     async getVoteItemWithOptionPaging(){
         let {data} = await axios.get(this.url);
@@ -100,25 +99,15 @@ class Index extends Component{
     //     this.options.count = count;
     //     // <VoteIndex url={this.url} getCount={this.getCount.bind(this)}/>
     // }
+=======
+      }
+}
+class Index extends Component{
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
     render(){
-        const clickTypes = document.getElementsByClassName("type")
-        const clickProgram = document.getElementsByClassName("program")
-        for( var i=0; i<clickTypes.length; i++){
-            if(clickTypes[i].title == this.options.type)
-                clickTypes[i].style.color="rgba(221, 44, 192, 1)"
-            else
-                clickTypes[i].style.color="black"
-        }
-        for( var i=0; i<clickProgram.length; i++){
-            if(clickProgram[i].title == this.options.program)
-                clickProgram[i].style.color="rgba(221, 44, 192, 1)"
-            else
-                clickProgram[i].style.color="black"
-        }
-
-
         return(
             <div>
+<<<<<<< HEAD
                 <h2>실시간 투표</h2>
 <<<<<<< HEAD
                 <div className="vote_options_select_div">
@@ -165,6 +154,14 @@ class Index extends Component{
                 <VoteIndex data={this.state.data}/>
                 <Pagination count={this.options.count} page={this.options.page} onChange={this.pageClick.bind(this)}/>
 >>>>>>> jaeyoung
+=======
+                Vote
+                <div>
+                    <a href="/vote/create">투표 생성</a>
+                </div>
+                <br/><br/><br/>
+                <VoteIndex/>
+>>>>>>> parent of 877a2626... Merge branch 'minseok'
             </div>
         )
     }
@@ -172,5 +169,4 @@ class Index extends Component{
 
 
 ReactDOM.render(<Index/>,document.getElementById('voteIndex'));
-
 

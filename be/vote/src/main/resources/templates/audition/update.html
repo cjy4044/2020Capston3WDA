@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<content>
+<body>  	   
+	<form th:action="@{'/audition/update/' + ${audition.auditionid}}" method="post">     
+		<table border="1">
+			<tr>
+				<th><label for="atitle">제목</label></th>
+				<td><input name="atitle" th:value="${audition.atitle}" /></td>
+			</tr>
+			<tr>
+				<th><label for="acategory">내용</label></th>
+				<td><input name="acategory" th:value="${audition.acategory}" /></td>
+			</tr>			
+		</table>
+		<div>
+            <input type="submit" value="수정하기" /> 
+            <a href="" th:href="@{/audition/list}">목록</a>
+		</div>
+	</form>
+</body>
+</content>
+</html>

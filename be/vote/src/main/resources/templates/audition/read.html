@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<content>
+<body>
+<!--     <table border="1">
+		<tr>
+			<th>제목</th>
+			<td th:text="${audition.a_title}">제목입니다.</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td th:text="${audition.a_category}">분야입니다.</td>
+		</tr>
+	</table> -->
+	<table class="table table-bordered">
+   
+    <tbody>
+            <tr>
+            	<th>분야: </th>
+                <td th:text="${audition.acategory}"></td>
+          <!--       <th>모집기간 : </th>
+                 <td th:date="${audition.a_startgate}"></td>
+                <th>    ~     </th>
+                 <td th:date="${audition.a_enddate}"></td>
+               
+                <th>발표일 : </th>
+                 <td th:date="${audition.a_issue}"></td>  -->
+                 <th>인원 : </th>
+                 <td th:text="${audition.arecruits}"></td>
+                <th> 명 </th>
+            </tr>
+            <tr>
+                <th>제목 : </th>
+                 <td th:text="${audition.atitle}"></td>
+
+            </tr>
+           
+          
+         
+    </tbody>
+</table>
+<table>
+ <tr>
+                <th>내용 : </th>
+                
+                  <td th:text="${audition.acontent}"></td>
+            <!--    <td><textarea cols="150" rows="20" placeholder="내용을 입력하세요. " name="a_content"></textarea></td> -->
+            </tr>
+</table>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div>
+        <a href="" th:href="@{'/audition/update/' + ${audition.auditionid}}">수정</a> 
+        
+             <form id="delete-form" th:action="@{'/audition/' + ${audition.auditionid}}" method="post">
+            <input type="hidden" name="_method" value="delete"/> 
+            <button id="delete-btn">삭제</button>
+        </form>
+        
+	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
+		<a href="" th:href="@{/audition/list}">목록</a>
+	</div>
+</body>
+</content>
+</html>

@@ -21,7 +21,6 @@ class Asdf extends React.Component{
         return this.state.data.map((prd,index)=>{
             return (
                 <ItemCard2 name={prd.name} price={prd.price} img={prd.img}></ItemCard2>
-                <Section></Section>
                 // <div key={"div"+index}>
                 //     <div>{prd.name}</div>    
                 //     <div>{prd.price}</div>    

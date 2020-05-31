@@ -31,15 +31,6 @@ public class ShopController {
 	Asdf asdf;
 	@RequestMapping("/shop/index")
 	public String index(Model model) {
-
-		
-		
-		
-		model.addAttribute("cate2", prdCateDJpaRepository.findCategory_dByCategory(2));
-		model.addAttribute("cate3", prdCateDJpaRepository.findCategory_dByCategory(3));
-		model.addAttribute("cate4", prdCateDJpaRepository.findCategory_dByCategory(4));
-		model.addAttribute("cate5", prdCateDJpaRepository.findCategory_dByCategory(5));
-		model.addAttribute("cate6", prdCateDJpaRepository.findCategory_dByCategory(6));
 		return "shop/index";
 
 	}

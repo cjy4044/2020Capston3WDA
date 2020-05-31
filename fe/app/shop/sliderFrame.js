@@ -1,5 +1,5 @@
 import React from 'react';
-class SliderFrame extends React.Component {
+export default class SliderFrame extends React.Component {
     render() {
         return (
             <section id="slider">
@@ -71,5 +71,3 @@ class SliderFrame extends React.Component {
         )
     }
 }
-
-export default SliderFrame;

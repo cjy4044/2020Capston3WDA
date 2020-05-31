@@ -12,6 +12,7 @@ class VoteIndex extends Component {
         super(props);
         this.state = { data: [] };
         // this.url = this.props.url;
+        // asds
     }
 
     // async componentDidMount(){

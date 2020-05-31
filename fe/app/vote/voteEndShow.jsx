@@ -12,7 +12,7 @@ var url = document.location.href;
 const num = url.split('/');
 var param = num[num.length-1];
 // url.substr(url.length-1,1);
-
+// asd
 const regeneratorRuntime = require("regenerator-runtime");
 
 

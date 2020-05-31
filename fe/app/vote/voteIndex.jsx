@@ -13,7 +13,7 @@ class Index extends Component{
         this.state = { data: [] };
         this.options = {type: 1,page : 1, size : 6, sort : "id", count: 1, program: 0};
         this.url = "/vote/axios?page="+(this.options.page-1)+"&size="+this.options.size+"&sort="+this.options.sort+"&state="+this.options.type+"&program="+this.options.program;
-        
+        // 
     }
     async componentDidMount(){
         this.getVoteItemWithOptionPaging();

@@ -66,6 +66,7 @@ class Show extends React.Component{
         },1000)
         
     }
+    // asd
     parseTime(){
         var time = this.state.date.endTime;
         console.log(time);

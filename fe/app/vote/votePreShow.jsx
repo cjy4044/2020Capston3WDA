@@ -12,7 +12,7 @@ var param = num[num.length-1];
 // url.substr(url.length-1,1);
 
 const regeneratorRuntime = require("regenerator-runtime");
-
+// asd
 
 class VoteShow extends React.Component {
     constructor(props){

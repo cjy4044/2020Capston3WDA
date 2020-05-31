@@ -41,7 +41,9 @@ module.exports = {
     profileIndex: path.join(__dirname,'./app/userInfo/profileIndex.jsx'),
     allCompany: path.join(__dirname,'./app/userInfo/allCompany.jsx'),
     proRegIndex: path.join(__dirname,'./app/programRegister/proRegIndex.js'),
-    modal: path.join(__dirname,'./app/programRegister/modal.jsx')
+    modal: path.join(__dirname,'./app/programRegister/modal.jsx'),
+    votePreShow: path.join(__dirname,'./app/vote/votePreShow.jsx'),
+    voteEndShow: path.join(__dirname,'./app/vote/voteEndShow.jsx')
     
 
   },

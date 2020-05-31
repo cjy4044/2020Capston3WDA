@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import org.springframework.data.domain.Pageable;
 
 public interface CustomVoteRepository{
-    List<Vote> customFindVotes(String time, String state, Pageable page);
+    List<Vote> customFindVotes(String time,Pageable page,int state,int program);
 
     long getFindVotesCount();
 }

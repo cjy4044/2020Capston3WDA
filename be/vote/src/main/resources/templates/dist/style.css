@@ -1,4 +1,4 @@
-/* Sidebar */
+/* /* Sidebar
 #sidebar-wrapper{
   z-index:1;
   position: absolute;
@@ -12,7 +12,7 @@
 	align-items:center;
 }
 
-/* Main Content */
+Main Content
 #page-content-wrapper{
   width: 100%;	
   position: absolute;
@@ -24,7 +24,7 @@
 	transition:all .3s;
 	font-size:2em;
 }
-/* Change the width of the sidebar to display it*/
+Change the width of the sidebar to display it
 #wrapper.menuDisplayed #sidebar-wrapper{
   width:250px;
 }
@@ -33,7 +33,7 @@
   padding-left:250px;
 }
 
-/* Sidebar styling */
+Sidebar styling
 .sidebar-nav{
   padding:0;
   list-style:none; 
@@ -57,4 +57,4 @@
 
 .sidebar-nav li:hover{
   background:#846bab;
-}
+} */ */

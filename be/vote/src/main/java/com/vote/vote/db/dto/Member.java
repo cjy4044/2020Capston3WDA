@@ -97,10 +97,13 @@ public class Member{
         return this.gender;
     }
     public void setBirth(String birth){
+    	//System.out.println(birth.getClass().getName());
         this.birth = birth;
     }
     public String getBirth(){
-        return this.birth;
+    	String str = this.birth;
+    	String[] split = str.split(" ");
+     	return split[0];
     }
     public void setNickname(String nickname){
         this.nickname = nickname;
@@ -147,6 +150,6 @@ public class Member{
     }
 
     public String toString(){
-        return "no["+no+"] userid["+userid+"] password["+password+"] name[ "+name+"] gender[ "+gender+"] birth["+birth+"] nickname["+nickname+"] phone[ "+phone+"] addr[ "+addr+"] addr2["+addr2+"]";
+        return "no["+no+"] userid["+userid+"] password["+password+"] name[ "+name+"] gender[ "+gender+"] birth["+birth+"] nickname["+nickname+"] phone[ "+phone+"] addr[ "+addr+"] addr2["+addr2+"] profile["+profile+"]";
     }
 }

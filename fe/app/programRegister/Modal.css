@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
   }
   
   .MyModal .content {
@@ -15,5 +16,8 @@
     padding: 1rem;
     width: 400px;
     height: auto;
+    
   }
+  
+  .modal{text-align: center}
   textarea{resize: none;}

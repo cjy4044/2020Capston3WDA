@@ -43,7 +43,8 @@ module.exports = {
     proRegIndex: path.join(__dirname,'./app/programRegister/proRegIndex.js'),
     modal: path.join(__dirname,'./app/programRegister/modal.jsx'),
     votePreShow: path.join(__dirname,'./app/vote/votePreShow.jsx'),
-    voteEndShow: path.join(__dirname,'./app/vote/voteEndShow.jsx')
+    voteEndShow: path.join(__dirname,'./app/vote/voteEndShow.jsx'),
+    Shop_index: path.join(__dirname,'./app/Shop_index.js'),
     
 
   },

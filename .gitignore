@@ -1,5 +1,4 @@
 fe/node_modules/*
 fe/node/node_modules/*
 fe/target/*
-*/application.properties
-application.properties
+be\vote\src\main\resources\application.properties

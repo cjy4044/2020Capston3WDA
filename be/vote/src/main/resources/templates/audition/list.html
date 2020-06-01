@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'오디션')}">
+th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판')}">
 <head>
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,10 +36,11 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션')}">
 			<!--  <td th:text="${audition.a_title}"></td> -->
 			<td><a href="" th:href="@{'/audition/read/' + ${audition.auditionid}}" th:text="${audition.atitle}"></a></td>
 			<td th:text="${audition.acategory}"></td>
-			<td th:text="${audition.astartdate}"></td>
-			<td th:text="${audition.aenddate}"></td>
-			<td th:text="${audition.arecruits}"></td>
-			<td th:text="${audition.aissue}"></td>
+			<td th:text="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}"></td>
+			<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
+			<td th:text="${audition.arecruits}+ 명"></td>
+			<td th:text="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"></td>
+			
   
 
 		</tr>
@@ -48,10 +49,23 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션')}">
               <input type="button" value="등록" onclick="location.href='/audition/write'"/>
                                     </td>
             </tr>
+            	<tr>
+                <td colspan="2">
+              <input type="button" value="처음으로" onclick="location.href='/audition/list'"/>
+                                    </td>
+            </tr>
+
 		</tbody>
 		</div>
 		</table>
-
+		
+		<form action="/audition/serch" method="GET">
+		    <div>
+		        <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+		    </div>
+		
+		    <button>검색하기</button>
+		</form>
 
        </content>
 

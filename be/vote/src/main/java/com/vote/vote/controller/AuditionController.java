@@ -1,6 +1,7 @@
 package com.vote.vote.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.vote.vote.db.dto.Audition;
@@ -33,7 +35,17 @@ public class AuditionController {
 		model.addAttribute("auditionlist",auditionRepository.findAll());
 		return "audition/list";
 	}
+	
 
+	
+	@GetMapping("/audition/serch")
+	public String serch(@RequestParam(value="keyword") String keyword, Model model) {
+		List<Audition> audition = auditionRepository.findByAtitle(keyword);
+		
+				model.addAttribute("auditionlist", audition);
+				
+				return "audition/list";
+	}
 	
 
 //	@GetMapping("/audition")
@@ -83,7 +95,6 @@ public class AuditionController {
 		if (bindingResult.hasErrors()) {
 			return "/audition/update";
 		} else {
-			audition.setAstartdate(new Date());
 			auditionRepository.save(audition).getAuditionid();
 		return "redirect:/audition/list";
 		}
@@ -102,5 +113,6 @@ public class AuditionController {
 		
 		return "redirect:/audition/list";
 	}
+	
 	
 }

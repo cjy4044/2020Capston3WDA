@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
+th:replace="~{main_layout::layout(~{::content},_,'수정하기')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +8,44 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
 <content>
 <body>  	   
 	<form th:action="@{'/audition/update/' + ${audition.auditionid}}" method="post">     
+	
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+
 		<table border="1">
-			<tr>
-				<th><label for="atitle">제목</label></th>
-				<td><input name="atitle" th:value="${audition.atitle}" /></td>
-			</tr>
-			<tr>
-				<th><label for="acategory">내용</label></th>
-				<td><input name="acategory" th:value="${audition.acategory}" /></td>
-			</tr>			
-		</table>
+    <tbody>
+            <tr>
+                <th><label for="atitle">분야 : </label></th>
+				<td><input type="text" name="acategory" th:value="${audition.acategory}" /></td>
+        	     <th><label for="astartdate">모집기간 : </label></th>
+				<td><input type="date" name="astartdate" th:value="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}" /></td>
+                <th>    ~     </th>
+                <td><input type="date" name="aenddate" th:value="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}" /></td>
+                
+                <th><label for="arecruits">인원 : </label></th>
+				<td><input type="text" name="arecruits" th:value="${audition.arecruits}" /></td>
+				
+                <th><label for="aissue">발표일 : </label></th>
+				<td><input type="date" name="aissue" th:value="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"> /></td>
+                
+            </tr>
+            <tr>
+                <th><label for="atitle">제목 : </label></th>
+				<td><input type="text" name="atitle" th:value="${audition.atitle}" /></td>
+            </tr>
+           
+          
+         
+    </tbody>
+</table>
+<table>
+ <tr>
+                <th><label for="acontent">내용 : </label></th>
+                <td><input type="text" name="acontent" style=" width:1040px; height:300px;" th:value="${audition.acontent}" /></td>
+            </tr>
+</table>
 		<div>
             <input type="submit" value="수정하기" /> 
             <a href="" th:href="@{/audition/list}">목록</a>

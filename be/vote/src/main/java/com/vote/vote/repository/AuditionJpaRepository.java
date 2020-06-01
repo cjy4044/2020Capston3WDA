@@ -14,5 +14,6 @@ import com.vote.vote.db.dto.Audition;
 public interface AuditionJpaRepository  extends JpaRepository<Audition, String>{
 	public ArrayList<Audition> findAll();
 	public Audition findByAuditionid(int auditionid);
+	public ArrayList<Audition> findByAtitle(String keyword);
 
 }

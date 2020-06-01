@@ -21,4 +21,5 @@ fe/node/node_modules/*
 fe/target/*
 be/vote/src/main/resources/application.properties
 *.properties
-*.properties
+.properties
+

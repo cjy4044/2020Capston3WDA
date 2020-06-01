@@ -23,3 +23,6 @@ be/vote/src/main/resources/application.properties
 *.properties
 .properties
 안녕.txt
+*.properties
+be/vote/src/main/resources/application.properties
+be/vote/src/main/resources/application.properties

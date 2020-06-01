@@ -1,0 +1,28 @@
+# Directories #
+/build/
+/bin/
+target/
+
+# OS Files #
+
+ 
+# Package Files #
+      
+# Eclipse #
+.project
+.metadata
+.classpath
+.settings/
+.loadpath
+
+
+fe/node_modules/*
+fe/node/node_modules/*
+fe/target/*
+be/vote/src/main/resources/application.properties
+*.properties
+.properties
+안녕.txt
+*.properties
+be/vote/src/main/resources/application.properties
+*/be/vote/src/main/resources/application.properties

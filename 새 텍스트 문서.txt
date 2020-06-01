@@ -2,15 +2,14 @@ RIRO
 DB 
 생성쿼리
 최종 수정일
-2020-06-01
+2020-05-18
 
-차재영ㅇㅇ
+차재영
 // 시퀀스는 따로 만들어야합니다.
 // 수정사항 : datetime -> date
 // 테이블명 긴 것 일부 줄임 
 // 다지우는 쿼리 SELECT 'DROP TABLE "' || TABLE_NAME || '" CASCADE CONSTRAINTS;' FROM user_tables;
 이밑에서부터 끝까지 복사해서 붙여넣기
-//06.01 이경준 상세카테고리 테이블, 상품테이블에 상세카테고리fk 추가
 
 
 -- 유저테이블
@@ -28,7 +27,7 @@ CREATE TABLE r_user (
 		addr CLOB NULL,
 		addr2 CLOB NULL,
 		point NUMBER DEFAULT 0,
-		role CHAR(1) NULL
+		role CHAR(1) default 0
 );
 
 -- 회사정보
@@ -59,6 +58,15 @@ CREATE TABLE p_manager (
 		r_id NUMBER NULL,
 		program_id NUMBER NULL
 );
+-- 프로그램관리자
+ALTER TABLE p_manager
+	ADD CONSTRAINT FK_program_TO_p_manager 
+	FOREIGN KEY (
+		program_id
+	)
+	REFERENCES program ( 
+		program_id
+	);
 
 -- 프로그램관리자
 ALTER TABLE p_manager
@@ -644,12 +652,17 @@ ALTER TABLE orderlist
 
 -- vote
 CREATE TABLE vote (
-		voteid NUMBER primary key,
-		title VARCHAR2(50) NOT NULL,
-		writer VARCHAR2(50) NOT NULL,
-		address CLOB NULL,
-		count NUMBER NULL
+        voteid NUMBER primary key,
+        title VARCHAR2(50) NOT NULL,
+        writer VARCHAR2(50) NOT NULL,
+        address CLOB NULL,
+        count NUMBER NULL,
+        starttime VARCHAR2(100 BYTE), 
+        endtime VARCHAR2(100 BYTE), 
+        thumbnail CLOB, 
+        program_id NUMBER
 );
+
 
 -- candidate
 CREATE TABLE candidate (
@@ -688,54 +701,3 @@ ALTER TABLE voter
 	REFERENCES vote ( -- vote
 		voteid -- 투표 id
 	);        
--- voter
-CREATE TABLE voter (
-		id NUMBER primary key,
-		voteid NUMBER NULL,
-		userid VARCHAR2(50) NOT NULL,
-		state NUMBER NULL,
-		hash CLOB NULL
-);
-
--- product_category_d
-CREATE TABLE PRODUCT_CATEGORY_D"(	
-	"CATEGORY_D_ID" NUMBER, 
-	"CATEGORY_D" VARCHAR2(50), 
-	"CATEGORY" NUMBER
-   )
-
-
---------------------------------------------------------
---  파일이 생성됨 - 월요일-6월-01-2020   
---------------------------------------------------------
---------------------------------------------------------
---  DDL for Table PRODUCT_CATEGORY_D
---------------------------------------------------------
-
-  CREATE TABLE "PRODUCT_CATEGORY_D" ("CATEGORY_D_ID" NUMBER, "CATEGORY_D" VARCHAR2(50), "CATEGORY" NUMBER)
---------------------------------------------------------
---  DDL for Index PRODUCT_CATEGORY_D_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "PRODUCT_CATEGORY_D_PK" ON "PRODUCT_CATEGORY_D" ("CATEGORY_D_ID")
---------------------------------------------------------
---  Constraints for Table PRODUCT_CATEGORY_D
---------------------------------------------------------
-
-  ALTER TABLE "PRODUCT_CATEGORY_D" MODIFY ("CATEGORY_D" NOT NULL ENABLE)
-  ALTER TABLE "PRODUCT_CATEGORY_D" ADD CONSTRAINT "PRODUCT_CATEGORY_D_PK" PRIMARY KEY ("CATEGORY_D_ID") ENABLE
-  ALTER TABLE "PRODUCT_CATEGORY_D" MODIFY ("CATEGORY_D_ID" NOT NULL ENABLE)
---------------------------------------------------------
---  Ref Constraints for Table PRODUCT_CATEGORY_D
---------------------------------------------------------
-
-  ALTER TABLE "PRODUCT_CATEGORY_D" ADD CONSTRAINT "PRODUCT_CATEGORY_D_FK1" FOREIGN KEY ("CATEGORY") REFERENCES "PRODUCT_CATEGORY" ("CATEGORY_ID") ENABLE
-
---------------------------------------------------------
---  Add Column for Table PRODUCT
---------------------------------------------------------
-ALTER TABLE "PRODUCT_CATEGORY_D" ADD("PRODUCT_CATEGORY_D" NUMBER);
---------------------------------------------------------
---  Ref Constraints for Table PRODUCT
---------------------------------------------------------
-ALTER TABLE "PRODUCT" ADD CONSTRAINT "FK_PRD_CATE_D_TO_PRODUCT" FOREIGN KEY ("PRODUCT_CATEGORY_D") REFERENCES "PRODUCT_CATEGORY_D" ("CATEGORY_D_ID") ENABLE

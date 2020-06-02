@@ -1,0 +1,51 @@
+#item{
+    width: 100% !important;
+    border-right: 2px solid gray;
+}
+.left_right_box{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap:15px;
+}
+#voteDate{
+    margin: 15px;
+}
+.show_result{
+    text-align: center;
+    color:rgba(221, 44, 192, 1)
+}
+
+.right_div_box{
+    margin-top: 50px;
+}
+
+.vote_result{
+    top: 15%;
+    position: relative;
+    text-align: -webkit-center;
+}
+.progress{
+    text-align: left;
+}
+.progress-meter-text{
+    /* text-align: center !important; */
+    /* margin-left: 100% !important; */
+    left : 50px !important;
+}
+
+.list_a_tag a:focus, .list_a_tag a:hover{
+    color: white !important;
+}
+*, ::after, ::before{
+    webkit-box-sizing: unset !important;
+    box-sizing: unset !important;
+}
+.top_div a:focus,.top_div a:hover{
+    color : white !important;
+}
+.menu > a{
+    display: inline !important;
+}
+.dropMenu a{
+    display: block !important;
+}

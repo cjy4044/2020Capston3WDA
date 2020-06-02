@@ -22,6 +22,7 @@ class AllCompany extends Component {
         this.state = { company: [] , pageNum: 1 , count: 0, modal : false };
         this.url = '/userInfo/axios3?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
+
     setUrl(){
         this.url = '/userInfo/axios3?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
@@ -32,6 +33,7 @@ class AllCompany extends Component {
         this.setUrl()   
         this.componentDidMount()
     }
+    
 
 
     async componentDidMount(){
@@ -85,8 +87,7 @@ class Index extends Component{
         super(props);
        this.props.company
        this.state = { modal : false };
-      
-    
+  
        
     }
 
@@ -125,10 +126,14 @@ class Index extends Component{
                                  </TableCell>
                                  {this.state.modal && (  
                                  <div className="MyModal">
-
-                                     
+                                      <div className="content">
+                                  <input type="hidden" value={c.c_id}></input>
+                                  {c.c_name}을 등록하시겠습니까?
+                                  
+                                  <button className="submit_button" type="submit">신청하기</button> 
                                   <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
-                                 </div>  )   }{} 
+                                  </div>
+                                 </div>  )}{} 
                                
                              
                                

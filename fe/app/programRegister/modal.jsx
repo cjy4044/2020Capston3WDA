@@ -136,7 +136,7 @@ class Modal extends Component {
                                                 
                     </tbody>
                 </table>
-                  <button className="submit_button" type="submit">회원가입</button>
+                  <button className="submit_button" type="submit">신청하기</button>
 
 
 

@@ -64,6 +64,7 @@ class AllCompany extends Component {
                                             <TableCell>회사연락처</TableCell>
                                             <TableCell>예상금액</TableCell>
                                             <TableCell>승인여부</TableCell>
+                                            <TableCell>승인</TableCell>
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -85,14 +86,15 @@ class Index extends Component{
        this.props.company
        this.state = { modal : false };
       
+    
        
     }
 
     handleOpenModal(){
         this.setState({modal:true});
+      
       };
       handleCloseModal(){
-        
         this.setState({modal:false});
       };
   
@@ -117,17 +119,24 @@ class Index extends Component{
                                 <TableCell>{c.c_reader}</TableCell>
                                 <TableCell>{c.c_phone}</TableCell>
                                 <TableCell>{c.c_budget}</TableCell>
-                                <TableCell><button onClick={this.handleOpenModal.bind(this)}>확인하기</button></TableCell>
-                                  
-                                {this.state.modal && (  
-                                     <div className="MyModal">
-                                        <span>ddd</span>
-                                        <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
-                                     </div>  )   }{" "} 
-                             </TableRow>
-       
-                        )
+                                <TableCell>{c.c_confirm}</TableCell>
+                                <TableCell><button onClick={this.handleOpenModal.bind(this)}>확인</button>
+                               
+                                 </TableCell>
+                                 {this.state.modal && (  
+                                 <div className="MyModal">
 
+                                     
+                                  <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                                 </div>  )   }{} 
+                               
+                             
+                               
+                             </TableRow>
+                             
+                            
+                        )
+                           
                     })
                   
                    

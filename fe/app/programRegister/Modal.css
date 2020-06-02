@@ -8,8 +8,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index:10;
     
-  }  
+  }
+
+  
   .MyModal .content {
     background: white;
     padding: 1rem;
@@ -17,6 +20,6 @@
     height: auto;
     
   }
-  
+
   .modal{text-align: center}
   textarea{resize: none;}

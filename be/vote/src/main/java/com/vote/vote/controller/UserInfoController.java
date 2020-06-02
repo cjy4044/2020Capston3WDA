@@ -223,5 +223,14 @@ public class UserInfoController {
 						
 				return json;
 			}
+		 
+		 @RequestMapping(value="/companyUpdate", method=RequestMethod.POST)
+		    public String registerOk(Company cc){
+		       	
+		    	System.out.println(cc.getId());
+		    	return "redirect:/userInfo/allCompany";
+		    
+
+		    }
 
 }

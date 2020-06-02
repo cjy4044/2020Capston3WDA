@@ -101,10 +101,16 @@ public class Member{
         this.birth = birth;
     }
     public String getBirth(){
+
     	String str = this.birth;
+    	if(str != null) {
     	String[] split = str.split(" ");
-     	return split[0];
+     	return split[0]; }
+    	else {
+    		return this.birth;
+    	}
     }
+
     public void setNickname(String nickname){
         this.nickname = nickname;
     }

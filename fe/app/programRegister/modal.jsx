@@ -73,7 +73,7 @@ class Modal extends Component {
                       <div className="content">
                         <h3>신청 양식</h3>
                         
-                        <table className="register_table">
+                <table className="register_table">
                     <tbody>
                         <tr>
                          
@@ -107,15 +107,18 @@ class Modal extends Component {
                         </tr>
 
                         <tr>
-                        <select name="ccategory" id="category">
-                          <option value="">프로그램 종류</option>
-                          <option>아이돌</option>
-                          <option>랩</option>
-                          <option>댄스</option>
-                          <option>보컬</option>
-                          <option>성악</option>
-                          <option>트로트</option>
-                        </select> 
+                            <td>
+                                <select name="ccategory" id="category">
+                                    <option value="">프로그램&nbsp;종류</option>
+                                    <option>아이돌</option>
+                                    <option>랩</option>
+                                    <option>댄스</option>
+                                    <option>보컬</option>
+                                    <option>성악</option>
+                                    <option>트로트</option>
+                                </select> 
+                            </td>
+                        
                         </tr>
 
                         <tr>
@@ -124,7 +127,7 @@ class Modal extends Component {
 
                         프로그램 예상 기한
                         <tr>
-                            <td><input className="register_birth" type="date" name="cstartdate" id="c_startdate"  required/>        ~</td>
+                            <td><input className="register_birth" type="date" name="cstartdate" id="c_startdate"  required/>&nbsp;&nbsp;&nbsp;&nbsp;~</td>
                             <td><input className="register_birth" type="date" name="cenddate" id="c_enddate"  required/></td>
                         </tr>
 
@@ -136,14 +139,14 @@ class Modal extends Component {
                                                 
                     </tbody>
                 </table>
-                  <button className="submit_button" type="submit">회원가입</button>
+                  <button className="submit_button" type="submit">신청하기</button>
 
 
 
 
                         <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
                       </div>
-                  </div> )}{" "}
+                  </div> )}{""}
             </div>            
             
         )

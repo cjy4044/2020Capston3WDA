@@ -17,7 +17,7 @@ class Index extends Component {
     async componentDidMount(){
         let {data:profile} = await axios.get('/userInfo/axios')
         this.setState({profile})
-        $("input:radio[id ='test']:input[value="+profile[0].gender+"]").attr("checked", true)
+        $("input:radio[class ='test']:input[value="+profile[0].gender+"]").attr("checked", true)
     }
     none(e){
    alert("카카오톡 유저입니다. 카톡에서 프로필사진을 바꿔주세요!!!");
@@ -38,7 +38,7 @@ class Index extends Component {
             <table>
              <tbody>
                  <tr><td key={index} >아이디<input type="text" id="id"  placeholder="이메일" value={p.userid} readOnly/></td></tr>
-                 <tr><td>프로필<img src={p.profile} id="profile" name="profile2" alt="profile" /></td></tr>
+                 <tr><td>프로필<img src={p.profile ? p.profile :'#'} id="profile" name="profile2" alt="profile" /></td></tr>
                  <tr><td><input type="file" name="profile2" id="file" onClick={this.none.bind(this)}/></td></tr>
     
                  <tr><td>닉네임<input type="text" name="nickname" placeholder="입력해주세요" defaultValue={p.nickname}/></td></tr>
@@ -46,8 +46,8 @@ class Index extends Component {
                  <tr><td>이름<input type="text" id="name" placeholder="이름" value={p.username} readOnly/></td></tr>
                  <tr> <td>생년월일<input  type="date" name="birth" defaultValue={p.birth} /></td></tr>
                  <tr>
-                 <td className="register_left_td"><input className="register_gender" id="test" type="radio"  name="gender" value="0" required/>남자</td>
-                 <td className="register_right_td"><input type="radio" id="test" name="gender" value="1" required/>여자</td>
+                 <td className="register_left_td"><input className="register_gender" className="test" type="radio"  name="gender" value="0" required/>남자</td>
+                 <td className="register_right_td"><input type="radio" className="test" name="gender" value="1" required/>여자</td>
                  </tr>
                  <tr><td colSpan="2"><hr></hr></td></tr>
                  <tr><td>연락처<input type="tel" name="phone"  pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="입력해주세요" defaultValue={p.phone} /></td></tr>
@@ -71,16 +71,16 @@ class Index extends Component {
                  <table>
              <tbody>
                  <tr><td key={index} >아이디<input type="text" id="id"  placeholder="이메일" value={p.userid} readOnly/></td></tr>
-                 <tr><td>비밀번호<input type="password" name="password" placeholder="비밀번호" defaultValue={p.password}  required/></td></tr>
-                 <tr><td key={index} >프로필<img id="profile" src={p.profile} /></td></tr>
+                 <tr><td>비밀번호<input type="password" name="password" placeholder="비밀번호" defaultValue={p.password?p.password:''}  required/></td></tr>
+                 <tr><td key={index} >프로필<img id="profile" src={p.profile?p.profile:'/img/defaultProfile.png'} /></td></tr>
                  <tr><td><input type="file" name="profile2"/></td></tr>
                  <tr><td>닉네임<input   type="text" name="nickname" placeholder="입력해주세요" defaultValue={p.nickname}/></td></tr>
                  <tr><td colSpan="2"><hr></hr></td></tr>
                  <tr><td>이름<input type="text" name="username" placeholder="이름" value={p.username} readOnly/></td></tr>
                  <tr><td>생년월일<input  type="date" name="birth" defaultValue={p.birth} /></td></tr>
                  <tr>
-                 <td className="register_left_td"><input className="register_gender" id="test" type="radio"  name="gender" value="0" required/>남자</td>
-                 <td className="register_right_td"><input type="radio" id="test" name="gender" value="1" required/>여자</td>
+                 <td className="register_left_td"><input className="register_gender" className="test" type="radio"  name="gender" value="0" required/>남자</td>
+                 <td className="register_right_td"><input type="radio" className="test" name="gender" value="1" required/>여자</td>
                  </tr>
                  <tr><td colSpan="2"><hr></hr></td></tr>
                  <tr><td>연락처<input type="tel" name="phone"  pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="입력해주세요"  defaultValue={p.phone} /></td></tr>
@@ -88,7 +88,7 @@ class Index extends Component {
                  <tr><td>상세주소<input type="text" name="addr2" placeholder="입력해주세요"  defaultValue={p.addr2} /></td></tr>
             </tbody>
             </table> 
-            <input type="hidden" name="profile" value={p.profile}></input>
+            <input type="hidden" name="profile" value={p.profile?p.profile:'/img/defaultProfile.png'}></input>
             <input type="hidden" name="userid" value={p.userid}></input>
             <input type="hidden" name="no" value={p.r_id}></input>
             <input type="hidden" name="name" value={p.username}></input>

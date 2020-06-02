@@ -54,7 +54,7 @@ top a {
     text-decoration: none;
     /*    color: black;*/
     color: white;
-    font padding-right: 10px;
+    padding-right: 10px;
     padding-left: 10px;
 }
 
@@ -232,10 +232,8 @@ nav div.dropMenuactive .drop {
 }
 
 
-contents{
-}
 contents div.contents{
-   /* max-width: 1200px; */
+   max-width: 1200px;
     margin: auto;
 /*      min-height: 100px; */
 /*    background-color: aquamarine;*/

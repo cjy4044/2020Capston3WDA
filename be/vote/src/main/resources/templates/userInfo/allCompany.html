@@ -10,10 +10,20 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'마이페이지')}">
 
 <body>
     <content>
-    Company
-       <div id="allCompany"></div>
-        <script src="/assets/allCompany.js"></script>
+    
+    	 <form method="post"  action="/userInfo/companyUpdate" id="register_form">
+	     
+	     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	     
+	     <div id="allCompany"></div>
+         <script src="/assets/allCompany.js"></script>
+       	
+       	
+       	</form>
+       
     </content>
+    
+  
 </body>
  
 </html>

@@ -9,11 +9,11 @@ class ItemCard2 extends Component{
 
     render(){
         return (
-            <div style={{margin: 20, maxWidth:300}}>
+            <div style={{margin: 20, maxWidth: 350, maxHeight: 300}}>
                 <Card
                     image={'/uploads/'+this.props.img}
                     title={this.props.name}
-                    text=' 설명 입니다. '
+                    text={this.props.info}
                 />
             </div>
         )

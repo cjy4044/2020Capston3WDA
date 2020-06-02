@@ -1,11 +1,17 @@
 	   window.onload = function(){
-	
+		
+		var newSS=document.createElement('link');
+		newSS.rel='stylesheet';
+		newSS.href='/css/style.css'
+		document.getElementsByTagName("head")[0].appendChild(newSS);
+
+
 		//사이드바 필요할시 스타일활성해주는 것
 		 $(".sideon").attr('class','glyphicon glyphicon-menu-hamburger');
 		 $(".btn2").attr('class','btn'); 
 	
 		//개인정보
-	    $("#side").append("<li><a href='#'>개인정보</a></li>");
+	    $("#side").append("<li><a href='/userInfo'>개인정보</a></li>");
 		$("#side").append("<li><a href='#'>나의투표</a></li>");
 		
 		//회원관리

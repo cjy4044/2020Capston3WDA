@@ -11,7 +11,10 @@
     z-index:10;
     
   }
+  #ss{
 
+    overflow: scroll; 
+  }
   
   .MyModal .content {
     background: white;

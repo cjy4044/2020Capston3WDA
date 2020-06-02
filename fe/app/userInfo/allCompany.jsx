@@ -47,7 +47,7 @@ class AllCompany extends Component {
         
         return(
                 <div>
-                    <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
+                    <Pagination id="sss" count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
  
                          <Paper >
                             <Table id="myTable">

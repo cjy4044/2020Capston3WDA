@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
-
+import './../programRegister/Modal.css';
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -19,9 +19,10 @@ class AllCompany extends Component {
     
     constructor(props){
         super(props);
-        this.state = { company: [] , pageNum: 1 , count: 0};
+        this.state = { company: [] , pageNum: 1 , count: 0, modal : false };
         this.url = '/userInfo/axios3?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
+
     setUrl(){
         this.url = '/userInfo/axios3?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
@@ -32,6 +33,8 @@ class AllCompany extends Component {
         this.setUrl()   
         this.componentDidMount()
     }
+    
+
 
     async componentDidMount(){
         let {data : company} = await axios.get(this.url)
@@ -39,6 +42,7 @@ class AllCompany extends Component {
         this.setState({company})
         
     }
+    
     render() {
         
         return(
@@ -62,6 +66,7 @@ class AllCompany extends Component {
                                             <TableCell>회사연락처</TableCell>
                                             <TableCell>예상금액</TableCell>
                                             <TableCell>승인여부</TableCell>
+                                            <TableCell>승인</TableCell>
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -81,9 +86,18 @@ class Index extends Component{
     constructor(props){
         super(props);
        this.props.company
+       this.state = { modal : false };
+  
        
     }
 
+    handleOpenModal(){
+        this.setState({modal:true});
+      
+      };
+      handleCloseModal(){
+        this.setState({modal:false});
+      };
   
 
     render(){
@@ -107,11 +121,31 @@ class Index extends Component{
                                 <TableCell>{c.c_phone}</TableCell>
                                 <TableCell>{c.c_budget}</TableCell>
                                 <TableCell>{c.c_confirm}</TableCell>
-                                                        
-                            </TableRow>
+                                <TableCell><button onClick={this.handleOpenModal.bind(this)}>확인</button>
+                               
+                                 </TableCell>
+                                 {this.state.modal && (  
+                                 <div className="MyModal">
+                                      <div className="content">
+                                  <input type="hidden" value={c.c_id}></input>
+                                  {c.c_name}을 등록하시겠습니까?
+                                  
+                                  <button className="submit_button" type="submit">신청하기</button> 
+                                  <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                                  </div>
+                                 </div>  )}{} 
+                               
+                             
+                               
+                             </TableRow>
+                             
                             
                         )
+                           
                     })
+                  
+                   
+                     
                 }
             
         

@@ -11,7 +11,7 @@
 		 $(".btn2").attr('class','btn'); 
 	
 		//개인정보
-	    $("#side").append("<li><a href='#'>개인정보</a></li>");
+	    $("#side").append("<li><a href='/userInfo'>개인정보</a></li>");
 		$("#side").append("<li><a href='#'>나의투표</a></li>");
 		
 		//회원관리

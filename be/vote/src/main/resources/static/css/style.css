@@ -1,3 +1,4 @@
+html{font-size: 15px !important ;}
 /* Sidebar */
 #sidebar-wrapper{
   z-index:1;
@@ -59,8 +60,10 @@
   background:#846bab;
 }
 
-
 /*  커스텀 */
 contents div.contents{
   max-width: none !important;
 }
+
+.html{font-size: 15px !important ;}
+

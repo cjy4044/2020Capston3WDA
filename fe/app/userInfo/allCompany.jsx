@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
-
+import './../programRegister/Modal.css';
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -19,7 +19,7 @@ class AllCompany extends Component {
     
     constructor(props){
         super(props);
-        this.state = { company: [] , pageNum: 1 , count: 0};
+        this.state = { company: [] , pageNum: 1 , count: 0, modal : false };
         this.url = '/userInfo/axios3?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
     setUrl(){
@@ -33,12 +33,14 @@ class AllCompany extends Component {
         this.componentDidMount()
     }
 
+
     async componentDidMount(){
         let {data : company} = await axios.get(this.url)
         this.state.count = Math.ceil((company.pop()*1.0)/10)
         this.setState({company})
         
     }
+    
     render() {
         
         return(
@@ -81,9 +83,18 @@ class Index extends Component{
     constructor(props){
         super(props);
        this.props.company
+       this.state = { modal : false };
+      
        
     }
 
+    handleOpenModal(){
+        this.setState({modal:true});
+      };
+      handleCloseModal(){
+        
+        this.setState({modal:false});
+      };
   
 
     render(){
@@ -106,12 +117,21 @@ class Index extends Component{
                                 <TableCell>{c.c_reader}</TableCell>
                                 <TableCell>{c.c_phone}</TableCell>
                                 <TableCell>{c.c_budget}</TableCell>
-                                <TableCell>{c.c_confirm}</TableCell>
-                                                        
-                            </TableRow>
-                            
+                                <TableCell><button onClick={this.handleOpenModal.bind(this)}>확인하기</button></TableCell>
+                                  
+                                {this.state.modal && (  
+                                     <div className="MyModal">
+                                        <span>ddd</span>
+                                        <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                                     </div>  )   }{" "} 
+                             </TableRow>
+       
                         )
+
                     })
+                  
+                   
+                     
                 }
             
         

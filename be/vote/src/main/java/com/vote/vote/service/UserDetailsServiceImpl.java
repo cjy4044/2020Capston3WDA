@@ -47,6 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         user2.setAUTHORITY("USER");
         user2.setR_ID(entityUser.getNo());
         user2.setROLE(entityUser.getRole());
+        user2.setNICKNAME(entityUser.getNickname());
         System.out.println("세션사용자정보"+entityUser.toString());
         //  = (CustomUserDetails)usert;
         

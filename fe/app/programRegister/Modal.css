@@ -11,10 +11,13 @@
     z-index:10;
     
   }
-  #ss{
-
-    overflow: scroll; 
-  }
+  #tablebox{
+    /* width: auto; 
+    height: auto; 
+    overflow: auto; */
+    width: 1500px;
+    height: 1000px; overflow: auto;
+  } 
   
   .MyModal .content {
     background: white;

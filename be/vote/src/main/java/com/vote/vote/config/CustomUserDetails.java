@@ -17,6 +17,17 @@ public class CustomUserDetails implements UserDetails{
 	private boolean ENABLED;
 	private int R_ID;
 	private String ROLE;
+	private String NICKNAME;
+	
+	
+
+	public String getNICKNAME() {
+		return NICKNAME;
+	}
+
+	public void setNICKNAME(String nICKNAME) {
+		NICKNAME = nICKNAME;
+	}
 
 	public String getROLE() {
 		return ROLE;

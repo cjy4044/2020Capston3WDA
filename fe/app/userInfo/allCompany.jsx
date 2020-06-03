@@ -46,11 +46,11 @@ class AllCompany extends Component {
     render() {
         
         return(
-                <div>
-                    <Pagination id="sss" count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
+                <div id="tablebox">
+                    <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
  
                          <Paper >
-                            <Table id="myTable">
+                            <Table size="small" id="myTable">
                             <TableHead>
                                 <TableRow>
                                             <TableCell>번호</TableCell>
@@ -66,7 +66,6 @@ class AllCompany extends Component {
                                             <TableCell>회사연락처</TableCell>
                                             <TableCell>예상금액</TableCell>
                                             <TableCell>승인여부</TableCell>
-                                            <TableCell>승인</TableCell>
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -88,11 +87,39 @@ class Index extends Component{
        this.props.company
        this.state = { modal : false };
   
-       
+       document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
     }
 
-    handleOpenModal(){
-        this.setState({modal:true});
+    result_submit(e){
+       
+     alert("승인하였습니다.");
+  
+        
+    } 
+
+    sendSelect(c){
+        const select  =  {"select" : c.c_id}
+        if(!confirm(c.c_program+"을 등록하시겠습니까?")) return;
+    
+        axios.post('/userInfo/companyConfirm/', select)
+        .then((response)=>{
+            if(response.data.errorMessage){
+                alert(response.data.errorMessage);
+                // window.location.href="/vote";
+                window.location.reload();
+            }else{
+                alert(response.data.message);
+                window.location.reload();
+                
+            }
+        });
+
+    };
+
+
+    handleOpenModal(c){
+        console.log(c.c_id);
+       this.setState({modal:true});
       
       };
       handleCloseModal(){
@@ -110,7 +137,7 @@ class Index extends Component{
                              
                                 <TableCell key={index}>{index+1}</TableCell>
                                 <TableCell>{c.c_category}</TableCell>
-                                <TableCell> <a href="/"> {c.c_program}> </a> </TableCell>
+                                <TableCell>{c.c_program}> </TableCell>
                                 <TableCell>{c.c_startdate}</TableCell>
                                 <TableCell>{c.c_enddate}</TableCell>
                                 <TableCell>{c.r_id}</TableCell>
@@ -120,22 +147,7 @@ class Index extends Component{
                                 <TableCell>{c.c_reader}</TableCell>
                                 <TableCell>{c.c_phone}</TableCell>
                                 <TableCell>{c.c_budget}</TableCell>
-                                <TableCell>{c.c_confirm}</TableCell>
-                                <TableCell><button onClick={this.handleOpenModal.bind(this)}>확인</button>
-                               
-                                 </TableCell>
-                                 {this.state.modal && (  
-                                 <div className="MyModal">
-                                      <div className="content">
-                                  <input type="hidden" value={c.c_id}></input>
-                                  {c.c_name}을 등록하시겠습니까?
-                                  
-                                  <button className="submit_button" type="submit">신청하기</button> 
-                                  <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
-                                  </div>
-                                 </div>  )}{} 
-                               
-                             
+                                <TableCell>{c.c_confirm} <a onClick={this.sendSelect.bind(this,c)}>승인하기</a></TableCell>
                                
                              </TableRow>
                              

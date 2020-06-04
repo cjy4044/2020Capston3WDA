@@ -81,6 +81,19 @@
     text-align: center;
     justify-content: center;
 }
+.voteType{
+    margin: 15px 0px;
+    font-size: 20px;
+    color: rgb(77, 121, 255);
+    font-weight: 800;
+}
+.voteIndexPageTitle{
+    text-align: center;
+    margin-bottom: 25px;
+}
+.voteSort{
+    color: red;
+}
 
 
 
@@ -97,4 +110,8 @@
     .options{
         overflow: scroll;
     }
+    .voteType{
+        display: block !important;
+    }
+
 }

@@ -26,3 +26,16 @@ main{
     height: 600px;
 }
 
+@media(max-width:950px){
+    .title{
+        text-align: center;
+        margin-left: 0;
+    }
+    body{
+        min-width: 0;
+    }
+    content{
+        display: inline;
+    }
+}
+

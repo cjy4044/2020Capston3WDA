@@ -38,3 +38,15 @@ nav{
     font-size: 17px;
     font-weight: 1000;
 }
+@media(max-width:950px){
+    .title{
+        text-align: center;
+        margin-left: 0;
+    }
+    body{
+        min-width: 0;
+    }
+    content{
+        display: inline !important;
+    }
+}

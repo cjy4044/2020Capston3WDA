@@ -23,6 +23,7 @@ class Index extends Component{
 
         const programOptionTitle = document.createElement("div");
         programOptionTitle.innerHTML = "프로그램 ▶ "
+        programOptionTitle.className ="voteType"
         parentsDiv.appendChild(programOptionTitle);
         data.map((program,index)=>{
             var div = document.createElement("div");
@@ -111,12 +112,12 @@ class Index extends Component{
 
         return(
             <div>
-                <h2>실시간 투표</h2>
+                <h2 className="voteIndexPageTitle">Vote List</h2>
                 <div className="vote_options_select_div">
                     <div className="options">
-                        <div>정렬</div>
+                        <div className="voteSort">&#60;정렬&#62;</div>
                         <div className="vote_option_div">
-                            <div>투표상태 ▶ </div>
+                            <div className="voteType">투표상태 ▶ </div>
                             <div className="voteState type" title="0" onClick={this.clickTag.bind(this,0)}>시작전 투표</div>
                             <div className="voteState type" title="1" onClick={this.clickTag.bind(this,1)}>진행중인 투표</div>
                             <div className="voteState type" title="2" onClick={this.clickTag.bind(this,2)}>마감된 투표</div>

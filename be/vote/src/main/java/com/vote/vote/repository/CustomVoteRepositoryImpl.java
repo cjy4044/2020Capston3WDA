@@ -67,7 +67,8 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
             booleanBuilder.and(vote.title.contains(text));
         }
 
-        List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).where(booleanBuilder).fetch();
+        
+        List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).orderBy(vote.id.desc()).where(booleanBuilder).fetch();
 
         count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
     

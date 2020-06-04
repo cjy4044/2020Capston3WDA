@@ -16,3 +16,15 @@
     background-color:#3498DB;
     
 }
+@media(max-width:950px){
+    .title{
+        text-align: center;
+        margin-left: 0;
+    }
+    body{
+        min-width: 0;
+    }
+    content{
+        display: inline !important;
+    }
+}

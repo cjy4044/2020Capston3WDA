@@ -108,7 +108,7 @@
         margin-top: 15px;
     }
     .options{
-        overflow: scroll;
+        /* overflow: scroll; */
     }
     .voteType{
         display: block !important;

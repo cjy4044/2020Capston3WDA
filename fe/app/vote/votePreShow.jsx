@@ -83,16 +83,17 @@ class Show extends React.Component{
                         <div className="img">
                         <ItemCard3 img={this.state.program.img}title={this.state.program.name}/>
                         </div>                    
-                        <div className="info">
+                        <div className="info" style={{width: "100%"}}>
                             <div className="div_center textColor">★☆프로그램 소개☆★</div>
-                            <div>{this.state.program.info}</div>
+                            <div>{this.state.program.info ? this.state.program.info :'정보가 없습니다.'}</div>
                         </div>
                     </div>
-                    <div className="text_center br_div">투표기간</div>
-                    <div className="text_center">시작: {this.stTime}</div>
-                    <div className="text_center">마감: {this.edTime}</div>
-                    <div className="text_center">집계공개: {this.rsTime}</div>
-                    <div className="text_center">선발인원: {this.state.selectNum}&nbsp;명</div>
+                    <br/><br/>
+                    <div className="text_center br_div vote_info_during">투표기간</div>
+                    <div className="text_center vote_during">시작: {this.stTime}</div>
+                    <div className="text_center vote_during">마감: {this.edTime}</div>
+                    <div className="text_center vote_during">집계공개: {this.rsTime}</div>
+                    <div className="text_center vote_during">선발인원: {this.state.selectNum}&nbsp;명</div>
                     <div className="text_center show_result">★☆공동 우승자가 있을 경우 우승인원이 선발인원보다 많아 질 수 있습니다.☆★</div>
                     <div className="candidate">&lt;&lt; 후보 정보 &gt;&gt;</div>
                     <div className="candidate_op">★☆후보 클릭 시 관련 정보로 이동☆★</div>

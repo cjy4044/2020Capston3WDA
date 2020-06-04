@@ -125,7 +125,7 @@ class VoteCreate extends React.Component {
   }
     render() {
         return (
-          <div id="voteCreate">
+          <div>
               <table className="table">
                   <tbody>
                     <tr>
@@ -157,7 +157,7 @@ class VoteCreate extends React.Component {
                     </tr>
                     <tr>
                       <td>투표기간</td>
-                      <td><input type="datetime-local" id="startTime" name="startTime" required/> - <input type="datetime-local" id="endTime" name="endTime" required/></td>
+                      <td><input type="datetime-local" id="startTime" name="startTime" required/> ~ <input type="datetime-local" id="endTime" name="endTime" required/></td>
                     </tr>
                     <tr>
                       <td>결과공개시간</td>

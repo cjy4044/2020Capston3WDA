@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <!-- 모바일 메뉴 사이드 바 -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="/js/mobileSidBar.js"></script>
+
+
     <title>RIRO</title>
 </head>
 
@@ -27,8 +33,6 @@
                     <a href="/userInfo">내 정보 및 관리 </a>&nbsp;
                     <input type="submit" value="로그아웃">                    
                 </form>
-                <span sec:authentication="principal.ROLE"></span><span>권한번호</span> 
-                <span sec:authentication="principal.R_ID"></span><span>사용자번호</span> 
                 
             </th:block>
 
@@ -51,6 +55,55 @@
                 <div class="title">
                     <a href="/">RIRO</a>
                 </div>
+                <button id="mobileSidBarButton" onclick="w3_open()">&#9776;</button>
+                <!-- 모바일 사이드바 -->
+                <div class="w3-sidebar w3-bar-block w3-animate-left" style="display:none;z-index:5" id="mobileSideBar">
+                    <div><button  onclick="w3_close()" class="mobileCloseButton">&times;</button></div>
+                    <div id="mobileMenus">
+                        <a href="/">
+                            <div class="sideMenu">홈</div>
+                        </a>
+                        <div class="dropMenu">
+                            <a href="#">
+                                <div class="sideMenu">소개</div>
+                            </a>
+                            <div class="drop">
+                                <a href="#">블록체인이란?</a>
+                                <a href="#">서비스소개</a>
+                                <a href="#">개발자소개</a>
+                            </div>
+                        </div>
+                        <div class="dropMenu">
+                            <a href="#">
+                                <div class="sideMenu">오디션</div>
+                            </a>
+    
+                            <div class="drop">
+                                <a href="#">참가신청</a>
+                                <a href="#">예선결과안내</a>
+                            </div>
+    
+                        </div>
+                        <a href="/vote" class="sideMenu">
+                            <div class="sideMenu">투표</div>
+                        </a>
+                        <div class="dropMenu sideMenu">
+                            <a href="#">
+                                <div href="#" class="sideMenu">커뮤니티</div>
+                            </a>
+                            <div class="drop">
+                                <a href="#">팬클럽</a>
+                                <a href="#">인기투표</a>
+                                <a href="#">주간Hot Clip</a>
+                                <a href="#">방청권응모</a>
+                            </div>
+                        </div>
+                        <a href="#" class="sideMenu">
+                            <div class="sideMenu">굿즈샵</div>
+                        </a>
+                    </div>
+                    
+                  </div>
                 <div class="menu">
                     <a href="/">
                         <div>홈</div>
@@ -79,16 +132,6 @@
                     <a href="/vote">
                         <div>투표</div>
                     </a>
-                    <!-- <div class="dropMenu">
-                        <a href="#">
-                            <div href="/vote">투표</div>
-                        </a>
-                        <div class="drop">
-                            <a href="/vote/pre">시작전투표</a>
-                            <a href="/vote">진행중인 투표</a>
-                            <a href="/vote/end">마감된 투표</a>
-                        </div>
-                    </div> -->
                     <div class="dropMenu">
                         <a href="#">
                             <div href="#">커뮤니티</div>
@@ -123,6 +166,7 @@
 
                 <!--                </div>-->
             </main>
+            <div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
         </div>
 
     </header>

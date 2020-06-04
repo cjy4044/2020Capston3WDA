@@ -53,13 +53,53 @@
 div.winner .sc-AxjAm {
     background-color: #A9A9F5;
 }
-/* ivZCRl */
+.selectVoteShowType{
+    margin-top: 15px;
+}
+.selectVoteShowType button{
+    border-radius: 8px;
+    border: 1px solid #CEE3F6;
+    color: black;
+    background-color: #E0ECF8;
+    padding:5px;
+    margin: 5px 0px;;
+}
+.progress-meter-text{
+    color: black;
+}
 
-@media(max-width:700px){
+@media(max-width:950px){
     .left_right_box{
         grid-template-columns: none;
     }
     #item{
         border-right: none;
     }
+    .vote_result{
+        padding-bottom: 60px;
+        text-align: center;
+    }
+    .card_div  div{
+        margin: auto !important;
+    }
+    .left_right_box{
+        display: inline;;
+    }
+    #itemTopDiv{
+        /* width: 100%; */
+    }
+    .cards{
+        width: 100%;
+        margin: auto;
+    }
+    /* .vote_result{
+        overflow: scroll;
+    } */
+    #showChart{
+        overflow: scroll;
+    }
+    canvas{
+        width:30%;
+    }
+    
 }

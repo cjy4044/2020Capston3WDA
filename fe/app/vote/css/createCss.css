@@ -1,3 +1,4 @@
+
 .input_name{
     display: block;
 }
@@ -98,4 +99,38 @@
 
 .inputWidth{
     width: 50px;
+}
+@media(max-width:790px){
+    .col-lg-12{
+        padding: 0;
+    }
+    #voteCreate {
+        min-width: 0;
+        width: 100% !important;
+    }
+    .candidateItem{
+        display: table;
+        grid-template-columns: none;
+    }
+    .grid{
+        display: block;
+        margin-bottom: 10px;
+    }
+    .candidateList{
+        width: 90%;
+    }
+    .candidateInfo{
+        width: 50%;
+    }
+    .candidateTable{
+        display: block;
+        padding: 0;
+        
+    }
+    .tagInput{
+        width:50%;
+    }
+    .table{
+        border-spacing: 0;
+    }
 }

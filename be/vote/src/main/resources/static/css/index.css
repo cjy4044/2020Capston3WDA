@@ -1,4 +1,5 @@
 body {
+    width: 100%;
     margin:0px;
     font-family: none !important;
 }
@@ -254,3 +255,128 @@ contents div.contents{
 }
 
 .haveProgram{text-align: center;}  
+*, *:before, *:after {
+    box-sizing: content-box !important;
+}
+/* 모바일 사이드바 */
+#mobileSidBarButton{
+    display: none;
+}
+
+@media(max-width:790px){
+    nav{
+        /* display: block !important; */
+    }
+    header{
+        padding-top: 60px;
+    }
+    header .contents{
+        width: 100%;
+        max-width: viewport-length;
+        min-width: 0;
+    }
+    nav{
+        width: 100%;
+        /* position: absolute; */
+        margin-right: 0;
+    }
+    nav div.dropMenu{
+        position: relative;
+        display: inline;
+    }
+    nav .menu{
+        display: none;
+    }
+
+    /* 모바일 사이드바 */
+    #mobileSidBarButton{
+        display: inline;
+        position: absolute;
+        right: 5%;
+        top: 13%;
+        background-color: #E0E0F8;
+        /* border: none; */
+        border: 0;
+        border-radius: 15;
+        border-radius: 10px;
+        padding: 10px;
+        z-index:9999;
+    }
+    /* #mobileSidBarButton div{
+        text-align: center;
+    } */
+    .dropMenu .drop{
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    #mobileSideBar{
+        text-align: center;
+        border-radius: 15px;
+        z-index: 100 !important;
+        overflow: scroll;
+    }
+    #mobileSideBar .sideMenu{
+        border-bottom: 2px solid gray;
+        padding: 10px 0px;
+        /* background-color: #ECE0F8; */
+    }
+    #mobileSideBar a{
+        text-decoration: none;
+        font-size: 15px;
+    }
+    .mobileCloseButton{
+        display: block;
+        width:100%;
+        padding: 0;
+        border: none;
+        background-color: #F5A9A9;
+        margin-bottom: 15px;
+        height: 40px;
+        font-size: 20;
+        font-weight: 800;
+    }
+    #mobileMenus{
+        width: 80%;
+        margin:auto;
+    }
+
+    .w3-sidebar{
+        width:210px !important;
+    }
+
+
+
+    top .top_div{
+        width:100%;
+        text-align: center;
+    }
+    .center_title h1{
+        padding: 20px;
+        font-size: 4rem;
+    }
+    .title{
+        /* display: block; */
+        text-align: center;
+        width: 100%;
+    }
+    div.title a{
+        margin-left: 0px;
+        /* display: block; */
+        text-align: center;
+    }
+
+
+    /* footer */
+    footer{
+        padding: 20px 0px;
+        z-index: 9999;
+    }
+    footer .option{
+        font-size: 50%;
+        margin-left: 0;
+    }
+    footer .min-address{
+        font-size: 50%;
+    }
+}

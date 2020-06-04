@@ -141,27 +141,34 @@ class VoteResult extends Component {
         console.log(data);
 
         this.setState({data})
-        console.log("state:"+this.state)
-        console.log("data:"+this.data)
+        
+        $('.circle_result_show').css("background-color","#F5A9A9");
     }
 
     showChart(){// 차트
         console.log("원형 차트");
         this.setState({circle: 0, age:1 ,gender:1})
-        
+        $('.circle_result_show').css("background-color","#F5A9A9");
+        $('.age_result_show').css("background-color","#E0ECF8");
+        $('.gender_result_show').css("background-color","#E0ECF8");
     }
 
     showAge(){ // 나이별
         console.log("나이별");
 
         this.setState({circle: 1, age:0 ,gender:1})
-
+        $('.circle_result_show').css("background-color","#E0ECF8");
+        $('.age_result_show').css("background-color","#F5A9A9");
+        $('.gender_result_show').css("background-color","#E0ECF8");
     }
 
     showGender(){ //성별별
         console.log("성비별");
 
         this.setState({circle: 1, age:1 ,gender:0})
+        $('.circle_result_show').css("background-color","#E0ECF8");
+        $('.age_result_show').css("background-color","#E0ECF8");
+        $('.gender_result_show').css("background-color","#F5A9A9");
     }
 
 
@@ -195,11 +202,12 @@ class VoteResult extends Component {
                                 )
                             }
                         </div>
-                        <div>옵션</div>
-                        <div>
-                            <button  onClick={this.showChart.bind(this)}>득표수</button>
-                            <button onClick={this.showAge.bind(this)}>연령별</button>
-                            <button onClick={this.showGender.bind(this)}>성별</button>
+                        <div className="selectVoteShowType">
+                            <div>
+                                <button className="circle_result_show" onClick={this.showChart.bind(this)}>득표수</button>
+                                <button className="age_result_show" onClick={this.showAge.bind(this)}>연령별</button>
+                                <button className="gender_result_show" onClick={this.showGender.bind(this)}>성별</button>
+                            </div>
                         </div>
                     </div>
                 )}

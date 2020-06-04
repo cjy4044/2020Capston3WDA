@@ -129,9 +129,8 @@ class Index extends Component{
                         </div>
                     </div>
                     <div className="search_vote">
-                        검색
                         <input type="text" id="searchInput"/>
-                        <button type="click" onClick={this.onSearchEvnet.bind(this)}>검색</button>
+                        <button type="click" className="searchButton"onClick={this.onSearchEvnet.bind(this)}>검색</button>
                     </div>
                 </div>
                 <br/><br/><br/>

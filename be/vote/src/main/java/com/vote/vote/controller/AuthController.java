@@ -148,6 +148,16 @@ public class AuthController {
         }else{
             user2.setIMG("/img/defaultProfile.png");
         }
+        if(user.getGender() != null){
+            user2.setGENDER(member.getGender());
+        }else{
+            user2.setGENDER("0");
+        }
+        if(user.getBirth() != null){
+            user2.setBIRTH(member.getBirth());
+        }else{
+            user2.setBIRTH("2");
+        }
         
         user2.setAUTHORITY("USER");
 

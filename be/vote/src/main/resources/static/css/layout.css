@@ -38,7 +38,11 @@ main {
 }
 .menu > a{
     display: inline !important;
+    padding-left: 0px;
 }
 .dropMenu a{
     display: block !important;
+}
+.top_div{
+    padding-left: 0px !important;
 }

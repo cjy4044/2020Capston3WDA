@@ -17,6 +17,8 @@ public class CustomUserDetails implements UserDetails{
 	private boolean ENABLED;
 	private int R_ID;
 	private String ROLE;
+	private String GENDER;
+	private String BIRTH;
 
 	public String getROLE() {
 		return ROLE;
@@ -93,4 +95,20 @@ public class CustomUserDetails implements UserDetails{
     public void setAUTHORITY(String authority){
         AUTHORITY = authority;
     }
+
+	public String getGENDER() {
+		return GENDER;
+	}
+
+	public void setGENDER(String gENDER) {
+		GENDER = gENDER;
+	}
+
+	public String getBIRTH() {
+		return BIRTH;
+	}
+
+	public void setBIRTH(String bIRTH) {
+		BIRTH = bIRTH;
+	}
 }

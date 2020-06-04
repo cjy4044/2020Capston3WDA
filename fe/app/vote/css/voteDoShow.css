@@ -49,3 +49,17 @@
 .dropMenu a{
     display: block !important;
 }
+
+div.winner .sc-AxjAm {
+    background-color: #A9A9F5;
+}
+/* ivZCRl */
+
+@media(max-width:700px){
+    .left_right_box{
+        grid-template-columns: none;
+    }
+    #item{
+        border-right: none;
+    }
+}

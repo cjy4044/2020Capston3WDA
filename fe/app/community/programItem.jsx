@@ -19,8 +19,7 @@ class ProgramItem extends Component {
             return (
                 <div key={'div'+index} className="vote_index_item">
                     <a href={"/community/"+program.id}>
-                        {index}
-                        <ItemCard3 img={program.img} title={program.name}/>
+                       <ItemCard3 img={program.img} title={program.name}/>
                     </a>
                  </div>
             )

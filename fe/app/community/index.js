@@ -1,4 +1,3 @@
-
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
 import ProgramItem from './programItem.jsx';
@@ -46,11 +45,11 @@ class Index extends Component {
                 <div className="voteItem">
                     <ProgramItem data={this.state.data}/>
                 </div>
-         </div> 
-
-     
+         </div> )
     }
 }
+     
+  
 
 
 ReactDOM.render(<Index/>,document.getElementById('communityIndex'));

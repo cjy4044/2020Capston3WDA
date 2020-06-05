@@ -18,6 +18,7 @@ import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Program;
+import com.vote.vote.db.dto.Vote;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
@@ -80,4 +81,18 @@ public class CommunityController {
 		System.out.println("프로그램 json 넘김");
 		return result;
 	}
+    
+    
+		
+    @RequestMapping(value={"/{program}","/{program}/"}, method = RequestMethod.GET)
+  	public String detailIndex(@PathVariable("program") int program) {
+    	
+    	System.out.println(program);
+		// System.out.println("/ --> index");
+		// if(user != null){
+		// 	// UserDetails u = (UserDetails)user;
+		// 	System.out.println(u);
+		// }
+		return "community/detailIndex";
+	}	
 }

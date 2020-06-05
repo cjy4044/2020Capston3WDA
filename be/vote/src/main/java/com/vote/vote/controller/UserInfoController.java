@@ -289,7 +289,7 @@ public class UserInfoController {
 					Company cc = companyRepository.findById(data); // 해당 사업자번호의 회사정보를 찾는다.
 					
 					program.setCategory(cc.getCcategory());   //카테고리
-					program.setImg("/img/defaultProfile.png"); //기본이미지
+					program.setImg("defaultProfile.png"); //기본이미지
 					program.setName(cc.getCprogram());            //프로그램명
 					
 					
@@ -316,54 +316,7 @@ public class UserInfoController {
 					result.put("errorMessage","이미 승인한 프로그램입니다.");
 					System.out.println("이미 승인한 프로그램입니다.");
 				}
-
-		/*
-		 * // 이미 확인된 회사인지 확인하기위한 Company company = customCompanyRepository.findOne();
-		 * Voter voter = voterRepository.findByVoteIdAndMemberId(voteId,
-		 * userDetails.getR_ID());
-		 * 
-		 * if(voter== null){// 처음 투표한 경우. Voter voter2 = new Voter();
-		 * voter2.setMemberId(userDetails.getR_ID()); voter2.setState(0);
-		 * voter2.setVoteId(voteId); voterRepository.saveAndFlush(voter2); }
-		 * 
-		 * // 밑에서 조건문에 사용하고 업데이트 하는 변수 voter3 Voter voter3 =
-		 * voterRepository.findByVoteIdAndMemberId(voteId, userDetails.getR_ID());
-		 * 
-		 * 
-		 * Vote vote = voteRepository.findById(voteId); String nowTime = getNowTime();
-		 * if(!(Long.parseLong(nowTime) >= vote.getLongStartTime() &&
-		 * Long.parseLong(nowTime)<vote.getLongEndTime())){
-		 * result.put("message","해당 투표는 현재 진행중이지 않습니다."); } else if(vote.getVoteCanNum()
-		 * > voter3.getState()){// 투표가 가능하면
-		 * 
-		 * System.out.println(voter3.getState()); ExecutorService es =
-		 * Executors.newCachedThreadPool();
-		 * 
-		 * es.execute(() -> { try {
-		 * 
-		 * JSONObject message = klaytn.klaytnSend2(vote.getAddress(),
-		 * Integer.parseInt(axiosData.get("select").toString()),Long.parseLong(nowTime))
-		 * ;
-		 * 
-		 * VoterHash voterHash = new VoterHash();
-		 * voterHash.setMemberId(userDetails.getR_ID()); voterHash.setVoteId(voteId);
-		 * voterHash.setVoterId(voter3.getId());
-		 * voterHash.setHash(message.get("hash").toString());
-		 * 
-		 * voter3.setState(voter.getState()+1);
-		 * 
-		 * voterRepository.saveAndFlush(voter3);//투표 완료.
-		 * voterHashRepository.saveAndFlush(voterHash);
-		 * 
-		 * } catch (Exception e) {
-		 * System.out.println("클레이튼 오류 발생: 클레이튼으로 선택 사항 전달&처리에서 문제발생."); } });
-		 * 
-		 * result.put("message","투표 참여에 성공하였습니다."); //
-		 * result.put("hash",message.get("hash")); }else{// 이미 투표에 참여한 경우
-		 * result.put("errorMessage","이미 투표를 완료했습니다."); }
-		 */
-
-				
+		
 
 				return result;
 				

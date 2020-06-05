@@ -6,6 +6,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,11 +17,14 @@ import javax.servlet.http.HttpSession;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Program;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.service.KakaoAPIService;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

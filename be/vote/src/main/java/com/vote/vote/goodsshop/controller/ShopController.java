@@ -1,5 +1,6 @@
 package com.vote.vote.goodsshop.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,12 @@ public class ShopController {
 	PrdCateDJpaRepository prdCateDJpaRepository;
 	@Autowired
 	Asdf asdf;
+	
+	
 	@RequestMapping("/shop/index")
-	public String index(Model model) {
+	public String index(Model model,Principal user) {
+//		model.addAttribute("username",user.getName());
+		
 		return "shop/index";
 
 	}

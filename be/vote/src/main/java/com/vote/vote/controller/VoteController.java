@@ -349,6 +349,7 @@ public class VoteController {
 		result.add(2, program);
 		result.add(3, date);
 		result.add(4,vote.getSelectNum());// 선발인원
+		result.add(5,vote.getVoteCanNum());// 투표 가능횟수
 			
 		return result;
 	}

@@ -19,6 +19,17 @@ public class CustomUserDetails implements UserDetails{
 	private String ROLE;
 	private String GENDER;
 	private String BIRTH;
+	private String NICKNAME;
+	
+	
+
+	public String getNICKNAME() {
+		return NICKNAME;
+	}
+
+	public void setNICKNAME(String nICKNAME) {
+		NICKNAME = nICKNAME;
+	}
 
 	public String getROLE() {
 		return ROLE;

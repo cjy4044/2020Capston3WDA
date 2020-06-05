@@ -46,7 +46,7 @@ class UserIndex extends Component {
                 <div>
                     <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.haha.bind(this)}> </Pagination>
  
-                         <Paper >
+                         <Paper>
                             <Table id="myTable">
                             <TableHead>
                                 <TableRow>

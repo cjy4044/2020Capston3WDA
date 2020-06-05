@@ -1,11 +1,15 @@
 
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
+<<<<<<< HEAD
 import ProgramItem from './programItem.jsx';
+=======
+>>>>>>> master
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
+<<<<<<< HEAD
 class Index extends Component {
     
     constructor(props){
@@ -46,9 +50,31 @@ class Index extends Component {
                     <ProgramItem data={this.state.data}/>
                 </div>
          </div> 
+=======
+class CommunityIndex extends Component {
+    
+    constructor(props){
+        super(props);
+     
+    }
+
+   
+    
+    render() {
+        
+        return(
+                <div >
+                  gd
+
+                </div>
+>>>>>>> master
         )
      
     }
 }
 
+<<<<<<< HEAD
 ReactDOM.render(<Index/>,document.getElementById('communityIndex'));
+=======
+ReactDOM.render(<CommunityIndex/>,document.getElementById('Index'));
+>>>>>>> master

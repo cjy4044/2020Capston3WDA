@@ -8,7 +8,9 @@ $(document).ready(function() {
             return false;
         });
         socket.on('chat message', function(msg) {
-            $('#messages').append($('<li>').text(msg));
+        	
+        	console.log($("#username").text());
+            $('#messages').append($('<li>').text($("#username").text()+" : "+msg));
             $("#messages").scrollTop($("#messages")[0].scrollHeight);
         });
     });

@@ -59,7 +59,9 @@ public class Program {
         this.category = category;
     }
 
-
+    public String toString(){
+        return "id["+id+"] p_name["+name+"] p_image["+img+"] p_category[ "+category+"]";
+        }
 
     
 }

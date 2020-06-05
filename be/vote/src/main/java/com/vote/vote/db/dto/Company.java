@@ -215,7 +215,13 @@ public class Company{
 
 
 	public String getCstartdate() {
-		return cstartdate;
+		String str = this.cstartdate;
+		if(str != null) {
+		String[] split = str.split(" ");
+	 	return split[0]; }
+		else {
+			return cstartdate;
+		}
 	}
 
 
@@ -235,9 +241,14 @@ public class Company{
 
 
 	public String getCenddate() {
-		return cenddate;
+		String str = this.cenddate;
+		if(str != null) {
+		String[] split = str.split(" ");
+	 	return split[0]; }
+		else {
+			return cenddate;
+		}
 	}
-
 
 
 

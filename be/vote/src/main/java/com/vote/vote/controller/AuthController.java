@@ -2,6 +2,7 @@ package com.vote.vote.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -143,6 +145,7 @@ public class AuthController {
         user2.setNAME(userInfo.get("name").toString());
         user2.setROLE(user.getRole());
         user2.setR_ID(user.getNo());
+        user2.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
         if(userInfo.get("img")!=null){
             user2.setIMG(userInfo.get("img").toString());
         }else{
@@ -163,10 +166,13 @@ public class AuthController {
 
         final HttpSession session = request.getSession();
         final SecurityContext securityContext = SecurityContextHolder.getContext();
+        // final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+        //     user2, "null", AuthorityUtils.commaSeparatedStringToAuthorityList("USER"));
         final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            user2, "null", AuthorityUtils.commaSeparatedStringToAuthorityList("USER"));
+            user2, null , Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
 
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        // authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
         

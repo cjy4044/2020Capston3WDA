@@ -14,6 +14,7 @@ public class CustomUserDetails implements UserDetails{
     private String NAME;
     private String IMG;
 	private String AUTHORITY;
+	private Collection<? extends GrantedAuthority> authorities;
 	private boolean ENABLED;
 	private int R_ID;
 	private String ROLE;
@@ -121,5 +122,9 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setBIRTH(String bIRTH) {
 		BIRTH = bIRTH;
+	}
+
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
 }

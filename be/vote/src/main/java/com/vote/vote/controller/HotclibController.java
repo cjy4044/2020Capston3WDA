@@ -52,7 +52,8 @@ public class HotclibController {
 	@GetMapping("/hotclib/read/{hotclibid}")
 	public String read(Model model, @PathVariable int hotclibid){
 		model.addAttribute("hotclib", hotclibRepository.findById(hotclibid));
-		model.addAttribute("replyList", replyRepository.findAll());
+		List<Reply> reply = replyRepository.findByHotclibid(hotclibid);
+		model.addAttribute("replyList", reply);
 		Hotclib hotclib = hotclibRepository.findById(hotclibid);
 		hotclib.setHviewcount(hotclib.getHviewcount() + 1);
 		hotclibRepository.save(hotclib);
@@ -69,9 +70,10 @@ public class HotclibController {
 		 reply.setR_date(new Date());	
 		 replyRepository.save(reply);
 		 sessionStatus.setComplete();
-		return "redirect:/hotclib/read/";
+		return "redirect:/hotclib/read/{hotclibid}";
 		}
 	}
+
 	@GetMapping("/hotclib/upload")
 	public String upload(Model model){
 		model.addAttribute("hotclib", new Hotclib());

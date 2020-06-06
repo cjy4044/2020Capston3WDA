@@ -1,4 +1,4 @@
-package com.vote.vote.goodsshop.controller;
+package com.vote.vote.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -46,18 +46,18 @@ public class ShopController {
 		return "asdf";
 	}
 
-	@RequestMapping("/shop/cart/axios")
-	@ResponseBody
-	public JSONArray react() {
-		List<Prd> prd = asdf.asdf();
-		JSONArray json = new JSONArray();
-		for(Prd prd2:prd){
-			JSONObject obj = new JSONObject();
-			obj.put("name", prd2.getP_NAME());
-			obj.put("price", prd2.getP_PRICE());
-			obj.put("img", prd2.getP_UPLOAD());
-			json.add(obj);
-		}
-		return json;
-	}
+	// @RequestMapping("/shop/cart/axios")
+	// @ResponseBody
+	// public JSONArray react() {
+	// 	List<Prd> prd = asdf.asdf();
+	// 	JSONArray json = new JSONArray();
+	// 	for(Prd prd2:prd){
+	// 		JSONObject obj = new JSONObject();
+	// 		obj.put("name", prd2.getP_NAME());
+	// 		obj.put("price", prd2.getP_PRICE());
+	// 		obj.put("img", prd2.getP_UPLOAD());
+	// 		json.add(obj);
+	// 	}
+	// 	return json;
+	// }
 }

@@ -11,7 +11,6 @@ import com.vote.vote.db.dto.Hotclib;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.repository.HotclibRepository;
 import com.vote.vote.repository.MemberJpaRepository;
-import com.vote.vote.repository.ReplyRepository;
 import com.vote.vote.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;

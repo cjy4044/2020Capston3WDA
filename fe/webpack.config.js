@@ -47,6 +47,9 @@ module.exports = {
     Shop_index: path.join(__dirname,'./app/Shop_index.js'),
     communityIndex: path.join(__dirname,'./app/community/index.js'),
     detailIndex: path.join(__dirname,'./app/community/detailIndex.js'),
+    voterVoteList : path.join(__dirname, './app/userInfo/voterVoteList.jsx'),
+    manageVote : path.join(__dirname, './app/userInfo/manageVote.jsx')
+    
 
   },
   output: {

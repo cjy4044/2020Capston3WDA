@@ -1,12 +1,25 @@
 package com.vote.vote.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
+import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.dto.Company;
+import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Program;
+import com.vote.vote.db.dto.ProgramManager;
+import com.vote.vote.db.dto.Vote;
+import com.vote.vote.repository.CompanyJpaRepository;
+import com.vote.vote.repository.CustomCompanyRepository;
+import com.vote.vote.repository.CustomMemberRepository;
+import com.vote.vote.repository.CustomProgramRepository;
+import com.vote.vote.repository.CustomVoteRepository;
+import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.ProgramJpaRepository;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
+import com.vote.vote.repository.VoteJpaRepository;
+import com.vote.vote.service.StorageService;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,7 +34,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
@@ -48,6 +61,7 @@ import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
+
 
 @Controller
 @RequestMapping("/userInfo")
@@ -79,6 +93,10 @@ public class UserInfoController {
 	
 	@Autowired
 	private JudgeJpaRepository jmRepository;
+	// @Autowired
+	// private VoteJpaRepository voteRepository;
+	@Autowired
+	private CustomVoteRepository customVoteRepository;
 	//개인정보
 	@RequestMapping(value={"","/"})
 	public String index(RedirectAttributes redirAttrs,Model model) {  
@@ -329,5 +347,74 @@ public class UserInfoController {
 				return result;
 				
 			}
+	
+	@RequestMapping(value={"/voter","/voter/"})
+	public String voterVoteList(Principal user){// 내가 투표한 투표 리스트  뷰
+		
+		
+		return "/userInfo/voterVoteList";
+	}
+
+
+			//  내 정보 페이지 투표 관련
+	@RequestMapping(value={"/voter/axios","/voter/axios/"})
+	@ResponseBody
+	public JSONArray voterVoteListAxios(Principal user, @PageableDefault Pageable pageable){// 내가 투표한 투표 리스트  정보
+		Member member = memberRepository.findByUserid(user.getName());
+		// System.out.println("memer id :"+member.getNo());
+		List<Vote>  votes = customVoteRepository.getVotesByR_id(pageable, member.getNo());
+		int count = customVoteRepository.getVotesByR_idCount(member.getNo());
+
+		
+		JSONArray result = new JSONArray();
+
+		for(Vote vote : votes){
+			JSONObject voteInfo = new JSONObject();
+			voteInfo.put("no", vote.getId());
+			voteInfo.put("title", vote.getTitle());
+			voteInfo.put("startTime",vote.getLongStartTime());
+			voteInfo.put("endTime",vote.getLongEndTime());
+			voteInfo.put("resultTime",vote.getLongResultShowTime());
+			result.add(voteInfo);
+		}
+		result.add(count);
+		
+		return result;
+	}
+	// 투표 관리 페이지
+	@RequestMapping(value={"/manage/vote","/manage/vote/"})
+	public String manageVoteView(){// 내가 투표한 투표 리스트  뷰
+		
+		
+		return "/userInfo/manageVote";
+	}
+
+
+			//  내 정보 페이지 투표 관련
+	@RequestMapping(value={"/manage/vote/axios","/manage/vote/axios/"})
+	@ResponseBody
+	public JSONArray manageVoteAxios(Principal user, @PageableDefault Pageable pageable){// 내가 투표한 투표 리스트  정보
+		Member member = memberRepository.findByUserid(user.getName());
+		
+		List<Vote>  votes = customVoteRepository.getMyVotes(pageable, member.getNo());
+		int count = customVoteRepository.getMyVotesCount(member.getNo());
+
+		// System.out.println("ㅁㅁㅁㅁ"+votes);
+		
+		JSONArray result = new JSONArray();
+
+		for(Vote vote : votes){
+			JSONObject voteInfo = new JSONObject();
+			voteInfo.put("no", vote.getId());
+			voteInfo.put("title", vote.getTitle());
+			voteInfo.put("startTime",vote.getLongStartTime());
+			voteInfo.put("endTime",vote.getLongEndTime());
+			voteInfo.put("resultTime",vote.getLongResultShowTime());
+			result.add(voteInfo);
+		}
+		result.add(count);
+		
+		return result;
+	}
 
 }

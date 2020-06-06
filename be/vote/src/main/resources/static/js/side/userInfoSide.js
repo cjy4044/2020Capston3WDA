@@ -1,5 +1,6 @@
 	   window.onload = function(){
 		
+
 		var newSS=document.createElement('link');
 		newSS.rel='stylesheet';
 		newSS.href='/css/style.css'
@@ -29,8 +30,8 @@
 		
 		if(userRole=="1"||userRole=="2"){ //관리자 또는 매니저
 		//투표관리
-		$("#side").append("<li><a href='#'>투표개설</a></li>");	 
-		$("#side").append("<li><a href='#'>투표관리</a></li>");
+		$("#side").append("<li><a href='/vote/create'>투표개설</a></li>");	 
+		$("#side").append("<li><a href='/userInfo/manage/vote'>투표관리</a></li>");
 		//커뮤니티관리
 		$("#side").append("<li><a href='#'>핫클립관리</a></li>");	 
 		$("#side").append("<li><a href='#'>방첨권추첨</a></li>");	 
@@ -45,7 +46,7 @@
 		//채팅관리
 		$("#side").append("<li><a href='#'>채팅방관리</a></li>");	}	
 			
-		$("#side").append("<li><a href='#'>나의투표</a></li>");
+		$("#side").append("<li><a href='/userInfo/voter'>나의투표</a></li>");
 		$("#side").append("<li><a href='#'>나의주문</a></li>");
 		$("#side").append("<li><a href='#'>장바구니</a></li>");
 		$("#side").append("<li><a href='#'>구매내역</a></li>");

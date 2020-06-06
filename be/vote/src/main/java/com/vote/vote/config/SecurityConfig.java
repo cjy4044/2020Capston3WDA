@@ -1,15 +1,12 @@
 package com.vote.vote.config;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
@@ -30,9 +27,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/img/**").permitAll() // 프론트 권한
 			.antMatchers("/").permitAll() // 모든 권한을 줌.=로그인 필요 없음.     
 			.antMatchers("/auth/**").permitAll()
-			.antMatchers("/vote/**").permitAll()
+
+			// 블록체인 투표
+			.antMatchers(HttpMethod.GET,"/vote").permitAll()//  투표페이지 
+			.antMatchers("/vote/program/axios").permitAll()// 투표 index (투표목록)
+			.antMatchers(HttpMethod.GET,"/vote/axios").permitAll()//  투표페이지 
+			.antMatchers("/vote/axios/**").hasAnyAuthority("0","1")//투표 정보..
+			.antMatchers("/vote/{voteId}/**").hasAnyAuthority("0","1")
+			.antMatchers("/vote/result/**").hasAnyAuthority("0","1")
+			.antMatchers("/vote/create/**").hasAnyAuthority("1")// 투표 생성뷰 vote/{} 이거 때문에 작동 안하는 듯.
+			.antMatchers(HttpMethod.POST,"/vote").hasAnyAuthority("1")// 투표 생성
+			.antMatchers(HttpMethod.DELETE,"/vote/*/").hasAnyAuthority("1")// 투표 삭제
+
+			
+			// .antMatchers("/vote/axios").permitAll()
+			// .antMatchers("/vote/axios/**").hasRole("USER")
+			// .antMatchers("/vote/").hasRole("USER")
 			.antMatchers("/uploads/**").permitAll()
 			.antMatchers("/auth/oauth2/**").permitAll()
+			
 			// .antMatchers("/posts/**").hasRole("USER")
 			.antMatchers("/home").hasRole("USER")
 			//.antMatchers("/").hasAnyRole("USER","ADMIN")

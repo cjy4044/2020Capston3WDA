@@ -33,26 +33,6 @@ public class MainController {
 	// 	// System.out.println("/ --> home");
 	// 	return "contact";
 	// }
-
-	@RequestMapping("sss")
-	public String indexss() {
-		// System.out.println("/ --> index");
-		// if(user != null){
-		// 	// UserDetails u = (UserDetails)user;
-		// 	System.out.println(u);
-		// }
-		return "dist/index";
-	}
-	
-	@RequestMapping("sss2")
-	public String indexs() {
-		// System.out.println("/ --> index");
-		// if(user != null){
-		// 	// UserDetails u = (UserDetails)user;
-		// 	System.out.println(u);
-		// }
-		return "dist/index2";
-	}
 	
 	
 }

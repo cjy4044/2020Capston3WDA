@@ -28,7 +28,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-secutiry">
 
 <body>
     <th:block sec:authorize="isAuthenticated()"><!-- 로그인 되어 있는가 -->
-  		 <span id="username" sec:authentication="principal.name"></span>
+  		 <span style="display:none" id="username" sec:authentication="principal.name"></span>
     </th:block>
      
     

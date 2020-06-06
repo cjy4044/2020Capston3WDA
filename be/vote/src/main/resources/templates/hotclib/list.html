@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org/extras/spring-security"
+th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+   <content>
+      <style>
+        table {
+          width: 100%;
+          border: 1px solid #444444;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #444444;
+          padding: 10px;
+        }
+      </style>
+        
+        <form action="/hotclib/search" method="get">
+          <div class="search">
+          <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+          </div>
+          <button>검색</button>
+          </form>
+
+   <table border="1">
+    <tr>
+      <th>아이디</th>
+      <th>제목</th>
+      <th>작성일</th>
+      <th>조회수</th>
+      <th>작성자</th>
+    </tr>
+    <tr th:each="hotclib:${hotclibList}">
+      <td th:text="${hotclib.hotclibid}"></td>
+      <td><a href="" th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}" th:text="${hotclib.htitle}"></a></td>
+      <td th:text="${hotclib.h_date}"></td>
+      <td th:text="${hotclib.hviewcount}"></td>
+      <td sec:authentication="principal.name"></span>
+   </table>
+   <input type="button" value="영상 업로드" onclick="location.href='hotclib/upload'">
+   </div>
+
+
+   
+   <nav style="text-align: center;">
+    <ul class="pagination"
+     th:with="start=${T(Math).floor(hotclibList.number/10)*10 + 1},
+                    last=(${start + 9 < hotclibList.totalPages ? start + 9 : hotclibList.totalPages})" >
+          <li>
+            <a th:href="@{/hotclib(page=1)}" aria-label="First">
+                <span aria-hidden="true">First</span>
+              </a>
+          </li>
+
+          <li th:class="${hotclibList.first} ? 'disabled'">
+            <a th:href="${hotclibList.first} ? '#' :@{/hotclib(page=${hotclibList.number})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>       
+            
+          <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == hotclibList.number + 1} ? 'active'">
+            <a th:text="${page}" th:href="@{/hotclib(page=${page})}"></a>
+          </li>
+
+          <li th:class="${hotclibList.last} ? 'disabled'">
+            <a th:href="${hotclibList.last} ? '#' : @{/hotclib(page=${hotclibList.number + 2})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+
+          <li>
+            <a th:href="@{/hotclib(page=${hotclibList.totalPages})}" aria-label="Last">
+              <span aria-hidden="true">Last</span>
+            </a>
+         </li>
+       </ul>
+     </nav>
+    </content>
+  </body>
+</html>

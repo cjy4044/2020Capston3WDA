@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -30,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
+import com.vote.vote.db.dto.Judge;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
@@ -40,6 +43,7 @@ import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.CustomCompanyRepository;
 import com.vote.vote.repository.CustomMemberRepository;
 import com.vote.vote.repository.CustomProgramRepository;
+import com.vote.vote.repository.JudgeJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
@@ -73,9 +77,13 @@ public class UserInfoController {
 	@Autowired
 	private ProgramManagerJpaRepository pmRepository;	
 	
+	@Autowired
+	private JudgeJpaRepository jmRepository;
 	//개인정보
 	@RequestMapping(value={"","/"})
-	public String index(Principal user, RedirectAttributes redirAttrs) {        
+	public String index(RedirectAttributes redirAttrs,Model model) {  
+		
+		
 		
         return "userInfo/index";
        	}
@@ -304,7 +312,7 @@ public class UserInfoController {
 					pmRepository.saveAndFlush(pm); // 프로그램 권한자 등록
 					
 					customCompanyRepository.updateByConfirm(data); // 프로그램 confirm 1로 변경
-					
+					memberRepository.managerUpdate(cc.getRid()); // 회원테이블 role 3 으로 변경 (매니저)
 					
 					System.out.println(program.toString());
 					

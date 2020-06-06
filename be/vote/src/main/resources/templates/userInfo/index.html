@@ -5,7 +5,9 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'마이페이지')}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 사이드바 -->
-    <script src="/js/side/userInfoSide.js"></script>
+    
+<script src="/js/side/userInfoSide.js"></script>
+
 </head>
 <body>
 <div>
@@ -13,6 +15,12 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'마이페이지')}">
 </script>
 </div>
     <content>
+        <th:block sec:authorize="isAuthenticated()"><!-- 로그인 되어 있는가 -->
+  			<span style="display:none" id="userRole" sec:authentication="principal.ROLE"></span>
+  		    <span style="display:none" id="userRid" sec:authentication="principal.R_ID"></span>
+  		     		<!-- 	<input type="hidden" id="role" th:value="${userRole}"/> -->
+  		</th:block>
+ 
 		
             <form method="post" enctype="multipart/form-data" action="/userInfo/userUpdate" id="register_form">
 	        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

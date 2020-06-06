@@ -122,4 +122,5 @@ public class CustomUserDetails implements UserDetails{
 	public void setBIRTH(String bIRTH) {
 		BIRTH = bIRTH;
 	}
+	
 }

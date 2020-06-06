@@ -9,7 +9,6 @@ const axios = require('axios');
 class Index extends Component {
     
     constructor(props){
-        
         super(props);
         this.state = { data: [] };
     }
@@ -21,7 +20,7 @@ class Index extends Component {
         <div>
 
                 <div>
-                    dddd
+                    
                 </div>
          </div> )
     }

@@ -42,5 +42,10 @@ public interface MemberJpaRepository extends JpaRepository<Member,String>{
     						 @Param("addr2") String addr2,
     						 @Param("rid") int rid);
     
+    @Modifying
+    @Transactional
+    @Query("update Member set role = 2 where r_id = :rid ")
+    void managerUpdate(@Param("rid") int rid);
+    
    
 }

@@ -49,6 +49,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         user2.setAUTHORITY(entityUser.getRole());
         user2.setR_ID(entityUser.getNo());
         user2.setROLE(entityUser.getRole());
+        user2.setBIRTH(entityUser.getBirth());
+        user2.setGENDER(entityUser.getGender());
         user2.setNICKNAME(entityUser.getNickname());
 
 

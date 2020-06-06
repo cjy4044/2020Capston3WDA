@@ -1,5 +1,6 @@
 	   window.onload = function(){
 		
+
 		var newSS=document.createElement('link');
 		newSS.rel='stylesheet';
 		newSS.href='/css/style.css'
@@ -12,7 +13,7 @@
 	
 		//개인정보
 	    $("#side").append("<li><a href='/userInfo'>개인정보</a></li>");
-		$("#side").append("<li><a href='#'>나의투표</a></li>");
+		$("#side").append("<li><a href='/userInfo/voter'>나의투표</a></li>");
 		
 		//회원관리
 		$("#side").append("<li><a href='/userInfo/allUser'>회원관리</a></li>");
@@ -24,8 +25,8 @@
 	    $("#side").append("<li><a href='#'>심사결과</a></li>");
 	    
 	    //투표관리
-	    $("#side").append("<li><a href='#'>투표개설</a></li>");	 
-	    $("#side").append("<li><a href='#'>투표관리</a></li>");
+	    $("#side").append("<li><a href='/vote/create'>투표개설</a></li>");	 
+	    $("#side").append("<li><a href='/userInfo/manage/vote'>투표관리</a></li>");
 	    
    	    //커뮤니티관리
 	    $("#side").append("<li><a href='#'>핫클립관리</a></li>");	 

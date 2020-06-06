@@ -47,7 +47,7 @@ class Show extends React.Component{
         let {data} = await axios.get('/vote/axios/'+param);
         console.log(data);
         this.setState({votes : data[0], title : data[1], program:data[2], date: data[3], selectNum:data[4], canNum:data[5]});
-        console.log(data);
+        console.log(data[2]);
 
         
     }

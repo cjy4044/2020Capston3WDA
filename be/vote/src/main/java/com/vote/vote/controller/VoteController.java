@@ -370,6 +370,7 @@ public class VoteController {
 		JSONObject result = new JSONObject();
 
 		// 처음 투표하는 사람인지 확인하기 위한 voter
+		System.out.println("유저 r_id:"+userDetails.getR_ID());
 		Voter voter = voterRepository.findByVoteIdAndMemberId(voteId, userDetails.getR_ID());
 
 		if(voter== null){// 처음 투표한 경우.
@@ -402,6 +403,7 @@ public class VoteController {
 				try {
 					
 					int age = 2; 
+					System.out.println("회원 birth :"+userDetails.getBIRTH());
 					if(!userDetails.getBIRTH().equals("2")){ ////19990122....
 						System.out.println(userDetails.getBIRTH());
 						int y = Integer.parseInt(nowTime.substring(0, 4));
@@ -547,6 +549,18 @@ public class VoteController {
 		}
 
 		return json;
+	}
+
+	@RequestMapping(value={"/{voteId}","/{voteId}/"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject delete(@PathVariable("voteId") int voteId) { 
+		Vote vote = voteRepository.findById(voteId);
+		voteRepository.delete(vote);
+
+		JSONObject result = new JSONObject();
+		result.put("message", "투표가 삭제되었습니다.");
+		
+		return result;
 	}
 	
 }

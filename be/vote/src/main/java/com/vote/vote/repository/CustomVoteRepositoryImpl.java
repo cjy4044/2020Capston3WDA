@@ -6,9 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.vote.vote.db.dto.QVote;
+import com.vote.vote.db.dto.QVoter;
 import com.vote.vote.db.dto.Vote;
 
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
     private EntityManager em;
 
     private QVote vote = QVote.vote;
+    private QVoter voter = QVoter.voter;
 
     private Long count = 0L;
 
@@ -79,8 +81,87 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
         
     }
     @Override
+    public List<Vote> getVotesByR_id(Pageable page, int r_id){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        
+
+        booleanBuilder.and(vote.id.in((
+            JPAExpressions
+                    .select(voter.voteId)
+                    .from(voter)
+                    .where(voter.memberId.eq(r_id)))));
+
+        List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).orderBy(vote.id.desc()).where(booleanBuilder).fetch();
+        // System.out.println("voteList:"+voteList);
+        // count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
+
+        return voteList;
+    }
+    @Override
+    public int getVotesByR_idCount(int r_id){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        
+
+        booleanBuilder.and(vote.id.in((
+            JPAExpressions
+                    .select(voter.voteId)
+                    .from(voter)
+                    .where(voter.memberId.eq(r_id)))));
+
+        List<Vote> voteList =  query.select(vote).from(vote).where(booleanBuilder).fetch();
+        // System.out.println("voteList:"+voteList);
+        // count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
+
+        return voteList.size();
+    }
+    @Override
     public long getFindVotesCount(){
         return count;
+    }
+
+    @Override
+    public List<Vote> getMyVotes(Pageable page, int r_id){
+
+        System.out.println("아이디: "+r_id);
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        booleanBuilder.and(vote.memberId.eq(r_id));
+
+
+        List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).orderBy(vote.id.desc()).where(booleanBuilder).fetch();
+        
+        // System.out.println(" 개수 :"+voteList);
+
+        return voteList;
+    }
+    @Override
+    public int getMyVotesCount(int r_id){
+
+        System.out.println("아이디: "+r_id);
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        booleanBuilder.and(vote.memberId.eq(r_id));
+
+
+        List<Vote> voteList =  query.select(vote).from(vote).where(booleanBuilder).fetch();
+        
+        // System.out.println(" 개수 :"+voteList);
+
+        return voteList.size();
     }
     
 }

@@ -45,22 +45,13 @@ public class Hotclib {
     private int hviewcount;
 
     @Column(nullable=true)
-    private String h_writer;
-
-    @Column(nullable=true)
-    private String h_thumbnail;
-
-    @Column(nullable=true)
-    private String h_video;
-
-    @Column(nullable=true)
     private int h_reply_count;
     
     @Column(nullable=true)
     private String h_reply;
     
     @Column(nullable=true)
-    private Integer broadcast_id;
+    private Integer program_id;
     
     @Column(nullable=true)
     private Integer r_id;
@@ -113,14 +104,6 @@ public class Hotclib {
         this.hviewcount = hviewcount;
     }
 
-    public String getH_writer() {
-        return h_writer;
-    }
-
-    public void setH_writer(String h_writer) {
-        this.h_writer = h_writer;
-    }
-
     public int getH_reply_count() {
         return h_reply_count;
     }
@@ -137,36 +120,21 @@ public class Hotclib {
         this.h_reply = h_reply;
     }
 
-    public Integer getBroadcast_id() {
-        return broadcast_id;
-    }
 
-    public void setBroadcast_id(Integer broadcast_id) {
-        this.broadcast_id = broadcast_id;
-    }
+    public Integer getProgram_id() {
+		return program_id;
+	}
 
-    public Integer getR_id() {
+	public void setProgram_id(Integer program_id) {
+		this.program_id = program_id;
+	}
+
+	public Integer getR_id() {
         return r_id;
     }
 
     public void setR_id(Integer r_id) {
         this.r_id = r_id;
-    }
-
-    public String getH_thumbnail() {
-        return h_thumbnail;
-    }
-
-    public void setH_thumbnail(String h_thumbnail) {
-        this.h_thumbnail = h_thumbnail;
-    }
-
-    public String getH_video() {
-        return h_video;
-    }
-
-    public void setH_video(String h_video) {
-        this.h_video = h_video;
     }
 
    

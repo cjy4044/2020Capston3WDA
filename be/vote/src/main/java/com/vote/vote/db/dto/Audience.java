@@ -11,16 +11,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(
-  name = "B_APPLY_GENERATOR", 
-  sequenceName = "B_APPLY_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
-  allocationSize = 1)
 @Table(name = "b_apply")
 public class Audience {
   
     @Id
     @Column(nullable = false, name="apply_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "B_APPLY_SEQ_GENERATOR")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="APPLY_SEQ_GENERATOR")
+    @SequenceGenerator(name="APPLY_SEQ_GENERATOR", sequenceName="APPLY_SEQ", allocationSize = 1)
     private int applyId;
 
     @Column(nullable = false, name="a_title")
@@ -29,20 +26,17 @@ public class Audience {
     @Column(nullable = false, name="a_content")
     private String aContent; // 내용41
 
-    @Column(name = "a_startdate")
-    private Date aStartdate; // 응모시작일
-
-    @Column(name = "a_enddate")
-    private Date aEnddate; // 응모마감일
-
     @Column(name = "a_date")
-    private Date aDate; // 입장시간
+    private Date aDate; // 등록일
 
     @Column(name = "a_mdate")
-    private Date aMdate; // 공연시작시작
+    private Date aMdate; // 수정일
+
+    @Column(name = "a_view_count")
+    private int aViewCount; // 조회수
 
     @Column(name = "a_recruits")
-    private int aRecruits; // 추첨인원\
+    private int aRecruits; // 추첨인원
 
     @Column(name = "a_view")
     private String aView; // 결과공개여부(1자리)
@@ -50,26 +44,25 @@ public class Audience {
     @Column(name = "a_limit")
     private int aLimit; // 신청횟수 제한
 
-    @Column(nullable = false, name="a_writer")
-    private String rWriter; // 작성자
+    @Column(name = "a_startdate")
+    private Date aStartdate; // 응모시작일
+
+    @Column(name = "a_enddate")
+    private Date aEnddate; // 응모마감일
+
+    @Column(nullable = false, name="r_id")
+    private int rId; // 작성자
 
     @Column(name = "a_price")
     private int aPrice; // 소모포인트
 
-    @Column(name = "broadcast_id")
-    private int broadcastId; // 방송호ㅓㅣ차
-
-    @Column(name = "a_view_count")
-    private int aViewCount; // 조회수
-
-    @Column(name = "a_limit_age")
-    private int aLimitAge; // 연령제한
-
+    @Column(name = "program_id")
+    private int programId; //프로그램
+    
     @Column(name = "img")
     private String img; // 이미지
 
-    @Column(name = "ticket_time")
-    private Date ticketTime; // 티켓팅시간 맨아래3개 열 새로추가햇음
+   
 
     public int getApplyId() {
         return this.applyId;
@@ -95,22 +88,6 @@ public class Audience {
         this.aContent = aContent;
     }
 
-    public Date getAStartdate() {
-        return this.aStartdate;
-    }
-
-    public void setAStartdate(Date aStartdate) {
-        this.aStartdate = aStartdate;
-    }
-
-    public Date getAEnddate() {
-        return this.aEnddate;
-    }
-
-    public void setAEnddate(Date aEnddate) {
-        this.aEnddate = aEnddate;
-    }
-
     public Date getADate() {
         return this.aDate;
     }
@@ -125,6 +102,14 @@ public class Audience {
 
     public void setAMdate(Date aMdate) {
         this.aMdate = aMdate;
+    }
+
+    public int getAViewCount() {
+        return this.aViewCount;
+    }
+
+    public void setAViewCount(int aViewCount) {
+        this.aViewCount = aViewCount;
     }
 
     public int getARecruits() {
@@ -151,12 +136,28 @@ public class Audience {
         this.aLimit = aLimit;
     }
 
-    public String getrWriter() {
-        return this.rWriter;
+    public Date getAStartdate() {
+        return this.aStartdate;
     }
 
-    public void setRWriter(String rWriter) {
-        this.rWriter = rWriter;
+    public void setAStartdate(Date aStartdate) {
+        this.aStartdate = aStartdate;
+    }
+
+    public Date getAEnddate() {
+        return this.aEnddate;
+    }
+
+    public void setAEnddate(Date aEnddate) {
+        this.aEnddate = aEnddate;
+    }
+
+    public int getRId() {
+        return this.rId;
+    }
+
+    public void setRId(int rId) {
+        this.rId = rId;
     }
 
     public int getAPrice() {
@@ -167,28 +168,12 @@ public class Audience {
         this.aPrice = aPrice;
     }
 
-    public int getBroadcastId() {
-        return this.broadcastId;
+    public int getProgramId() {
+        return this.programId;
     }
 
-    public void setBroadcastId(int broadcastId) {
-        this.broadcastId = broadcastId;
-    }
-
-    public int getAViewCount() {
-        return this.aViewCount;
-    }
-
-    public void setAViewCount(int aViewCount) {
-        this.aViewCount = aViewCount;
-    }
-
-    public int getALimitAge() {
-        return this.aLimitAge;
-    }
-
-    public void setALimitAge(int aLimitAge) {
-        this.aLimitAge = aLimitAge;
+    public void setProgramId(int programId) {
+        this.programId = programId;
     }
 
     public String getImg() {
@@ -198,18 +183,7 @@ public class Audience {
     public void setImg(String img) {
         this.img = img;
     }
-
-    public Date getTicketTime() {
-        return this.ticketTime;
-    }
-
-    public void setTicketTime(Date ticketTime) {
-        this.ticketTime = ticketTime;
-    }
-
-	public Audience toEntity() {
-		return null;
-	}
+    
     
 
     

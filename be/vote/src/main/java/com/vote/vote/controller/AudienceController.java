@@ -35,7 +35,8 @@ public class AudienceController {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "applyId"));
         model.addAttribute("list", audienceJpaRepository.findAll(pageable));
-        return "audience/list";
+        System.out.println(audienceJpaRepository.findAll(pageable));
+        return "audience/list2";
     }
 
 
@@ -63,8 +64,7 @@ public class AudienceController {
 			return "audience/create";
 		} else {
         audience.setADate(new Date());
-        audience.setRWriter("rWriter");
-		audienceJpaRepository.save(audience);
+		audienceJpaRepository.saveAndFlush(audience);
 		sessionStatus.setComplete();
 		return "redirect:/";
 		}

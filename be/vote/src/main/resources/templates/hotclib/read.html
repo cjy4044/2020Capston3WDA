@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<content>
+<body>
+    <table border="1">
+		<tr>
+			<th>제목</th>
+			<td th:text="${hotclib.htitle}"></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td th:text="${hotclib.h_content}"></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td th:text="${hotclib.h_writer}"></td>
+		</tr>
+	</table>
+	<div>
+        <a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a> 
+        
+        <form id="delete-form" th:action="@{'/hotclib/' + ${hotclib.hotclibid}}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button id="delete-btn">삭제</button>
+        </form>
+	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
+		<a href="" th:href="@{/hotclib}">목록</a>
+	</div>
+	<form>
+		<tr>댓글테스트
+		<td><input type="textarea" placeholder="내용을 입력하세요" name="r_content"></td>
+		    <input type="submit" value="등록">
+	</tr>
+	<tr>
+
+	</tr>
+	</form>
+	
+		<tr>
+		  <th>아이디</th>
+		  <th>내용</th>
+		</tr>
+		<tr th:each="Hotclib:${hotclibreply}">
+		  <td th:text="${hotclib.h_reply}"></td> 
+		</tr>
+	   
+</body>
+</content>
+</html>

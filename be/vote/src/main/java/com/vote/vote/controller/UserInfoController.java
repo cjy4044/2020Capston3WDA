@@ -343,7 +343,7 @@ public class UserInfoController {
 		 
 		 @RequestMapping(value={"/myProgram/axios","/myProgram/axios/"}) //사용자정보
 			@ResponseBody
-			public JSONArray myProgramAxios(){
+			public JSONObject myProgramAxios(){
 					
 			 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			CustomUserDetails sessionUser = (CustomUserDetails)principal;
@@ -361,7 +361,7 @@ public class UserInfoController {
 	  
 		  System.out.println(program.toString());
 		  
-		  JSONArray json = new JSONArray();
+		
 
 		
 				JSONObject programData = new JSONObject();
@@ -372,14 +372,16 @@ public class UserInfoController {
 				programData.put("category", program.getCategory());
 
 				
-				json.add(programData);
+				
 					
-			return json;
+			return programData;
 		  
 		  
 		  }else { 
-			  System.out.println("Ddddsdf");
+			  System.out.println("매니저가아닙니다.");
+			  
 		  }
+		  
 		return null;
 		 
 				
@@ -389,6 +391,28 @@ public class UserInfoController {
 
 			 	
 			}
+		 
+		 @RequestMapping(value="/programUpdate", method=RequestMethod.POST)
+		    public String programUpdate(Program p, RedirectAttributes redirAttrs, Principal principal,
+		    		@RequestParam(name="file") MultipartFile file){
+		       	
+			 System.out.println(p.toString());
+
+//			 if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
+//		    		
+//		    		System.out.println("넘어온 파일없다 마");
+//		    		storageService.store(file);
+//		    		String thumbnailPath2 = StringUtils.cleanPath(file.getOriginalFilename());
+//		    		thumbnailPath = url.concat(thumbnailPath2);
+//		   	
+//		    	}
+			 
+			 //programRepository.programUpdate(p.getId(), p.getName(), p.getImg(), p.getCategory());
+			
+			 
+		    	return "redirect:/userInfo/myProgram";   
+
+		    }
 		 
 
 }

@@ -79,6 +79,9 @@ public class UserInfoController {
 	
 	@Autowired
 	private JudgeJpaRepository jmRepository;
+	
+
+	
 	//개인정보
 	@RequestMapping(value={"","/"})
 	public String index(RedirectAttributes redirAttrs,Model model) {  
@@ -329,5 +332,63 @@ public class UserInfoController {
 				return result;
 				
 			}
+		 
+		 //회사정보
+			@RequestMapping(value={"/myProgram"})
+			public String myProgram() {        
+				
+		        return "userInfo/myProgram";
+		       	}
+			
+		 
+		 @RequestMapping(value={"/myProgram/axios","/myProgram/axios/"}) //사용자정보
+			@ResponseBody
+			public JSONArray myProgramAxios(){
+					
+			 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			CustomUserDetails sessionUser = (CustomUserDetails)principal;
+			
+			 
+		
+		  if(sessionUser.getROLE().equals("2")) {
+		  
+		  ProgramManager pm = pmRepository.findById(sessionUser.getR_ID()); 
+		  
+//		  System.out.println( pm.getId());
+		 
+		  
+		  Program program = programRepository.findById(pm.getProgramId());
+	  
+		  System.out.println(program.toString());
+		  
+		  JSONArray json = new JSONArray();
+
+		
+				JSONObject programData = new JSONObject();
+				
+				programData.put("id", program.getId());
+				programData.put("name", program.getName());
+				programData.put("img", program.getImg());
+				programData.put("category", program.getCategory());
+
+				
+				json.add(programData);
+					
+			return json;
+		  
+		  
+		  }else { 
+			  System.out.println("Ddddsdf");
+		  }
+		return null;
+		 
+				
+				
+				
+			
+
+			 	
+			}
+		 
 
 }

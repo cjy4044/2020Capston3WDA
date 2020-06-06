@@ -38,6 +38,7 @@ module.exports = {
     voteResult: path.join(__dirname,'./app/vote/voteResult.jsx'),
     layout: path.join(__dirname,'./app/layout/layout.jsx'),
     userInfo: path.join(__dirname,'./app/userInfo/userInfo.jsx'),
+    myProgram: path.join(__dirname,'./app/userInfo/myProgram.jsx'),
     profileIndex: path.join(__dirname,'./app/userInfo/profileIndex.jsx'),
     allCompany: path.join(__dirname,'./app/userInfo/allCompany.jsx'),
     proRegIndex: path.join(__dirname,'./app/programRegister/proRegIndex.js'),
@@ -47,6 +48,8 @@ module.exports = {
     Shop_index: path.join(__dirname,'./app/Shop_index.js'),
     communityIndex: path.join(__dirname,'./app/community/index.js'),
     detailIndex: path.join(__dirname,'./app/community/detailIndex.js'),
+   
+
 
   },
   output: {

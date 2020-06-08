@@ -10,7 +10,7 @@ import Pagination from '@material-ui/lab/Pagination';
 
 import ItemCard4 from '../items/itemCard4.jsx';
 
-import "./myProgram.css";
+import './Modal.css';
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -19,50 +19,54 @@ class MyCommunity extends Component {
     
     constructor(props){
         super(props);
-        this.state = { community: [] , pageNum: 1 , count: 0, modal : false };
+        this.state = { community: [] , pageNum: 1 , count: 0, modal : false , programId : 0 , file : '', previewURL:''};
      
         // document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
 
     }
  
-
- 
     async componentDidMount(){
          let {data: community} = await axios.get('/userInfo/myCommunity/axios')
-      
+         this.state.programId = community.pop()
+
         this.setState({community})
         console.log({community})
+        console.log(this.state.programId)
+
         
     }
-    result_submit(e){
+    handleOpenModal(){
+        this.setState({modal:true});
+      };
+      handleCloseModal(){
+        
+        this.setState({modal:false});
+      };  
 
-        // if(!confirm("이미지를 변경 하시겠습니까?")) return;
- 
-    }
-     insert(){
-        // const select  =  {"select" : c.c_id}
-        // if(!confirm(c.c_program+"을 등록하시겠습니까?")) return;
-    
-        // axios.post('/userInfo/communityConfirm/', select)
-        // .then((response)=>{
-        //     if(response.data.errorMessage){
-        //         alert(response.data.errorMessage);
-        //         // window.location.href="/vote";
-        //         window.location.reload();
-        //     }else{
-        //         alert(response.data.message);
-        //         window.location.reload();
-                
-        //     }
-        // });
+    checkImage(event){
 
-    };
-   
+        event.preventDefault();
+        let reader = new FileReader();
+        let file = event.target.files[0];
+
+        reader.onloadend = () => {
+          this.setState({
+            file : file,
+            previewURL : reader.result
+          })
+        }
+        reader.readAsDataURL(file);
+      }
 
     render() {
-        return(
-            <div id="tablebox">
+        let profile_preview = null;
+        if(this.state.file !== ''){
+          profile_preview = <img  className='profile_preview' src={this.state.previewURL}></img>
+        }
 
+        return(
+                <div id="tablebox">
+                    <h3>후보자 and 팬클럽 목록</h3>
               {/* <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination> */}
 
                 <div>
@@ -70,8 +74,35 @@ class MyCommunity extends Component {
                     <Index community={this.state.community}/>    
              
                 </div>
-                            <a onClick={this.insert.bind(this)}>인기인 추가</a>
-           
+                           <button onClick={this.handleOpenModal.bind(this)}>추가</button>
+                           {this.state.modal && (
+                   <div className="MyModal"> 
+                      <div className="content">
+                        <h3>후보 추가</h3>
+                        
+                <table className="register_table">
+                    <tbody>
+                    <tr>
+                    <td><input type="text" name="name" placeholder="이름" required/></td>
+                    </tr>
+
+                    <tr>
+                    <td>{profile_preview}</td>
+                    </tr>
+
+                    <tr>
+                     <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)} required/></td> 
+                    </tr> 
+                         
+                    </tbody>
+                </table>
+                <input type="hidden" name="pid" value={this.state.programId}></input>
+                <input type="hidden" name="img" value="default"></input>
+                <button type="submit">등록</button>
+
+                        <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                      </div>
+                  </div> )}{""} 
 
 
 
@@ -97,14 +128,6 @@ class Index extends Component{
     // } 
    
 
-
-    handleOpenModal(c){
-       this.setState({modal:true});
-      
-      };
-      handleCloseModal(){
-        this.setState({modal:false});
-      };
   
 
     render(){

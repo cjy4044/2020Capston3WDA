@@ -466,7 +466,7 @@ public class UserInfoController {
 					}
 				
 					//json.add(count);
-					
+					json.add(pm.getProgramId());
 					return json;
 			  
 			  
@@ -477,6 +477,31 @@ public class UserInfoController {
 			  
 			return null;	 	
 				}
+			 
+			 
+			@RequestMapping(value="/insertPopular", method=RequestMethod.POST)
+			    public String insertOk(Popular pp, RedirectAttributes redirAttrs, Principal principal
+			    		,@RequestParam(name="img2") MultipartFile file
+			    		){
+			       	
+					
+			    	System.out.println("test:"+pp.toString());
+
+
+	
+			    		storageService.store(file);
+			    		String thumbnailPath = StringUtils.cleanPath(file.getOriginalFilename());
+
+			    		pp.setImg(thumbnailPath);
+			    		
+			    		System.out.println("test:"+pp.toString());
+			    	
+			    		popularRepository.saveAndFlush(pp);
+				
+			            return "redirect:/userInfo/myCommunity";
+			        
+
+			    }
 			 
 			 
 

@@ -33,6 +33,7 @@
 		$("#side").append("<li><a href='#'>투표관리</a></li>");
 		//커뮤니티관리
 		$("#side").append("<li><a href='/userInfo/myProgram/'>프로그램관리</a></li>");	 
+		$("#side").append("<li><a href='/userInfo/myCommunity/'>팬클럽관리</a></li>");	 
 		$("#side").append("<li><a href='#'>핫클립관리</a></li>");	 
 		$("#side").append("<li><a href='#'>방첨권추첨</a></li>");	 
 		$("#side").append("<li><a href='#'>팬클럽관리</a></li>");

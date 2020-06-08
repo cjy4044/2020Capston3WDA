@@ -34,6 +34,7 @@ import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Judge;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
@@ -45,6 +46,7 @@ import com.vote.vote.repository.CustomMemberRepository;
 import com.vote.vote.repository.CustomProgramRepository;
 import com.vote.vote.repository.JudgeJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
@@ -80,6 +82,8 @@ public class UserInfoController {
 	@Autowired
 	private JudgeJpaRepository jmRepository;
 	
+	@Autowired
+	private PopularJpaRepository popularRepository;
 
 	
 	//개인정보
@@ -333,7 +337,7 @@ public class UserInfoController {
 				
 			}
 		 
-		 //회사정보
+		 //나의 프로그램
 			@RequestMapping(value={"/myProgram"})
 			public String myProgram() {        
 				
@@ -418,5 +422,62 @@ public class UserInfoController {
 
 		    }
 		 
+		 
+		 //팬클럽 관리
+			@RequestMapping(value={"/myCommunity"})
+			public String myCommunity() {        
+				System.out.println("팬클럽관리");
+		        return "userInfo/myCommunity";
+		        
+		       	}
+		 
+			 @RequestMapping(value={"/myCommunity/axios","/myCommunity/axios/"}) //사용자정보
+				@ResponseBody
+				public JSONArray myCommunityAxios(Principal user, @PageableDefault Pageable pageable, Model model){
+						
+				Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+				if(sessionUser.getROLE().equals("2")) {
+			  
+					ProgramManager pm = pmRepository.findById(sessionUser.getR_ID()); 
+			  
+//				  System.out.println( pm.getId());
+		  
+					Program program = programRepository.findById(pm.getProgramId());
+	  
+     				System.out.println("gd"+pm.getProgramId());
+     				
+					List<Popular> populares = popularRepository.findByPid(program.getId());
+		
+								
+					JSONArray json = new JSONArray();
+					
+					for( Popular popular : populares){
+						JSONObject popularData = new JSONObject();
+						
+						popularData.put("id", popular.getId());
+						popularData.put("name", popular.getName());
+						popularData.put("img", popular.getImg());
+						popularData.put("p_id", popular.getPid());
+
+						
+						json.add(popularData);
+					}
+				
+					//json.add(count);
+					
+					return json;
+			  
+			  
+			  }else { 
+				  System.out.println("잘못된 접근입니다.");
+				  
+			  }
+			  
+			return null;	 	
+				}
+			 
+			 
 
 }

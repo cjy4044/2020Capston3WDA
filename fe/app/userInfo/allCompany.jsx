@@ -137,7 +137,7 @@ class Index extends Component{
                              
                                 <TableCell key={index}>{index+1}</TableCell>
                                 <TableCell>{c.c_category}</TableCell>
-                                <TableCell>{c.c_program}> </TableCell>
+                                <TableCell>{c.c_program} </TableCell>
                                 <TableCell>{c.c_startdate}</TableCell>
                                 <TableCell>{c.c_enddate}</TableCell>
                                 <TableCell>{c.r_id}</TableCell>

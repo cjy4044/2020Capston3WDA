@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VoterHashJpaRepository extends JpaRepository<VoterHash, String> {
 
-    List<VoterHash> findByMemberId(int memberId);
+    List<VoterHash> findByMemberIdAndVoteId(int memberId, int voteId);
     
 }

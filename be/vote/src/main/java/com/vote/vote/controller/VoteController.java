@@ -540,7 +540,7 @@ public class VoteController {
 
 			ArrayList userAdd = new ArrayList();
 			
-			List<VoterHash> voterHash = voterHashRepository.findByMemberId(userDetails.getR_ID());
+			List<VoterHash> voterHash = voterHashRepository.findByMemberIdAndVoteId(userDetails.getR_ID(),vote.getId());
 
 			for(VoterHash voterH : voterHash){
 				userAdd.add(voterH.getHash());

@@ -48,7 +48,8 @@ module.exports = {
     communityIndex: path.join(__dirname,'./app/community/index.js'),
     detailIndex: path.join(__dirname,'./app/community/detailIndex.js'),
     voterVoteList : path.join(__dirname, './app/userInfo/voterVoteList.jsx'),
-    manageVote : path.join(__dirname, './app/userInfo/manageVote.jsx')
+    manageVote : path.join(__dirname, './app/userInfo/manageVote.jsx'),
+    blockChainIntroduce : path.join(__dirname, './app/introduce/blockChainIntroduce.js')
     
 
   },

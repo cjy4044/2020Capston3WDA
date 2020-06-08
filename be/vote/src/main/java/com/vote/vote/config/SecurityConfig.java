@@ -39,7 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST,"/vote").hasAnyAuthority("1")// 투표 생성
 			.antMatchers(HttpMethod.DELETE,"/vote/*/").hasAnyAuthority("1")// 투표 삭제
 
-			
+			// 소개 
+			.antMatchers("/introduce/**").permitAll()
+
 			// .antMatchers("/vote/axios").permitAll()
 			// .antMatchers("/vote/axios/**").hasRole("USER")
 			// .antMatchers("/vote/").hasRole("USER")

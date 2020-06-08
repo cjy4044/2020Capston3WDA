@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import CircleChart from '../items/circleChart.jsx';
 import BarChart from '../items/barChart.jsx';
 import jQuery from "jquery";
+import "./css/addressModal.css";
 window.$ = window.jQuery = jQuery;
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -80,15 +81,16 @@ class VoteResult extends Component {
     constructor(props){
         super(props);
         console.log("VoteResult : constructor")
-        this.state = { data:{}, circle: 0, age: 1 ,gender: 1 }       
+        this.state = { data:{}, circle: 0, age: 1 ,gender: 1 , modal:1,voteAdd:"", userAdd:[]}       
         this.show = 0;
         this.send = {data:{},count:0}
+        
     }
     
     async componentDidMount(){
         console.log("VoteResult : componentDidMount")
         const {data: json} =  await axios.get('/vote/result/axios/'+param);
-        // json[]  0: 투표결과 , 1: 후보이름, 2: 나이별, 3: 성별별, 4:count: 투표총 횟수 ,5: 후보수, 6: 선발인원 숫자 ,7: show
+        // json[]  0: 투표결과 , 1: 후보이름, 2: 나이별, 3: 성별별, 4:count: 투표총 횟수 ,5: 후보수, 6: 선발인원 숫자 ,7: show, 8: vote address , 9: userAddress
 
         if(json[7] == 1){
             console.log("결과 공개 X")
@@ -96,6 +98,9 @@ class VoteResult extends Component {
         }
         this.show = json[7];            
         
+        // 주소
+        
+
 
         title = json[1];
 
@@ -140,7 +145,7 @@ class VoteResult extends Component {
         this.send.count = json[4];
         console.log(data);
 
-        this.setState({data})
+        this.setState({data:data, voteAdd:json[8],userAdd:json[9]})
         
         $('.circle_result_show').css("background-color","#F5A9A9");
     }
@@ -171,7 +176,12 @@ class VoteResult extends Component {
         $('.gender_result_show').css("background-color","#F5A9A9");
     }
 
-
+    modalOn(){
+        this.setState({modal : 0})
+    }
+    modalOff(){
+        this.setState({modal:1})
+    }
 
     render() {
         const {data} = this.state;
@@ -209,6 +219,30 @@ class VoteResult extends Component {
                                 <button className="gender_result_show" onClick={this.showGender.bind(this)}>성별</button>
                             </div>
                         </div>
+                        <div onClick={this.modalOn.bind(this)}>블록체인 주소확인</div>
+                        {
+                            this.state.modal == 0?(
+                                <div className="modal">
+                                    <div className="modalContentBox">
+                                        <div className="modalItem">
+                                            <div className="addText">투표 블록체인 주소:</div>
+                                            <div>{this.state.voteAdd}</div>
+                                            <div className="addText">내가 투표한 정보</div>
+                                            <div className="usrAdd">
+                                                {this.state.userAdd.map((add, index) => {
+                                                    return <div key={index}>{add}</div>
+                                                })}
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <div className="closeBtn" onClick={this.modalOff.bind(this)}>닫기</div>
+                                    </div>
+                                </div>
+                            ):(
+                            <div></div>
+                            )
+                        }
                     </div>
                 )}
             </div>

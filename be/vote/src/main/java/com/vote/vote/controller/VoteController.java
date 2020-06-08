@@ -488,7 +488,9 @@ public class VoteController {
 	produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	 // 동기 처리      // 반대 개념 : 비동기 처리
-	public synchronized JSONArray showResultAxios(@PathVariable("voteId") int voteId) {
+	public synchronized JSONArray showResultAxios(@PathVariable("voteId") int voteId, @Nullable Authentication authentication) {
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		Vote vote = voteRepository.findById(voteId);
 		ArrayList<Candidate> candidateList = candidateRepository.findByVoteId(voteId);
@@ -511,9 +513,9 @@ public class VoteController {
 				json.add(4,"");
 				json.add(5,"");
 				json.add(6,"");
-				json.add(7,"");
 				json.add(7,"1");
-
+				json.add(8,"0");
+				json.add(9,"0");
 				return json;
 			}
 				
@@ -526,6 +528,8 @@ public class VoteController {
 				json.add(5,"");
 				json.add(6,"");
 				json.add(7,"1");
+				json.add(8,"0");
+				json.add(9,"0");
 				return json;
 		}
 
@@ -533,6 +537,15 @@ public class VoteController {
 			JSONArray result = klaytn.load3(vote.getAddress());   // 블록체인 소스 추가해서, 투표 결과 시간 에 맞게.
 			System.out.println("result: " +result);
 			// System.out.println(result.get("result"));
+
+			ArrayList userAdd = new ArrayList();
+			
+			List<VoterHash> voterHash = voterHashRepository.findByMemberId(userDetails.getR_ID());
+
+			for(VoterHash voterH : voterHash){
+				userAdd.add(voterH.getHash());
+			}
+
 
 			json.add(0, result.get(0));// 투표 결과
 			json.add(1, names);//후보 이름
@@ -542,6 +555,8 @@ public class VoteController {
 			json.add(5,vote.getCount());// 후보수
 			json.add(6,vote.getSelectNum());// 선발인원 숫자
 			json.add(7,0);// 투표결과 보여주는가?
+			json.add(8,vote.getAddress());// 투표 address
+			json.add(9,userAdd); // 사용자 address
 			
 			
 		} catch (Exception e) {

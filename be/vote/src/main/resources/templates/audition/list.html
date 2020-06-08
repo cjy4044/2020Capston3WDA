@@ -21,6 +21,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판')}"
       <table class="table table-striped table-sm">
       <thead>
 		<tr>
+
 			<th>글 번호</th>
 			<th>제목</th>
 			<th>분야</th>
@@ -28,6 +29,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판')}"
 			<th>모집종료일</th>
 			<th>모집인원</th>
 			<th>발표일</th>
+			<th>작성자</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -40,11 +42,19 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판')}"
 			<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
 			<td th:text="${audition.arecruits}+ 명"></td>
 			<td th:text="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"></td>
+			<td th:text="${audition.rid}"></td>
+			
 			
   
 
 		</tr>
-		<tr>
+	
+
+		</tbody>
+		</div>
+		</table>
+
+			<tr>
                 <td colspan="2">
               <input type="button" value="등록" onclick="location.href='/audition/write'"/>
                                     </td>
@@ -54,11 +64,6 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판')}"
               <input type="button" value="처음으로" onclick="location.href='/audition/list'"/>
                                     </td>
             </tr>
-
-		</tbody>
-		</div>
-		</table>
-		
 		<form action="/audition/serch" method="GET">
 		    <div>
 		        <input name="keyword" type="text" placeholder="검색어를 입력해주세요">

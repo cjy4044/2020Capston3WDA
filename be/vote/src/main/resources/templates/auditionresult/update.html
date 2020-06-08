@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'수정하기')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<content>
+<body>  	   
+	<form th:action="@{'/auditionresult/update/' + ${auditionResult.resultid}}" method="post">     
+	
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+
+		<table border="1">
+    <tbody>
+            <tr>
+                <th><label for="rtitle">제목</label></th>
+				<td><input type="text" name="rtitle" th:value="${auditionResult.rtitle}" /></td>
+        	     
+            </tr>
+          
+         
+    </tbody>
+    <table>
+ <tr>
+                <th><label for="rcontent">내용</label></th>
+                <td><input type="text" name="rcontent" style=" width:1040px; height:300px;" th:value="${auditionResult.rcontent}" /></td>
+            </tr>
+</table>
+
+</table>
+
+		<div>
+            <input type="submit" value="수정하기" /> 
+            <a href="" th:href="@{/auditionresult/list}">목록</a>
+		</div>
+	</form>
+</body>
+</content>
+</html>

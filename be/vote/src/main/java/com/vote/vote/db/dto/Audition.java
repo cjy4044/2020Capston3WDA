@@ -140,7 +140,9 @@ public class Audition {
 		}
 
 		
-		
+		public String toString() {
+			return ""+rid;
+		}
 	    
 
 }

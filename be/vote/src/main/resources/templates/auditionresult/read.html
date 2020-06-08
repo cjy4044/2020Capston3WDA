@@ -24,15 +24,8 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
     <tbody>
             <tr>
                 <th>제목 : </th>
-                 <td th:text="${audition.atitle}"></td>
+                 <td th:text="${auditionResult.rtitle}"></td>
 
-            </tr>
-            
-            <tr>
-                <th>기간 : </th>
-                 <td th:text="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}"></td>
-				<th>  ~  </th>
-				<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
             </tr>
            
           
@@ -43,7 +36,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
  <tr>
                 <th>내용 : </th>
                 
-                  <td th:text="${audition.acontent}"></td>
+                  <td th:text="${auditionResult.rcontent}"></td>
             <!--    <td><textarea cols="150" rows="20" placeholder="내용을 입력하세요. " name="a_content"></textarea></td> -->
             </tr>
 </table>
@@ -51,29 +44,21 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
 	
 	
 	
-	<div>
-			<tr><center>
-                <td colspan="2">
-              <input type="button" value="신청서" onclick="location.href='/audition_con/form'"/>
-                                    </td></center>
-            </tr>
-        </form>
 	
-	</div>
 	
-	<br><br>
+	
 	
 	
 	<div>
-        <a href="" th:href="@{'/audition/update/' + ${audition.auditionid}}">수정</a> 
+        <a href="" th:href="@{'/auditionresult/update/' + ${auditionResult.Resultid}}">수정</a> 
         
-             <form id="delete-form" th:action="@{'/audition/' + ${audition.auditionid}}" method="post">
+             <form id="delete-form" th:action="@{'/auditionresult/' + ${auditionResult.Resultid}}" method="post">
             <input type="hidden" name="_method" value="delete"/> 
             <button id="delete-btn">삭제</button>
         </form>
         
 	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
-		<a href="" th:href="@{/audition/list}">목록</a>
+		<a href="" th:href="@{/auditionresult/list}">목록</a>
 	</div>
 </body>
 </content>

@@ -359,7 +359,7 @@ public class UserInfoController {
 		  
 		  Program program = programRepository.findById(pm.getProgramId());
 	  
-		  System.out.println(program.toString());
+//		  System.out.println(program.toString());
 		  
 		
 
@@ -393,21 +393,25 @@ public class UserInfoController {
 			}
 		 
 		 @RequestMapping(value="/programUpdate", method=RequestMethod.POST)
-		    public String programUpdate(Program p, RedirectAttributes redirAttrs, Principal principal,
+		    public String programUpdate(Program p, 
+		    		RedirectAttributes redirAttrs, Principal principal,
 		    		@RequestParam(name="file") MultipartFile file){
 		       	
-			 System.out.println(p.toString());
-
-//			 if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
-//		    		
-//		    		System.out.println("넘어온 파일없다 마");
-//		    		storageService.store(file);
-//		    		String thumbnailPath2 = StringUtils.cleanPath(file.getOriginalFilename());
-//		    		thumbnailPath = url.concat(thumbnailPath2);
-//		   	
-//		    	}
 			 
-			 //programRepository.programUpdate(p.getId(), p.getName(), p.getImg(), p.getCategory());
+			 
+		    	String thumbnailPath = p.getImg();
+
+
+		    	if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
+		    		
+		    		storageService.store(file);
+			    	
+			    	thumbnailPath =  StringUtils.cleanPath(file.getOriginalFilename());
+		   	
+		    	}	
+
+		 
+			 programRepository.programUpdate(p.getId(), p.getName(), thumbnailPath, p.getCategory());
 			
 			 
 		    	return "redirect:/userInfo/myProgram";   

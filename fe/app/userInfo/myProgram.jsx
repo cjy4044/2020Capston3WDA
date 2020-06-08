@@ -32,6 +32,7 @@ class MyProgram extends Component {
         let {data: program} = await axios.get('/userInfo/myProgram/axios')
       
         this.setState({program})
+        console.log({program})
         
     }
     result_submit(e){
@@ -42,29 +43,27 @@ class MyProgram extends Component {
    
 
     render() {
-        console.log(this.state.program.id)
         return(
                 <div>
                   
-                            <div>
+                            
                             <span> 대표이미지 </span> 
-                            <ItemCard3 name="file" img={this.state.program.img}/> 
+                            <ItemCard3 img={this.state.program.img}/> 
                             <input type="file" name="file"></input>
-                            </div>
+                            
 
-                            <div>
+                            
                             <span> 프로그램명 </span> 
                             <input type="text" name="name" defaultValue={this.state.program.name}></input>
-                            </div>
+                            
                            
 
-                            <div>
+                            
                             <span> 카테고리 </span> 
                             <input type="text" name="category" defaultValue={this.state.program.category}></input>
-                            
-                            </div>
                             <input type="hidden" name="id" value={this.state.program.id}></input>
-                            <input type="hidden" name="img" value={this.state.program.img}></input>
+                            <input type="hidden" name="img" value={this.state.program.img?this.state.program.img:'/img/defaultProfile.png'}></input>
+                         
 
                             <button className="submit_button" type="submit">변경하기</button>
                             {/* <input type="submit" value="변경" onClick={this.update.bind(this,program)}></input> */}
@@ -76,36 +75,6 @@ class MyProgram extends Component {
         )
      
     }
-}
-class Index extends Component{
-    constructor(props){
-        super(props);
-       this.props.program
-       
-    }
-
-  
-
-    render(){
-         console.log(this.props.program)
-                    return  this.props.program.map((p,index)=>{
-                       
-                        return (
-                            
-                            <TableRow key={'div'+index}>
-                                
-                               
-                                <TableCell> <ItemCard3 img={p.img}/></TableCell>
-                                <TableCell >{p.name}</TableCell>
-                                <TableCell >{p.category}</TableCell>
-                            </TableRow>
-                            
-                        )
-                    })
-                }
-            
-        
-    
 }
 
 

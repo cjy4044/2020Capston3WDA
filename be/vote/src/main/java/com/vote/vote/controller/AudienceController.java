@@ -6,13 +6,16 @@ import javax.validation.Valid;
 
 import com.vote.vote.db.dto.Audience;
 import com.vote.vote.repository.AudienceJpaRepository;
+import com.vote.vote.service.AudienceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +28,21 @@ import org.springframework.web.bind.support.SessionStatus;
 @RequestMapping("/audience")
 public class AudienceController {
 
+  
+    private AudienceService audienceService;
     @Autowired
     AudienceJpaRepository audienceJpaRepository;
 
+    public AudienceController(AudienceService audienceService) {
+        this.audienceService = audienceService;
+    }
 
     //리스트
-    @RequestMapping(value = { "/", "/list" })
-    public String audience(Model model, @PageableDefault Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "applyId"));
-        model.addAttribute("list", audienceJpaRepository.findAll(pageable));
-        System.out.println(audienceJpaRepository.findAll(pageable));
+    @GetMapping(value = { "/", "/list" })
+    public String audience(@PageableDefault Pageable pageable, Model model) {
+
+        Page<Audience> boardList = audienceService.getBoardList(pageable);
+        model.addAttribute("boardList", boardList);
         return "audience/list2";
     }
 
@@ -47,7 +54,7 @@ public class AudienceController {
         Audience audience = audienceJpaRepository.findById(applyId);
         audience.setAViewCount(audience.getAViewCount() + 1);
         audienceJpaRepository.save(audience);
-        return "audience/read";
+        return "audience/read2";
     }
 
 

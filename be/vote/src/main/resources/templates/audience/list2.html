@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/board.common.css">
     <link rel="stylesheet" href="/css/featherlight.css">
     <link rel="stylesheet" href="/css/moblie.css">
+    <link rel="stylesheet" href="/shop/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -23,8 +24,7 @@
             <!-- 게시판 페이지 정보 및 버튼 시작 { -->
             <div id="bo_btn_top">
                 <div id="bo_list_total">
-                    <span><i class="fa fa-file-o"></i> Total 51 /</span>
-                    1 page
+                    <span th:text="${'total  '}+${boardList.totalPages} + ${' /  '}+${boardList.number + 1} + ${' page  '}"></span>
                 </div>
 
                 <ul class="btn_bo_user">
@@ -48,22 +48,21 @@
 
 
                 <div class="webzineList">
-                    <ul th:each="list:${list}">
+                    <ul th:each="list:${boardList}">
                         <li class="">
-                            <a href="#" class="list_img"><img src=""alt=""></a>
+                            <a href="#" class="list_img"><img src="/uploads/개장수.png"alt=""></a>
                             <a href="#" th:href="@{'/audience/read/' + ${list.applyId}}" class="bo_tit">
                                 <span class="sound_only">50</span> <strong th:text="${list.aTitle}"></strong>
                                 <i class="fa fa-download" aria-hidden="true"></i>
-                                <!-- <em th:text="${list.content}">
-                                    페이지디 반응형 홈페이지 테마의 웹진형 게시판입니다.&nbsp;웹진형 게시판은 목록에서 다양한 정보를 미리 보여주어 홈페이지 이용자가 원하는 정보를
-                                    쉽게 접글할 수 있도록 합니다.웹진형 게시판의 목록에서는 게시글의 제목, 첨부된 이미지가 있을 경우 해당 이미지, 게시글의 일부 내용 및 . . .
-                                </em> -->
+                                <span class="content" th:text="${list.aContent}">
+
+                                </span>
                             </a>
 
                             <u>
-                                <!-- <span><span class="sv_member" th:text="${list.rId}">웹사이팅</span></span>
-                                <span th:text="${list.aViewCount}"><i class="fa fa-eye"></i> 574</span>
-                                <span th:text="${list.aDate}"><i class="fa fa-clock-o"></i> 02-07</span> -->
+                                <span><span class="sv_member" th:text="${list.rId}"></span></span>
+                                <span th:text="${list.aViewCount}"><i class="fa fa-eye"></i> </span>
+                                <span th:text="${list.aDate}"><i class="fa fa-clock-o"></i> </span>
                             </u>
                         </li>
                     
@@ -110,7 +109,8 @@
 
 
         <!-- 페이지 -->
-        <nav class="pg_wrap"><span class="pg"><span class="sound_only">열린</span><strong
+        <!-- <nav class="pg_wrap" th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
+        last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})"><span class="pg"><span class="sound_only">열린</span><strong
                     class="pg_current">1</strong><span class="sound_only">페이지</span>
                 <a href="" class="pg_page">2<span
                         class="sound_only">페이지</span></a>
@@ -119,7 +119,43 @@
                 <a href="" class="pg_page">4<span
                         class="sound_only">페이지</span></a>
                 <a href="" class="pg_page pg_end">맨끝</a>
-            </span></nav>
+            </span>
+        </nav> -->
+
+
+        <nav style="text-align: center;">
+            <ul class="pagination"
+                th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
+                            last=(${start + 9 < boardList.totalPages ? start + 4 : boardList.totalPages})">
+                <li>
+                    <a th:href="@{/audience/list(page=1)}" aria-label="First">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+        
+                <li th:class="${boardList.first} ? 'disabled'">
+                    <a th:href="${boardList.first} ? '#' :@{/audience/list(page=${boardList.number})}" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+        
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
+                    <a th:text="${page}" th:href="@{/audience/list(page=${page})}"></a>
+                </li>
+        
+                <li th:class="${boardList.last} ? 'disabled'">
+                    <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+        
+                <li>
+                    <a th:href="@{/boards(page=${boardList.totalPages})}" aria-label="Last">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
         <!-- } 게시판 목록 끝 -->
 

@@ -136,6 +136,17 @@
 	.webzineList > ul > li .bo_tit em{font-size:11px;line-height:1.2em;}
 }
 
+.content{
+	display: block;
+    padding-top: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 1.4em;
+    color: #999;
+}
+
+
 
 
 

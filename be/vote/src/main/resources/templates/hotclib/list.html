@@ -8,7 +8,17 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
 </head>
 <body>
    <content>
-      <style>
+     <style>
+       .gi{
+         border: 1px solid #ccc;
+         padding: 5px;
+    width: 250px;
+    margin: 10px ;
+    display: inline-block;
+    text-align:left;
+       }
+     </style>
+      <!-- <style>
         table {
           width: 100%;
           border: 1px solid #444444;
@@ -18,18 +28,19 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
           border: 1px solid #444444;
           padding: 10px;
         }
-      </style>
-        
+      </style> -->
+ 
         <form action="/hotclib/search" method="get">
           <div class="search">
           <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
           </div>
           <button>검색</button>
           </form>
-
-   <table border="1">
+<!-- 
+   <table border="1"></table>
     <tr>
       <th>아이디</th>
+      <th>썸네일</th>
       <th>제목</th>
       <th>작성일</th>
       <th>조회수</th>
@@ -41,12 +52,24 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
       <td th:text="${hotclib.h_date}"></td>
       <td th:text="${hotclib.hviewcount}"></td>
       <td sec:authentication="principal.name"></span>
-   </table>
-   <input type="button" value="영상 업로드" onclick="location.href='hotclib/upload'">
-   </div>
-
-
+   </table> -->
+   <div class="gi" th:each="hotclib:${hotclibList}" >
+   <img th:src="@{img/ + rfile.filename}"/>
+   <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li>
+   <li>제목: <a href="" th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}" th:text="${hotclib.htitle}"></a></li>
+   <li>작성일: <span th:utext="${hotclib.h_date}"></span></li>
+   <li>조회수: <span th:utext="${hotclib.hviewcount}"></span></li>
+   <li>작성자: <span sec:authentication="principal.name"></span></li>
    
+   </div>
+   <!-- <ul>
+    <li th:each="rfile : ${rfiles}">
+    <a th:href="${file}" th:text="${file}">file</a>
+    </li>
+    </ul> -->
+   <input type="button" value="영상 업로드" onclick="location.href='hotclib/upload'">
+  
+     
    <nav style="text-align: center;">
     <ul class="pagination"
      th:with="start=${T(Math).floor(hotclibList.number/10)*10 + 1},

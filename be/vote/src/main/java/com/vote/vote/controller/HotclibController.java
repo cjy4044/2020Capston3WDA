@@ -1,16 +1,21 @@
 package com.vote.vote.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Hotclib;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Reply;
+import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.repository.HotclibRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.ReplyRepository;
+import com.vote.vote.repository.RfileRepository;
 import com.vote.vote.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +25,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -40,6 +48,9 @@ public class HotclibController {
 
 	@Autowired
 	private ReplyRepository replyRepository;
+
+	@Autowired
+	private RfileRepository rfileRepository;
 
 	@GetMapping("/hotclib")
 	public String hotclib(Model model, @PageableDefault Pageable pageable){
@@ -81,17 +92,33 @@ public class HotclibController {
 	}
 
 	@PostMapping("/hotclib/upload")
-	public String upload(Hotclib hotclib,
-	 BindingResult bindingResult, 
-	SessionStatus sessionStatus){
+	public String upload(
+		@RequestParam(name="filename") MultipartFile filename,
+	//	@RequestParam(name="hotclibid", required = false) Integer hotclibid,
+		Model model,
+		RedirectAttributes redirAttrs,
+		Hotclib hotclib,
+		BindingResult bindingResult, 
+		SessionStatus sessionStatus){
+
+		Rfile rfile = new Rfile();
+		storageService.store(filename);
+		String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+		
+		rfile.setFilename(filenamePath); 
+		rfile.setHotclibid(224);
+		System.out.println(rfile.toString());
+		
 		if (bindingResult.hasErrors()) {
 			return "hotclib/upload";
 		} else {
 		hotclib.setH_date(new Date());	
-		hotclibRepository.save(hotclib);
+		hotclibRepository.save(hotclib); 
+		model.addAttribute("rfiles", rfileRepository.saveAndFlush(rfile));
 		sessionStatus.setComplete();
 		return "redirect:/hotclib";
 		}
+	
 	}
 
  	@GetMapping("/hotclib/update/{hotclibid}")

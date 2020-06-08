@@ -7,7 +7,6 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
 </head>
 <body>
     <content>   
-       
         <form th:action="@{/hotclib/upload}" method="post" enctype="multipart/form-data">                
           <div>
             <tr>
@@ -22,21 +21,20 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
             </tr>
             </div>
             <tr>
+          </tr>
           
-             <div>
-                
-                    <input type="submit" value="등록">
-                    <input type="reset" value="취소" onclick="history.back();">                    
-           </div>
-
-       <!--   <div>댓글허용여부</div>
-           <input type="radio" name="xxx" value="xxx" checked>O</input>
-           <input type="radio" name="xxx" value="yyy" checked>X</input></div>-->
-           <div class="form-group row mb-4">
-            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">썸네일 선택</label>
-            <div class="col-sm-12 col-md-7">
-              <input type="file" name="img" id="img">
-            </div>
+           썸네일선택
+              <input type="file" name="filename">
+           영상선택 </div>
+           <input type="file" name="filename" >
+            <!-- <div class="form">
+                <div class="col">
+                  
+                </div> -->
+               
+                  <input type="submit" value="등록">
+                  <input type="reset" value="취소" onclick="history.back();">                    
+         </div>
         </form>
             </content>
 </body>

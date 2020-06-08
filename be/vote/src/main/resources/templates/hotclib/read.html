@@ -6,21 +6,33 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <content>
+	<style>
+		.gi{
+		  border: 1px solid #ccc;
+		  padding: 5px;
+	 width: 250px;
+	 margin: 10px ;
+	 display: inline-block;
+	 text-align:left;
+		}
+	  </style>
 <body>
-    <table border="1">
-		<tr>
-			<th>제목</th>
-			<td th:text="${hotclib.htitle}"></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td th:text="${hotclib.h_content}"></td>
-		</tr>
-		<th>작성자</th>
-			<td sec:authentication="principal.name"></span>
+	
+	
+		<div class="gi">
 			
-
-	</table>
+	<tr>
+		<li>제목: <span th:utext="${hotclib.htitle}"></span></li>
+	</tr>
+		<tr>
+			<li>내용: <span th:utext="${hotclib.h_content}"></span></li>
+		</tr>
+			<tr>
+				<li>조회수: <span th:utext="${hotclib.hviewcount}"></span></li>
+			</tr>
+			<li>작성자: <span sec:authentication="principal.name"></span></li>
+		</div>
+	
 	<div>
 		<a href="" th:href="@{/hotclib}">목록</a>
         <a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a> 
@@ -31,7 +43,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
 		</div>
 	
 	
-		<!-- <form method="post" th:actio= "@{'/hotclib/read/' + ${hotclib.hotclibid}}"> -->
+		
 		<form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
 		<tr>댓글테스트
 		<td><input type="textarea" placeholder="내용을 입력하세요" name="r_content"></td>
@@ -39,17 +51,23 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
 	</tr>
 	</form>
 
-		<table border="1">
+		<table  border="1">
 	<tr>
+		
 		<th>작성자</th>
 		<th>내용</th>
 		<th>작성일자</th>
+		
+		
 	</tr>
 	
 	<tr th:each="reply:${replyList}">
+		
 		<td sec:authentication="principal.name"></span>
 		<td th:text="${reply.r_content}"></td>
 		<td th:text="${reply.r_date}"></td>
+		<td><input type="button" value="수정"></td>
+		<td><input type="button" value="삭제"></td>
 		</tr>
 		</table>	
 </body>

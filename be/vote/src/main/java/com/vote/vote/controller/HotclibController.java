@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Hotclib;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Reply;
 import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.repository.HotclibRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.repository.ReplyRepository;
 import com.vote.vote.repository.RfileRepository;
 import com.vote.vote.service.StorageService;
@@ -57,6 +59,9 @@ public class HotclibController {
 	@Autowired
 	private MemberJpaRepository memberRepository;
 
+	@Autowired
+	private ProgramManagerJpaRepository pmRepository;
+	
 	@GetMapping("/hotclib")
 	public String hotclib(Model model, @PageableDefault Pageable pageable){
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
@@ -128,14 +133,24 @@ public class HotclibController {
 		//int hotclibid = hotclib.getHotclibid();
 		//hotclibRepository.findById(hotclibid);
 		
-		rfile.setHotclibid(hotclibid);
+		ProgramManager pm = pmRepository.findById(r_id);
+		int programId = pm.getProgramId();
+		
+		
+		System.out.println(programId);
+		
+		hotclib.setProgramid(programId);
+		
+		hotclibRepository.saveAndFlush(hotclib);  // 저장하고 커밋까지 Flush
+				
+		rfile.setHotclibid(hotclib.getHotclibid());
 		rfile.setFilename(filenamePath); 
 		
 		System.out.println(rfile.toString());
-		System.out.println(hotclibid);
+		
 
 		hotclib.setH_date(new Date());	
-		hotclibRepository.save(hotclib); 
+		
 		rfileRepository.saveAndFlush(rfile);
 		sessionStatus.setComplete();
 		return "redirect:/hotclib";

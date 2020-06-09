@@ -56,7 +56,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
       <td sec:authentication="principal.name"></span>
    </table> -->
    <div class="gi" th:each="hotclib:${hotclibList}" >
-   <img th:src="@{img/ + rfile.filename}"/>
+   <img th:src = "@{'/uploads/' + ${rfiles[hotclibStat.index].filename}}"/>
    <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li>
    <li>제목: <a href="" th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}" th:text="${hotclib.htitle}"></a></li>
    <li>작성일: <span th:utext="${hotclib.h_date}"></span></li>

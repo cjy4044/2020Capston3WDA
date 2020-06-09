@@ -69,9 +69,9 @@ class MyCommunity extends Component {
                     <h3>후보자 and 팬클럽 목록</h3>
               {/* <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination> */}
 
-                <div>
+                <div class="community_item">
                     
-                    <Index community={this.state.community}/>    
+                    <Index  community={this.state.community}/>    
              
                 </div>
                            <button onClick={this.handleOpenModal.bind(this)}>추가</button>
@@ -115,29 +115,84 @@ class Index extends Component{
     constructor(props){
         super(props);
        this.props.community
-       this.state = { modal : false };
-  
-      // document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
+       this.state = { modal : false, file : '', previewURL:'' };
+     // document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
+    
+    }
+   
+    handleOpenModal(c,a){
+      console.log(c);
+
+      console.log(a.value)
+      this.setState({modal:true});
+       
+      // document.getElementById("name").innerHTML = c.name;
+      console.log(this.state.previewURL)
+     
+    };
+    handleCloseModal(){
+      this.setState({modal:false});
+    };  
+    checkImage(event){
+
+      event.preventDefault();
+      let reader = new FileReader();
+      let file = event.target.files[0];
+
+      reader.onloadend = () => {
+        this.setState({
+          file : file,
+          previewURL : reader.result
+        })
+      }
+      reader.readAsDataURL(file);
     }
 
-    // result_submit(e){
-       
-    //  alert("승인하였습니다.");
-  
-        
-    // } 
-   
-
-  
-
     render(){
-         console.log(this.props.community)
+      var a = document.getElementById("name");
+         //console.log(this.props.community)
+         let profile_preview = null;
+         if(this.state.file !== ''){
+           profile_preview = <img  className='profile_preview' src={this.state.previewURL}></img>
+         }
          return this.props.community.map((c,index)=>{
+           //console.log(c)
             if (c.name != 0){
                 return (
-                    <div key={c.name+index} className="card_div"> 
-                        <ItemCard4 key={c.img} img={c.img} name={c.name}/>
-                    </div>
+                    <div key={c.name+index} className="community_index_item">
+                       <div onClick={this.handleOpenModal.bind(this,c,a)}>
+                       <ItemCard4 key={c.img} img={c.img} name={c.name} />
+                       </div>
+                           {this.state.modal && (
+                          <div className="MyModal"> 
+                              <div className="content">
+                                <h3>후보 수정</h3>
+                                
+                            <table className="register_table">
+                            <tbody>
+                            <tr>
+                            <td><input type="text" id="name" name="name" value="입력" required/></td>
+                            </tr>
+
+                            <tr>
+                            <td>{profile_preview}</td>
+                            </tr>
+
+                            <tr>
+                            <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)} required/></td> 
+                            </tr> 
+                                
+                            </tbody>
+                        </table>
+                        <input type="hidden" name="pid" value={this.state.programId}></input>
+                        <input type="hidden" name="img" value="default"></input>
+                        <button type="submit">등록</button>
+
+                                <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                              </div>
+                         </div> )}{""} 
+                            </div>
+                    
                 )
             }
         })

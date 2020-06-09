@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.vote.vote.db.dto.Audience;
 import com.vote.vote.repository.AudienceJpaRepository;
 import com.vote.vote.service.AudienceService;
+import com.vote.vote.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,9 @@ public class AudienceController {
     private AudienceService audienceService;
     @Autowired
     AudienceJpaRepository audienceJpaRepository;
+
+    @Autowired  
+	private StorageService storageService; 
 
     public AudienceController(AudienceService audienceService) {
         this.audienceService = audienceService;
@@ -69,13 +73,16 @@ public class AudienceController {
     @PostMapping("/create")
 	public String upload(@Valid Audience audience,  BindingResult bindingResult,  SessionStatus sessionStatus, Principal principal){
 		if (bindingResult.hasErrors()) {
-			return "audience/create";
+            System.out.println("야야");
+			return "audience/create2";
 		} else {
         System.out.println(principal.getName());
+        audience.setRId(21);
+        audience.setProgramId(1);
         audience.setADate(new Date());
 		audienceJpaRepository.saveAndFlush(audience);
 		sessionStatus.setComplete();
-		return "redirect:/";
+		return "redirect:/audience/list";
 		}
     }
     

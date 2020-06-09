@@ -44,8 +44,8 @@ class Register extends React.Component {
         e.preventDefault();
         console.log("아이디 중복확인");
         console.log(this.state.check);
-        var id = document.getElementById("id").value;
-
+        var id = document.getElementById("e-mail").value;
+        console.log(id);
         if(!id)  return alert("이메일을 입력해 주세요");
 
         axios.get("/auth/register/checkId/"+id)
@@ -69,7 +69,7 @@ class Register extends React.Component {
                 <table className="register_table">
                     <tbody>
                         <tr>
-                            <td><input className="register_input" type="text" id="id" name="userid"  placeholder="이메일"  required/></td>
+                            <td><input className="register_input" type="e-mail" id="e-mail" name="userid"  placeholder="이메일"  required/></td>
                             <td><input className="check_button"  type="button" value="중복확인" onClick={this.checkId.bind(this)} /></td>
                         </tr>
                         <tr>
@@ -95,7 +95,7 @@ class Register extends React.Component {
                             <td colSpan="2"><hr></hr></td>
                         </tr>
                         <tr>
-                            <td><input className="register_input" type="tel" name="phone"  pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required/></td>
+                            <td><input className="register_input" type="tel" name="phone"  placeholder="010-0000-0000"  pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required/></td>
                         </tr>
                         <tr>
                             <td ><input className="register_input" type="text" name="addr" placeholder="도로명 주소" required/></td>

@@ -24,7 +24,7 @@ public class Hotclib {
     @Column(nullable=false, name="hotclib_id")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="HOTCLIB_SEQ_GENERATOR")
     @SequenceGenerator(name="HOTCLIB_SEQ_GENERATOR", sequenceName="HOTCLIB_SEQ", allocationSize = 1)
-    private int hotclibid;
+    private Integer hotclibid;
     
     @Column(nullable=false, name="h_title")
     private String htitle;
@@ -54,14 +54,7 @@ public class Hotclib {
     @Column(nullable=true, name="program_id")
     private Integer programid;
     
-    public int getHotclibid() {
-        return hotclibid;
-    }
-
-    public void setHotclibid(int hotclibid) {
-        this.hotclibid = hotclibid;
-    }
-
+ 
     public String getHtitle() {
         return htitle;
     }
@@ -133,6 +126,14 @@ public class Hotclib {
 	public void setProgramid(Integer programid) {
 		this.programid = programid;
 	}
+
+    public Integer getHotclibid() {
+        return hotclibid;
+    }
+
+    public void setHotclibid(Integer hotclibid) {
+        this.hotclibid = hotclibid;
+    }
 
  
    

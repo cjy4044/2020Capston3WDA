@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface ReplyRepository extends JpaRepository<Reply, Integer> {
     public ArrayList<Reply> findAll();
     public ArrayList<Reply> findByHotclibid(int hotclibid);
+    public Reply deleteById(int replyid);
     
     
     

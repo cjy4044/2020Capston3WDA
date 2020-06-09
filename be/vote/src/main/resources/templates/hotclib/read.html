@@ -66,8 +66,12 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
 		<td sec:authentication="principal.name"></span>
 		<td th:text="${reply.r_content}"></td>
 		<td th:text="${reply.r_date}"></td>
-		<td><input type="button" value="수정"></td>
-		<td><input type="button" value="삭제"></td>
+		
+		<!-- <td><input type="button" value="수정"></td> -->
+		
+		<td><input type="button" id="delete" value="삭제"></td>
+		
+		</form>
 		</tr>
 		</table>	
 </body>

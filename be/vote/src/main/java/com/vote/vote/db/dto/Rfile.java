@@ -11,14 +11,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name= "r_file")
 public class Rfile {
-   
-  // @Column(nullable=false, name="file_id")
- //  @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="R_FIIE_SEQ_GENERATOR")
-  // @SequenceGenerator(name="R_FIIE_SEQ_GENERATOR", sequenceName="R_FIIE_SEQ", allocationSize = 1)
-    private int fileid;
 
-    @Id
-    @Column(nullable=true, name="hotclib_id")
+   @Id 
+   @Column(nullable=true, name="file_id")
+   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="R_FILE_SEQ_GENERATOR")
+   @SequenceGenerator(name="R_FILE_SEQ_GENERATOR", sequenceName="R_FILE_SEQ", allocationSize = 1)
+    private int fileid;
+   
+    @Column(nullable=false, name="hotclib_id")
     private Integer hotclibid;
 
     @Column(nullable=true, name="apply_id")
@@ -27,7 +27,6 @@ public class Rfile {
     @Column(nullable=true, name="p_id")
     private Integer pid;
 
-    
     @Column(nullable=true)
     private String filename;
 
@@ -67,11 +66,4 @@ public class Rfile {
         return filename;
     }
 
-    public int getFileid() {
-        return fileid;
-    }
-
-    public void setFileid(int fileid) {
-        this.fileid = fileid;
-    }
 }

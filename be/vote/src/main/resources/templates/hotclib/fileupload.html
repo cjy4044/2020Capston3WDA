@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},~{::script},'마이페이지')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+<div>
+<script>
+</script>
+</div>
+    <content>
+        <form enctype="multipart/form-data" method="POST" th:action="@{/hotclib/fileupload}">
+        썸네일선택
+        <input type="file" name="filename">
+     <!-- 영상선택 </div>
+     <input type="file" name="filename" > -->
+    
+    <input type="submit" value="등록">
+    <input type="reset" value="취소" onclick="history.back();">     
+</form>     
+    </content>
+
+</body>
+</html>

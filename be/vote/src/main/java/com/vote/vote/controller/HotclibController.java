@@ -23,6 +23,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -52,11 +54,15 @@ public class HotclibController {
 	@Autowired
 	private RfileRepository rfileRepository;
 
+	@Autowired
+	private MemberJpaRepository memberRepository;
+
 	@GetMapping("/hotclib")
 	public String hotclib(Model model, @PageableDefault Pageable pageable){
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hotclibid"));
 		model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
+		model.addAttribute("rfiles", rfileRepository.findAll());
 		return "hotclib/list";
 	}
 
@@ -65,21 +71,26 @@ public class HotclibController {
 		model.addAttribute("hotclib", hotclibRepository.findById(hotclibid));
 		List<Reply> reply = replyRepository.findByHotclibid(hotclibid);
 		model.addAttribute("replyList", reply);
+	//	List<Rfile> rfile = rfileRepository.findByHotclibid(hotclibid);
+	//	model.addAttribute("rfileList", rfile);
 		Hotclib hotclib = hotclibRepository.findById(hotclibid);
 		hotclib.setHviewcount(hotclib.getHviewcount() + 1);
 		hotclibRepository.save(hotclib);
 		return "hotclib/read";
 	}
 
-	@PostMapping("/hotclib/read/{hotclibid}")
+	@PostMapping("/hotclib/read/{hotclibid}/{replyid}")
 	public String read(Reply reply, 
+	@PathVariable int replyid,
 	 BindingResult bindingResult, 
 	SessionStatus sessionStatus){
 		 if (bindingResult.hasErrors()) {
 		 	return "hotclib/read/{hotclibid}";
 		 } else {
+			
 		 reply.setR_date(new Date());	
 		 replyRepository.save(reply);
+		 replyRepository.deleteById(replyid);
 		 sessionStatus.setComplete();
 		return "redirect:/hotclib/read/{hotclibid}";
 		}
@@ -93,34 +104,69 @@ public class HotclibController {
 
 	@PostMapping("/hotclib/upload")
 	public String upload(
+		
 		@RequestParam(name="filename") MultipartFile filename,
-	//	@RequestParam(name="hotclibid", required = false) Integer hotclibid,
+		@RequestParam(name="hotclibid", required = false) Integer hotclibid,
 		Model model,
 		RedirectAttributes redirAttrs,
 		Hotclib hotclib,
 		BindingResult bindingResult, 
-		SessionStatus sessionStatus){
-
-		Rfile rfile = new Rfile();
-		storageService.store(filename);
-		String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
-		
-		rfile.setFilename(filenamePath); 
-		rfile.setHotclibid(224);
-		System.out.println(rfile.toString());
-		
+		SessionStatus sessionStatus,
+		Principal principal){
+			
+			String userid = principal.getName(); 
+			Member member = memberRepository.findByUserid(userid); 
+			int r_id = member.getNo();
+			hotclib.setNo(r_id);
 		if (bindingResult.hasErrors()) {
 			return "hotclib/upload";
 		} else {
+			
+		Rfile rfile = new Rfile();
+		storageService.store(filename);
+		String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+		//int hotclibid = hotclib.getHotclibid();
+		//hotclibRepository.findById(hotclibid);
+		
+		rfile.setHotclibid(hotclibid);
+		rfile.setFilename(filenamePath); 
+		
+		System.out.println(rfile.toString());
+		System.out.println(hotclibid);
+
 		hotclib.setH_date(new Date());	
 		hotclibRepository.save(hotclib); 
-		model.addAttribute("rfiles", rfileRepository.saveAndFlush(rfile));
+		rfileRepository.saveAndFlush(rfile);
 		sessionStatus.setComplete();
 		return "redirect:/hotclib";
 		}
 	
 	}
+	// @GetMapping("/hotclib/fileuplad")
+	// public String fileupload(Model model){
+	// 	model.addAttribute("rfiles", new Rfile());
+	// 	return "hotclib/fileupload";
+	// }
 
+	// @PostMapping("/hotclib/fileupload")
+	// public String fileupload(
+	// 	@RequestParam(name="filename") MultipartFile filename,
+	// 	@RequestParam(name="hotclibid", required = false) Integer hotclibid,
+	// 	Model model,
+	// 	RedirectAttributes redirAttrs){
+			
+	// 	Rfile rfile = new Rfile();
+	// 	storageService.store(filename);
+	// 	String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+
+	// 	rfile.setHotclibid(hotclibid);
+	// 	rfile.setFilename(filenamePath); 
+		
+	// 	System.out.println(rfile.toString());
+	// 	rfileRepository.saveAndFlush(rfile);
+	// 	return "redirect:/hotclib";
+	// }
+ 
  	@GetMapping("/hotclib/update/{hotclibid}")
 	public String update(Model model, @PathVariable int hotclibid){
 		Hotclib hotclib = hotclibRepository.findById(hotclibid);

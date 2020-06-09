@@ -1,5 +1,6 @@
 package com.vote.vote.controller;
 
+import java.security.Principal;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -62,14 +63,15 @@ public class AudienceController {
     @GetMapping("/create")
 	public String upload(Model model){
 		model.addAttribute("audience", new Audience());
-		return "audience/create";
+		return "audience/create2";
 	}
     
     @PostMapping("/create")
-	public String upload(@Valid Audience audience,  BindingResult bindingResult,  SessionStatus sessionStatus){
+	public String upload(@Valid Audience audience,  BindingResult bindingResult,  SessionStatus sessionStatus, Principal principal){
 		if (bindingResult.hasErrors()) {
 			return "audience/create";
 		} else {
+        System.out.println(principal.getName());
         audience.setADate(new Date());
 		audienceJpaRepository.saveAndFlush(audience);
 		sessionStatus.setComplete();

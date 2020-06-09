@@ -48,7 +48,7 @@
             </tr>
         </table>
         <input type="button" value="글쓰기" onclick="location.href='/audience/create'">
-        <!-- <nav style="text-align: center;">
+        <nav style="text-align: center;">
             <ul class="pagination" th:with="start=${T(Math).floor(hotclibList.list/10)*10 + 1},
                     last=(${start + 9 < hotclibList.totalPages ? start + 9 : hotclibList.totalPages})">
                 <li>
@@ -78,7 +78,7 @@
                     <span aria-hidden="true">Last</span></a>
                 </li>
          </ul>
-        </nav> -->
+        </nav>
     </content>
   </body>
 </html>

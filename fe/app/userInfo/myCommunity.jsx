@@ -10,6 +10,9 @@ import Pagination from '@material-ui/lab/Pagination';
 
 import ItemCard4 from '../items/itemCard4.jsx';
 
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
+
 import './Modal.css';
 
 const regeneratorRuntime = require("regenerator-runtime");
@@ -30,9 +33,6 @@ class MyCommunity extends Component {
          this.state.programId = community.pop()
 
         this.setState({community})
-        console.log({community})
-        console.log(this.state.programId)
-
         
     }
     handleOpenModal(){
@@ -69,7 +69,7 @@ class MyCommunity extends Component {
                     <h3>후보자 and 팬클럽 목록</h3>
               {/* <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination> */}
 
-                <div class="community_item">
+                <div className="community_item">
                     
                     <Index  community={this.state.community}/>    
              
@@ -115,23 +115,21 @@ class Index extends Component{
     constructor(props){
         super(props);
        this.props.community
-       this.state = { modal : false, file : '', previewURL:'' };
+       this.state = { modal : false, file : '', previewURL:'' , item:[]};
      // document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
-    
+      
     }
-   
-    handleOpenModal(c,a){
-      console.log(c);
-
-      console.log(a.value)
+    handleOpenModal(c){
+      console.log(c)
       this.setState({modal:true});
-       
-      // document.getElementById("name").innerHTML = c.name;
+      this.setState({item:c})
       console.log(this.state.previewURL)
-     
+
     };
-    handleCloseModal(){
+    handleCloseModal(c){
+      document.getElementById("name").value = c.name;
       this.setState({modal:false});
+      this.componentDidMount()
     };  
     checkImage(event){
 
@@ -147,31 +145,35 @@ class Index extends Component{
       }
       reader.readAsDataURL(file);
     }
-
+    async componentDidMount(){
+     
+     
+  }
     render(){
-      var a = document.getElementById("name");
+        
          //console.log(this.props.community)
          let profile_preview = null;
          if(this.state.file !== ''){
            profile_preview = <img  className='profile_preview' src={this.state.previewURL}></img>
          }
+
          return this.props.community.map((c,index)=>{
-           //console.log(c)
-            if (c.name != 0){
-                return (
+               return (
                     <div key={c.name+index} className="community_index_item">
-                       <div onClick={this.handleOpenModal.bind(this,c,a)}>
+
+                        <div onClick={this.handleOpenModal.bind(this,c)}>
                        <ItemCard4 key={c.img} img={c.img} name={c.name} />
-                       </div>
-                           {this.state.modal && (
+                    
+                        </div>
+                      {this.state.modal &&                                              
                           <div className="MyModal"> 
-                              <div className="content">
+                             <div className="content">
                                 <h3>후보 수정</h3>
                                 
-                            <table className="register_table">
+                            <table>
                             <tbody>
                             <tr>
-                            <td><input type="text" id="name" name="name" value="입력" required/></td>
+                            <td><input type="text" id="name" name="name" value={this.state.item.name} required/></td>
                             </tr>
 
                             <tr>
@@ -179,23 +181,23 @@ class Index extends Component{
                             </tr>
 
                             <tr>
-                            <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)} required/></td> 
+                            <td><input type="file" name="img2"accept="image/*" onChange={this.checkImage.bind(this)} required/></td> 
                             </tr> 
                                 
                             </tbody>
-                        </table>
-                        <input type="hidden" name="pid" value={this.state.programId}></input>
+                            </table>
+                        <input type="hidden" name="pid" value={this.state.item.p_id}></input>
                         <input type="hidden" name="img" value="default"></input>
                         <button type="submit">등록</button>
 
                                 <button onClick={this.handleCloseModal.bind(this)}>닫기</button>
                               </div>
-                         </div> )}{""} 
-                            </div>
+                         </div> }{""} 
+                    </div>
                     
                 )
             }
-        })
+        )
     }
         
     

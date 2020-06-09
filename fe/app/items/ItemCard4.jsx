@@ -4,7 +4,6 @@ import Card from '@bit/jakeprins.react-milkshake.card';
 class ItemCard4 extends Component{
     constructor(props){
 		super(props);
-		console.log(this.props)
     }
 
     render(){

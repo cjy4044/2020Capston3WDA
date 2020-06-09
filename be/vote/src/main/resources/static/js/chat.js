@@ -3,14 +3,14 @@ $(document).ready(function() {
         var socket = io("http://localhost:4000");
         $('#chatform').submit(function(e) {
             e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', $('#chatinput').val());
+            socket.emit('chat message', $("#username").text() + " : " +  $('#chatinput').val());
             $('#chatinput').val('');
             return false;
         });
         socket.on('chat message', function(msg) {
         	
         	console.log($("#username").text());
-            $('#messages').append($('<li>').text($("#username").text()+" : "+msg));
+            $('#messages').append($('<li>').text(msg));
             $("#messages").scrollTop($("#messages")[0].scrollHeight);
         });
     });

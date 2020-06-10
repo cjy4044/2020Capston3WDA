@@ -105,7 +105,7 @@ public class CustomUserDetails implements UserDetails{
         PASSWORD = password;
     }
     public void setAUTHORITY(String authority){
-        AUTHORITY = authority;
+    	AUTHORITY = authority;
     }
 
 	public String getGENDER() {
@@ -126,6 +126,7 @@ public class CustomUserDetails implements UserDetails{
 
 
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		System.out.println(authorities);
 		this.authorities = authorities;
 	}
 }

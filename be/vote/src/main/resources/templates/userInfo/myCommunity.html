@@ -6,8 +6,10 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'프로그램관리')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 사이드바 -->
     
-<script src="/js/side/userInfoSide.js"></script>
+	<script src="/js/side/userInfoSide.js"></script>
 
+
+	
 </head>
 <body>
 <div>
@@ -16,7 +18,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'프로그램관리')
 </div>
        <content>
     
-    	 <form method="post"  enctype="multipart/form-data" action="/userInfo/insertPopular" id="register_form">
+    	 <form method="post"  enctype="multipart/form-data"  id="register_form">
 	     
 	     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	     

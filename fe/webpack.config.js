@@ -52,6 +52,7 @@ module.exports = {
     manageVote : path.join(__dirname, './app/userInfo/manageVote.jsx'),
     blockChainIntroduce : path.join(__dirname, './app/introduce/blockChainIntroduce.js'),
     myCommunity: path.join(__dirname,'./app/userInfo/myCommunity.jsx'),
+    updatePopular: path.join(__dirname,'./app/userInfo/updatePopular.jsx'),
    
 
 

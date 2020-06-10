@@ -36,7 +36,7 @@ class MyProgram extends Component {
         
     }
     result_submit(e){
-
+        
         if(!confirm("이미지를 변경 하시겠습니까?")) return;
  
     }

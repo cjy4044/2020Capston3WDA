@@ -34,6 +34,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -436,7 +437,7 @@ public class UserInfoController {
 			@ResponseBody
 			public JSONObject myProgramAxios(){
 					
-			 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			CustomUserDetails sessionUser = (CustomUserDetails)principal;
 			
 			 
@@ -588,8 +589,36 @@ public class UserInfoController {
 			            return "redirect:/userInfo/myCommunity";
 			        
 
-			    }
-			 
+			    }	
+			
+			@RequestMapping(value="/updatePopular", method=RequestMethod.POST)
+		    public String updateOk(Popular pp, RedirectAttributes redirAttrs, Principal principal
+		    		,@RequestParam(name="img2") MultipartFile file
+		    		){
+		       	
+				System.out.println(pp.toString());
+		    	
+		    	
+		    	String thumbnailPath = pp.getImg();  // 프로필사진 변동안했을때 그대로 두기위해서
+		    	String url = "/uploads/";
+
+		    	if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
+
+		    		storageService.store(file);
+		    		thumbnailPath = StringUtils.cleanPath(file.getOriginalFilename());
+		    		
+		   	
+		    	}
+		    	
+		    	popularRepository.popularUpdate(pp.getName(), thumbnailPath, pp.getPid(), pp.getId());
+				
+		    	
+		    	
+		            return "redirect:/userInfo/myCommunity";
+		        
+
+		    }	
+		
 			 
 
 }

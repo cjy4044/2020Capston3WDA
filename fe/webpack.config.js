@@ -38,6 +38,7 @@ module.exports = {
     voteResult: path.join(__dirname,'./app/vote/voteResult.jsx'),
     layout: path.join(__dirname,'./app/layout/layout.jsx'),
     userInfo: path.join(__dirname,'./app/userInfo/userInfo.jsx'),
+    myProgram: path.join(__dirname,'./app/userInfo/myProgram.jsx'),
     profileIndex: path.join(__dirname,'./app/userInfo/profileIndex.jsx'),
     allCompany: path.join(__dirname,'./app/userInfo/allCompany.jsx'),
     proRegIndex: path.join(__dirname,'./app/programRegister/proRegIndex.js'),
@@ -49,8 +50,10 @@ module.exports = {
     detailIndex: path.join(__dirname,'./app/community/detailIndex.js'),
     voterVoteList : path.join(__dirname, './app/userInfo/voterVoteList.jsx'),
     manageVote : path.join(__dirname, './app/userInfo/manageVote.jsx'),
-    blockChainIntroduce : path.join(__dirname, './app/introduce/blockChainIntroduce.js')
-    
+    blockChainIntroduce : path.join(__dirname, './app/introduce/blockChainIntroduce.js'),
+    myCommunity: path.join(__dirname,'./app/userInfo/myCommunity.jsx'),
+   
+
 
   },
   output: {

@@ -47,6 +47,7 @@ import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Judge;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
@@ -58,6 +59,7 @@ import com.vote.vote.repository.CustomMemberRepository;
 import com.vote.vote.repository.CustomProgramRepository;
 import com.vote.vote.repository.JudgeJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
@@ -97,6 +99,11 @@ public class UserInfoController {
 	// private VoteJpaRepository voteRepository;
 	@Autowired
 	private CustomVoteRepository customVoteRepository;
+	
+	@Autowired
+	private PopularJpaRepository popularRepository;
+
+	
 	//개인정보
 	@RequestMapping(value={"","/"})
 	public String index(RedirectAttributes redirAttrs,Model model) {  
@@ -416,5 +423,173 @@ public class UserInfoController {
 		
 		return result;
 	}
+		 
+		 //나의 프로그램
+			@RequestMapping(value={"/myProgram"})
+			public String myProgram() {        
+				
+		        return "userInfo/myProgram";
+		       	}
+			
+		 
+		 @RequestMapping(value={"/myProgram/axios","/myProgram/axios/"}) //사용자정보
+			@ResponseBody
+			public JSONObject myProgramAxios(){
+					
+			 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			CustomUserDetails sessionUser = (CustomUserDetails)principal;
+			
+			 
+		
+		  if(sessionUser.getROLE().equals("2")) {
+		  
+		  ProgramManager pm = pmRepository.findById(sessionUser.getR_ID()); 
+		  
+//		  System.out.println( pm.getId());
+		 
+		  
+		  Program program = programRepository.findById(pm.getProgramId());
+	  
+//		  System.out.println(program.toString());
+		  
+		
+
+		
+				JSONObject programData = new JSONObject();
+				
+				programData.put("id", program.getId());
+				programData.put("name", program.getName());
+				programData.put("img", program.getImg());
+				programData.put("category", program.getCategory());
+
+				
+				
+					
+			return programData;
+		  
+		  
+		  }else { 
+			  System.out.println("매니저가아닙니다.");
+			  
+		  }
+		  
+		return null;
+		 
+				
+				
+				
+			
+
+			 	
+			}
+		 
+		 @RequestMapping(value="/programUpdate", method=RequestMethod.POST)
+		    public String programUpdate(Program p, 
+		    		RedirectAttributes redirAttrs, Principal principal,
+		    		@RequestParam(name="file") MultipartFile file){
+		       	
+			 
+			 
+		    	String thumbnailPath = p.getImg();
+
+
+		    	if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
+		    		
+		    		storageService.store(file);
+			    	
+			    	thumbnailPath =  StringUtils.cleanPath(file.getOriginalFilename());
+		   	
+		    	}	
+
+		 
+			 programRepository.programUpdate(p.getId(), p.getName(), thumbnailPath, p.getCategory());
+			
+			 
+		    	return "redirect:/userInfo/myProgram";   
+
+		    }
+		 
+		 
+		 //팬클럽 관리
+			@RequestMapping(value={"/myCommunity"})
+			public String myCommunity() {        
+				System.out.println("팬클럽관리");
+		        return "userInfo/myCommunity";
+		        
+		       	}
+		 
+			 @RequestMapping(value={"/myCommunity/axios","/myCommunity/axios/"}) //사용자정보
+				@ResponseBody
+				public JSONArray myCommunityAxios(Principal user, @PageableDefault Pageable pageable, Model model){
+						
+				Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+				if(sessionUser.getROLE().equals("2")) {
+			  
+					ProgramManager pm = pmRepository.findById(sessionUser.getR_ID()); 
+			  
+//				  System.out.println( pm.getId());
+		  
+					Program program = programRepository.findById(pm.getProgramId());
+	  
+     				System.out.println("gd"+pm.getProgramId());
+     				
+					List<Popular> populares = popularRepository.findByPid(program.getId());
+		
+								
+					JSONArray json = new JSONArray();
+					
+					for( Popular popular : populares){
+						JSONObject popularData = new JSONObject();
+						
+						popularData.put("id", popular.getId());
+						popularData.put("name", popular.getName());
+						popularData.put("img", popular.getImg());
+						popularData.put("p_id", popular.getPid());
+
+						
+						json.add(popularData);
+					}
+				
+					//json.add(count);
+					json.add(pm.getProgramId());
+					return json;
+			  
+			  
+			  }else { 
+				  System.out.println("잘못된 접근입니다.");
+				  
+			  }
+			  
+			return null;	 	
+				}
+			 
+			 
+			@RequestMapping(value="/insertPopular", method=RequestMethod.POST)
+			    public String insertOk(Popular pp, RedirectAttributes redirAttrs, Principal principal
+			    		,@RequestParam(name="img2") MultipartFile file
+			    		){
+			       	
+					
+			    	System.out.println("test:"+pp.toString());
+
+
+	
+			    		storageService.store(file);
+			    		String thumbnailPath = StringUtils.cleanPath(file.getOriginalFilename());
+
+			    		pp.setImg(thumbnailPath);
+			    		
+			    		System.out.println("test:"+pp.toString());
+			    	
+			    		popularRepository.saveAndFlush(pp);
+				
+			            return "redirect:/userInfo/myCommunity";
+			        
+
+			    }
+			 
+			 
 
 }

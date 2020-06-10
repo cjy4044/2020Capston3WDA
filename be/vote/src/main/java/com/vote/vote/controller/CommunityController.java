@@ -78,7 +78,6 @@ public class CommunityController {
 			json.put("img",program.getImg());
 			result.add(json);
 		}
-		System.out.println("프로그램 json 넘김");
 		return result;
 	}
     
@@ -88,11 +87,7 @@ public class CommunityController {
   	public String detailIndex(@PathVariable("program") int program) {
     	
     	System.out.println(program);
-		// System.out.println("/ --> index");
-		// if(user != null){
-		// 	// UserDetails u = (UserDetails)user;
-		// 	System.out.println(u);
-		// }
+
 		return "community/detailIndex";
 	}	
 }

@@ -15,6 +15,7 @@ import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.repository.ReplyRepository;
 import com.vote.vote.repository.RfileRepository;
 import com.vote.vote.service.AudienceService;
+import com.vote.vote.service.RfileService;
 import com.vote.vote.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ import org.springframework.util.StringUtils;
 @RequestMapping("/audience")
 public class AudienceController {
 
-  
+    private RfileService rfileService;
     private AudienceService audienceService;
     @Autowired
     AudienceJpaRepository audienceJpaRepository;
@@ -61,8 +62,9 @@ public class AudienceController {
     @Autowired  
 	private StorageService storageService; 
 
-    public AudienceController(AudienceService audienceService) {
+    public AudienceController(AudienceService audienceService, RfileService rfileService) {
         this.audienceService = audienceService;
+        this.rfileService = rfileService;
     }
 
     //리스트
@@ -70,8 +72,10 @@ public class AudienceController {
     public String audience(@PageableDefault Pageable pageable, Model model) {
 
         Page<Audience> boardList = audienceService.getBoardList(pageable);
-        Page<Rfile> fileList = audienceService.getBoardList(pageable);
+        Page<Rfile> imgList = rfileService.getImgList(pageable);
         model.addAttribute("boardList", boardList);
+        model.addAttribute("imgList", imgList);
+        System.out.println(imgList);
         return "audience/list2";
     }
 

@@ -531,6 +531,18 @@ public class VoteController {
 				json.add(8,"0");
 				json.add(9,"0");
 				return json;
+		}else if(vote.getShowState() == 1){
+			json.add(0,"");
+				json.add(1,"");
+				json.add(2,"");
+				json.add(3,"");
+				json.add(4,"");
+				json.add(5,"");
+				json.add(6,"");
+				json.add(7,"1");
+				json.add(8,"0");
+				json.add(9,"0");
+				return json;
 		}
 
 		try {

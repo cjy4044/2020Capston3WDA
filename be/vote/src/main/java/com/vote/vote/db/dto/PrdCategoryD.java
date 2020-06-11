@@ -8,6 +8,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="product_category_d")
 public class PrdCategoryD {
+    // @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VOTE_SEQ_GENERATOR")
+    // @SequenceGenerator(name="VOTE_SEQ_GENERATOR", sequenceName="VOTE_SEQ", allocationSize = 1)
+    
     @Id
     @Column(nullable = false)
     private int category_d_id;

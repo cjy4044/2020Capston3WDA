@@ -42,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// 소개 
 			.antMatchers("/introduce/**").permitAll()
 
+			// 쇼핑몰
+			.antMatchers("/shop/**").permitAll()//  투표페이지 
 			// .antMatchers("/vote/axios").permitAll()
 			// .antMatchers("/vote/axios/**").hasRole("USER")
 			// .antMatchers("/vote/").hasRole("USER")

@@ -12,11 +12,11 @@ export default class Section extends React.Component {
             <section>
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-3">
+                        <div className="col-sm-3"> {/* 왼쪽 카테고리, 프로그램 별... */} 
                             <LeftSidebar></LeftSidebar>
                         </div>
-
-                        <div className="col-sm-9 padding-right">
+                        
+                        <div className="col-sm-9 padding-right"> {/* 오른쪽 신상품... 상품목록 */}
                             <NewItem data={this.props.data}></NewItem>
                             <CateTab></CateTab>
 

@@ -618,6 +618,22 @@ public class UserInfoController {
 		        
 
 		    }	
+			
+			@RequestMapping(value="/deletePopular", method=RequestMethod.POST)
+		    public String deleteOk(Popular pp, RedirectAttributes redirAttrs, Principal principal
+		    		){
+		       	
+				System.out.println(pp.toString());
+		    			    	
+		    	
+		    	popularRepository.deleteByid(pp.getId());
+				
+		    	
+		    	
+		            return "redirect:/userInfo/myCommunity";
+		        
+
+		    }	
 		
 			 
 

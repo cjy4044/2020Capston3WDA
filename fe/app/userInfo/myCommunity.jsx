@@ -115,7 +115,7 @@ class MyCommunity extends Component {
                         </tr>
 
                         <tr>
-                            <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)} required/></td> 
+                            <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)}/></td> 
                        </tr> 
                          
                        </tbody>
@@ -127,7 +127,7 @@ class MyCommunity extends Component {
  
                       {this.state.UD == 0 &&  <button formAction="/userInfo/insertPopular">등록</button>}
                       {this.state.UD != 0 &&  <button formAction="/userInfo/updatePopular">수정</button>}
-                      {this.state.UD != 0 &&  <button formAction="#">삭제</button>}
+                      {this.state.UD != 0 &&  <button formAction="/userInfo/deletePopular">삭제</button>}
                       <button type="button" onClick={this.handleCloseModal.bind(this)}>닫기</button>
                      
                       </div>

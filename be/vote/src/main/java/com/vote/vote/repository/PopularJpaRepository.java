@@ -19,6 +19,12 @@ public interface PopularJpaRepository extends JpaRepository<Popular, String> {
     
     public List<Popular> findByPid(int pid);
     
+    @Transactional
+    @Modifying
+    void deleteByid(int id);   
+    
+   
+    
     
     @Modifying
     @Transactional

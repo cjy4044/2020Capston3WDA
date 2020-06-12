@@ -69,8 +69,7 @@ public class AudienceController {
 
     }
 
-
-    //-----------------------------------------사용자
+    // -----------------------------------------사용자
     // 모든프로그램 게시글 리스트
     @GetMapping(value = { "/", "/list" })
     public String audienceAllList(@PageableDefault Pageable pageable, Model model) {
@@ -115,14 +114,13 @@ public class AudienceController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
+
             aDetailRepository.saveAndFlush(aDetail);
-            return "응모완료!";   
+            return "응모완료!";
         }
     }
 
-
-    // ---------------------------------관리자 
+    // ---------------------------------관리자
     // 게시글 업로드(관리자)
     @GetMapping("/create")
     public String mUpload(Model model) {
@@ -165,7 +163,7 @@ public class AudienceController {
     // 게시글 삭제
     // @GetMapping("/delete/{applyId}")
     // public String delete(@PathVariable int applyId, Model model){
-    // model.addAttribute("applyId", applyId);
+    // model.addAttribute("applyId", applyId); 
     // return "/delete";
     // }
     @PostMapping("/{applyId}")
@@ -174,19 +172,19 @@ public class AudienceController {
         return "redirect:/audience/";
     }
 
-    //내가 작성한 게시글(관리자)
+    // 내가 작성한 게시글(관리자)
     @GetMapping(value = { "/mlist" })
     public String mList(Principal principal, Pageable pageable, Model model) {
         Member member = memberRepository.findByUserid(principal.getName());
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작 
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "applyId")); // <- Sort 추가
-        
+
         Page<Audience> boardList = audienceJpaRepository.findAllByrId(pageable, member.getNo());
         model.addAttribute("boardList", boardList);
         return "audience/mList";
     }
 
-    //내가 작성한 게시글 보기(관리자)
+    // 내가 작성한 게시글 보기(관리자)
     @RequestMapping("/mread/{applyId}")
     public String mRead(Model model, @PathVariable int applyId) {
         model.addAttribute("audience", audienceJpaRepository.findById(applyId));
@@ -199,8 +197,13 @@ public class AudienceController {
     // 응모인원 리스트 ajax
     @GetMapping("/showRecruits")
     public String showList(Model model, Audience audience, Principal principal) {
-        // List<Member> list = new ArrayList();
-        // list = memberRepository.showRecruits(audience.getApplyId());
+        List<Member> list = new ArrayList<Member>();
+        try {
+            list = memberRepository.showRecruits(audience.getApplyId());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
        
         System.out.println("gd");
         return "audience/showRecruits";

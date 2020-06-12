@@ -50,6 +50,6 @@ public interface MemberJpaRepository extends JpaRepository<Member, String> {
 	@Query(value ="select DISTINCT r_user.username, r_user.phone"
 				 + "from a_detail, r_user"
 				 + "where a_detail.r_id = r_user.r_id and  a_detail.apply_id = ?1", nativeQuery = true)
-	ArrayList<Member> showRecruits(@Param("applyId") int applyId) throws Exception;
+	public ArrayList<Member> showRecruits(@Param("applyId") int applyId) throws Exception;
 
 }

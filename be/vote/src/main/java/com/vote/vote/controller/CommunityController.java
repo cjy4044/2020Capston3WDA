@@ -18,18 +18,23 @@ import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
+import com.vote.vote.db.dto.PopularBoard;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
+import com.vote.vote.repository.CustomPopularBoardRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularBoardJpaRepository;
 import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.service.KakaoAPIService;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -59,6 +64,12 @@ public class CommunityController {
 	@Autowired
 	PopularJpaRepository popularRepository;
 	
+	@Autowired
+	PopularBoardJpaRepository popularBoardRepository;
+	
+	@Autowired
+	CustomPopularBoardRepository customPopularBoardRepository;
+	
     @RequestMapping(value={"","/"})
 	public String index() {
 		// System.out.println("/ --> index");
@@ -66,6 +77,7 @@ public class CommunityController {
 		// 	// UserDetails u = (UserDetails)user;
 		// 	System.out.println(u);
 		// }
+    	    		
 		return "community/index";
 	}	
     
@@ -144,14 +156,100 @@ public class CommunityController {
     
     }
     
-    @RequestMapping(value={"/{program}/{popular}/","/{program}/{popular}/"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/{program}/{popular}","/{program}/{popular}/"})
    	public String popularBoard(@PathVariable("program") int programNum,
    								@PathVariable("popular") int popularNum,Model model) {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
      	
+     	model.addAttribute("popularName", popular.getName());
+     	
+     	System.out.println(popularBoardRepository.findAll());
+     	
  		return "community/popularBoard";
+ 	}	
+    
+    @RequestMapping(value={"/{program}/{popular}/axios","/{program}/{popular}/axios"}) //사용자정보
+	@ResponseBody
+	public JSONArray popularBoardAxios(
+			    @PathVariable("program") int programNum,
+				@PathVariable("popular") int popularNum,
+				Principal user, 
+				@PageableDefault Pageable pageable, Model model){
+	
+		List<PopularBoard> popularboards = customPopularBoardRepository.findAll(pageable);
+	
+		long count = customPopularBoardRepository.CountAll();
+		
+		
+
+		System.out.println("pageable : " + pageable);
+
+		System.out.println("getOffset : " + pageable.getOffset());
+		
+		int gob;
+		int rownum;
+		
+		if(pageable.getPageNumber()==0) {
+			 gob = 0;
+			
+		}else {
+			 gob = 10;
+		}
+		int i = 0;
+		rownum = (int)count - (pageable.getPageNumber() * gob) ;
+		
+		System.out.println(count-pageable.getPageNumber());
+		
+		JSONArray json = new JSONArray();
+
+		for( PopularBoard popularBoard : popularboards){
+			JSONObject popularBoardData = new JSONObject();
+			
+			popularBoardData.put("rownum",rownum-i);
+			popularBoardData.put("id", popularBoard.getId());
+			popularBoardData.put("popular_id", popularBoard.getPopularid());
+			popularBoardData.put("title", popularBoard.getTitle());
+			popularBoardData.put("content", popularBoard.getContent());
+			popularBoardData.put("date", popularBoard.getDate());
+			popularBoardData.put("mdate", popularBoard.getMdate());
+			popularBoardData.put("viewCount", popularBoard.getViewcount());
+			popularBoardData.put("replyCount", popularBoard.getReplycount());
+			popularBoardData.put("r_id", popularBoard.getRid());			
+			i++;
+			json.add(popularBoardData);
+		}
+		json.add(count);
+		
+		
+		
+		int countList= 10;
+		int totalPage= (int)(count) / countList;
+		
+		if (count%countList>0) {
+			
+			totalPage++;
+			
+		}
+				
+		return json;
+	}
+    
+    @RequestMapping(value={"/{program}/{popular}/{popularBoard}","/{program}/{popular}/{popularBoard}/"})
+   	public String popularBoardView(@PathVariable("program") int programNum,
+   								@PathVariable("popular") int popularNum,
+   								@PathVariable("popularBoard") int BoardNum,Model model) {
+     	
+     	Program program = programRepository.findById(programNum);
+     	Popular popular = popularRepository.findById(popularNum);
+     	PopularBoard board = popularBoardRepository.findById(popularNum);
+     	
+     	//model.addAttribute("popularName", popular.getName());
+     	
+     	
+     	
+ 		return "community/popularView";
  	}	
     
 }

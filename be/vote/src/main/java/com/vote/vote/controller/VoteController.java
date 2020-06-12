@@ -190,15 +190,16 @@ public class VoteController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		System.out.println(userDetails);
 
-		storageService.store(thumbnail);
-		String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
-
+		// storageService.store(thumbnail);
+		// String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
+		String thumbnailPath = storageService.store2(thumbnail);
 
 		ArrayList<String> fileName = new ArrayList<String>();
 		
 		for(int i=0;i<file.length;i++){
-			storageService.store(file[i]);   // 파일 저장
-			fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
+			// storageService.store(file[i]);   // 파일 저장
+			// fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
+			fileName.add( storageService.store2(file[i]) );
 		}
 
 		Vote data = new Vote();

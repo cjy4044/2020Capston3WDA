@@ -17,11 +17,14 @@ import javax.servlet.http.HttpSession;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
+import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.service.KakaoAPIService;
 
@@ -52,6 +55,9 @@ public class CommunityController {
 
 	@Autowired
 	ProgramJpaRepository programRepository;
+	
+	@Autowired
+	PopularJpaRepository popularRepository;
 	
     @RequestMapping(value={"","/"})
 	public String index() {
@@ -84,10 +90,68 @@ public class CommunityController {
     
 		
     @RequestMapping(value={"/{program}","/{program}/"}, method = RequestMethod.GET)
-  	public String detailIndex(@PathVariable("program") int program) {
+  	public String detailIndex(@PathVariable("program") int programNum,Model model) {
     	
-    	System.out.println(program);
-
+    	Program program = programRepository.findById(programNum);
+    	model.addAttribute("programName", program.getName());
+    	
 		return "community/detailIndex";
 	}	
+    
+    @RequestMapping(value={"/{program}/axios","/{program}/axios/"}, method = RequestMethod.GET) // 해당 프로그램 인기인 정보
+  	@ResponseBody
+  	public JSONObject detailProgramAxios(@PathVariable("program") int programNum ){
+  	
+      	System.out.println(programNum);
+      	
+      	Program program = programRepository.findById(programNum);
+
+
+  		JSONObject programData = new JSONObject();
+
+  		programData.put("id", program.getId());
+  		programData.put("name", program.getName());
+  		programData.put("img", program.getImg());
+  		programData.put("category", program.getCategory());
+	
+  	    return programData; 
+  	   
+      }
+    
+    @RequestMapping(value={"/{program}/popular/axios","/{program}/popular/axios/"}) // 해당 프로그램 인기인 정보
+  	@ResponseBody
+  	public JSONArray  popularAxios(@PathVariable("program") int programNum ){
+  	
+      	
+      	List<Popular> populares = popularRepository.findByPid(programNum);
+
+
+      	JSONArray json = new JSONArray();
+		
+		for( Popular popular : populares){
+			JSONObject popularData = new JSONObject();
+			
+			popularData.put("id", popular.getId());
+			popularData.put("name", popular.getName());
+			popularData.put("img", popular.getImg());
+			popularData.put("p_id", popular.getPid());
+
+			json.add(popularData);
+		}
+	
+
+		return json;
+    
+    }
+    
+    @RequestMapping(value={"/{program}/{popular}/","/{program}/{popular}/"}, method = RequestMethod.GET)
+   	public String popularBoard(@PathVariable("program") int programNum,
+   								@PathVariable("popular") int popularNum,Model model) {
+     	
+     	Program program = programRepository.findById(programNum);
+     	Popular popular = popularRepository.findById(popularNum);
+     	
+ 		return "community/popularBoard";
+ 	}	
+    
 }

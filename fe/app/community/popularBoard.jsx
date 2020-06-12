@@ -1,12 +1,10 @@
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
-import ProgramItem from './programItem.jsx';
-
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
-class Index extends Component {
+class PopularBoard extends Component {
     
     constructor(props){
         
@@ -15,23 +13,19 @@ class Index extends Component {
     }
     async componentDidMount(){
 
-        let {data} = await axios.get('/community/axios');
-        this.setState({data});
     }
 
     render() {
         
         return(
         <div>
-
-                <div className="voteItem">
-                    <ProgramItem data={this.state.data}/>
-                </div>
-         </div> )
+sss
+        </div> 
+         )
     }
 }
      
   
 
 
-ReactDOM.render(<Index/>,document.getElementById('communityIndex'));
+ReactDOM.render(<PopularBoard/>,document.getElementById('popularBoard'));

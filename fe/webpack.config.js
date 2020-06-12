@@ -53,6 +53,7 @@ module.exports = {
     blockChainIntroduce : path.join(__dirname, './app/introduce/blockChainIntroduce.js'),
     myCommunity: path.join(__dirname,'./app/userInfo/myCommunity.jsx'),
     updatePopular: path.join(__dirname,'./app/userInfo/updatePopular.jsx'),
+    popularBoard: path.join(__dirname,'./app/community/popularBoard.jsx'),
    
 
 

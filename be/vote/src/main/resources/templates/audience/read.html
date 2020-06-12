@@ -22,10 +22,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}"> -->
 	<div>
         <a href="" th:href="@{'/audience/update/' + ${audience.applyId}}">수정</a> 
         
-        <form id="delete-form" th:action="@{'/audience/' + ${audience.applyId}}" method="post">
-            <input type="hidden" name="_method" value="delete"/>
-            <button id="delete-btn">삭제</button>
-        </form>
+       
 	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
 		<a href="" th:href="@{/audience/}">목록</a>
 	</div>

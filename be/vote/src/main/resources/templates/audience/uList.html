@@ -50,7 +50,7 @@
                 <div class="webzineList">
                     <ul th:each="list:${boardList}">
                         <li class="">
-                            <a href="#" class="list_img"><img src="/uploads/개장수.png"alt=""></a>
+                            <a href="#" class="list_img"><img src="#" th:src="@{'/uploads/' + ${list.img}}" alt=""></a>
                             <a href="#" th:href="@{'/audience/read/' + ${list.applyId}}" class="bo_tit">
                                 <span class="sound_only">50</span> <strong th:text="${list.aTitle}"></strong>
                                 <i class="fa fa-download" aria-hidden="true"></i>

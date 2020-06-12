@@ -23,10 +23,11 @@ public class AudienceService {
 
     public Page<Audience> getBoardList(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
-      
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "applyId")); // <- Sort 추가
         return audienceJpaRepository.findAll(pageable);
     }
+
+   
 
     
 }

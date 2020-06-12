@@ -57,6 +57,9 @@ import net.minidev.json.JSONObject;
 @Controller
 @RequestMapping("/community")
 public class CommunityController {
+	
+	@Autowired
+	private MemberJpaRepository memberRepository;	
 
 	@Autowired
 	ProgramJpaRepository programRepository;
@@ -203,12 +206,20 @@ public class CommunityController {
 		System.out.println(count-pageable.getPageNumber());
 		
 		JSONArray json = new JSONArray();
-
+		Member member = new Member();
 		for( PopularBoard popularBoard : popularboards){
 			JSONObject popularBoardData = new JSONObject();
+	
+			member = memberRepository.findByNo(popularBoard.getRid());
+			
+			String nickname = member.getNickname();
+			if(nickname==null) {
+				nickname = member.getName();
+			}
 			
 			popularBoardData.put("rownum",rownum-i);
 			popularBoardData.put("id", popularBoard.getId());
+			popularBoardData.put("nickname", nickname);
 			popularBoardData.put("popular_id", popularBoard.getPopularid());
 			popularBoardData.put("title", popularBoard.getTitle());
 			popularBoardData.put("content", popularBoard.getContent());
@@ -251,5 +262,40 @@ public class CommunityController {
      	
  		return "community/popularView";
  	}	
+    
+    @RequestMapping(value={"/{program}/{popular}/{popularBoard}/axios"}, method = RequestMethod.GET) // 해당 프로그램 인기인 정보
+  	@ResponseBody
+  	public JSONObject popularBoardAxios(@PathVariable("program") int programNum,
+										@PathVariable("popular") int popularNum,
+										@PathVariable("popularBoard") int BoardNum,Model model ){
+  	
+
+      	
+      	PopularBoard popularBoard = popularBoardRepository.findById(BoardNum);
+
+
+  		JSONObject popularBoardData = new JSONObject();
+  		
+  		Member member = memberRepository.findByNo(popularBoard.getRid());
+		member = memberRepository.findByNo(popularBoard.getRid());
+		
+		String nickname = member.getNickname();
+		if(nickname==null) {
+			nickname = member.getName();
+		}
+		popularBoardData.put("nickname", nickname);
+  		popularBoardData.put("id", popularBoard.getId());
+   		popularBoardData.put("popular_id", popularBoard.getPopularid());
+  		popularBoardData.put("title", popularBoard.getTitle());
+  		popularBoardData.put("content", popularBoard.getContent());
+		popularBoardData.put("date", popularBoard.getDate());
+		popularBoardData.put("mdate", popularBoard.getMdate());
+		popularBoardData.put("viewCount", popularBoard.getViewcount());
+		popularBoardData.put("replyCount", popularBoard.getReplycount());
+		popularBoardData.put("r_id", popularBoard.getRid());	
+	
+  	    return popularBoardData; 
+  	   
+      }
     
 }

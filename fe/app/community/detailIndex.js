@@ -34,7 +34,7 @@ class Index extends Component {
     render() {
         
         return(
-        <div class="community_item">
+        <div className="community_item">
             
 
 

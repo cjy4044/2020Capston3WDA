@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MemberJpaRepository extends JpaRepository<Member,String>{
+	public Member findByNo(int userid);
     public Member findByUserid(String userid);
     public ArrayList<Member> findAll();
     

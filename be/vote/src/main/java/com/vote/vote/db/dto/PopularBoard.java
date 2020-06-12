@@ -96,7 +96,12 @@ public class PopularBoard {
 
 
 	public String getDate() {
-		return date;
+		String str = this.date;
+		if(str != null) {
+		String[] split = str.split(" ");
+	 	return split[0]; }
+		else {
+			return date; }
 	}
 
 

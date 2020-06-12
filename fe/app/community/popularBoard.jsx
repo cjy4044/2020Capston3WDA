@@ -65,10 +65,11 @@ class PopularBoard extends Component {
                                 <TableRow>
                                             <TableCell>번호</TableCell>
                                             <TableCell>제목</TableCell>
-                                            <TableCell>작성일</TableCell>
-                                            <TableCell>조회수</TableCell>
-                                            <TableCell>댓글수</TableCell>
                                             <TableCell>작성자</TableCell>
+                                            <TableCell>댓글수</TableCell>
+                                            <TableCell>조회수</TableCell>
+                                            <TableCell>작성일</TableCell>
+
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -131,12 +132,11 @@ class Index extends Component{
                             <TableRow key={'div'+index}>
 
                                 <TableCell key={index}>{c.rownum}</TableCell>
-                                <TableCell><a href={`${param}/${c.id} `}>{c.title}</a></TableCell>
-                                <TableCell>{c.date}</TableCell>
-                                <TableCell>{c.viewCount} </TableCell>
+                                <TableCell ><a href={`${param}/${c.id} `}>{c.title}</a></TableCell>
+                                <TableCell>{c.nickname}</TableCell>
                                 <TableCell>{c.replyCount}</TableCell>
-                                <TableCell>{c.r_id}</TableCell>
-                             
+                                <TableCell>{c.viewCount} </TableCell>
+                                <TableCell>{c.date}</TableCell>
                              </TableRow>
                              
                             

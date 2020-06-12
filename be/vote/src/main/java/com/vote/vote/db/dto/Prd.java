@@ -34,6 +34,9 @@ public class Prd {
     @Column(nullable = true)
     private int P_MANAGER;
 
+    @Column(nullable = true)
+    private int product_category_d;
+    
     public int getPRODUCT_ID() {
         return this.PRODUCT_ID;
     }
@@ -120,5 +123,13 @@ public class Prd {
 
     public void setP_MANAGER(int P_MANAGER) {
         this.P_MANAGER = P_MANAGER;
+    }
+
+    public int getProduct_category_d() {
+        return product_category_d;
+    }
+
+    public void setProduct_category_d(int product_category_d) {
+        this.product_category_d = product_category_d;
     }
 }

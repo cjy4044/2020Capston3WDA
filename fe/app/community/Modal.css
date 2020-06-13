@@ -23,7 +23,8 @@
   .MyModal .content {
     background: white;
     padding: 1rem;
-    width: 300px;
+    margin : auto;
+    width: 60%;
     height: auto;
     
   }

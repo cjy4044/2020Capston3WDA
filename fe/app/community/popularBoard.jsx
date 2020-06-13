@@ -119,22 +119,9 @@ class PopularBoard extends Component {
 
                       
                       
-                     
-   
-       
-                   <table className="register_table" id="tablebox">
-                      <tbody>
-                         <tr>
-                           <td><TextField id="standard-secondary" fullWidth label="제목" color="primary" /></td>
-                         </tr>
-
-                        <tr>
-                            <td>{profile_preview}</td>
-                        </tr>
-
-                        <tr>
-                        <td>
-                        <TextField
+                      <TextField id="standard-secondary" fullWidth label="제목" color="primary" />
+                      {profile_preview}
+                      <TextField
                             id="outlined-multiline-static"
                             // error={this.state.data.customer === "" ? true : false
                             label="내용"
@@ -143,15 +130,10 @@ class PopularBoard extends Component {
                             fullWidth
                             placeholder="Default Value"
                             variant="outlined"
-                            /></td>
-                        </tr>
-
-                        <tr>
-                            <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)}/></td> 
-                       </tr> 
-                         
-                       </tbody>
-                    </table>                                                        
+                            />
+                            <input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)}/>
+       
+                                  
                             
                      <button type="submit">등록</button>
 

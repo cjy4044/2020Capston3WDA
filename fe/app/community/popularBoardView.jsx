@@ -46,7 +46,7 @@ class PopularBoardView extends Component {
         return(
         <div>
               <Paper >
-                            <Table size="small" id="myTable">
+                            <Table size="small">
                             <TableHead>
                                 <TableRow>
                                 <TableCell colSpan="5">{this.state.popularBoard.title}</TableCell>

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,${programName})}">
+th:replace="~{main_layout::layout(~{::content},_,${popularName})}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 사이드바 -->
-    <script src="#"></script>
+    <!-- <script src="/js/side/popularBoard.js"></script> -->
 </head>
 <body>
 
-</div>
     <content>
-            <div id="communityIndex"></div>
-       		<script src="/assets/detailIndex.js"></script>
+		
+            <div id="popularBoardCreate"></div>
+       		<script src="/assets/popularBoardCreate.js"></script>
+       		
     </content>
 
 </body>

@@ -34,4 +34,4 @@ class Index extends Component {
   
 
 
-ReactDOM.render(<Index/>,document.getElementById('communityIndex'));
+ReactDOM.render(<Index/>,document.getElementById('popularBoard'));

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "b_apply")
 public class Audience {
@@ -27,9 +29,11 @@ public class Audience {
     private String aContent; // 내용41
 
     @Column(name = "a_date")
+    @DateTimeFormat
     private Date aDate; // 등록일
 
     @Column(name = "a_mdate")
+    @DateTimeFormat
     private Date aMdate; // 수정일
 
     @Column(name = "a_view_count")
@@ -45,9 +49,11 @@ public class Audience {
     private int aLimit; // 신청횟수 제한
 
     @Column(name = "a_startdate")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date aStartdate; // 응모시작일
 
     @Column(name = "a_enddate")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date aEnddate; // 응모마감일
 
     @Column(nullable = false, name="r_id")

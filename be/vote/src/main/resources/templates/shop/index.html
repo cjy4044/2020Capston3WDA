@@ -27,14 +27,7 @@
 <!--/head-->
 
 <body>
-	<div display="none">
-		<th:block sec:authorize="isAuthenticated()">
-			<!-- 로그인 되어 있는가 -->
-			<span id="username" sec:authentication="principal.name"></span>
-		</th:block>
-	</div>
-
-
+	<span id="username" sec:authentication="principal.name" style="display: none;"></span>
 	<div id="root">
 	</div>
 	<script src="/assets/Shop_index.js"></script>

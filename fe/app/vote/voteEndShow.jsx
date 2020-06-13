@@ -28,7 +28,7 @@ class VoteShow extends React.Component {
                 return (
                     <div key={vote.name+index} className="card_div" > 
                         <ItemCard2 key={vote.img} img={vote.img} name={vote.name} result={this.props.data.data[index]} count={this.props.data.count}
-                        win={this.props.data.win.includes(this.props.data.data[index])}/>
+                        win={this.props.data.win.includes(this.props.data.data[index])} show={this.props.data.show}/>
                     </div>
                 )
             }
@@ -44,7 +44,7 @@ class Show extends React.Component{
         this.stTime;
         this.edTime;
         this.rsTime;
-        this.voteData = {data:[],count:0, win:[],winNum:0}
+        this.voteData = {data:[],count:0, win:[],winNum:0, show:1}
     }
 
     async componentDidMount(){
@@ -83,7 +83,8 @@ class Show extends React.Component{
         }
         // https://stackoverflow.com/questions/32647149/why-is-math-max-returning-nan-on-an-array-of-integers
         
-        this.voteData = {data : data.data, count : data.count, win : winnerData, winNum : data.win}
+        this.voteData = {data : data.data, count : data.count, win : winnerData, winNum : data.win, show:0}
+        console.log("aaaaa", this.voteData)
 
         this.forceUpdate()
     }

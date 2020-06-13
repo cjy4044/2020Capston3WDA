@@ -190,15 +190,16 @@ public class VoteController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		System.out.println(userDetails);
 
-		storageService.store(thumbnail);
-		String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
-
+		// storageService.store(thumbnail);
+		// String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
+		String thumbnailPath = storageService.store2(thumbnail);
 
 		ArrayList<String> fileName = new ArrayList<String>();
 		
 		for(int i=0;i<file.length;i++){
-			storageService.store(file[i]);   // 파일 저장
-			fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
+			// storageService.store(file[i]);   // 파일 저장
+			// fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
+			fileName.add( storageService.store2(file[i]) );
 		}
 
 		Vote data = new Vote();
@@ -521,6 +522,18 @@ public class VoteController {
 				
 		}else if(vote.getLongResultShowTime()> nowTime){// 투표 결과 공개시간이 아직 되지 않은 경우.
 				json.add(0,"");
+				json.add(1,"");
+				json.add(2,"");
+				json.add(3,"");
+				json.add(4,"");
+				json.add(5,"");
+				json.add(6,"");
+				json.add(7,"1");
+				json.add(8,"0");
+				json.add(9,"0");
+				return json;
+		}else if(vote.getShowState() == 1){
+			json.add(0,"");
 				json.add(1,"");
 				json.add(2,"");
 				json.add(3,"");

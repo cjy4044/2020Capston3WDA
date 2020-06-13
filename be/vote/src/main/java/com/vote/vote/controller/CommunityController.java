@@ -282,6 +282,7 @@ public class CommunityController {
       	PopularBoard popularBoard = popularBoardRepository.findById(BoardNum);
 
 
+
   		JSONObject popularBoardData = new JSONObject();
   		
   		Member member = memberRepository.findByNo(popularBoard.getRid());
@@ -307,8 +308,14 @@ public class CommunityController {
 		popularBoardData.put("sessionUser", sessionUser.getR_ID());	
 		popularBoardData.put("sessionRole", sessionUser.getROLE());
 		popularBoardData.put("managerId", pm.getId());
-	
+		System.out.println("-----------------");
+		System.out.println(sessionUser.getR_ID());
+		System.out.println(sessionUser.getROLE());
+		System.out.println(pm.getId());
   	    return popularBoardData; 
+  	    
+      	
+    	
   	   
       }
     

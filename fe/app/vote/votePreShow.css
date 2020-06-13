@@ -140,9 +140,7 @@ body{
     #item{
         width: 100% !important;
     }
-    article{
-        width: 100% !important;
-    }
+    
     .card_div  div{
         margin: auto !important;
     }
@@ -154,5 +152,10 @@ body{
     }
     .sc-AxjAm{
         width: 80%;
+    }
+}
+@media(max-width:400px){
+    article{
+        width: 100% !important;
     }
 }

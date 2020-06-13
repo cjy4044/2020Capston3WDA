@@ -1,9 +1,16 @@
 package com.vote.vote.db.dto;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -12,6 +19,8 @@ public class Prd {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_SEQ_GENERATOR")
+    @SequenceGenerator(name="PRODUCT_SEQ_GENERATOR", sequenceName="PRODUCT_SEQ", allocationSize = 1)
     private int PRODUCT_ID;
     @Column(nullable = true)
     private int PROGRAM_ID;
@@ -29,8 +38,10 @@ public class Prd {
     private String P_UPLOAD;
     @Column(nullable = true)
     private String P_STATE;
+
     @Column(nullable = true)
     private String P_ENDDATE;
+
     @Column(nullable = true)
     private int P_MANAGER;
 

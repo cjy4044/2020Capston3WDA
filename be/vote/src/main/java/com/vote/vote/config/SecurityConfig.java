@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override  
 	protected void configure(HttpSecurity http) throws Exception{   
-		
+		// 0 : 일반 사용자 , 1: 관리자,  2: 매니저 
 		http
 		.authorizeRequests()    
 			.antMatchers("/auth","/oauth2/**","/").permitAll()
@@ -43,7 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/introduce/**").permitAll()
 
 			// 쇼핑몰
-			.antMatchers("/shop/**").permitAll()//  투표페이지 
+			.antMatchers("/shop/**").permitAll()//  쇼핑몰
+			.antMatchers("/shop/create").hasAnyAuthority("1","2")// 상품 생성
+			
+
 			// .antMatchers("/vote/axios").permitAll()
 			// .antMatchers("/vote/axios/**").hasRole("USER")
 			// .antMatchers("/vote/").hasRole("USER")

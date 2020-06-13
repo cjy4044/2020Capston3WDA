@@ -131,7 +131,7 @@ public class HotclibController {
 		Member member = memberRepository.findByUserid(principal.getName());
 		ProgramManager pm = pmRepository.findById(member.getNo());
 		Hotclib hotclib= new Hotclib();
-		// //핫클립 테이블에 프로그램아이디, 사용자아이디, 날짜, 파일이름2저장
+		// //핫클립 테이블에 프로그램아이디, 사용자아이디, 날짜, 파일이름2저장함
 		hotclib.setProgramid(pm.getProgramId());
 		hotclib.setNo(member.getNo());
 		hotclib.setHtitle(htitle);

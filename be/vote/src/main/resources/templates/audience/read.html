@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en"></html>
+<!-- <html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}"> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<content>
+<body>
+    <table border="1">
+		<tr>
+			<th>제목</th>
+			<td th:text="${audience.aTitle}">제목입니다.</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td th:text="${audience.aContent}">내용입니다.</td>
+		</tr>
+	</table>
+	<div>
+        <a href="" th:href="@{'/audience/update/' + ${audience.applyId}}">수정</a> 
+        
+       
+	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
+		<a href="" th:href="@{/audience/}">목록</a>
+	</div>
+</body>
+</content>
+</html>

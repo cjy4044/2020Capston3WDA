@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+
+
+<body>
+<content>
+    <style>
+.im{
+weidht:100px;
+height:100px;}</style>
+
+<form th:action="@{'/audition_con/update/' + ${auditionCon.formid}}" method="post"> 
+	<table class="table table-bordered">
+
+    <tbody>
+
+            <tr>
+            	<th>성명</th>
+
+                        <td>  <input type="hidden" name="fusername" th:text="${auditionCon.fusername}" th:value="${auditionCon.fusername}" /></td>
+                <th>휴대전화번호</th>
+                <td> <input type="hidden" name="fuserphone" th:text="${auditionCon.fuserphone}" th:value="${auditionCon.fuserphone}"/></td>
+                <th>이메일</th>
+                <td>  <input type="hidden" name="fusermail" th:text="${auditionCon.fusermail}" th:value="${auditionCon.fusermail}" /></td>
+                
+            </tr>
+            <tr>
+                <th>제목</th>
+               <td>  <input   type="hidden" name="ftitle" th:text="${auditionCon.ftitle}" th:value="${auditionCon.ftitle}" /></td>
+            </tr>
+      	    <tr>
+      	    
+      	     <!--  <div id="bo_v_img">
+                    <img src="#" th:src="@{'/uploads/' + ${audience.img}}" alt="">
+                </div>-->
+                
+                <th>사진 </th>
+             <td>  	 <a><img class= "im" th:src="@{'/uploads/' + ${auditionCon.fprofile}}"    ></a>
+       
+           <input type="hidden" name="fprofile" th:value="${auditionCon.fprofile}" /></td>
+                <th>주소</th>
+                <td>  <input type="hidden" name="faddr" th:text="${auditionCon.faddr}" th:value="${auditionCon.faddr}" /></td>
+            </tr>
+          	<tr>
+                <th>학력</th>
+                  <td>  <input type="hidden" name="feducation" th:text="${auditionCon.feducation}" th:value="${auditionCon.feducation}" /></td>
+            </tr>
+         	<tr>
+                <th>성별</th>
+                 <td>  <input type="hidden" name="fgender" th:text="${auditionCon.fgender}" th:value="${auditionCon.fgender}" /></td>
+                 <th>키</th>
+                  <td>  <input type="hidden" name="fheight" th:text="${auditionCon.fheight}" th:value="${auditionCon.fheight}" /></td>
+                 <th>몸무게</th>
+                  <td>  <input type="hidden" name="fweight" th:text="${auditionCon.fweight}" th:value="${auditionCon.fweight}" /></td>
+                 <th>혈액형</th>
+                  <td>  <input type="hidden" name="fblood" th:text="${auditionCon.fblood}" th:value="${auditionCon.fblood}" /></td>
+            </tr>
+            <tr>
+                <th>가족관계</th>
+                 <td>  <input type="hidden" name="ffamily" th:text="${auditionCon.ffamily}" th:value="${auditionCon.ffamily}" /></td>
+                 <th>취미</th>
+                  <td>  <input type="hidden" name="fhobby" th:text="${auditionCon.fhobby}" th:value="${auditionCon.fhobby}" /></td>
+                 <th>특기</th>
+                  <td>  <input type="hidden" name="fability" th:text="${auditionCon.fability}" th:value="${auditionCon.fability}" /></td>
+            </tr>
+    </tbody>
+</table>
+	
+	<td><input type="hidden" name="fdate" th:value="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"/></td>
+	<div>
+	
+	<center>
+	<h4>
+	합격<input type="radio" name="confirm" value="o">
+	불합격<input type="radio" name="confirm" value="x">
+</h4>
+	</center>
+
+
+	
+
+    			 <input type="reset" value="이전으로" onclick="history.back();"> 
+ 
+
+		<span style="float:right;">
+		<input type="submit" value="저장" /> 
+		</span>
+	</div>
+	</form>
+	       <script>
+	       if(auditionCon.fhobby==)
+                function career_add() {
+                    var career = '<tr>' +
+                                    '<th>경력</th>' +
+                                    '<td>' +
+                                        '<input type="text" name="fcarrer">' +
+                                    '</td>' +
+                                '</tr>';
+                    $('.table_body').append(career)
+                }
+                function motive_add() {
+                    var career = '<tr>' +
+                                    '<th>지원동기</th>' +
+                                    '<td>' +
+                                        '<input type="text" name="fmotive">' +
+                                    '</td>' +
+                                '</tr>';
+                    $('.table_body').append(career)
+                }
+                function category_add() {
+                    var career = '<tr>' +
+                                    '<th>지원부문</th>' +
+                                    '<td>' +
+                                        '<input type="text" name="fcategory">' +
+                                    '</td>' +
+                                '</tr>';
+                    $('.table_body').append(career)
+                }
+                function introduction_add() {
+                    var career = '<tr>' +
+                                    '<th>자기소개</th>' +
+                                    '<td>' +
+                                        '<input type="text" name="fintroduction">' +
+                                    '</td>' +
+                                '</tr>';
+                    $('.table_body').append(career)
+                }
+                function job_add() {
+                    var career = '<tr>' +
+                                    '<th>직업</th>' +
+                                    '<td>' +
+                                        '<input type="text" name="fjob">' +
+                                    '</td>' +
+                                '</tr>';
+                    $('.table_body').append(career)
+                }
+            </script>
+</body>
+</content>
+</html>

@@ -28,7 +28,7 @@ class VoteShow extends React.Component {
                 return (
                     <div key={vote.name+index} className="card_div" > 
                         <ItemCard2 key={vote.img} img={vote.img} name={vote.name} result={this.props.data.data[index]} count={this.props.data.count}
-                        win={this.props.data.win.includes(this.props.data.data[index])}/>
+                        win={this.props.data.win.includes(this.props.data.data[index])} show={this.props.data.show}/>
                     </div>
                 )
             }
@@ -44,13 +44,13 @@ class Show extends React.Component{
         this.stTime;
         this.edTime;
         this.rsTime;
-        this.voteData = {data:[],count:0, win:[],winNum:0}
+        this.voteData = {data:[],count:0, win:[],winNum:0, show:1}
     }
 
     async componentDidMount(){
 
         let {data} = await axios.get('/vote/axios/'+param);
-        this.setState({votes : data[0], title : data[1], program:data[2], date: data[3]});
+        this.setState({votes : data[0], title : data[1], program:data[2], date: data[3], canNum:data[5]});
         
     }
     setDate(){
@@ -83,7 +83,8 @@ class Show extends React.Component{
         }
         // https://stackoverflow.com/questions/32647149/why-is-math-max-returning-nan-on-an-array-of-integers
         
-        this.voteData = {data : data.data, count : data.count, win : winnerData, winNum : data.win}
+        this.voteData = {data : data.data, count : data.count, win : winnerData, winNum : data.win, show:0}
+        console.log("aaaaa", this.voteData)
 
         this.forceUpdate()
     }
@@ -107,6 +108,7 @@ class Show extends React.Component{
                     <div className="text_center">마감: {this.edTime}</div>
                     <div className="text_center">집계공개: {this.rsTime}</div>
                     <div className="text_center">선발인원: {this.voteData.winNum}&nbsp;명</div>
+                    <div className="text_center vote_during">투표가능 횟수: {this.state.canNum}&nbsp;번</div>
                 </div>
                 
                 <div className="text_center show_result">★☆공동 우승자가 있을 경우 우승인원이 선발인원보다 많아 질 수 있습니다.☆★</div>

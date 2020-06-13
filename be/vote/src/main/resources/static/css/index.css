@@ -262,7 +262,36 @@ contents div.contents{
 #mobileSidBarButton{
     display: none;
 }
-
+#mobileSideBar{
+    text-align: center;
+    border-radius: 15px;
+    z-index: 100 !important;
+    /* overflow: scroll; */
+}
+#mobileSideBar .sideMenu{
+    border-bottom: 2px solid gray;
+    padding: 10px 0px;
+    /* background-color: #ECE0F8; */
+}
+#mobileSideBar a{
+    text-decoration: none;
+    font-size: 15px;
+}
+.mobileCloseButton{
+    display: block;
+    width:100%;
+    padding: 0;
+    border: none;
+    background-color: #F5A9A9;
+    margin-bottom: 15px;
+    height: 40px;
+    font-size: 20;
+    font-weight: 800;
+}
+#mobileMenus{
+    width: 80%;
+    margin:auto;
+}
 @media(max-width:790px){
     nav{
         /* display: block !important; */
@@ -314,7 +343,7 @@ contents div.contents{
         text-align: center;
         border-radius: 15px;
         z-index: 100 !important;
-        overflow: scroll;
+        /* overflow: scroll; */
     }
     #mobileSideBar .sideMenu{
         border-bottom: 2px solid gray;

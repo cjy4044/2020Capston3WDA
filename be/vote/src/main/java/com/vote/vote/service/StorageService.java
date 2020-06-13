@@ -67,7 +67,6 @@ public class StorageService {
 
 		
 			int count =1;
-				System.out.println(filename);
 			// 중복된 파일이 있는지 확인,  있으면 ( int ) 추가  filename(2) ,(3) ...
 			
 			while(Files.exists(this.rootLocation.resolve(str.toString()))){

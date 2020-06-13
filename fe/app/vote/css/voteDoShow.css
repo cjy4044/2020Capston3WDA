@@ -20,7 +20,8 @@
 }
 
 .vote_result{
-    top: 15%;
+    /* top: 15%; */
+    top:10px;
     position: relative;
     text-align: -webkit-center;
 }
@@ -67,6 +68,11 @@ div.winner .sc-AxjAm {
 .progress-meter-text{
     color: black;
 }
+#showChart{
+    overflow: scroll;
+    text-align: -webkit-center;
+}
+
 
 @media(max-width:950px){
     .left_right_box{

@@ -12,7 +12,7 @@ class ItemCard2 extends Component{
     }
 
     render(){
-        
+        console.log(this.props.show);
         return (
             <div className={this.props.win ==true ?'winner':'loser'} style={{margin: 20, maxWidth: 350, maxHeight: 300, }} >
                 <Card
@@ -24,18 +24,21 @@ class ItemCard2 extends Component{
                 <div style={{ width: 100 }}>
                 <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.1/css/foundation-float.min.css' />   
                     
-                    {this.props.result ? ( // 결과가 있으면,
+                    {this.props.result || this.props.show ==0? [ // 결과가 있으면,
                         <Progress color={Colors.primary} meter={{ text: (Math.floor(this.props.result/this.props.count * 100))+"%" }} tabIndex='0' min={0} max={100} value={(Math.floor(this.props.result/this.props.count * 100))} valuetext='25 percent' />
-                    ) : ( //결과가 없으면,ALERT WARNING - > 다 파란색 ..
+                    
+                        
+                            ,(this.props.win == true ? 
+                                <div style={{color:'white', fontSize:18}}>우승</div>
+                             :
+                                <div style={{color:'red', fontSize:18}}>탈락</div>
+                            
+                            )            
+
+                     ] : ( //결과가 없으면,ALERT WARNING - > 다 파란색 ..
                     <Progress color={Colors.warning} meter={{ text: "집계전" }} tabIndex='0' min={0} max={100} value={100} valuetext='25 percent' />
                     ) }
-                    {
-                        this.props.win == true ? (
-                            <div style={{color:'white', fontSize:18}}>우승</div>
-                        ) :(
-                            <div style={{color:'red', fontSize:18}}>탈락</div>
-                        )
-                    }        
+                    
                 </div>
                 
                 

@@ -1,0 +1,15 @@
+.introduceRIROVote{
+    text-align: center;
+}
+.introduceRIROVote img{
+    max-width: 600px;
+    margin: 20px;   
+}
+
+@media(max-width:950px){
+    .introduceRIROVote img{
+        width: 100%;
+        margin: 15px 0px;
+    }
+    
+}

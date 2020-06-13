@@ -17,11 +17,15 @@ th:fragment="layout(content,js,title)">
  	<script  src="/js/script.js"></script>
 
      <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+
      <!-- <link rel="stylesheet" href="/css/style.css"> -->
     <!-- 모바일 사이드바 -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="/js/mobileSidBar.js"></script>
 
+	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+	
     <title>RIRO</title>
 
 </head>
@@ -41,6 +45,9 @@ th:fragment="layout(content,js,title)">
                     <a href="/userInfo">내 정보 및 관리 </a>&nbsp;
                     <input type="submit" value="로그아웃">                    
                 </form>
+                <span style="display:none" id="userRole" sec:authentication="principal.ROLE"></span>
+  		 	    <span style="display:none" id="userRid" sec:authentication="principal.R_ID"></span>
+  		     		<!-- 	<input type="hidden" id="role" th:value="${userRole}"/> -->
             </th:block>
 
             <th:block sec:authorize="! isAuthenticated()">
@@ -75,7 +82,7 @@ th:fragment="layout(content,js,title)">
                                 <div class="sideMenu">소개</div>
                             </a>
                             <div class="drop">
-                                <a href="#">블록체인이란?</a>
+                                <a href="/introduce/blockChain">블록체인이란?</a>
                                 <a href="#">서비스소개</a>
                                 <a href="#">개발자소개</a>
                             </div>
@@ -95,8 +102,8 @@ th:fragment="layout(content,js,title)">
                             <div class="sideMenu">투표</div>
                         </a>
                         <div class="dropMenu sideMenu">
-                            <a href="#">
-                                <div href="#" class="sideMenu">커뮤니티</div>
+                            <a href="/community">
+                                <div href="/community" class="sideMenu">커뮤니티</div>
                             </a>
                             <div class="drop">
                                 <a href="#">팬클럽</a>
@@ -106,7 +113,7 @@ th:fragment="layout(content,js,title)">
                             </div>
                         </div>
                         <a href="#" class="sideMenu">
-                            <div class="sideMenu">굿즈샵</div>
+                            <div class="/shop/index">굿즈샵</div>
                         </a>
                     </div>
                     
@@ -120,7 +127,7 @@ th:fragment="layout(content,js,title)">
                             <div>소개</div>
                         </a>
                         <div class="drop">
-                            <a href="#">블록체인이란?</a>
+                            <a href="/introduce/blockChain">블록체인이란?</a>
                             <a href="#">서비스소개</a>
                             <a href="#">개발자소개</a>
                         </div>
@@ -131,8 +138,8 @@ th:fragment="layout(content,js,title)">
                         </a>
 
                         <div class="drop">
-                            <a href="#">참가신청</a>
-                            <a href="#">예선결과안내</a>
+                            <a href="/audition/list">참가신청</a>
+                            <a href="/audition_con/list">예선결과안내</a>
                         </div>
 
                     </div>
@@ -142,8 +149,8 @@ th:fragment="layout(content,js,title)">
                     </a>
 
                     <div class="dropMenu">
-                        <a href="#">
-                            <div href="#">커뮤니티</div>
+                        <a href="/community">
+                            <div href="/community">커뮤니티</div>
                         </a>
                         <div class="drop">
                             <a href="#">팬클럽</a>
@@ -152,7 +159,7 @@ th:fragment="layout(content,js,title)">
                             <a href="#">방청권응모</a>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="/shop/index">
                         <div>굿즈샵</div>
                     </a>
                 </div>
@@ -208,7 +215,7 @@ th:fragment="layout(content,js,title)">
             <a href="#">
                 <div>이용약관</div>
             </a>
-            <a href="#">
+            <a href="/proRegIndex">
                 <div>관리자</div>
             </a>
         </div>

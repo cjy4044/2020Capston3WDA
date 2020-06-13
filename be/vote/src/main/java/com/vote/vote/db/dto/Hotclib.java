@@ -9,13 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -26,7 +23,7 @@ public class Hotclib {
     @Column(nullable=false, name="hotclib_id")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="HOTCLIB_SEQ_GENERATOR")
     @SequenceGenerator(name="HOTCLIB_SEQ_GENERATOR", sequenceName="HOTCLIB_SEQ", allocationSize = 1)
-    private Integer hotclibid;
+    private int hotclibid;
     
     @Column(nullable=false, name="h_title")
     private String htitle;

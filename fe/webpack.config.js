@@ -38,6 +38,7 @@ module.exports = {
     voteResult: path.join(__dirname,'./app/vote/voteResult.jsx'),
     layout: path.join(__dirname,'./app/layout/layout.jsx'),
     userInfo: path.join(__dirname,'./app/userInfo/userInfo.jsx'),
+    myProgram: path.join(__dirname,'./app/userInfo/myProgram.jsx'),
     profileIndex: path.join(__dirname,'./app/userInfo/profileIndex.jsx'),
     allCompany: path.join(__dirname,'./app/userInfo/allCompany.jsx'),
     proRegIndex: path.join(__dirname,'./app/programRegister/proRegIndex.js'),
@@ -45,8 +46,19 @@ module.exports = {
     votePreShow: path.join(__dirname,'./app/vote/votePreShow.jsx'),
     voteEndShow: path.join(__dirname,'./app/vote/voteEndShow.jsx'),
     Shop_index: path.join(__dirname,'./app/Shop_index.js'),
-    community_index: path.join(__dirname,'./app/community/index.js')
-    
+    communityIndex: path.join(__dirname,'./app/community/index.js'),
+    detailIndex: path.join(__dirname,'./app/community/detailIndex.js'),
+    voterVoteList : path.join(__dirname, './app/userInfo/voterVoteList.jsx'),
+    manageVote : path.join(__dirname, './app/userInfo/manageVote.jsx'),
+    blockChainIntroduce : path.join(__dirname, './app/introduce/blockChainIntroduce.js'),
+    shopItemCreate : path.join(__dirname,"./app/shop/itemCreate.jsx"),
+    myCommunity: path.join(__dirname,'./app/userInfo/myCommunity.jsx'),
+    updatePopular: path.join(__dirname,'./app/userInfo/updatePopular.jsx'),
+    popularBoard: path.join(__dirname,'./app/community/popularBoard.jsx'),
+    popularBoardView: path.join(__dirname,'./app/community/popularBoardView.jsx'),
+    popularBoardCreate: path.join(__dirname,'./app/community/popularBoardCreate.jsx'),
+   
+
 
   },
   output: {

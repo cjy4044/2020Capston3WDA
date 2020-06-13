@@ -125,9 +125,6 @@ class Index extends Component{
                         <div id="program_option"className="vote_option_div">
                             {/* componentDidMount 에서 추가 */}
                         </div>
-                        <div>
-                            <a href="/vote/create">투표 생성</a>
-                        </div>
                     </div>
                     <div className="search_vote">
                         <input type="text" id="searchInput"/>

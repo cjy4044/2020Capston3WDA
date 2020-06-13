@@ -8,4 +8,6 @@ public interface ProgramManagerJpaRepository extends JpaRepository<ProgramManage
 
     public ProgramManager findById(int id);
     
+    public ProgramManager findByProgramId(int id);
+    
 }

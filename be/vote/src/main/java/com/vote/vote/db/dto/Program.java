@@ -25,6 +25,9 @@ public class Program {
 
     @Column(name="p_category", nullable=false)
     private String category;
+
+    @Column(name="p_info", nullable=true)
+    private String info;
     
 
     public int getId() {
@@ -61,6 +64,14 @@ public class Program {
 
     public String toString(){
         return "id["+id+"] p_name["+name+"] p_image["+img+"] p_category[ "+category+"]";
+        }
+
+        public String getInfo() {
+            return info;
+        }
+
+        public void setInfo(String info) {
+            this.info = info;
         }
 
     

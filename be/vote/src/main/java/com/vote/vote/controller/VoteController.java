@@ -190,15 +190,16 @@ public class VoteController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		System.out.println(userDetails);
 
-		storageService.store(thumbnail);
-		String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
-
+		// storageService.store(thumbnail);
+		// String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
+		String thumbnailPath = storageService.store2(thumbnail);
 
 		ArrayList<String> fileName = new ArrayList<String>();
 		
 		for(int i=0;i<file.length;i++){
-			storageService.store(file[i]);   // 파일 저장
-			fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
+			// storageService.store(file[i]);   // 파일 저장
+			// fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
+			fileName.add( storageService.store2(file[i]) );
 		}
 
 		Vote data = new Vote();
@@ -349,6 +350,7 @@ public class VoteController {
 		result.add(2, program);
 		result.add(3, date);
 		result.add(4,vote.getSelectNum());// 선발인원
+		result.add(5,vote.getVoteCanNum());// 투표 가능횟수
 			
 		return result;
 	}
@@ -369,6 +371,7 @@ public class VoteController {
 		JSONObject result = new JSONObject();
 
 		// 처음 투표하는 사람인지 확인하기 위한 voter
+		System.out.println("유저 r_id:"+userDetails.getR_ID());
 		Voter voter = voterRepository.findByVoteIdAndMemberId(voteId, userDetails.getR_ID());
 
 		if(voter== null){// 처음 투표한 경우.
@@ -401,6 +404,7 @@ public class VoteController {
 				try {
 					
 					int age = 2; 
+					System.out.println("회원 birth :"+userDetails.getBIRTH());
 					if(!userDetails.getBIRTH().equals("2")){ ////19990122....
 						System.out.println(userDetails.getBIRTH());
 						int y = Integer.parseInt(nowTime.substring(0, 4));
@@ -485,7 +489,9 @@ public class VoteController {
 	produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	 // 동기 처리      // 반대 개념 : 비동기 처리
-	public synchronized JSONArray showResultAxios(@PathVariable("voteId") int voteId) {
+	public synchronized JSONArray showResultAxios(@PathVariable("voteId") int voteId, @Nullable Authentication authentication) {
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		Vote vote = voteRepository.findById(voteId);
 		ArrayList<Candidate> candidateList = candidateRepository.findByVoteId(voteId);
@@ -508,9 +514,9 @@ public class VoteController {
 				json.add(4,"");
 				json.add(5,"");
 				json.add(6,"");
-				json.add(7,"");
 				json.add(7,"1");
-
+				json.add(8,"0");
+				json.add(9,"0");
 				return json;
 			}
 				
@@ -523,6 +529,20 @@ public class VoteController {
 				json.add(5,"");
 				json.add(6,"");
 				json.add(7,"1");
+				json.add(8,"0");
+				json.add(9,"0");
+				return json;
+		}else if(vote.getShowState() == 1){
+			json.add(0,"");
+				json.add(1,"");
+				json.add(2,"");
+				json.add(3,"");
+				json.add(4,"");
+				json.add(5,"");
+				json.add(6,"");
+				json.add(7,"1");
+				json.add(8,"0");
+				json.add(9,"0");
 				return json;
 		}
 
@@ -530,6 +550,15 @@ public class VoteController {
 			JSONArray result = klaytn.load3(vote.getAddress());   // 블록체인 소스 추가해서, 투표 결과 시간 에 맞게.
 			System.out.println("result: " +result);
 			// System.out.println(result.get("result"));
+
+			ArrayList userAdd = new ArrayList();
+			
+			List<VoterHash> voterHash = voterHashRepository.findByMemberIdAndVoteId(userDetails.getR_ID(),vote.getId());
+
+			for(VoterHash voterH : voterHash){
+				userAdd.add(voterH.getHash());
+			}
+
 
 			json.add(0, result.get(0));// 투표 결과
 			json.add(1, names);//후보 이름
@@ -539,6 +568,8 @@ public class VoteController {
 			json.add(5,vote.getCount());// 후보수
 			json.add(6,vote.getSelectNum());// 선발인원 숫자
 			json.add(7,0);// 투표결과 보여주는가?
+			json.add(8,vote.getAddress());// 투표 address
+			json.add(9,userAdd); // 사용자 address
 			
 			
 		} catch (Exception e) {
@@ -546,6 +577,18 @@ public class VoteController {
 		}
 
 		return json;
+	}
+
+	@RequestMapping(value={"/{voteId}","/{voteId}/"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject delete(@PathVariable("voteId") int voteId) { 
+		Vote vote = voteRepository.findById(voteId);
+		voteRepository.delete(vote);
+
+		JSONObject result = new JSONObject();
+		result.put("message", "투표가 삭제되었습니다.");
+		
+		return result;
 	}
 	
 }

@@ -52,7 +52,7 @@ class Show extends React.Component{
     async componentDidMount(){
         let {data} = await axios.get('/vote/axios/'+param);
         // console.log(data[0]);
-        this.setState({votes : data[0], title : data[1], program:data[2], date : data[3], selectNum:data[4]});
+        this.setState({votes : data[0], title : data[1], program:data[2], date : data[3], selectNum:data[4], canNum:data[5]});
         console.log(data);
 
         this.edTime = this.parseTime();
@@ -153,6 +153,7 @@ class Show extends React.Component{
                     <div className="text_center">마감: {this.divEdTime}</div>
                     <div className="text_center">집계공개: {this.divRsTime}</div>
                     <div className="text_center">선발인원: {this.state.selectNum}&nbsp;명</div>
+                    <div className="text_center vote_during">투표가능 횟수: {this.state.canNum}&nbsp;번</div>
                 </div>
                 <div className="text_center show_result">★☆공동 우승자가 있을 경우 우승인원이 선발인원보다 많아 질 수 있습니다.☆★</div>
                 <div className="left_right_box">

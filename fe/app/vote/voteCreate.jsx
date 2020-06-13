@@ -13,14 +13,15 @@ class VoteCreate extends React.Component {
     super(props);
     // this.changeSelect = this.changeSelect.bind(this);
     this.candidateNum = 0;
-
+    this.check = 1; //후보자 수 체크를 하지 않은 상태 : 1, 체크함 : 0
+    this.candidateCheck = 1;
     this.childTag = '<div class="grid">'+
     '<table class="candidateTable">'+
       '<tbody>'+
         '<tr>'+
           '<td rowSpan="2">'+
             '<div class="imgDiv">'+
-              '<img class="candidateImg"src="/uploads/검정고무신.png" alt=""/>'+
+              '<img class="candidateImg" src="/uploads/검정고무신.png"  alt=""/>'+
             '</div>'+
           '</td>'+
           '<td>'+
@@ -30,12 +31,12 @@ class VoteCreate extends React.Component {
         '</tr>'+
         '<tr>'+
           '<td>'+
-            '<textarea type="text" class="candidateInfo"placeholder="내용을 입력하세요"  name="info"></textarea>'+
+            '<textarea type="text" class="candidateInfo"placeholder="내용을 입력하세요"  name="info" required></textarea>'+
           '</td>'+
         '</tr>'+
         '<tr>'+
           '<td></td>'+
-          '<td><div class="tag">태그</div><input class="tagInput"type="text" placeholder="#태그"/></td>'+
+          '<td><div class="tag">태그</div><input class="tagInput"type="text" placeholder="#태그" required/></td>'+
         '</tr>'+
     '</tbody>'+
   '</table>'+
@@ -67,6 +68,7 @@ class VoteCreate extends React.Component {
     }
     candidateGener(e){
       e.preventDefault();
+      var numStr =  /^[0-9]*$/
       var num = $('#candidateCount').val()
       if(num >100)
         return alert("후보자 수는 100 을 초과할 수 없습니다.")
@@ -74,6 +76,17 @@ class VoteCreate extends React.Component {
         return alert("후보자 수는 0보다 작을 수 없습니다.")
       else if(num == 0 || num == "")
         return $("#candidateInfoItem").empty();
+      
+      if(num == 0 ||  !numStr.test(num)){
+        this.check = 1;
+      }else{
+        this.check = 0;
+      }
+      console.log("this.check: ",this.check)
+      
+
+
+      
       this.changeCandidateNum(num)
       
     }
@@ -104,7 +117,33 @@ class VoteCreate extends React.Component {
       return window.location = '/vote'
     else return
   }
+  checkNo(e){
+    this.check = 1; // 체크 필요함
+  }
   checkForm(e){
+    
+    var startTime = $("#startTime").val().replace(/[^0-9]/g,'');
+    var endTime = $("#endTime").val().replace(/[^0-9]/g,'');
+    var resultTime = $("#resultShowTime").val().replace(/[^0-9]/g,'');
+    
+    // for(var i=0;i<$("#candidateCount").val();i++){
+    //   if(!$('.fileImg')[i].val()){
+    //     this.candidateCheck = 1  
+    //   }
+    //   else if(!$('.candidateName')[i].val()){
+    //     this.candidateCheck = 1 
+    //   }
+    //   else if(!$('.candidateTag')[i].val()){
+    //     this.candidateCheck = 1 
+    //   }
+
+    // }
+// console.log($('.fileImg')[i].val())
+
+    if(!$("#program_id").val){
+      e.preventDefault();
+      return alert("프로그램 정보가 없습니다.")
+    }
     if($('#candidateCount').val()<2){
       e.preventDefault();
       return alert("후보자 수는 2명 이상이어야 합니다.")
@@ -114,13 +153,30 @@ class VoteCreate extends React.Component {
     }else if($('#selectedNum').val()>=$('#candidateCount').val()){
       e.preventDefault();
       return alert("선발인원은 후보자 수 보다 적어야 합니다.")
-    }else if($("#voteCanNum").val()>0){
+    }else if($("#voteCanNum").val()<0){
       e.preventDefault();
       return alert("다중투표 횟수는 0보다 커야합니다.")
+    } else if(this.check==1){
+      e.preventDefault();
+      alert("후보 생성을 위해서 체크 버튼을 눌러주세요");
     }
-    if(confirm("해당 설정으로 투표를 개설하시겠습니까?")){
+    else if(endTime < startTime){
+      e.preventDefault();
+      return alert("투표 마감시간은 시작시간 보다 늦을 수 없습니다.")
+
+    }else if(resultTime<endTime){
+      e.preventDefault();
+      return alert("결과 공개시간은 투표 마감시간보다 늦을 수 없습니다\
+      해당 기능을 이용하고 싶으시면, 실시간 공개여부에 공개를 체크해주세요");
+
+    }
+    // else if(this.candidateCheck==1){
+    //   e.preventDefault();
+    //   return alert("후보자 정보를 확인해주세요.");
+    else if(confirm("해당 설정으로 투표를 개설하시겠습니까?")){
       return;
     }
+    
     return e.preventDefault();
   }
     render() {
@@ -145,15 +201,15 @@ class VoteCreate extends React.Component {
                     </tr>
                     <tr>
                       <td>후보자 수</td>
-                      <td><input type="number" className="inputTextRight inputWidth" id="candidateCount"name="count" required/>명 &nbsp;<button onClick={this.candidateGener.bind(this)}>체크</button></td>
+                      <td><input type="number" min="1" className="inputTextRight inputWidth" id="candidateCount"name="count" onChange={this.checkNo.bind(this)} required/>명 &nbsp;<button onClick={this.candidateGener.bind(this)}>체크</button></td>
                     </tr>
                     <tr>
                       <td>선발인원</td>
-                      <td><input type="number" id="selectedNum" name="selectNum" className="inputTextRight inputWidth" required/>명</td>
+                      <td><input type="number" min="1" id="selectedNum" name="selectNum" className="inputTextRight inputWidth" required/>명</td>
                     </tr>
                     <tr>
                       <td>다중투표</td>
-                      <td>1인 최대<input type="number" id="voteCanNum" name="voteCanNum" className="inputTextRight inputWidth" required/>표</td>
+                      <td>1인 최대<input type="number"  min="1" id="voteCanNum" name="voteCanNum" className="inputTextRight inputWidth" required/>표</td>
                     </tr>
                     <tr>
                       <td>투표기간</td>
@@ -161,11 +217,11 @@ class VoteCreate extends React.Component {
                     </tr>
                     <tr>
                       <td>결과공개시간</td>
-                      <td><input type="datetime-local" name="resultShowTime" required/></td>
+                      <td><input type="datetime-local" id="resultShowTime" name="resultShowTime" required/></td>
                     </tr>
                     <tr>
                       <td>진행사항 공개여부</td>
-                      <td><input type="radio" name="show" value="0"/> 공개 <input type="radio" name="show" value="1"/> 비공개</td>
+                      <td><input type="radio" name="show" value="0" required/> 공개 <input type="radio" name="show" value="1" required/> 비공개</td>
                     </tr>
                   </tbody>
               </table>
@@ -187,7 +243,7 @@ class VoteCreate extends React.Component {
             </div> */}
 
             <div className="Notification">※ 투표 개설 시 수정이 불가능하며 투표 시작 전 까지 삭제만 가능합니다.</div>
-            <div className="formButton"><button type="submit" onSubmit={this.checkForm.bind(this)}>개설</button>&nbsp;&nbsp;<button type="click" onClick={this.cancle.bind(this)}>취소</button></div>
+            <div className="formButton"><button type="submit" onClick={this.checkForm.bind(this)}>개설</button>&nbsp;&nbsp;<button type="click" onClick={this.cancle.bind(this)}>취소</button></div>
           </div>
         );
       }

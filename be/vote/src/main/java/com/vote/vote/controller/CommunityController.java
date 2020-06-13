@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
+import com.vote.vote.db.dto.Hotclib;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.PopularBoard;
@@ -262,11 +263,12 @@ public class CommunityController {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
-     	PopularBoard board = popularBoardRepository.findById(popularNum);
-
+     	PopularBoard board = popularBoardRepository.findById(BoardNum);
+     	  
+     	System.out.println(board.toString());
      	model.addAttribute("popularName", popular.getName());
-     	
-     	
+          	
+     //조회수카운트하기
      	
  		return "community/popularBoardView";
  	}	

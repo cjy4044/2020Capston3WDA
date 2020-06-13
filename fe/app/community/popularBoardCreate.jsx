@@ -10,6 +10,8 @@ import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
 
+import './Modal.css';
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
@@ -30,16 +32,18 @@ class PopularBoardCreate extends Component {
   
 
     }
+  
 
     render() {
-        
+           
         return(
         <div>
               <Paper >
                             <Table size="small" id="myTable">
                             <TableHead>
+                            <TableCell>제목<input type="text" name="content"></input></TableCell>
                             <TableRow>
-                                            <TableCell>제목</TableCell>
+                             
                                             <TableCell>작성자</TableCell>
                                             <TableCell>댓글수</TableCell>
                                             <TableCell>작성일</TableCell>
@@ -50,7 +54,7 @@ class PopularBoardCreate extends Component {
                                 </TableBody>
                             </Table>
              </Paper> 
-   
+                   
                                
                                 
                                    

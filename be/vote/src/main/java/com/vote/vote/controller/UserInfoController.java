@@ -183,9 +183,10 @@ public class UserInfoController {
 	    	if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
 	    		
 	    		System.out.println("넘어온 파일없다 마");
-	    		storageService.store(file);
-	    		String thumbnailPath2 = StringUtils.cleanPath(file.getOriginalFilename());
-	    		thumbnailPath = url.concat(thumbnailPath2);
+//	    		storageService.store2(file);
+	    		//String thumbnailPath2 = StringUtils.cleanPath(file.getOriginalFilename());
+	    		thumbnailPath = url.concat(storageService.store2(file));
+	    		//thumbnailPath = url.concat(thumbnailPath2);
 	   	
 	    	}
 	    
@@ -496,9 +497,8 @@ public class UserInfoController {
 
 		    	if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
 		    		
-		    		storageService.store(file);
-			    	
-			    	thumbnailPath =  StringUtils.cleanPath(file.getOriginalFilename());
+		    				    	
+			    	thumbnailPath = storageService.store2(file);
 		   	
 		    	}	
 
@@ -577,8 +577,8 @@ public class UserInfoController {
 
 
 	
-			    		storageService.store(file);
-			    		String thumbnailPath = StringUtils.cleanPath(file.getOriginalFilename());
+			    		
+			    		String thumbnailPath = storageService.store2(file);
 
 			    		pp.setImg(thumbnailPath);
 			    		
@@ -604,8 +604,7 @@ public class UserInfoController {
 
 		    	if(!file.isEmpty()) { // 프로필사진 변경을 했을시 
 
-		    		storageService.store(file);
-		    		thumbnailPath = StringUtils.cleanPath(file.getOriginalFilename());
+		    		    		thumbnailPath = storageService.store2(file);
 		    		
 		   	
 		    	}

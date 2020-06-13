@@ -1,0 +1,37 @@
+.MyModal {
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index:10;
+    
+  }
+  #tablebox{
+    /* width: auto; 
+    height: auto; 
+    overflow: auto; */
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+  } 
+ 
+  .MyModal .content {
+    background: white;
+    padding: 1rem;
+    width: 300px;
+    height: auto;
+    
+  }
+  .profile_preview{
+    max-width: 200px;
+    max-height : 200px;
+  }
+
+
+  .modal{text-align: center}
+  textarea{resize: none;}

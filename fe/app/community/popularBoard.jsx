@@ -10,6 +10,11 @@ import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
 
+import TextField from '@material-ui/core/TextField';
+import FilledInput from '@material-ui/core/FilledInput';
+
+import './Modal.css';
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
@@ -18,12 +23,14 @@ const num = url.split('/');
 var param = num[num.length-1];
 var param2 = num[num.length-2];
 
+
+
 class PopularBoard extends Component {
     
     constructor(props){
         
         super(props);
-        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0};
+        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0, modal : false, file : '', previewURL:''};
         this.url = '/community/'+param2+'/'+param+'/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
     setUrl(){
@@ -52,14 +59,34 @@ class PopularBoard extends Component {
 
 
     }
-    create(){    
-      
-    location.href=`${param}/create`
+    handleOpenModal(){
+        this.setState({modal:true});
+      };
+      handleCloseModal(){
 
-        
-    }
+        this.setState({modal:false});
+      };  
+
+      checkImage(event){
+
+        event.preventDefault();
+        let reader = new FileReader();
+        let file = event.target.files[0];
+
+        reader.onloadend = () => {
+          this.setState({
+            file : file,
+            previewURL : reader.result
+          })
+        }
+        reader.readAsDataURL(file);
+      }
 
     render() {
+        let profile_preview = null;
+        if(this.state.file !== ''){
+          profile_preview = <img  className='profile_preview' src={this.state.previewURL}></img>
+        }
         
         return(
         <div>
@@ -84,7 +111,54 @@ class PopularBoard extends Component {
                                 </TableBody>
                                     </Table>
                                     </Paper> 
-                                    <button type="button" onClick={this.create.bind(this)}>글등록</button>     
+                                    <button onClick={this.handleOpenModal.bind(this)}>등록</button>
+
+                  {this.state.modal && (
+                   <div className="MyModal"> 
+                      <div className="content">
+
+                      
+                      
+                     
+   
+       
+                   <table className="register_table" id="tablebox">
+                      <tbody>
+                         <tr>
+                           <td><TextField id="standard-secondary" fullWidth label="제목" color="primary" /></td>
+                         </tr>
+
+                        <tr>
+                            <td>{profile_preview}</td>
+                        </tr>
+
+                        <tr>
+                        <td>
+                        <TextField
+                            id="outlined-multiline-static"
+                            // error={this.state.data.customer === "" ? true : false
+                            label="내용"
+                            multiline
+                            rows={4}
+                            fullWidth
+                            placeholder="Default Value"
+                            variant="outlined"
+                            /></td>
+                        </tr>
+
+                        <tr>
+                            <td><input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)}/></td> 
+                       </tr> 
+                         
+                       </tbody>
+                    </table>                                                        
+                            
+                     <button type="submit">등록</button>
+
+                      <button type="button" onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                     
+                      </div>
+                  </div> )}{""}   
         </div> 
          )
     }
@@ -97,35 +171,9 @@ class Index extends Component{
        this.props.allCount
        this.props.pageNum
        this.state = { modal : false , count:0};
-  
-       //document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
+
     }
 
-    result_submit(e){
-       
-     alert("승인하였습니다.");
-  
-        
-    } 
-
-    sendSelect(c){
-        const select  =  {"select" : c.c_id}
-        if(!confirm(c.c_program+"을 등록하시겠습니까?")) return;
-    
-        axios.post('/userInfo/popularBoardConfirm/', select)
-        .then((response)=>{
-            if(response.data.errorMessage){
-                alert(response.data.errorMessage);
-                // window.location.href="/vote";
-                window.location.reload();
-            }else{
-                alert(response.data.message);
-                window.location.reload();
-                
-            }
-        });
-
-    };
 
     render(){
          //console.log(this.props.popularBoard)

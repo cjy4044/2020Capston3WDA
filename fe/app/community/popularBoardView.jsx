@@ -81,7 +81,7 @@ class PopularBoardView extends Component {
                                 {/* 게시글작성자 or 관리자 or 매니저일경우 수정삭제가능 */}
                                 {(this.state.popularBoard.r_id==this.state.popularBoard.sessionUser||
                                 this.state.popularBoard.sessionRole==1||
-                                this.state.popularBoard.r_id==this.state.popularBoard.managerId)&&
+                                this.state.popularBoard.sessionUser==this.state.popularBoard.managerId)&&
                                 <div>
                                 <button type="button">수정</button>
                                 <button type="button">삭제</button>

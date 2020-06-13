@@ -140,7 +140,7 @@ public class HotclibController {
 		hotclib.setFilename2(filename2Path);
 		hotclibRepository.saveAndFlush(hotclib);  // 저장하고 커밋까지 Flush
 
-		// //Rfile 테이블에 핫클립번호 파일이름 저장
+		// //Rfile 테이블에 핫클립번호 파일이름 저장함
 		Rfile rfile = new Rfile();
 		String filenamePath = storageService.store2(filename);
 		rfile.setHotclibid(hotclib.getHotclibid());

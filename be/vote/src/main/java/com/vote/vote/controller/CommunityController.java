@@ -315,15 +315,13 @@ public class CommunityController {
     @RequestMapping(value={"/{program}/{popular}/create","/{program}/{popular}/create/"}) //프로그램>인기인>게시글작성
    	public String popularBoardCreate(@PathVariable("program") int programNum,
    								@PathVariable("popular") int popularNum,
-   								@PathVariable("popularBoard") int BoardNum,Model model) {
+   								Model model) {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
      	PopularBoard board = popularBoardRepository.findById(popularNum);
 
-     	model.addAttribute("popularName", popular.getName());
-     	
-     	
+      		System.out.println("인기인게시판글쓰기 입니다.");
      	
  		return "community/popularBoardCreate";
  	}	

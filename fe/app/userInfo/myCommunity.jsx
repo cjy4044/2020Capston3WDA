@@ -1,6 +1,5 @@
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
-
 import ItemCard4 from '../items/itemCard4.jsx';
 
 import jQuery from "jquery";

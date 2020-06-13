@@ -54,7 +54,7 @@ class PopularBoard extends Component {
     }
     create(){    
       
-    location.href=`/community/${param2}/${param}/create`
+    location.href=`${param}/create`
 
         
     }

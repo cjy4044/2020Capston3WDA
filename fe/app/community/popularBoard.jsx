@@ -111,7 +111,7 @@ class PopularBoard extends Component {
                                 </TableBody>
                                     </Table>
                                     </Paper> 
-                                    <button onClick={this.handleOpenModal.bind(this)}>등록</button>
+                                <button onClick={this.handleOpenModal.bind(this)}>등록</button>
 
                   {this.state.modal && (
                    <div className="MyModal"> 
@@ -119,25 +119,23 @@ class PopularBoard extends Component {
 
                       
                       
-                      <TextField id="standard-secondary" fullWidth label="제목" color="primary" />
+                      <TextField id="standard-secondary" fullWidth label="제목" color="primary" required />
                       {profile_preview}
                       <TextField
                             id="outlined-multiline-static"
                             // error={this.state.data.customer === "" ? true : false
                             label="내용"
                             multiline
-                            rows={4}
+                            rows={8}
                             fullWidth
                             placeholder="Default Value"
-                            variant="outlined"
+                            required
                             />
-                            <input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)}/>
+                        <input type="file" name="img2" accept="image/*" onChange={this.checkImage.bind(this)}/>
        
                                   
-                            
-                     <button type="submit">등록</button>
-
-                      <button type="button" onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                        <button formAction={'/community/'+param2+'/'+param+'/create'} >등록</button>   
+                        <button type="button" onClick={this.handleCloseModal.bind(this)}>닫기</button>
                      
                       </div>
                   </div> )}{""}   

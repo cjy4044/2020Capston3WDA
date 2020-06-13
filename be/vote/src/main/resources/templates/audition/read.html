@@ -45,6 +45,8 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
                 
                   <td th:text="${audition.acontent}"></td>
             <!--    <td><textarea cols="150" rows="20" placeholder="내용을 입력하세요. " name="a_content"></textarea></td> -->
+                 <td>  	 <a><img class= "im" th:file="@{'/uploads/' + ${audition.afile}}"    ></a>
+
             </tr>
 </table>
 	
@@ -52,12 +54,17 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
 	
 	
 	<div>
+	
+	
 			<tr><center>
                 <td colspan="2">
-              <input type="button" value="신청서" onclick="location.href='/audition_con/form'"/>
+             <input type="button" value="신청서" onclick="location.href='/audition_con/form'"/>  
+         
                                     </td></center>
+                                    
             </tr>
-        </form>
+        
+
 	
 	</div>
 	
@@ -75,6 +82,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
 	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
 		<a href="" th:href="@{/audition/list}">목록</a>
 	</div>
+
 </body>
 </content>
 </html>

@@ -31,11 +31,21 @@ public class AuditionResultController {
 	@Autowired
 	AuditionResultJpaRepository auditionResultRepository;
 	
-	@RequestMapping("/auditionresult/list")
-	public String list(Model model) {
-		model.addAttribute("auditionresultlist",auditionResultRepository.findAll());
+//	@RequestMapping("/auditionresult/list")
+//	public String list(Model model) {
+//		model.addAttribute("auditionresultlist",auditionResultRepository.findAll());
+//		return "auditionresult/list";
+//	}
+	
+	@GetMapping("/auditionresult/list")
+	public String result(Model model, @PageableDefault Pageable pageable){
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "resultid"));
+		model.addAttribute("auditionresultlist", auditionResultRepository.findAll(pageable));
 		return "auditionresult/list";
 	}
+	
+	
 	
 	@GetMapping("/auditionresult/serch")
 	public String serch(@RequestParam(value="keyword") String keyword, Model model) {

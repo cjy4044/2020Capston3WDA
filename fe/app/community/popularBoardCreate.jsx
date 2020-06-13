@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
 
-import './Modal.css';
+
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');

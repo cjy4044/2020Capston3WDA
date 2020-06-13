@@ -8,8 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@DynamicUpdate
+@DynamicInsert
 @Entity
 @Table(name="popular_board")
 public class PopularBoard {
@@ -28,12 +32,12 @@ public class PopularBoard {
     @Column(name="p_content", nullable=false)
     private String content;
     
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name="p_date", nullable=false)
+//    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @Column(name="p_date", nullable=true)
     private String date;
-
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name="p_mdate", nullable=false)
+//
+//    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @Column(name="p_mdate", nullable=true)
     private String mdate;
     
     @Column(name="p_view_count", nullable=false)
@@ -96,12 +100,12 @@ public class PopularBoard {
 
 
 	public String getDate() {
-		String str = this.date;
-		if(str != null) {
-		String[] split = str.split(" ");
-	 	return split[0]; }
-		else {
-			return date; }
+//		String str = this.date;
+//		if(str != null) {
+//		String[] split = str.split(" ");
+//	 	return split[0]; }
+//		else {}
+			return date; 
 	}
 
 
@@ -161,7 +165,7 @@ public class PopularBoard {
 
 
 	public String toString(){
-        return "id["+id+"] popular_id["+popularid+"] p_title["+title+"] p_content[ "+content+"]"
+        return "id["+id+"] popular_id["+popularid+"] r_id["+rid+"] p_title["+title+"] p_content[ "+content+"]"
         		+ "p_date["+date+"] m_date["+mdate+"] p_view_count["+viewcount+"] p_reply_count[ "+replycount+"]";
         }
 

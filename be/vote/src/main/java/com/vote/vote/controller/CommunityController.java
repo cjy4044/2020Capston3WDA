@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.minidev.json.JSONObject;
@@ -123,7 +124,7 @@ public class CommunityController {
   	@ResponseBody
   	public JSONObject detailProgramAxios(@PathVariable("program") int programNum ){
   	
-      	System.out.println(programNum);
+      	//System.out.println(programNum);
       	
       	Program program = programRepository.findById(programNum);
 
@@ -192,8 +193,8 @@ public class CommunityController {
 	
 		long count = customPopularBoardRepository.CountById(popularNum);
 		
-		System.out.println(popularNum);
-		System.out.println(count);
+		//System.out.println(popularNum);
+		//System.out.println(count);
 		
 
 		//System.out.println("pageable : " + pageable);
@@ -216,6 +217,11 @@ public class CommunityController {
 		
 		JSONArray json = new JSONArray();
 		Member member = new Member();
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+		
 		for( PopularBoard popularBoard : popularboards){
 			JSONObject popularBoardData = new JSONObject();
 	
@@ -240,6 +246,7 @@ public class CommunityController {
 			i++;
 			json.add(popularBoardData);
 		}
+		json.add(sessionUser.getR_ID());			
 		json.add(count);
 		
 		
@@ -265,10 +272,12 @@ public class CommunityController {
      	Popular popular = popularRepository.findById(popularNum);
      	PopularBoard board = popularBoardRepository.findById(BoardNum);
      	  
-     	System.out.println(board.toString());
+//     	System.out.println(board.toString());
      	model.addAttribute("popularName", popular.getName());
           	
      //조회수카운트하기
+     	//board.setViewcount(board.getViewcount()+1);
+     	//popularBoardRepository.save(board);
      	
  		return "community/popularBoardView";
  	}	
@@ -310,10 +319,10 @@ public class CommunityController {
 		popularBoardData.put("sessionUser", sessionUser.getR_ID());	
 		popularBoardData.put("sessionRole", sessionUser.getROLE());
 		popularBoardData.put("managerId", pm.getId());
-		System.out.println("-----------------");
-		System.out.println(sessionUser.getR_ID());
-		System.out.println(sessionUser.getROLE());
-		System.out.println(pm.getId());
+//		System.out.println("-----------------");
+//		System.out.println(sessionUser.getR_ID());
+//		System.out.println(sessionUser.getROLE());
+//		System.out.println(pm.getId());
   	    return popularBoardData; 
   	    
       	
@@ -321,18 +330,28 @@ public class CommunityController {
   	   
       }
     
-    @RequestMapping(value={"/{program}/{popular}/create","/{program}/{popular}/create/"}) //프로그램>인기인>게시글작성
+    @RequestMapping(value={"/{program}/{popular}/create"}) //프로그램>인기인>게시글작성
    	public String popularBoardCreate(@PathVariable("program") int programNum,
-   								@PathVariable("popular") int popularNum,
+   									@PathVariable("popular") int popularNum,
+   									
+   									PopularBoard board,@RequestParam(name="file2") MultipartFile file,
    								Model model) {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
-     	PopularBoard board = popularBoardRepository.findById(popularNum);
-
-      		System.out.println("인기인게시판글쓰기 입니다.");
+     	PopularBoard board2 = popularBoardRepository.findById(popularNum);
      	
- 		return "community/popularBoardCreate";
+     	SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd hh:mm");
+     	Date time = new Date();
+        String time1 = format1.format(time);
+     	//board.setDate(time1);
+     	
+     	System.out.println(board.toString());
+     	
+     	popularBoardRepository.saveAndFlush(board);
+     	
+     	
+ 		return "redirect:/community/{program}/{popular}";
  	}	
     
     

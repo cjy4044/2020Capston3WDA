@@ -75,7 +75,7 @@ public class CustomPopularBoardRepositoryImpl implements CustomPopularBoardRepos
     @Override
     public long CountById(int c) {
     	
-    	   System.out.println("아이디: "+c);
+    
     	   
            JPAQueryFactory query = new JPAQueryFactory(em);
 
@@ -87,7 +87,7 @@ public class CustomPopularBoardRepositoryImpl implements CustomPopularBoardRepos
 
            List<PopularBoard> boardList =  query.select(pm).from(pm).where(booleanBuilder).fetch();
            
-           System.out.println(" 개수 :"+boardList);
+//           System.out.println(" 개수 :"+boardList);
 
           return boardList.size();
 

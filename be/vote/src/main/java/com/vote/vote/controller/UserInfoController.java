@@ -229,6 +229,7 @@ public class UserInfoController {
 
 				JSONArray json = new JSONArray();
 
+
 				for( Company company : companies){
 					JSONObject companyData = new JSONObject();
 					

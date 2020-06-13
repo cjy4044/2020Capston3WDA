@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<content>
+	<style>
+		.gi{
+		  border: 1px solid #ccc;
+		  padding: 5px;
+	 width: 250px;
+	 margin: 10px ;
+	 display: inline-block;
+	 text-align:left;
+		}
+	  </style>
+<body>
+	<div>
+		<tr>		
+			<video th:src="@{/uploads/dd.mp4}" controls width="800px" height="500px;"></video>
+			<!-- <video class= "hi" th:src="@{'/uploads/' + ${rfile.filename}}"> -->
+		</tr>
+	</div>
+		<div class="gi">		
+	<tr>
+		<li>제목: <span th:utext="${hotclib.htitle}"></span></li>
+	</tr>
+		<tr>
+			<li>내용: <span th:utext="${hotclib.h_content}"></span></li>
+		</tr>
+			<tr>
+				<li>조회수: <span th:utext="${hotclib.hviewcount}"></span></li>
+			</tr>
+			<li>작성자: <span sec:authentication="principal.name"></span></li>
+		</div>
+	
+		<div>
+			<a href="" th:href="@{/hotclib}">목록</a><br>
+			<a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a> 
+			<form id="delete-form" th:action="@{'/hotclib/' + ${hotclib.hotclibid}}" method="post">
+				<input type="hidden" name="_method" value="delete"/>
+				<button id="delete-btn">삭제</button>
+			</form>
+			</div>
+
+			<form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
+				<tr>댓글테스트
+				<td><input type="textarea" placeholder="내용을 입력하세요" name="r_content"></td>
+					<input type="submit" value="등록">
+			</tr>
+			</form>
+		
+	
+
+	
+	
+
+	<tr th:each="reply:${replyList}">
+		
+			<p>
+			 
+			    <li>작성자<td sec:authentication="principal.name"></span></li>
+				<li>작성일자<td th:text="${reply.r_date}"></td></li>
+				<li>내용<td th:text="${reply.r_content}"></td></li>
+						
+					<div>
+					
+				<form id="replydelete-form"  method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">						
+					<input type="hidden" name="_method" value="replydelete"/>
+					<button id="replydelete">삭제</button>
+				</form>
+				<input type="hidden" name="_method" value="replydelete"/>
+					<button id="replyupdate">수정</button>
+				  </div>
+	</p>
+	</tr>
+
+</body>
+
+
+</content>
+</html>

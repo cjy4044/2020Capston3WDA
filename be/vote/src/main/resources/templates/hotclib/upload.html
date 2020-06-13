@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳')}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <content>   
+        <form th:action="@{/hotclib/upload}" method="post" enctype="multipart/form-data">                
+          <div>
+            <tr>
+				<th><label for="htitle">제목</label></th>
+				<td><input name="htitle" /></td>
+            </tr>
+            </div>
+            <div>
+			<tr>
+				<th><label for="h_content">내용</label></th>
+                <td><input name="h_content" /></td>
+            </tr>     
+        </div>
+            <tr>
+          </tr>
+          
+            썸네일선택<input type="file" name="filename2" id="filename2">
+              영상선택<input type="file" name="filename" id="filename">
+               <div class="form">  
+                  <input type="submit" value="등록">
+                  <input type="reset" value="취소" onclick="history.back();">                    
+         </div>
+        </form>
+            </content>
+</body>
+</html>

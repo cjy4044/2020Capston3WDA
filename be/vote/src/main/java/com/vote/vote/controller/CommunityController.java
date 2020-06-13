@@ -29,6 +29,7 @@ import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.PopularBoardJpaRepository;
 import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.KakaoAPIService;
 
 import org.json.simple.JSONArray;
@@ -72,6 +73,10 @@ public class CommunityController {
 	
 	@Autowired
 	CustomPopularBoardRepository customPopularBoardRepository;
+		
+	@Autowired
+	ProgramManagerJpaRepository pmRepository;
+	
 	
     @RequestMapping(value={"","/"})
 	public String index() {
@@ -168,7 +173,7 @@ public class CommunityController {
      	
      	model.addAttribute("popularName", popular.getName());
      	
-     	System.out.println(popularBoardRepository.findAll());
+   
      	
  		return "community/popularBoard";
  	}	
@@ -178,18 +183,21 @@ public class CommunityController {
 	public JSONArray popularBoardAxios(
 			    @PathVariable("program") int programNum,
 				@PathVariable("popular") int popularNum,
-				Principal user, 
+				
 				@PageableDefault Pageable pageable, Model model){
 	
-		List<PopularBoard> popularboards = customPopularBoardRepository.findAll(pageable);
+    	
+		List<PopularBoard> popularboards = customPopularBoardRepository.findById(popularNum,pageable);
 	
-		long count = customPopularBoardRepository.CountAll();
+		long count = customPopularBoardRepository.CountById(popularNum);
 		
+		System.out.println(popularNum);
+		System.out.println(count);
 		
 
-		System.out.println("pageable : " + pageable);
+		//System.out.println("pageable : " + pageable);
 
-		System.out.println("getOffset : " + pageable.getOffset());
+		//System.out.println("getOffset : " + pageable.getOffset());
 		
 		int gob;
 		int rownum;
@@ -203,7 +211,7 @@ public class CommunityController {
 		int i = 0;
 		rownum = (int)count - (pageable.getPageNumber() * gob) ;
 		
-		System.out.println(count-pageable.getPageNumber());
+		//System.out.println(count-pageable.getPageNumber());
 		
 		JSONArray json = new JSONArray();
 		Member member = new Member();
@@ -216,7 +224,6 @@ public class CommunityController {
 			if(nickname==null) {
 				nickname = member.getName();
 			}
-			
 			popularBoardData.put("rownum",rownum-i);
 			popularBoardData.put("id", popularBoard.getId());
 			popularBoardData.put("nickname", nickname);
@@ -227,7 +234,8 @@ public class CommunityController {
 			popularBoardData.put("mdate", popularBoard.getMdate());
 			popularBoardData.put("viewCount", popularBoard.getViewcount());
 			popularBoardData.put("replyCount", popularBoard.getReplycount());
-			popularBoardData.put("r_id", popularBoard.getRid());			
+			popularBoardData.put("r_id", popularBoard.getRid());
+			
 			i++;
 			json.add(popularBoardData);
 		}
@@ -247,7 +255,7 @@ public class CommunityController {
 		return json;
 	}
     
-    @RequestMapping(value={"/{program}/{popular}/{popularBoard}","/{program}/{popular}/{popularBoard}/"})
+    @RequestMapping(value={"/{program}/{popular}/{popularBoard}","/{program}/{popular}/{popularBoard}/"}) //프로그램>인기인>게시글내용
    	public String popularBoardView(@PathVariable("program") int programNum,
    								@PathVariable("popular") int popularNum,
    								@PathVariable("popularBoard") int BoardNum,Model model) {
@@ -255,12 +263,12 @@ public class CommunityController {
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
      	PopularBoard board = popularBoardRepository.findById(popularNum);
+
+     	model.addAttribute("popularName", popular.getName());
      	
-     	//model.addAttribute("popularName", popular.getName());
      	
      	
-     	
- 		return "community/popularView";
+ 		return "community/popularBoardView";
  	}	
     
     @RequestMapping(value={"/{program}/{popular}/{popularBoard}/axios"}, method = RequestMethod.GET) // 해당 프로그램 인기인 정보
@@ -270,7 +278,7 @@ public class CommunityController {
 										@PathVariable("popularBoard") int BoardNum,Model model ){
   	
 
-      	
+      	ProgramManager pm = pmRepository.findByProgramId(programNum);
       	PopularBoard popularBoard = popularBoardRepository.findById(BoardNum);
 
 
@@ -278,6 +286,9 @@ public class CommunityController {
   		
   		Member member = memberRepository.findByNo(popularBoard.getRid());
 		member = memberRepository.findByNo(popularBoard.getRid());
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails sessionUser = (CustomUserDetails)principal;
 		
 		String nickname = member.getNickname();
 		if(nickname==null) {
@@ -293,9 +304,29 @@ public class CommunityController {
 		popularBoardData.put("viewCount", popularBoard.getViewcount());
 		popularBoardData.put("replyCount", popularBoard.getReplycount());
 		popularBoardData.put("r_id", popularBoard.getRid());	
+		popularBoardData.put("sessionUser", sessionUser.getR_ID());	
+		popularBoardData.put("sessionRole", sessionUser.getROLE());
+		popularBoardData.put("managerId", pm.getId());
 	
   	    return popularBoardData; 
   	   
       }
+    
+    @RequestMapping(value={"/{program}/{popular}/create","/{program}/{popular}/create/"}) //프로그램>인기인>게시글작성
+   	public String popularBoardCreate(@PathVariable("program") int programNum,
+   								@PathVariable("popular") int popularNum,
+   								@PathVariable("popularBoard") int BoardNum,Model model) {
+     	
+     	Program program = programRepository.findById(programNum);
+     	Popular popular = popularRepository.findById(popularNum);
+     	PopularBoard board = popularBoardRepository.findById(popularNum);
+
+     	model.addAttribute("popularName", popular.getName());
+     	
+     	
+     	
+ 		return "community/popularBoardCreate";
+ 	}	
+    
     
 }

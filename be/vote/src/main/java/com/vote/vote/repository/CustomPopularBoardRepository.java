@@ -10,8 +10,12 @@ public interface CustomPopularBoardRepository {
     
 
     public List<PopularBoard> findAll(Pageable pageable);
+    
+    public List<PopularBoard> findById(int c,Pageable pageable);
 
     public long CountAll();
+    
+    public long CountById(int popularid);
 
 
 }

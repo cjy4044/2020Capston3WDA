@@ -52,6 +52,12 @@ class PopularBoard extends Component {
 
 
     }
+    create(){    
+      
+    location.href=`/community/${param2}/${param}/create`
+
+        
+    }
 
     render() {
         
@@ -78,8 +84,7 @@ class PopularBoard extends Component {
                                 </TableBody>
                                     </Table>
                                     </Paper> 
-
-                                    <button type="button">글 등록</button>     
+                                    <button type="button" onClick={this.create.bind(this)}>글등록</button>     
         </div> 
          )
     }

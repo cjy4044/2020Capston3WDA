@@ -24,17 +24,20 @@ class PopularBoardView extends Component {
     constructor(props){
         
         super(props);
-        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0};
+        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0 ,board :"" };
       }
 
     async componentDidMount(){
-        console.log(`/community/${param3}/${param2}/${param}/axios`)
+  
         let {data: popularBoard} = await axios.get(`/community/${param3}/${param2}/${param}/axios`)  
         this.setState({popularBoard})
 
-        console.log(popularBoard)
+        this.state.board = `/community/${param3}/${param2}`
+        console.log(this.state.popularBoard)
 
-
+    }
+    goBack(){
+        location.href=this.state.board;
 
     }
 
@@ -71,11 +74,22 @@ class PopularBoardView extends Component {
                                 </TableBody>
                                     </Table>
                                     </Paper> 
-                                <input type="hidden" value={this.state.popularBoard.id} readOnly/>
-                                <input type="hidden" value={this.state.popularBoard.popular_id} readOnly/> 
-                                    <button type="button" onClick='goBack()'>글 목록</button> 
-                                    <button type="button">수정</button>    
-                                    <button type="button">삭제</button>    
+                                <input type="hidden" value={this.state.popularBoard.id}/>
+                                <input type="hidden" value={this.state.popularBoard.popular_id}/>
+                               
+                                
+                                {/* 게시글작성자 or 관리자 or 매니저일경우 수정삭제가능 */}
+                                {(this.state.popularBoard.r_id==this.state.popularBoard.sessionUser||
+                                this.state.popularBoard.sessionRole==1||
+                                this.state.popularBoard.r_id==this.state.popularBoard.managerId)&&
+                                <div>
+                                <button type="button">수정</button>
+                                <button type="button">삭제</button>
+                                </div>
+                                 }{
+                                 <div><button type="button" onClick={this.goBack.bind(this)}>글 목록</button></div>}
+                               
+                                  
         </div> 
          )
     }

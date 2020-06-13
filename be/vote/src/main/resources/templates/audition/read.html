@@ -23,13 +23,13 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
    
     <tbody>
             <tr>
-                <th>제목 : </th>
+                <th>제목</th>
                  <td th:text="${audition.atitle}"></td>
 
             </tr>
             
             <tr>
-                <th>기간 : </th>
+                <th>기간</th>
                  <td th:text="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}"></td>
 				<th>  ~  </th>
 				<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
@@ -39,18 +39,28 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
          
     </tbody>
 </table>
-<table>
+	<span style="float:right;">
+            
+             	 <a href="" th:href="@{'/uploads/' + ${audition.afile}}">
+                  [[${audition.afile}]]</a>
+
+					
+					</span>
+				
+<table><br>
  <tr>
-                <th>내용 : </th>
+                <th>내용</th>
                 
                   <td th:text="${audition.acontent}"></td>
             <!--    <td><textarea cols="150" rows="20" placeholder="내용을 입력하세요. " name="a_content"></textarea></td> -->
-                 <td>  	 <a><img class= "im" th:file="@{'/uploads/' + ${audition.afile}}"    ></a>
-
+           
+                
             </tr>
+            
+           
 </table>
 	
-	
+
 	
 	
 	<div>

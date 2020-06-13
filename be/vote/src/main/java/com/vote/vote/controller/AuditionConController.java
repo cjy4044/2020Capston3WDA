@@ -1,0 +1,244 @@
+package com.vote.vote.controller;
+
+import java.security.Principal;
+import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.dto.Audition;
+import com.vote.vote.db.dto.AuditionCon;
+import com.vote.vote.db.dto.AuditionResult;
+import com.vote.vote.db.dto.Member;
+import com.vote.vote.repository.AuditionConJpaRepository;
+import com.vote.vote.repository.AuditionJpaRepository;
+import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
+import com.vote.vote.service.StorageService;
+
+
+@Controller
+public class AuditionConController {
+	
+	@Autowired
+	AuditionConJpaRepository auditionConRepository;
+	
+	@Autowired
+	private StorageService storageService;
+
+	@Autowired
+	private MemberJpaRepository memberRepository;
+
+	@Autowired
+	private ProgramManagerJpaRepository pmRepository;
+	
+	@Autowired
+	private AuditionJpaRepository auditionRepository;
+	
+
+	
+	
+	@RequestMapping("/audition_con/list")
+	public String list(Model model) { // 2~ n
+		model.addAttribute("auditionconlist",auditionConRepository.findAll());
+		return "/audition_con/list";
+	}
+	
+	
+	
+	
+
+	@RequestMapping("/audition_con/listm")
+	public String listmm(@Valid AuditionCon auditionCon, Integer rid, Model model) { // only 1
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails sessionUser = (CustomUserDetails)principal;
+        
+        System.out.println(sessionUser.getR_ID());
+        AuditionCon auditioncon = auditionConRepository.findByRid(sessionUser.getR_ID());
+        
+        
+		System.out.println(auditioncon.toString());
+		model.addAttribute("auditionconlistm",auditioncon);
+		
+//		System.out.println(sessionUser.getR_ID()+"의 오디션 폼의 오디션 fk는"+auditioncon.getAuditionid());
+
+				
+		
+		return "/audition_con/listm";
+	
+	}
+	
+
+	
+	@GetMapping("/audition_con/read/{formid}")
+	public String read(Model model, @PathVariable int formid){
+		
+		model.addAttribute("auditionCon", auditionConRepository.findByFormid(formid));
+		AuditionCon auditioncon = auditionConRepository.findByFormid(formid);
+		auditionConRepository.save(auditioncon);
+		return "audition_con/read";
+	}
+	
+
+	@GetMapping("/audition_con/form")
+	public String form(Model model
+//			, @PathVariable int auditionid
+			) {
+		
+		AuditionCon auditionCon = new AuditionCon();
+//		Audition audition = new Audition();
+//		audition.setAuditionid(audition.getAuditionid());
+//		auditionCon.setAuditionid(audition.getAuditionid());
+		model.addAttribute("auditionCon",new AuditionCon());
+		return "audition_con/form";
+	}
+	
+	/////////////////////////////////////////////////////////////
+	
+	@PostMapping("/audition_con/form")
+			  public String form(
+					  
+					  SessionStatus sessionStatus,
+			            Principal principal,			       
+			            RedirectAttributes redirAttrs,
+			            @RequestParam(name = "fprofile") MultipartFile fprofile,
+			            @RequestParam(name= "fusername") String fusername,
+			            @RequestParam(name= "fuserphone") String fuserphone,
+			            @RequestParam(name= "fusermail") String fusermail,
+			            @RequestParam(name= "ftitle") String ftitle,
+			            @RequestParam(name= "faddr") String faddr,
+			            @RequestParam(name= "feducation") String feducation,
+			            @RequestParam(name= "fgender") String fgender,
+			            @RequestParam(name= "fheight") String fheight,
+			            @RequestParam(name= "fweight") String fweight,
+			            @RequestParam(name= "fblood") String fblood,
+			            @RequestParam(name= "ffamily") String ffamily,
+			            @RequestParam(name= "fhobby") String fhobby,
+			            @RequestParam(name= "fability") String fability) {
+						
+						String fprofilePath = storageService.store2(fprofile); 
+			            Member member = memberRepository.findByUserid(principal.getName());
+//			            ProgramManager pm = pmRepository.findById(member.getNo());
+			           // Audition audition = auditionRepository.findByAuditionid(member.getNo());
+			           
+			            			         
+			            AuditionCon auditionCon = new AuditionCon();
+			            Audition audition = new Audition(); 
+			          
+//			            auditionCon.setAuditionid(audition.getAuditionid());
+			            auditionCon.setRid(member.getNo());
+			            auditionCon.setFprofile(fprofilePath);
+			            auditionCon.setFusername(fusername);
+			            auditionCon.setFuserphone(fuserphone);
+			            auditionCon.setFusermail(fusermail);
+			            auditionCon.setFtitle(ftitle);
+			            auditionCon.setFaddr(faddr);
+			            auditionCon.setFeducation(feducation);
+			            auditionCon.setFgender(fgender);
+			            auditionCon.setFheight(fheight);
+			            auditionCon.setFweight(fweight);
+			            auditionCon.setFblood(fblood);
+			            auditionCon.setFfamily(ffamily); 
+			            auditionCon.setFhobby(fhobby);
+			            auditionCon.setFability(fability);
+			                 
+			            auditionConRepository.saveAndFlush(auditionCon);
+
+			            // 파일 저장	       
+			            sessionStatus.setComplete();
+			            System.out.println("게시글업로드완료");
+			            return "redirect:/audition_con/list";
+			           
+	}
+	
+//			@RequestParam(name="fprofile") MultipartFile fprofile,
+//			@RequestParam(name="formid", required = false) Integer formid,
+//			Model model,
+//			RedirectAttributes redirAttrs,
+//			AuditionCon auditioncon,
+//			BindingResult bindingResult, 
+//			SessionStatus sessionStatus,
+//			Principal principal){
+//				
+//			
+//			if (bindingResult.hasErrors()) {
+//				return "audition_con/form";
+//			} else {
+//		
+//				
+//				
+//			AuditionCon fprofile = new AuditionCon();
+//			storageService.store(fprofile);
+//			String filenamePath = StringUtils.cleanPath(fprofile.getOriginalFilename());
+//			
+//			
+//			
+//			auditionConRepository.saveAndFlush(auditioncon);  // 저장하고 커밋까지 Flush
+//					
+//			fprofile.setFormid(fprofile.getFormid());
+//			fprofile.setFprofile(filenamePath); 
+//			
+//			auditionConRepository.saveAndFlush(fprofile);
+//			sessionStatus.setComplete();
+//			return "redirect:/audition_con";
+//			}
+		
+		
+//	public String form(@Valid AuditionCon auditionCon, BindingResult bindingResult, SessionStatus sessionStatus) {
+//		if(bindingResult.hasErrors()) {
+//			return "/audition_con/form";
+//		} else {
+//			auditionCon.setFdate(new Date());
+//			System.out.println(auditionCon.toString());
+//			auditionConRepository.save(auditionCon);
+//			sessionStatus.setComplete();
+//			return "redirect:/audition/complete";
+//		}
+//	}
+	
+	@GetMapping("/audition_con/update/{formid}")
+	public String update(Model model, @PathVariable int formid){
+		AuditionCon auditioncon = auditionConRepository.findByFormid(formid);
+		model.addAttribute("auditionCon", auditioncon);		
+		return "audition_con/update";
+	}
+
+	@PostMapping("/audition_con/update/{formid}")
+	public String update(AuditionCon auditioncon, BindingResult bindingResult){
+		if (bindingResult.hasErrors()) {
+			return "/audition_con/update";
+		} else {
+			
+			auditionConRepository.save(auditioncon).getFormid();
+		return "redirect:/audition_con/list";
+		}
+	}	
+	
+	@GetMapping("/audition_con/serch")
+	public String serch(@RequestParam(value="keyword") String keyword, Model model) {
+		List<AuditionCon> auditioncon = auditionConRepository.findByConfirm(keyword);
+		
+				model.addAttribute("auditionconlist", auditioncon);
+				
+				return "audition_con/list";
+	}
+
+	
+}

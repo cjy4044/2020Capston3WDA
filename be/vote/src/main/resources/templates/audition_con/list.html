@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판')}">
+<head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+   
+
+</head>
+  
+<body>
+
+
+    <content>
+ 
+
+
+ <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />-->
+    <!-- <div id="auditionList"><</div>
+    <script src="/assets/auditionList.js"></script> -->
+      <table class="table table-striped table-sm">
+      <thead>
+		<tr>
+			<th>No</th>
+			<th>제목</th>
+			<th>신청서이름</th>
+			<th>아이디</th>
+			<th>접수일</th>
+			<th>심사결과</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="auditionCon:${auditionconlist}">
+			<td th:text="${auditionCon.formid}"></td>
+			<td><a href="" th:href="@{'/audition_con/read/' + ${auditionCon.formid}}" th:text="${auditionCon.ftitle}"></a></td>
+			<td th:text="${auditionCon.fname}"></td>
+			<td sec:authentication="principal.name"></span><span> 님</span></td>
+			<td th:text="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"></td>
+			<td th:text="${auditionCon.confirm}"></td>
+  
+
+		</tr>
+	
+
+		</tbody>
+		
+
+		</table>
+				<form action="/audition_con/serch" method="GET">
+		    <div><center>
+		    <select name="job">
+   			 <option value="">심사결과</option>
+   	 	   	<option value="학생">o</option>
+   	 <option value="회사원">x</option>
+   	 <option value="기타">기타</option>
+	</select>
+		       
+		        <input name="keyword" type="text" placeholder="심사결과를 입력해주세요">
+		        <button>검색하기</button></center>
+		        
+		    </div>
+		
+		 
+		</form>
+		
+		
+		
+       </content>
+
+</body>
+</html>

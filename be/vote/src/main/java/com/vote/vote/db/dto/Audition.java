@@ -57,6 +57,8 @@ public class Audition {
 	    @Column(nullable=true,name="r_id")
 	    private Integer rid;
 
+	    @Column(nullable=true,name="a_file")
+	    private String afile;
 		
 
 		public int getAuditionid() {
@@ -141,6 +143,19 @@ public class Audition {
 
 		
 		
+		
+		
+		public String getAfile() {
+			return afile;
+		}
+
+		public void setAfile(String afile) {
+			this.afile = afile;
+		}
+
+		public String toString() {
+			return ""+rid;
+		}
 	    
 
 }

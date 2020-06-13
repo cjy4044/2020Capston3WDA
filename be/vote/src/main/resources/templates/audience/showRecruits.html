@@ -1,10 +1,7 @@
 <div>
     <tr th:each="list:${list}"></tr>
-        <td th:text="${list.applyId}"></td>
-        <td><a href="" th:href="@{'/audience/read/' + ${list.applyId}}" th:text="${list.aTitle}"></a></td>
-        <td th:text="${list.aStartdate}"></td>
-        <td th:text="${list.aEnddate}"></td>
-        <td th:text="${list.aViewCount}"></td>
+        <td th:text="${list.name}"></td>
+        <td th:text="${list.phone}"></td>
     </tr>
 
 </div>

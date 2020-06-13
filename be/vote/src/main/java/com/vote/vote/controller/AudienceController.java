@@ -197,7 +197,7 @@ public class AudienceController {
     // 응모인원 리스트 ajax
     @GetMapping("/showRecruits")
     public String showList(Model model, Audience audience, Principal principal) {
-        List<Member> list = new ArrayList<Member>();
+        List<Member> list = new ArrayList<Member>(); 
         try {
             list = memberRepository.showRecruits(audience.getApplyId());
         } catch (Exception e) {

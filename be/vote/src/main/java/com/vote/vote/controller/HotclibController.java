@@ -87,11 +87,12 @@ public class HotclibController {
 	}
 
 	@PostMapping("/hotclib/read/{hotclibid}")
-	public String read(Reply reply,
+	public String read(
 	@PathVariable int hotclibid,
 	 BindingResult bindingResult, 
 	SessionStatus sessionStatus,
 	Principal principal){
+		Reply reply = new Reply();
 		    String userid = principal.getName(); 
 			Member member = memberRepository.findByUserid(userid); 
 			int r_id = member.getNo();
@@ -181,7 +182,8 @@ public class HotclibController {
 	}
 
 	@PostMapping("/hotclib/update/{hotclibid}")
-	public String update(Hotclib hotclib, BindingResult bindingResult){
+	public String update(BindingResult bindingResult){
+		Hotclib hotclib = new Hotclib();
 		if (bindingResult.hasErrors()) {
 			return "hotclib/update";
 		} else {

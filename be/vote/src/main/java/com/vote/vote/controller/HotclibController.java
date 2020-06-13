@@ -68,13 +68,14 @@ public class HotclibController {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hotclibid"));
 		model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
-		// model.addAttribute("rfiles", rfileRepository.findAll());
+		model.addAttribute("rfiles", rfileRepository.findAll());
 		return "hotclib/list";
 	}
 	
 	@GetMapping("/hotclib/read/{hotclibid}")
-	public String read(Model model, @PathVariable int hotclibid){
-		// model.addAttribute("rfiles", rfileRepository.findByFilename(filename));
+	public String read(Model model, @PathVariable int hotclibid, String filename) {
+		
+		model.addAttribute("rfile", rfileRepository.findByFilename(filename));
 		model.addAttribute("hotclib", hotclibRepository.findById(hotclibid));	
 		List<Reply> reply = replyRepository.findByHotclibid(hotclibid);
 		model.addAttribute("replyList", reply);

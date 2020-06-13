@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 
 @Entity
@@ -32,6 +34,9 @@ public class Hotclib {
     @Column(nullable=false)
     private String h_content;
    
+    @Column(nullable=true)
+    private String filename2;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable=true)
     private Date h_date;
@@ -47,7 +52,7 @@ public class Hotclib {
     
     @Column(nullable=true)
     private String h_reply;
-    
+
     @Column(nullable=true, name="r_id")
     private Integer no;
 
@@ -135,7 +140,17 @@ public class Hotclib {
         this.hotclibid = hotclibid;
     }
 
- 
-   
+    public String getFilename2() {
+        return filename2;
+    }
+
+    public void setFilename2(String filename2) {
+        this.filename2 = filename2;
+    }
+
+    public String toString(){
+        return filename2;
+    }
+
 
 }

@@ -50,6 +50,49 @@ public class StorageService {
 		}
 	}
 	
+	public String store2(MultipartFile file){
+		String filename = StringUtils.cleanPath(file.getOriginalFilename());
+		StringBuilder str = new StringBuilder(filename);
+		try {
+			if (file.isEmpty()) {
+				throw new StorageException("빈 파일: "+ filename);
+			}
+			if(filename.contains("..")) {
+				throw new StorageException("파일 이름 오류: "+filename);
+			}
+			// try (InputStream inputStream = file.getInputStream()) {     
+			// 	Files.copy(inputStream, this.rootLocation.resolve(filename),      
+			// 	StandardCopyOption.REPLACE_EXISTING);   // 중복된 이름의 사진이 들어올 경우 덮어 쓰는 형식으로 해당 위치에 복사함
+			// 	} 
+
+		
+			int count =1;
+				System.out.println(filename);
+			// 중복된 파일이 있는지 확인,  있으면 ( int ) 추가  filename(2) ,(3) ...
+			
+			while(Files.exists(this.rootLocation.resolve(str.toString()))){
+				str = new StringBuilder(filename);
+				String add = "("+count+")";
+				str.insert(filename.indexOf("."), add);
+				count++;
+				System.out.println("while 문"+ str.toString());
+			}
+			
+			try (InputStream inputStream = file.getInputStream()) {     
+				System.out.println("확인1: "+ str.toString());
+				Files.copy(inputStream, this.rootLocation.resolve(str.toString()),      
+				StandardCopyOption.REPLACE_EXISTING);   // 중복된 이름의 사진이 들어올 경우 덮어 쓰는 형식으로 해당 위치에 복사함
+			} 
+
+
+		}catch(IOException e) {
+			throw new StorageException("저장 실패 "+filename, e);
+		}
+
+		System.out.println("확인2: "+ str.toString());
+		return str.toString();
+	}
+
 	public Stream<Path> loadAll(){ // 모든 파일을 로딩
 		try {
 			return Files.walk(this.rootLocation, 1)

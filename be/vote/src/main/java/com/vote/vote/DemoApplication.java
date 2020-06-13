@@ -22,6 +22,7 @@ public class DemoApplication {
 		return (args) -> {    
 			System.out.println("폴더 생성");
 			storageService.init();   // 파일들을 저장할 폴더가 없는 경우 만들어 줌.
+			
 		};  
 	} 
 }

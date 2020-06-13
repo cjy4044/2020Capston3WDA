@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "reply")
 public class Reply {
     @Id
-    @Column(nullable=false, name="reply_id")
+    @Column(nullable=true, name="reply_id")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPLY_SEQ_GENERATOR")
     @SequenceGenerator(name="REPLY_SEQ_GENERATOR", sequenceName="REPLY_SEQ", allocationSize = 1)
     private int replyid;

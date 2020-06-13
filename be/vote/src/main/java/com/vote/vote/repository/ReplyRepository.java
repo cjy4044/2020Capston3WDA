@@ -12,6 +12,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
     public ArrayList<Reply> findAll();
     public ArrayList<Reply> findByHotclibid(int hotclibid);
     public Reply deleteById(int replyid);
+    public Reply findById(int replyid);
     
     
     

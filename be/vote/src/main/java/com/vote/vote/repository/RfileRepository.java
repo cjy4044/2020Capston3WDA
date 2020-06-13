@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RfileRepository extends JpaRepository<Rfile, Integer> {
     public ArrayList<Rfile> findByHotclibid(int hotclibid);
-
+    public Rfile findByFilename(String filename);
 }

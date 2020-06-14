@@ -1,17 +1,28 @@
 package com.vote.vote.db.dto;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.format.annotation.DateTimeFormat;
 
+
+@DynamicInsert
 @Entity
 @Table(name = "PRODUCT")
 public class Prd {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_SEQ_GENERATOR")
+    @SequenceGenerator(name="PRODUCT_SEQ_GENERATOR", sequenceName="PRODUCT_SEQ", allocationSize = 1)
     private int PRODUCT_ID;
     @Column(nullable = true)
     private int PROGRAM_ID;
@@ -29,14 +40,20 @@ public class Prd {
     private String P_UPLOAD;
     @Column(nullable = true)
     private String P_STATE;
+
     @Column(nullable = true)
     private String P_ENDDATE;
+
     @Column(nullable = true)
     private int P_MANAGER;
 
     @Column(nullable = true)
     private int product_category_d;
     
+    @Column(nullable= true)
+    private int P_STOCK;
+
+
     public int getPRODUCT_ID() {
         return this.PRODUCT_ID;
     }
@@ -131,5 +148,13 @@ public class Prd {
 
     public void setProduct_category_d(int product_category_d) {
         this.product_category_d = product_category_d;
+    }
+
+    public int getP_STOCK() {
+        return P_STOCK;
+    }
+
+    public void setP_STOCK(int p_STOCK) {
+        P_STOCK = p_STOCK;
     }
 }

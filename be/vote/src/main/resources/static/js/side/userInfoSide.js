@@ -40,7 +40,7 @@
 		$("#side").append("<li><a href='#'>팬클럽관리</a></li>");
 		    
 		//굿즈샵관리
-		$("#side").append("<li><a href='#'>상품관리</a></li>");	 
+		$("#side").append("<li><a href='/userInfo/manage/product'>상품관리</a></li>");	 
 		$("#side").append("<li><a href='/shop/create'>상품등록</a></li>");	 
 		$("#side").append("<li><a href='#'>주문관리</a></li>");	 
 		$("#side").append("<li><a href='#'>판매추이</a></li>");	

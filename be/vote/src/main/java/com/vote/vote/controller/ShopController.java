@@ -30,12 +30,15 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 
 
 
@@ -141,7 +144,7 @@ public class ShopController {
 		product.setP_PRICE(price); // 상품 가격
 		product.setP_STATE("0"); // 상품 판매 상태   (임시)
 		product.setP_ENDDATE(endTime); // 상품 판매 종료 날짜
-		
+		product.setP_STOCK(stock);
 		prdRepository.saveAndFlush(product);
 
 
@@ -246,4 +249,13 @@ public class ShopController {
 
 		return categorys;
 	}
+
+	@RequestMapping(value={"/shop/product/{prdId}","/shop/product/{prdId}/"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public void prdDelete(@PathVariable("prdId") int prdId){
+
+		prdRepository.deleteById(prdId);
+
+	}
+
 }

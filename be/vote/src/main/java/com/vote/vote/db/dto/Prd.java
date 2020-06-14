@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
+@DynamicInsert
 @Entity
 @Table(name = "PRODUCT")
 public class Prd {
@@ -48,6 +50,10 @@ public class Prd {
     @Column(nullable = true)
     private int product_category_d;
     
+    @Column(nullable= true)
+    private int P_STOCK;
+
+
     public int getPRODUCT_ID() {
         return this.PRODUCT_ID;
     }
@@ -142,5 +148,13 @@ public class Prd {
 
     public void setProduct_category_d(int product_category_d) {
         this.product_category_d = product_category_d;
+    }
+
+    public int getP_STOCK() {
+        return P_STOCK;
+    }
+
+    public void setP_STOCK(int p_STOCK) {
+        P_STOCK = p_STOCK;
     }
 }

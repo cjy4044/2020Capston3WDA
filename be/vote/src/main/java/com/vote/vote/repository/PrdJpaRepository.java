@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PrdJpaRepository extends JpaRepository<Prd, String>{
+public interface PrdJpaRepository extends JpaRepository<Prd, Integer>{
     
 }

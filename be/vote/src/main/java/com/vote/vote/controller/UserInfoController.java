@@ -1,24 +1,27 @@
 package com.vote.vote.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.customSelect.CustomPrd;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.CustomCompanyRepository;
 import com.vote.vote.repository.CustomMemberRepository;
+import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.CustomProgramRepository;
 import com.vote.vote.repository.CustomVoteRepository;
+import com.vote.vote.repository.JudgeJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
-import com.vote.vote.repository.VoteJpaRepository;
 import com.vote.vote.service.StorageService;
 
 import org.json.simple.JSONArray;
@@ -30,11 +33,9 @@ import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,28 +43,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
-import com.vote.vote.config.CustomUserDetails;
-import com.vote.vote.db.dto.Company;
-import com.vote.vote.db.dto.Judge;
-import com.vote.vote.db.dto.Member;
-import com.vote.vote.db.dto.Popular;
-import com.vote.vote.db.dto.Program;
-import com.vote.vote.db.dto.ProgramManager;
-import com.vote.vote.db.dto.Vote;
-import com.vote.vote.db.dto.Voter;
-import com.vote.vote.db.dto.VoterHash;
-import com.vote.vote.repository.CompanyJpaRepository;
-import com.vote.vote.repository.CustomCompanyRepository;
-import com.vote.vote.repository.CustomMemberRepository;
-import com.vote.vote.repository.CustomProgramRepository;
-import com.vote.vote.repository.JudgeJpaRepository;
-import com.vote.vote.repository.MemberJpaRepository;
-import com.vote.vote.repository.PopularJpaRepository;
-import com.vote.vote.repository.ProgramJpaRepository;
-import com.vote.vote.repository.ProgramManagerJpaRepository;
-import com.vote.vote.service.StorageService;
 
 
 @Controller
@@ -104,12 +83,15 @@ public class UserInfoController {
 	@Autowired
 	private PopularJpaRepository popularRepository;
 
-	
+	@Autowired
+	private CustomPrdJapRepository customPrdRepository;
+
+
 	//개인정보
 	@RequestMapping(value={"","/"})
 	public String index(RedirectAttributes redirAttrs,Model model) {  
 		
-		
+	
 		
         return "userInfo/index";
        	}
@@ -635,6 +617,27 @@ public class UserInfoController {
 
 		    }	
 		
-			 
+
+		@RequestMapping(value={"/manage/product","/manage/product/"})
+		public String managePrd(){
+
+			return "/userInfo/managePrd";
+		}
+		@RequestMapping(value={"/manage/product/axios","/manage/product/axios/"})
+		@ResponseBody
+		public CustomPrd managePrdAxios(@PageableDefault Pageable pageable, Authentication authentication){
+
+			try{
+				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+				CustomPrd prd = customPrdRepository.getManagerPrd(userDetails.getR_ID(), pageable);
+				
+				return prd;
+
+			}catch(Exception e){
+				System.out.println("등록 상품 목록에서 오류 발생.");
+				return null;
+			}
+		}
 
 }

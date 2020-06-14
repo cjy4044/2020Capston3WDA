@@ -54,7 +54,7 @@ module.exports = {
     shopItemCreate : path.join(__dirname,"./app/shop/itemCreate.jsx"),
     myCommunity: path.join(__dirname,'./app/userInfo/myCommunity.jsx'),
     updatePopular: path.join(__dirname,'./app/userInfo/updatePopular.jsx'),
-   
+    managePrd : path.join(__dirname,'./app/userInfo/managePrd.jsx'),
 
 
   },

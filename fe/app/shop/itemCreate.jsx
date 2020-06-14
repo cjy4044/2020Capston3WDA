@@ -21,7 +21,7 @@ class ItemCreate extends React.Component {
         this.setState({category:data[0], categoryD:data[1], color:data[2], size:data[3]})
         console.log(this.state);
         this.categorys();
-        this.setOptionSelect();
+        // this.setOptionSelect();
     }
     categorys(){
         var categorySelect = $('#category_select');

@@ -17,6 +17,8 @@ import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.repository.ADetailRepository;
 import com.vote.vote.repository.AudienceJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.MemberRepository;
+import com.vote.vote.repository.MemberRepositoryImpl;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.repository.ReplyRepository;
 import com.vote.vote.repository.RfileRepository;
@@ -47,6 +49,8 @@ import org.springframework.util.StringUtils;
 @Controller
 @RequestMapping("/audience")
 public class AudienceController {
+   
+    private MemberRepository mr;
 
     private AudienceService audienceService;
     @Autowired
@@ -199,13 +203,14 @@ public class AudienceController {
     public String showList(Model model, Audience audience, Principal principal) {
         List<Member> list = new ArrayList<Member>(); 
         try {
-            list = memberRepository.showRecruits(audience.getApplyId());
+            System.out.println(audience.getApplyId());
+            list = mr.getInfo(audience.getApplyId());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
        
-        System.out.println("gd");
+        System.out.println(list);
         return "audience/showRecruits";
     }
         

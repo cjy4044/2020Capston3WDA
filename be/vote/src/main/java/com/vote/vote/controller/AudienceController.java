@@ -12,10 +12,12 @@ import com.vote.vote.db.dto.ADetaiId;
 import com.vote.vote.db.dto.ADetail;
 import com.vote.vote.db.dto.Audience;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.repository.ADetailRepository;
 import com.vote.vote.repository.AudienceJpaRepository;
+import com.vote.vote.repository.CustomProgramRepositoryImpl;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.MemberRepository;
 import com.vote.vote.repository.MemberRepositoryImpl;
@@ -50,7 +52,12 @@ import org.springframework.util.StringUtils;
 @RequestMapping("/audience")
 public class AudienceController {
    
-    private MemberRepository mr;
+    @Autowired
+    CustomProgramRepositoryImpl pg;
+    
+    @Autowired
+    public MemberRepositoryImpl mr;
+    
 
     private AudienceService audienceService;
     @Autowired
@@ -201,16 +208,21 @@ public class AudienceController {
     // 응모인원 리스트 ajax
     @GetMapping("/showRecruits")
     public String showList(Model model, Audience audience, Principal principal) {
-        List<Member> list = new ArrayList<Member>(); 
+        
         try {
             System.out.println(audience.getApplyId());
-            list = mr.getInfo(audience.getApplyId());
+            // Program program = pg.findByPK("미스트롯");
+            
+            List<Member> list = mr.getInfo();
+
+            System.out.println(list);
+            
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
        
-        System.out.println(list);
+        // System.out.println(list);
         return "audience/showRecruits";
     }
         

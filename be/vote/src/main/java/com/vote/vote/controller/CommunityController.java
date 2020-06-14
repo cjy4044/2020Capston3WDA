@@ -289,10 +289,9 @@ public class CommunityController {
      	  
 //     	System.out.println(board.toString());
      	model.addAttribute("popularName", popular.getName());
-          	
-     //조회수카운트하기
-     	//board.setViewcount(board.getViewcount()+1);
-     	//popularBoardRepository.save(board);
+	
+     	board.setViewcount(board.getViewcount()+1);
+     	popularBoardRepository.save(board);
      	
  		return "community/popularBoardView";
  	}	

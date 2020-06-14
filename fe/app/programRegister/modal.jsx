@@ -49,6 +49,7 @@ class Modal extends Component {
         var id = document.getElementById("id").value;
 
         if(!id)  return alert("사업자 번호를 확인해주세요");
+        if(id.length != 10)  return alert("사업자 번호 10자리를 확인해주세요");
 
         axios.get("/proRegIndex/register/checkId/"+id)
         .then((response)=>{

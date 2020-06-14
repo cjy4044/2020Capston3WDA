@@ -33,6 +33,9 @@
 		$("#side").append("<li><a href='/vote/create'>투표개설</a></li>");	 
 		$("#side").append("<li><a href='/userInfo/manage/vote'>투표관리</a></li>");
 		//커뮤니티관리
+		if(userRole=="1")
+		$("#side").append("<li><a href='/userInfo/AllProgram/'>프로그램관리</a></li>");	
+		if(userRole=="2")
 		$("#side").append("<li><a href='/userInfo/myProgram/'>프로그램관리</a></li>");	 
 		$("#side").append("<li><a href='/userInfo/myCommunity/'>팬클럽관리</a></li>");	 
 		$("#side").append("<li><a href='#'>핫클립관리</a></li>");	 

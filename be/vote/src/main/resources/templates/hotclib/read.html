@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +20,12 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 <body>
 	<div>
 		<tr>		
-			<video th:src="@{/uploads/dd.mp4}" controls width="800px" height="500px;"></video>
-			<!-- <video class= "hi" th:src="@{'/uploads/' + ${rfile.filename}}"> -->
+			<video controls th:src="@{'/uploads/' + ${rfile.filename}}" width="800" height="500"></video>
+			
 		</tr>
 	</div>
 		<div class="gi">		
-	<tr>
+	<tr> 
 		<li>제목: <span th:utext="${hotclib.htitle}"></span></li>
 	</tr>
 		<tr>
@@ -50,8 +51,22 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 				<td><input type="textarea" placeholder="내용을 입력하세요" name="r_content"></td>
 					<input type="submit" value="등록">
 			</tr>
+			</form> 
+		   댓글 
+		 <div class="container">
+			<label for="content">댓글입력</label>
+			<form name="commentInsertForm"  id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
+				<div class="input-group">
+								  
+				   <input type="text"  class="form-control" id="r_content" name="r_content" placeholder="내용을 입력하세요.">
+				   <input type="submit" value="등록">	
+				   <span class="input-group-btn">
+				   </span>
+				  </div>
 			</form>
-		
+		</div>
+	
+	
 	
 
 	
@@ -71,14 +86,25 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 					<input type="hidden" name="_method" value="replydelete"/>
 					<button id="replydelete">삭제</button>
 				</form>
-				<input type="hidden" name="_method" value="replydelete"/>
+			
+				<form id="replyupdate-form"  method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">							
+					<input type="hidden" name="_method" value="replyupdate"/>
 					<button id="replyupdate">수정</button>
+
+					
+				</form>
 				  </div>
 	</p>
 	</tr>
 
 </body>
 
-
 </content>
 </html>
+
+
+
+
+
+
+

@@ -26,24 +26,24 @@ public class PopularBoard {
     @Column(name="popular_id", nullable=false) //인기인 이름
     private int popularid;
 
-    @Column(name="p_title", nullable=false) //인기인 이미지
+    @Column(name="p_title") //인기인 이미지
     private String title;
 
-    @Column(name="p_content", nullable=false)
+    @Column(name="p_content")
     private String content;
     
 //    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name="p_date", nullable=true)
+    @Column(name="p_date")
     private String date;
 //
 //    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name="p_mdate", nullable=true)
+    @Column(name="p_mdate")
     private String mdate;
     
-    @Column(name="p_view_count", nullable=false)
+    @Column(name="p_view_count")
     private int viewcount;
     
-    @Column(name="p_reply_count", nullable=false)
+    @Column(name="p_reply_count")
     private int replycount;
     
     @Column(name="r_id", nullable=false)

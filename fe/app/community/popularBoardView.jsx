@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
+import ItemCard4 from '../items/itemCard4.jsx';
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -24,21 +25,31 @@ class PopularBoardView extends Component {
     constructor(props){
         
         super(props);
-        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0 ,board :"" };
+        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0 ,board :"" , update:false,data:[]};
       }
 
     async componentDidMount(){
   
-        let {data: popularBoard} = await axios.get(`/community/${param3}/${param2}/${param}/axios`)  
-        this.setState({popularBoard})
+        let {data: data} = await axios.get(`/community/${param3}/${param2}/${param}/axios`)  
 
-        this.state.board = `/community/${param3}/${param2}`
-        console.log(this.state.popularBoard)
+        this.state.popularBoard = (data.pop())
+        this.setState({data})
+        console.log(this.state.popularBoard);
+        console.log(this.state.data);
+        //this.setState({popularBoard})
+
+        //this.state.board = `/community/${param3}/${param2}`
+ 
+
+        
 
     }
     goBack(){
         location.href=this.state.board;
 
+    }
+    update(){
+        this.setState({update:true});  
     }
 
     render() {
@@ -49,7 +60,8 @@ class PopularBoardView extends Component {
                             <Table size="small">
                             <TableHead>
                                 <TableRow>
-                                <TableCell colSpan="5">{this.state.popularBoard.title}</TableCell>
+                                {this.state.update && <TableCell colSpan="5"><input type="text" name="name" defaultValue={this.state.popularBoard.title} required/></TableCell>}
+                                {!this.state.update &&<TableCell colSpan="5">{this.state.popularBoard.title}</TableCell>}
                                 </TableRow>  
                                 </TableHead> 
 
@@ -64,10 +76,29 @@ class PopularBoardView extends Component {
                                 {/* {this.state.popularBoard.viewCount && this.state.popularBoard.viewCount }{} */}
                                 <TableCell>{this.state.popularBoard.viewCount}</TableCell>
                                 <TableCell>{this.state.popularBoard.replyCount}</TableCell>
-                                </TableRow>  
+                                </TableRow> 
+                                
+                                {/* <ItemCard4 key={c.img} img={c.img} name={c.name} /> */}
+                                
+                                
+                                {this.state.data.map((c,index)=>{
+                       
+                                    return (
+                                
+                                        <TableRow key={'div'+index}>
+                                                <ItemCard4 key={c.img} img={c.filename} />
+                                          
+                                        </TableRow>                                           
+                                
+                                        )
+                                            
+                                    })}
+                                 {/* {this.state.data!=null && <TableCell colSpan="5">{this.state.data}</TableCell>}                      */}
+                            
                                
                                 <TableRow>
-                                <TableCell colSpan="5" rowSpan="200">{this.state.popularBoard.content}</TableCell>
+                                {this.state.update && <TableCell colSpan="5" rowSpan="200"><input type="text" name="name" defaultValue={this.state.popularBoard.content} required/></TableCell>}
+                                {!this.state.update &&<TableCell colSpan="5" rowSpan="200">{this.state.popularBoard.content}</TableCell>}                             
                                 </TableRow>  
                          
 
@@ -83,7 +114,9 @@ class PopularBoardView extends Component {
                                 this.state.popularBoard.sessionRole==1||
                                 this.state.popularBoard.sessionUser==this.state.popularBoard.managerId)&&
                                 <div>
-                                <button type="button">수정</button>
+                               
+                                <button type="button" onClick={this.update.bind(this)}>수정</button>
+                                {this.state.update && <button formAction={'/community/'+param3+'/'+param2+'/create'} >확인</button>}
                                 <button type="button">삭제</button>
                                 </div>
                                  }{

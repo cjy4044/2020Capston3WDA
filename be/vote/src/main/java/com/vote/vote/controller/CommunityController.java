@@ -22,6 +22,7 @@ import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.PopularBoard;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
+import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
@@ -31,7 +32,9 @@ import com.vote.vote.repository.PopularBoardJpaRepository;
 import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
+import com.vote.vote.repository.RfileRepository;
 import com.vote.vote.service.KakaoAPIService;
+import com.vote.vote.service.StorageService;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +64,9 @@ import net.minidev.json.JSONObject;
 @RequestMapping("/community")
 public class CommunityController {
 	
+	@Autowired  
+	private StorageService storageService; 
+	
 	@Autowired
 	private MemberJpaRepository memberRepository;	
 
@@ -78,6 +84,9 @@ public class CommunityController {
 		
 	@Autowired
 	ProgramManagerJpaRepository pmRepository;
+	
+	@Autowired
+	RfileRepository rfileRepository;
 	
 	
     @RequestMapping(value={"","/"})
@@ -284,15 +293,17 @@ public class CommunityController {
     
     @RequestMapping(value={"/{program}/{popular}/{popularBoard}/axios"}, method = RequestMethod.GET) // 해당 프로그램 인기인 정보
   	@ResponseBody
-  	public JSONObject popularBoardAxios(@PathVariable("program") int programNum,
+  	public JSONArray popularBoardAxios(@PathVariable("program") int programNum,
 										@PathVariable("popular") int popularNum,
 										@PathVariable("popularBoard") int BoardNum,Model model ){
   	
+    	
+    	JSONArray result = new JSONArray();
 
       	ProgramManager pm = pmRepository.findByProgramId(programNum);
       	PopularBoard popularBoard = popularBoardRepository.findById(BoardNum);
 
-
+      	
 
   		JSONObject popularBoardData = new JSONObject();
   		
@@ -301,6 +312,16 @@ public class CommunityController {
 		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+		List<Rfile> rfileList = rfileRepository.findByPid(BoardNum);
+
+		for(Rfile rfile : rfileList){
+			JSONObject json = new JSONObject();
+			json.put("id", rfile.getPid());
+			json.put("name",rfile.getFilename());
+			result.add(json);
+		}
+		
 		
 		String nickname = member.getNickname();
 		if(nickname==null) {
@@ -323,33 +344,37 @@ public class CommunityController {
 //		System.out.println(sessionUser.getR_ID());
 //		System.out.println(sessionUser.getROLE());
 //		System.out.println(pm.getId());
-  	    return popularBoardData; 
-  	    
-      	
-    	
+		result.add(popularBoardData);
+			
+		
+		
+		
+  	    return result; 
   	   
       }
     
     @RequestMapping(value={"/{program}/{popular}/create"}) //프로그램>인기인>게시글작성
    	public String popularBoardCreate(@PathVariable("program") int programNum,
    									@PathVariable("popular") int popularNum,
-   									
-   									PopularBoard board,@RequestParam(name="file2") MultipartFile file,
+   									 PopularBoard board,@RequestParam(name="filename") MultipartFile file,
    								Model model) {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
      	PopularBoard board2 = popularBoardRepository.findById(popularNum);
-     	
-     	SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd hh:mm");
-     	Date time = new Date();
-        String time1 = format1.format(time);
-     	//board.setDate(time1);
+     	Rfile rfile = new Rfile();    	
+    	
+     
      	
      	System.out.println(board.toString());
-     	
+    
      	popularBoardRepository.saveAndFlush(board);
      	
+     	if(file != null) {
+    	rfile.setFilename(storageService.store2(file)); 
+     	rfile.setPid(board.getId());
+     	rfileRepository.saveAndFlush(rfile);
+     	}
      	
  		return "redirect:/community/{program}/{popular}";
  	}	

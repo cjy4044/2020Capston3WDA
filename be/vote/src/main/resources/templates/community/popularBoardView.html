@@ -11,8 +11,16 @@ th:replace="~{main_layout::layout(~{::content},_,${popularName})}">
 
     <content>
 		
-            <div id="popularBoardView"></div>
+		 <form method="post" id="register_form" enctype="multipart/form-data" >	  
+              
+	        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	          <div id="popularBoardView"></div>
        		<script src="/assets/popularBoardView.js"></script>
+       	
+       	</form>
+       
+       
+          
        		
     </content>
 

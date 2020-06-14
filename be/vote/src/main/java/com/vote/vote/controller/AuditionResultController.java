@@ -1,5 +1,6 @@
 package com.vote.vote.controller;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,16 +21,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.util.StringUtils;
 
 import com.vote.vote.db.dto.Audition;
 import com.vote.vote.db.dto.AuditionResult;
 import com.vote.vote.repository.AuditionResultJpaRepository;
+import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.db.dto.Member;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
+import com.vote.vote.service.StorageService;
 
 @Controller
 public class AuditionResultController {
 	
 	@Autowired
 	AuditionResultJpaRepository auditionResultRepository;
+
+	@Autowired
+	private StorageService storageService;
+
+	@Autowired
+	private MemberJpaRepository memberRepository;
+
+	@Autowired
+	private ProgramManagerJpaRepository pmRepository;
 	
 //	@RequestMapping("/auditionresult/list")
 //	public String list(Model model) {
@@ -73,16 +90,55 @@ public class AuditionResultController {
 	}
 	
 	@PostMapping("/auditionresult/write")
-	public String write(@Valid AuditionResult auditionResult, BindingResult bindingResult, SessionStatus sessionStatus) {
+	public String write(@Valid AuditionResult auditionResult, BindingResult bindingResult, SessionStatus sessionStatus,
+			Principal principal, Model model, RedirectAttributes redirAttrs,
+            @RequestParam(name = "filename") MultipartFile filename	) {
+		
+		
 		if(bindingResult.hasErrors()) {
-			return "/auditionresult/wirte";
-		} else {
+			return "/auditionresult/write";
+		} else if(filename.isEmpty()) {
 			auditionResult.setRdate(new Date());
 			auditionResultRepository.save(auditionResult);
 			sessionStatus.setComplete();
 			return "redirect:/auditionresult/list";
+		} else {
+			
+		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+            Member member = memberRepository.findByUserid(principal.getName());
+			
+            // 게시글저장
+            auditionResult.setRid(member.getNo());
+//            audience.setADate(new Date());
+            auditionResult.setRfile(filenamePath);
+            auditionResultRepository.saveAndFlush(auditionResult);
+
+			auditionResult.setRdate(new Date());
+			auditionResultRepository.save(auditionResult);
+
+            // 파일 저장
+            storageService.store(filename);
+            // rfile.setApplyid(audience.getApplyId());
+            // rfile.setFilename(filenamePath);
+            // rfileRepository.saveAndFlush(rfile);
+            sessionStatus.setComplete();
+            System.out.println("게시글업로드완료");
+            return "redirect:/auditionresult/list";
+            
 		}
 	}
+
+	// @PostMapping("/auditionresult/write")
+	// public String write(@Valid AuditionResult auditionResult, BindingResult bindingResult, SessionStatus sessionStatus) {
+	// 	if(bindingResult.hasErrors()) {
+	// 		return "/auditionresult/wirte";
+	// 	} else {
+	// 		auditionResult.setRdate(new Date());
+	// 		auditionResultRepository.save(auditionResult);
+	// 		sessionStatus.setComplete();
+	// 		return "redirect:/auditionresult/list";
+	// 	}
+	// }
 	
 	@GetMapping("/auditionresult/update/{resultid}")
 	public String update(Model model, @PathVariable int resultid){

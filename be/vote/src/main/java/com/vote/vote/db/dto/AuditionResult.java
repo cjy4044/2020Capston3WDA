@@ -42,7 +42,10 @@ public class AuditionResult {
 	    
 	    
 	    @Column(nullable=true, name="r_id")
-	    private Integer rid;
+		private Integer rid;
+		
+		@Column(nullable=true, name="r_file")
+	    private String rfile;
 
 
 		public int getResultid() {
@@ -112,6 +115,14 @@ public class AuditionResult {
 
 		public void setRid(Integer rid) {
 			this.rid = rid;
+		}
+
+		public String getRfile() {
+			return rfile;
+		}
+
+		public void setRfile(String rfile) {
+			this.rfile = rfile;
 		}
 	    
 	    

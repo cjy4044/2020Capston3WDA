@@ -14,7 +14,7 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 작성')}">
 
     <content>
 
-<form th:action="@{/auditionresult/write}" method="post">     
+<form th:action="@{/auditionresult/write}" method="post" enctype="multipart/form-data">     
     <div class="container">
 <table class="table table-bordered">
     <thead>
@@ -27,7 +27,13 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 작성')}">
                 <td><input type="text" placeholder="제목을 입력하세요. " name="rtitle"/></td>
                 
             </tr>
-          
+          <tr>
+            <th>첨부파일</th>
+             <td>    
+                <input type="file" name="filename">
+             </td>
+
+          </tr>
          
     </tbody>
 </table>

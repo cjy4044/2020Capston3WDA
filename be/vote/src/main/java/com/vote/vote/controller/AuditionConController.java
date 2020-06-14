@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,12 +58,19 @@ public class AuditionConController {
 	
 
 	
-	
-	@RequestMapping("/audition_con/list")
-	public String list(Model model) { // 2~ n
-		model.addAttribute("auditionconlist",auditionConRepository.findAll());
+	@GetMapping("//audition_con/list")
+	public String audition(Model model, @PageableDefault Pageable pageable){
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "formid"));
+		model.addAttribute("auditionconlist", auditionConRepository.findAll(pageable));
 		return "/audition_con/list";
 	}
+	
+	// @RequestMapping("/audition_con/list")
+	// public String list(Model model) { // 2~ n
+	// 	model.addAttribute("auditionconlist",auditionConRepository.findAll());
+	// 	return "/audition_con/list";
+	// }
 	
 	
 	
@@ -113,60 +125,120 @@ public class AuditionConController {
 	/////////////////////////////////////////////////////////////
 	
 	@PostMapping("/audition_con/form")
-			  public String form(
-					  
-					  SessionStatus sessionStatus,
-			            Principal principal,			       
-			            RedirectAttributes redirAttrs,
-			            @RequestParam(name = "fprofile") MultipartFile fprofile,
-			            @RequestParam(name= "fusername") String fusername,
-			            @RequestParam(name= "fuserphone") String fuserphone,
-			            @RequestParam(name= "fusermail") String fusermail,
-			            @RequestParam(name= "ftitle") String ftitle,
-			            @RequestParam(name= "faddr") String faddr,
-			            @RequestParam(name= "feducation") String feducation,
-			            @RequestParam(name= "fgender") String fgender,
-			            @RequestParam(name= "fheight") String fheight,
-			            @RequestParam(name= "fweight") String fweight,
-			            @RequestParam(name= "fblood") String fblood,
-			            @RequestParam(name= "ffamily") String ffamily,
-			            @RequestParam(name= "fhobby") String fhobby,
-			            @RequestParam(name= "fability") String fability) {
-						
-						String fprofilePath = storageService.store2(fprofile); 
-			            Member member = memberRepository.findByUserid(principal.getName());
-//			            ProgramManager pm = pmRepository.findById(member.getNo());
-			           // Audition audition = auditionRepository.findByAuditionid(member.getNo());
-			           
-			            			         
-			            AuditionCon auditionCon = new AuditionCon();
-			            Audition audition = new Audition(); 
-			          
-//			            auditionCon.setAuditionid(audition.getAuditionid());
-			            auditionCon.setRid(member.getNo());
-			            auditionCon.setFprofile(fprofilePath);
-			            auditionCon.setFusername(fusername);
-			            auditionCon.setFuserphone(fuserphone);
-			            auditionCon.setFusermail(fusermail);
-			            auditionCon.setFtitle(ftitle);
-			            auditionCon.setFaddr(faddr);
-			            auditionCon.setFeducation(feducation);
-			            auditionCon.setFgender(fgender);
-			            auditionCon.setFheight(fheight);
-			            auditionCon.setFweight(fweight);
-			            auditionCon.setFblood(fblood);
-			            auditionCon.setFfamily(ffamily); 
-			            auditionCon.setFhobby(fhobby);
-			            auditionCon.setFability(fability);
-			                 
-			            auditionConRepository.saveAndFlush(auditionCon);
+	public String write(@Valid AuditionCon auditioncon, BindingResult bindingResult, SessionStatus sessionStatus,
+			Principal principal, Model model, RedirectAttributes redirAttrs,
+            @RequestParam(name = "filename") MultipartFile filename	) {
+		
+		
+//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+		if(bindingResult.hasErrors()) {
+			return "/audition_con/form";
+		} else if(filename.isEmpty()) {
+			auditioncon.setFdate(new Date());
+			System.out.println(auditioncon.toString());
+			auditionConRepository.save(auditioncon);
+			sessionStatus.setComplete();
+			return "redirect:/audition/complete";
+		} else {
+			
+		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+            Member member = memberRepository.findByUserid(principal.getName());
+//            ProgramManager pm = pmRepository.findById(member.getNo());
+			
+            // 게시글저장
+//            audition.setStartdate(pm.getProgramId());
+            auditioncon.setRid(member.getNo());
+//            audience.setADate(new Date());
+            auditioncon.setFprofile(filenamePath);
+            
+            auditionConRepository.saveAndFlush(auditioncon);
 
-			            // 파일 저장	       
-			            sessionStatus.setComplete();
-			            System.out.println("게시글업로드완료");
-			            return "redirect:/audition_con/list";
-			           
+          auditioncon.setFdate(new Date());
+//			System.out.println(auditionCon.toString());
+			auditionConRepository.save(auditioncon);
+//			sessionStatus.setComplete();
+            
+            
+            // 파일 저장
+            storageService.store(filename);
+            // rfile.setApplyid(audience.getApplyId());
+            // rfile.setFilename(filenamePath);
+            // rfileRepository.saveAndFlush(rfile);
+            sessionStatus.setComplete();
+            System.out.println("게시글업로드완료");
+            return "redirect:/audition_con/list";
+            
+            
+            
+//			audition.setRid(sessionUser.getR_ID());
+//			System.out.println(audition.toString());
+//			auditionRepository.save(audition);
+//			sessionStatus.setComplete();
+//			return "redirect:/audition/list";
+		}
 	}
+	
+	
+	
+	
+	
+//	@PostMapping("/audition_con/form")
+//			  public String form(
+//					  
+//					  SessionStatus sessionStatus,
+//			            Principal principal,			       
+//			            RedirectAttributes redirAttrs,
+//			            @RequestParam(name = "fprofile") MultipartFile fprofile,
+//			            @RequestParam(name= "fusername") String fusername,
+//			            @RequestParam(name= "fuserphone") String fuserphone,
+//			            @RequestParam(name= "fusermail") String fusermail,
+//			            @RequestParam(name= "ftitle") String ftitle,
+//			            @RequestParam(name= "faddr") String faddr,
+//			            @RequestParam(name= "feducation") String feducation,
+//			            @RequestParam(name= "fgender") String fgender,
+//			            @RequestParam(name= "fheight") String fheight,
+//			            @RequestParam(name= "fweight") String fweight,
+//			            @RequestParam(name= "fblood") String fblood,
+//			            @RequestParam(name= "ffamily") String ffamily,
+//			            @RequestParam(name= "fhobby") String fhobby,
+//			            @RequestParam(name= "fability") String fability) {
+//						
+//						String fprofilePath = storageService.store2(fprofile); 
+//			            Member member = memberRepository.findByUserid(principal.getName());
+////			            ProgramManager pm = pmRepository.findById(member.getNo());
+//			           // Audition audition = auditionRepository.findByAuditionid(member.getNo());
+//			           
+//			            			         
+//			            AuditionCon auditionCon = new AuditionCon();
+//			            Audition audition = new Audition(); 
+//			          
+////			            auditionCon.setAuditionid(audition.getAuditionid());
+//			            auditionCon.setRid(member.getNo());
+//			            auditionCon.setFprofile(fprofilePath);
+//			            auditionCon.setFusername(fusername);
+//			            auditionCon.setFuserphone(fuserphone);
+//			            auditionCon.setFusermail(fusermail);
+//			            auditionCon.setFtitle(ftitle);
+//			            auditionCon.setFaddr(faddr);
+//			            auditionCon.setFeducation(feducation);
+//			            auditionCon.setFgender(fgender);
+//			            auditionCon.setFheight(fheight);
+//			            auditionCon.setFweight(fweight);
+//			            auditionCon.setFblood(fblood);
+//			            auditionCon.setFfamily(ffamily); 
+//			            auditionCon.setFhobby(fhobby);
+//			            auditionCon.setFability(fability);
+//			                 
+//			            auditionConRepository.saveAndFlush(auditionCon);
+//
+//			            // 파일 저장	       
+//			            sessionStatus.setComplete();
+//			            System.out.println("게시글업로드완료");
+//			            return "redirect:/audition_con/list";
+//			           
+//	}
 	
 //			@RequestParam(name="fprofile") MultipartFile fprofile,
 //			@RequestParam(name="formid", required = false) Integer formid,

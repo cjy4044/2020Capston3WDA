@@ -10,6 +10,11 @@ import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
 
+import TextField from '@material-ui/core/TextField';
+import FilledInput from '@material-ui/core/FilledInput';
+
+import './Modal.css';
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
@@ -18,16 +23,19 @@ const num = url.split('/');
 var param = num[num.length-1];
 var param2 = num[num.length-2];
 
+
+
 class PopularBoard extends Component {
     
     constructor(props){
         
         super(props);
-        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0};
-        this.url = '/community/'+param2+'/'+param+'/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
+        this.state = { popularBoard: [] , pageNum: 1 , count: 0, allCount:0, modal : false, file : '', previewURL:'',sessionUser:''}
+        this.url = '/community/'+param2+'/'+param+'/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="date"';
+
     }
     setUrl(){
-        this.url = '/community/'+param2+'/'+param+'/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
+        this.url = '/community/'+param2+'/'+param+'/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="date"';
         
  
     }
@@ -39,28 +47,32 @@ class PopularBoard extends Component {
     }
 
     async componentDidMount(){
-        
+       
         let {data : popularBoard} = await axios.get(this.url)
         
         this.state.allCount = (popularBoard.pop())
         this.state.count = Math.ceil((this.state.allCount*1.0)/10)
         
+        this.state.sessionUser = (popularBoard.pop())
+
         this.setState({popularBoard})
 
-        console.log(popularBoard)
-
-
+       
 
     }
-    create(){    
-      
-    location.href=`${param}/create`
+    handleOpenModal(){
+        this.setState({modal:true});  
+    
+       
+      };
+      handleCloseModal(){
+        this.setState({modal:false});
+      };  
+  
 
-        
-    }
 
     render() {
-        
+     
         return(
         <div>
             <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
@@ -79,76 +91,123 @@ class PopularBoard extends Component {
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                             <Index   popularBoard={this.state.popularBoard} allCount={this.state.allCount} 
-                                             pageNum={this.state.pageNum}/>   
+
+                                {this.state.popularBoard.map((c,index)=>{
+                       
+                                  return (
+                           
+                                    <TableRow key={'div'+index}>
+
+                                        <TableCell key={index}>{c.rownum}</TableCell>
+                                         <TableCell ><a href={`${param}/${c.id} `}>{c.title}</a></TableCell>
+                                        {/* <TableCell><a onClick={this.handleOpenModal.bind(this,c)}>{c.title}</a></TableCell> */}
+                                        <TableCell>{c.nickname}</TableCell>
+                                        <TableCell>{c.replyCount}</TableCell>
+                                        <TableCell>{c.viewCount} </TableCell>
+                                        <TableCell>{c.date}</TableCell>
+                                        </TableRow>
+                                        
+                           
+                                    )
+                                        
+                                })
+                                }
                                 </TableBody>
                                     </Table>
-                                    </Paper> 
-                                    <button type="button" onClick={this.create.bind(this)}>글등록</button>     
+                                    </Paper>
+                                     {this.state.sessionUser!='' &&  <Modal sessionUser={this.state.sessionUser}></Modal> }{} 
+                                     {this.state.modal &&  <Modal2 boardItem={this.state.boardItem}></Modal2> }{} 
+            
+
         </div> 
          )
     }
 }
-     
-class Index extends Component{
+
+
+class Modal extends Component{
     constructor(props){
         super(props);
-       this.props.popularBoard
-       this.props.allCount
-       this.props.pageNum
-       this.state = { modal : false , count:0};
-  
-       //document.getElementById("register_form").addEventListener("submit",this.result_submit.bind(this));
-    }
-
-    result_submit(e){
-       
-     alert("승인하였습니다.");
-  
         
-    } 
+       this.state = { modal : false ,file : '', previewURL:'' , sessionUser : this.props.sessionUser , boardItem:this.props.boardItem}
+        
+       
 
-    sendSelect(c){
-        const select  =  {"select" : c.c_id}
-        if(!confirm(c.c_program+"을 등록하시겠습니까?")) return;
-    
-        axios.post('/userInfo/popularBoardConfirm/', select)
-        .then((response)=>{
-            if(response.data.errorMessage){
-                alert(response.data.errorMessage);
-                // window.location.href="/vote";
-                window.location.reload();
-            }else{
-                alert(response.data.message);
-                window.location.reload();
-                
-            }
-        });
+    }
+      handleOpenModal(){
+        
+        this.setState({modal:true});
+      };
+      handleCloseModal(){
 
-    };
+        this.setState({modal:false});
+        this.setState({previewURL:''});
+      };  
 
-    render(){
-         //console.log(this.props.popularBoard)
-         console.log(this.props.pageNum)
-                    return  this.props.popularBoard.map((c,index)=>{
-                       
+      checkImage(event){
+
+        event.preventDefault();
+        let reader = new FileReader();
+        let file = event.target.files[0];
+
+        reader.onloadend = () => {
+          this.setState({
+            file : file,
+            previewURL : reader.result
+          })
+        }
+        reader.readAsDataURL(file);
+      }
+
+    render(){   
+        console.log(this.state.sessionUser)
+        let profile_preview = null;
+        if(this.state.file !== ''){
+          profile_preview = <img  className='profile_preview' src={this.state.previewURL}></img>
+        }
+        
+              
                         return (
-                            
-                            <TableRow key={'div'+index}>
+                            <div>
+                            <button type="button" onClick={this.handleOpenModal.bind(this)}>등록</button>
+                                {this.state.modal && (
+                   <div className="MyModal"> 
+                      <div className="content">
 
-                                <TableCell key={index}>{c.rownum}</TableCell>
-                                <TableCell ><a href={`${param}/${c.id} `}>{c.title}</a></TableCell>
-                                <TableCell>{c.nickname}</TableCell>
-                                <TableCell>{c.replyCount}</TableCell>
-                                <TableCell>{c.viewCount} </TableCell>
-                                <TableCell>{c.date}</TableCell>
-                             </TableRow>
+                      <TextField id="standard-secondary" fullWidth label="제목" name="title" color="primary" required />
+                      {profile_preview}
+                      <TextField
+                            id="outlined-multiline-static"
+                            // error={this.state.data.customer === "" ? true : false
+                            label="내용"
+                            multiline
+                            rows={8}
+                            fullWidth
+                            placeholder="Default Value"
+                            name="content"
+                            required
+                            />
+                        
+                        <input type="file" name="filename" accept="image/*" onChange={this.checkImage.bind(this)} required/>       
+                        <input type="hidden" name="popularid" value={param}/> 
+                        <input type="hidden" name="rid" value={this.props.sessionUser}/> 
+
+                         <button formAction={'/community/'+param2+'/'+param+'/create'} >등록</button>   
+                     
+                      
+                        
+                        <button type="button" onClick={this.handleCloseModal.bind(this)}>닫기</button>
+                     
+                      </div>
+                  </div> )}{""}   
+
+
+                            </div>
+                          
                              
                             
                         )
-                           
-                    })
-                  
+                          
                    
                      
                 }
@@ -157,6 +216,7 @@ class Index extends Component{
     
 }
   
+
 
 
 ReactDOM.render(<PopularBoard/>,document.getElementById('popularBoard'));

@@ -55,7 +55,7 @@ public class CustomPopularBoardRepositoryImpl implements CustomPopularBoardRepos
         
         booleanBuilder.and(pm.popularid.eq(c));
 
-        List<PopularBoard> PopularBoard = query.select(pm).from(pm).where(booleanBuilder).offset(pageable.getOffset()).limit(pageable.getPageSize()).where(booleanBuilder).fetch();  //fetch 반환값이 list다
+        List<PopularBoard> PopularBoard = query.select(pm).from(pm).where(booleanBuilder).offset(pageable.getOffset()).limit(pageable.getPageSize()).where(booleanBuilder).orderBy(pm.date.desc()).fetch();  //fetch 반환값이 list다
 
         count = query.select(pm).from(pm).where(booleanBuilder).fetchCount();
 
@@ -75,7 +75,7 @@ public class CustomPopularBoardRepositoryImpl implements CustomPopularBoardRepos
     @Override
     public long CountById(int c) {
     	
-    	   System.out.println("아이디: "+c);
+    
     	   
            JPAQueryFactory query = new JPAQueryFactory(em);
 
@@ -87,7 +87,7 @@ public class CustomPopularBoardRepositoryImpl implements CustomPopularBoardRepos
 
            List<PopularBoard> boardList =  query.select(pm).from(pm).where(booleanBuilder).fetch();
            
-           System.out.println(" 개수 :"+boardList);
+//           System.out.println(" 개수 :"+boardList);
 
           return boardList.size();
 

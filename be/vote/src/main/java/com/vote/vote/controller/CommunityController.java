@@ -16,21 +16,26 @@ import javax.servlet.http.HttpSession;
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Company;
+import com.vote.vote.db.dto.Hotclib;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.PopularBoard;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
+import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.CustomPopularBoardRepository;
+import com.vote.vote.repository.CustomPopularRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.PopularBoardJpaRepository;
 import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
+import com.vote.vote.repository.RfileRepository;
 import com.vote.vote.service.KakaoAPIService;
+import com.vote.vote.service.StorageService;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +56,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.minidev.json.JSONObject;
@@ -59,11 +65,17 @@ import net.minidev.json.JSONObject;
 @RequestMapping("/community")
 public class CommunityController {
 	
+	@Autowired  
+	private StorageService storageService; 
+	
 	@Autowired
 	private MemberJpaRepository memberRepository;	
 
 	@Autowired
 	ProgramJpaRepository programRepository;
+	
+	@Autowired
+	CustomPopularRepository customPopularRepository;	
 	
 	@Autowired
 	PopularJpaRepository popularRepository;
@@ -76,6 +88,9 @@ public class CommunityController {
 		
 	@Autowired
 	ProgramManagerJpaRepository pmRepository;
+	
+	@Autowired
+	RfileRepository rfileRepository;
 	
 	
     @RequestMapping(value={"","/"})
@@ -122,7 +137,7 @@ public class CommunityController {
   	@ResponseBody
   	public JSONObject detailProgramAxios(@PathVariable("program") int programNum ){
   	
-      	System.out.println(programNum);
+      	//System.out.println(programNum);
       	
       	Program program = programRepository.findById(programNum);
 
@@ -138,14 +153,15 @@ public class CommunityController {
   	   
       }
     
-    @RequestMapping(value={"/{program}/popular/axios","/{program}/popular/axios/"}) // 해당 프로그램 인기인 정보
+    @RequestMapping(value={"/{program}/popular/axios","/{program}/popular/axios/"}) // 
   	@ResponseBody
-  	public JSONArray  popularAxios(@PathVariable("program") int programNum ){
+  	public JSONArray  popularAxios(@PathVariable("program") int programNum, @PageableDefault Pageable pageable){
   	
       	
-      	List<Popular> populares = popularRepository.findByPid(programNum);
+      	List<Popular> populares = customPopularRepository.findByPid(programNum, pageable);
+      	long count = customPopularRepository.CountByPid(programNum);
 
-
+      	System.out.println(count);
       	JSONArray json = new JSONArray();
 		
 		for( Popular popular : populares){
@@ -158,6 +174,7 @@ public class CommunityController {
 
 			json.add(popularData);
 		}
+		json.add(count);
 	
 
 		return json;
@@ -191,8 +208,8 @@ public class CommunityController {
 	
 		long count = customPopularBoardRepository.CountById(popularNum);
 		
-		System.out.println(popularNum);
-		System.out.println(count);
+		//System.out.println(popularNum);
+		//System.out.println(count);
 		
 
 		//System.out.println("pageable : " + pageable);
@@ -215,6 +232,11 @@ public class CommunityController {
 		
 		JSONArray json = new JSONArray();
 		Member member = new Member();
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+		
 		for( PopularBoard popularBoard : popularboards){
 			JSONObject popularBoardData = new JSONObject();
 	
@@ -239,6 +261,7 @@ public class CommunityController {
 			i++;
 			json.add(popularBoardData);
 		}
+		json.add(sessionUser.getR_ID());			
 		json.add(count);
 		
 		
@@ -262,26 +285,31 @@ public class CommunityController {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
-     	PopularBoard board = popularBoardRepository.findById(popularNum);
-
+     	PopularBoard board = popularBoardRepository.findById(BoardNum);
+     	  
+//     	System.out.println(board.toString());
      	model.addAttribute("popularName", popular.getName());
-     	
-     	
+          	
+     //조회수카운트하기
+     	//board.setViewcount(board.getViewcount()+1);
+     	//popularBoardRepository.save(board);
      	
  		return "community/popularBoardView";
  	}	
     
     @RequestMapping(value={"/{program}/{popular}/{popularBoard}/axios"}, method = RequestMethod.GET) // 해당 프로그램 인기인 정보
   	@ResponseBody
-  	public JSONObject popularBoardAxios(@PathVariable("program") int programNum,
+  	public JSONArray popularBoardAxios(@PathVariable("program") int programNum,
 										@PathVariable("popular") int popularNum,
 										@PathVariable("popularBoard") int BoardNum,Model model ){
   	
+    	
+    	JSONArray result = new JSONArray();
 
       	ProgramManager pm = pmRepository.findByProgramId(programNum);
       	PopularBoard popularBoard = popularBoardRepository.findById(BoardNum);
 
-
+      	
 
   		JSONObject popularBoardData = new JSONObject();
   		
@@ -290,6 +318,17 @@ public class CommunityController {
 		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails sessionUser = (CustomUserDetails)principal;
+		
+		List<Rfile> rfileList = rfileRepository.findByPid(BoardNum);
+
+		for(Rfile rfile : rfileList){
+			JSONObject json = new JSONObject();
+			json.put("id", rfile.getFileid());
+			json.put("pid", rfile.getPid());
+			json.put("name",rfile.getFilename());
+			result.add(json);
+		}
+		
 		
 		String nickname = member.getNickname();
 		if(nickname==null) {
@@ -308,30 +347,110 @@ public class CommunityController {
 		popularBoardData.put("sessionUser", sessionUser.getR_ID());	
 		popularBoardData.put("sessionRole", sessionUser.getROLE());
 		popularBoardData.put("managerId", pm.getId());
-		System.out.println("-----------------");
-		System.out.println(sessionUser.getR_ID());
-		System.out.println(sessionUser.getROLE());
-		System.out.println(pm.getId());
-  	    return popularBoardData; 
-  	    
-      	
-    	
+//		System.out.println("-----------------");
+//		System.out.println(sessionUser.getR_ID());
+//		System.out.println(sessionUser.getROLE());
+//		System.out.println(pm.getId());
+		result.add(popularBoardData);
+			
+		
+		
+		
+  	    return result; 
   	   
       }
     
-    @RequestMapping(value={"/{program}/{popular}/create","/{program}/{popular}/create/"}) //프로그램>인기인>게시글작성
+    @RequestMapping(value={"/{program}/{popular}/create"}) //프로그램>인기인>게시글작성
    	public String popularBoardCreate(@PathVariable("program") int programNum,
-   								@PathVariable("popular") int popularNum,
+   									@PathVariable("popular") int popularNum,
+   									 PopularBoard board,@RequestParam(name="filename") MultipartFile file,
    								Model model) {
      	
      	Program program = programRepository.findById(programNum);
      	Popular popular = popularRepository.findById(popularNum);
-     	PopularBoard board = popularBoardRepository.findById(popularNum);
-
-      		System.out.println("인기인게시판글쓰기 입니다.");
+     	PopularBoard board2 = popularBoardRepository.findById(popularNum);
+     	Rfile rfile = new Rfile();    	
+    	
+     
      	
- 		return "community/popularBoardCreate";
+     	System.out.println(board.toString());
+    
+     	popularBoardRepository.saveAndFlush(board);
+     	
+     	if(file != null) {
+    	rfile.setFilename(storageService.store2(file)); 
+     	rfile.setPid(board.getId());
+     	rfileRepository.saveAndFlush(rfile);
+     	}
+     	
+ 		return "redirect:/community/{program}/{popular}";
  	}	
     
+    @RequestMapping(value={"/{program}/{popular}/update"}) //프로그램>인기인>게시글작성
+   	public String popularBoardUpdate(@PathVariable("program") int programNum,
+   									@PathVariable("popular") int popularNum,  									
+   									PopularBoard board,
+   								Model model) {
+     	
+     	Program program = programRepository.findById(programNum);
+     	Popular popular = popularRepository.findById(popularNum);
+     	//PopularBoard board2 = popularBoardRepository.findById(boardNum);
+     	//Rfile rfile = new Rfile();    	
+    	
+     	
+     	Date time = new Date();
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+
+		String nowTime = format.format(time);
+	
+		
+		System.out.println(board.getDate());
+		board.setMdate(nowTime);
+		
+     	System.out.println(board.toString());
+     	
+     	
+		
+     	popularBoardRepository.saveAndFlush(board);
+     	
+     	//if(file != null) {
+    	//rfile.setFilename(storageService.store2(file)); 
+     	//rfile.setPid(board.getId());
+     	//rfileRepository.saveAndFlush(rfile);
+     	//}
+     	
+ 		return "redirect:/community/{program}/{popular}/"+board.getId();
+ 	}	
+    
+    
+	@RequestMapping(value={"/{program}/{popular}/{popularBoard}/delete"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject deletePost(@PathVariable("program") int programNum,
+								@PathVariable("popular") int popularNum,
+								@PathVariable("popularBoard") int BoardNum) { 
+		PopularBoard pb = popularBoardRepository.findById(BoardNum);
+		System.out.println(pb.toString()+"삭제 요청");
+		popularBoardRepository.delete(pb);
+
+		JSONObject result = new JSONObject();
+		result.put("message", "게시글이 삭제되었습니다.");
+		
+		return result;
+	}
+    
+	@RequestMapping(value={"/file/{fileId}","/file/{fileId}/"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject delete(@PathVariable("fileId") int fileId) { 
+		Rfile file = rfileRepository.findByFileid(fileId);
+		System.out.println(file.toString()+"삭제 요청");
+		
+		rfileRepository.delete(file);
+
+		JSONObject result = new JSONObject();
+		result.put("message", "첨부파일이 삭제되었습니다.");
+		
+		return result;
+	}
     
 }

@@ -81,7 +81,15 @@ public class Hotclib {
         this.h_date = h_date;
     }
 
-    public Date getH_mdate() {
+    public String getFilename2() {
+		return filename2;
+	}
+
+	public void setFilename2(String filename2) {
+		this.filename2 = filename2;
+	}
+
+	public Date getH_mdate() {
         return h_mdate;
     }
 
@@ -135,14 +143,6 @@ public class Hotclib {
 
     public void setHotclibid(Integer hotclibid) {
         this.hotclibid = hotclibid;
-    }
-
-    public String getFilename2() {
-        return filename2;
-    }
-
-    public void setFilename2(String filename2) {
-        this.filename2 = filename2;
     }
 
     public String toString(){

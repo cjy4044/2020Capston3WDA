@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import PopularItem from './popularItem.jsx';
 
 
+import Pagination from '@material-ui/lab/Pagination';
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
 
@@ -15,20 +17,38 @@ class Index extends Component {
     
     constructor(props){
         super(props);
-        this.state = { program:[], hotclib:[] , popular: [] };
+        this.state = { program:[], hotclib:[] , count: 0, popular: [] ,pageNum: 1 ,allCount:0};
+        this.url = '/community/'+param+'/popular/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
     }
 
     async componentDidMount(){
-        let {data: program} = await axios.get('/community/'+param+'/axios')
-        this.setState({program})    
-        console.log({program})
         
+        let {data: program} = await axios.get('/community/'+param+'/axios')
+        
+        this.setState({program})    
+        
+                                
+        let {data: popular} = await axios.get(this.url)
+        this.state.allCount = (popular.pop())
+        console.log(this.state.allCount)
+        this.state.count = Math.ceil((this.state.allCount*1.0)/10)
 
-        let {data: popular} = await axios.get('/community/'+param+'/popular/axios')  
         this.setState({popular})
-        console.log({popular})
+        console.log(this.state.count)
+
+    
 
 
+    }
+    setUrl(){
+        this.url = '/community/'+param+'/popular/axios?page='+(this.state.pageNum-1)+'&size='+10+'&sort="id"';
+
+    }
+    pagenation(e,page){
+        //console.log(page)
+        this.state.pageNum = page
+        this.setUrl()   
+        this.componentDidMount()
     }
 
     render() {
@@ -36,11 +56,11 @@ class Index extends Component {
         return(
         <div className="community_item">
             
-
-
-
-            <div >
-                    <PopularItem data={this.state.popular}/>
+            <div id="popular">
+           
+            <PopularItem data={this.state.popular}/>
+            <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
+                   
             </div>
 
          </div> )

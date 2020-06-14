@@ -149,7 +149,7 @@ public class AudienceController {
         } else {
 
             // Rfile rfile = new Rfile();
-            String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+            // String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
             Member member = memberRepository.findByUserid(principal.getName());
             ProgramManager pm = pmRepository.findById(member.getNo());
 
@@ -157,11 +157,11 @@ public class AudienceController {
             audience.setProgramId(pm.getProgramId());
             audience.setRId(member.getNo());
             audience.setADate(new Date());
-            audience.setImg(filenamePath);
+            audience.setImg(storageService.store2(filename));
             audienceJpaRepository.saveAndFlush(audience);
 
             // 파일 저장
-            storageService.store(filename);
+            storageService.store2(filename);
             // rfile.setApplyid(audience.getApplyId());
             // rfile.setFilename(filenamePath);
             // rfileRepository.saveAndFlush(rfile);
@@ -213,7 +213,7 @@ public class AudienceController {
             System.out.println(audience.getApplyId());
             // Program program = pg.findByPK("미스트롯");
             
-            List<Member> list = mr.getInfo();
+            List<Member> list = mr.getInfo2(1);
 
             System.out.println(list);
             

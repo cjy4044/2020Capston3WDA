@@ -7,5 +7,5 @@ import com.vote.vote.db.dto.Member;
 
 public interface MemberRepository {
    public List<Member> getInfo();
-   public List<Member> getInfo2(int no);
+   public List<Member> getInfo2();
 }

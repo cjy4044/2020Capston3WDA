@@ -70,19 +70,26 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public List<Member> getInfo2(int no) {
+    public List<Member> getInfo2() {
         // TODO Auto-generated method stub
-        // JPAQueryFactory query = new JPAQueryFactory(em);
-        // BooleanBuilder booleanBuilder = new BooleanBuilder();
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         // List<Member> list = query.select(member.name, member.phone)
         // .from(member)
         // .innerJoin(member.no, aDetail)
         // .fetch();
-        return null;
+
+        List<Member> list = query
+                .select(Projections.fields(Member.class, 
+                member.name.as("name"), 
+                member.phone.as("p")))
+                .from(member)
+                .join(aDetail)
+                .on(member.no.eq(aDetail.rId))
+                .fetch();
+        return list;
     }
-
-
 
     // @Override
     // public List<ADetail> test() {

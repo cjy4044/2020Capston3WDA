@@ -50,11 +50,9 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판')}"
 		</table>
 				<form action="/audition_con/serch" method="GET">
 		    <div><center>
-		    <select name="job">
+		    <select name="sim">
    			 <option value="">심사결과</option>
-   	 	   	<option value="학생">o</option>
-   	 <option value="회사원">x</option>
-   	 <option value="기타">기타</option>
+   	 	   
 	</select>
 		       
 		        <input name="keyword" type="text" placeholder="심사결과를 입력해주세요">
@@ -65,7 +63,42 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판')}"
 		 
 		</form>
 		
+		<nav style=text-align: center; >
+
+			<ul class="pagination"
+				th:with="start=${T(Math).floor(auditionconlist.number/10)*10 + 1},
+							last=(${start + 9 < auditionconlist.totalPages ? start + 9 : auditionconlist.totalPages})">
+				<li>
+					<a th:href="@{/audition_con/list(page=1)}" aria-label="First">
+						<span aria-hidden="true">First</span>
+					</a>
+				</li>
 		
+				<li th:class="${auditionconlist.first} ? 'disabled'">
+					<a th:href="${auditionconlist.first} ? '#' :@{/audition_con/list(page=${auditionconlist.number})}" aria-label="Previous">
+						<span aria-hidden="true">&lt;</span>
+					</a>
+				</li>
+		
+				<li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == auditionconlist.number + 1} ? 'active'">
+					<a th:text="${page}" th:href="@{/audition_con/list(page=${page})}"></a>
+				</li>
+		
+				<li th:class="${auditionconlist.last} ? 'disabled'">
+					<a th:href="${auditionconlist.last} ? '#' : @{/audition_con/list(page=${auditionconlist.number + 2})}" aria-label="Next">
+						<span aria-hidden="true">&gt;</span>
+					</a>
+				</li>
+		
+				<li>
+					<a th:href="@{/audition_con/list(page=${auditionconlist.totalPages})}" aria-label="Last">
+						<span aria-hidden="true">Last</span>
+					</a>
+				</li>
+			</ul>
+		  
+		</nav>
+			
 		
        </content>
 

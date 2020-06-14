@@ -32,6 +32,13 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글')}">
          
     </tbody>
 </table>
+<span style="float:right;">
+            
+    <a href="" th:href="@{'/uploads/' + ${auditionResult.rfile}}">
+    [[${auditionResult.rfile}]]</a>
+
+      
+      </span>
 <table>
  <tr>
                 <th>내용 : </th>

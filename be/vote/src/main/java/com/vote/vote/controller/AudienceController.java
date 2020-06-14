@@ -161,11 +161,11 @@ public class AudienceController {
             audienceJpaRepository.saveAndFlush(audience);
 
             // 파일 저장
-            storageService.store(filename);
+            //storageService.store(filename);
             // rfile.setApplyid(audience.getApplyId());
             // rfile.setFilename(filenamePath);
             // rfileRepository.saveAndFlush(rfile);
-            sessionStatus.setComplete();
+            //sessionStatus.setComplete();
             System.out.println("게시글업로드완료");
             return "redirect:/audience/mList";
         }
@@ -211,11 +211,15 @@ public class AudienceController {
         
         try {
             System.out.println(audience.getApplyId());
-            // Program program = pg.findByPK("미스트롯");
+             Program program = pg.findByPK("화성인");
             
             List<Member> list = mr.getInfo();
+            
+            for (Member s: list) {
+                System.out.println(s.toString());
+            }
 
-            System.out.println(list);
+          
             
         } catch (Exception e) {
             // TODO Auto-generated catch block

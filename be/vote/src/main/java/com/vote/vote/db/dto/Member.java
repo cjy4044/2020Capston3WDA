@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import antlr.collections.List;
+
 import javax.persistence.SequenceGenerator;
 
 
@@ -158,4 +161,7 @@ public class Member{
     public String toString(){
         return "no["+no+"] userid["+userid+"] password["+password+"] name[ "+name+"] gender[ "+gender+"] birth["+birth+"] nickname["+nickname+"] phone[ "+phone+"] addr[ "+addr+"] addr2["+addr2+"] profile["+profile+"]";
     }
+
+
+
 }

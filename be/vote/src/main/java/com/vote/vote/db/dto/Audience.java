@@ -18,8 +18,8 @@ public class Audience {
   
     @Id
     @Column(nullable = false, name="apply_id")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="APPLY_SEQ_GENERATOR")
-    @SequenceGenerator(name="APPLY_SEQ_GENERATOR", sequenceName="APPLY_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="B_APPLY_SEQ_GENERATOR")
+    @SequenceGenerator(name="B_APPLY_SEQ_GENERATOR", sequenceName="B_APPLY_SEQ", allocationSize = 1)
     private int applyId;
 
     @Column(nullable = false, name="a_title")

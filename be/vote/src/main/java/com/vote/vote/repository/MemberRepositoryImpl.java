@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.nimbusds.oauth2.sdk.id.Audience;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryFactory;
 import com.querydsl.core.types.Projections;
@@ -32,7 +33,33 @@ public class MemberRepositoryImpl implements MemberRepository {
         JPAQueryFactory query = new JPAQueryFactory(em);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        List<Member> list = query.select(member).from(member).fetch();
+        List<Member> list = query
+        .select(Projections.fields(Member.class,
+        member.no,
+        member.userid,
+        member.gender,
+        member.birth,
+        member.nickname,
+        member.addr,
+        member.addr2,
+        member.name,
+        member.phone
+        ))
+        .from(member)
+        .join(aDetail).on(member.no.eq(aDetail.rId))
+        .fetch();
+
+
+
+
+
+
+
+
+
+
+
+
         // booleanBuilder.and(aDetail.applyId.eq(a));
         // List<Member> list = query.select(Projections.bean(Member.class, member.name,
         // member.phone)).distinct()

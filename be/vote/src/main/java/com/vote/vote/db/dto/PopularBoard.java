@@ -32,11 +32,11 @@ public class PopularBoard {
     @Column(name="p_content")
     private String content;
     
-//    @DateTimeFormat(pattern="yyyy-MM-dd")
+   @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name="p_date")
     private String date;
-//
-//    @DateTimeFormat(pattern="yyyy-MM-dd")
+
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name="p_mdate")
     private String mdate;
     

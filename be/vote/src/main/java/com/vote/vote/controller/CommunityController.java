@@ -27,6 +27,7 @@ import com.vote.vote.db.dto.Vote;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.CustomPopularBoardRepository;
+import com.vote.vote.repository.CustomPopularRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.PopularBoardJpaRepository;
 import com.vote.vote.repository.PopularJpaRepository;
@@ -72,6 +73,9 @@ public class CommunityController {
 
 	@Autowired
 	ProgramJpaRepository programRepository;
+	
+	@Autowired
+	CustomPopularRepository customPopularRepository;	
 	
 	@Autowired
 	PopularJpaRepository popularRepository;
@@ -149,14 +153,15 @@ public class CommunityController {
   	   
       }
     
-    @RequestMapping(value={"/{program}/popular/axios","/{program}/popular/axios/"}) // 해당 프로그램 인기인 정보
+    @RequestMapping(value={"/{program}/popular/axios","/{program}/popular/axios/"}) // 
   	@ResponseBody
-  	public JSONArray  popularAxios(@PathVariable("program") int programNum ){
+  	public JSONArray  popularAxios(@PathVariable("program") int programNum, @PageableDefault Pageable pageable){
   	
       	
-      	List<Popular> populares = popularRepository.findByPid(programNum);
+      	List<Popular> populares = customPopularRepository.findByPid(programNum, pageable);
+      	long count = customPopularRepository.CountByPid(programNum);
 
-
+      	System.out.println(count);
       	JSONArray json = new JSONArray();
 		
 		for( Popular popular : populares){
@@ -169,6 +174,7 @@ public class CommunityController {
 
 			json.add(popularData);
 		}
+		json.add(count);
 	
 
 		return json;
@@ -317,7 +323,8 @@ public class CommunityController {
 
 		for(Rfile rfile : rfileList){
 			JSONObject json = new JSONObject();
-			json.put("id", rfile.getPid());
+			json.put("id", rfile.getFileid());
+			json.put("pid", rfile.getPid());
 			json.put("name",rfile.getFilename());
 			result.add(json);
 		}
@@ -379,5 +386,71 @@ public class CommunityController {
  		return "redirect:/community/{program}/{popular}";
  	}	
     
+    @RequestMapping(value={"/{program}/{popular}/update"}) //프로그램>인기인>게시글작성
+   	public String popularBoardUpdate(@PathVariable("program") int programNum,
+   									@PathVariable("popular") int popularNum,  									
+   									PopularBoard board,
+   								Model model) {
+     	
+     	Program program = programRepository.findById(programNum);
+     	Popular popular = popularRepository.findById(popularNum);
+     	//PopularBoard board2 = popularBoardRepository.findById(boardNum);
+     	//Rfile rfile = new Rfile();    	
+    	
+     	
+     	Date time = new Date();
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+
+		String nowTime = format.format(time);
+	
+		
+		System.out.println(board.getDate());
+		board.setMdate(nowTime);
+		
+     	System.out.println(board.toString());
+     	
+     	
+		
+     	popularBoardRepository.saveAndFlush(board);
+     	
+     	//if(file != null) {
+    	//rfile.setFilename(storageService.store2(file)); 
+     	//rfile.setPid(board.getId());
+     	//rfileRepository.saveAndFlush(rfile);
+     	//}
+     	
+ 		return "redirect:/community/{program}/{popular}/"+board.getId();
+ 	}	
+    
+    
+	@RequestMapping(value={"/{program}/{popular}/{popularBoard}/delete"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject deletePost(@PathVariable("program") int programNum,
+								@PathVariable("popular") int popularNum,
+								@PathVariable("popularBoard") int BoardNum) { 
+		PopularBoard pb = popularBoardRepository.findById(BoardNum);
+		System.out.println(pb.toString()+"삭제 요청");
+		popularBoardRepository.delete(pb);
+
+		JSONObject result = new JSONObject();
+		result.put("message", "게시글이 삭제되었습니다.");
+		
+		return result;
+	}
+    
+	@RequestMapping(value={"/file/{fileId}","/file/{fileId}/"}, method=RequestMethod.DELETE)
+	@ResponseBody
+	public JSONObject delete(@PathVariable("fileId") int fileId) { 
+		Rfile file = rfileRepository.findByFileid(fileId);
+		System.out.println(file.toString()+"삭제 요청");
+		
+		rfileRepository.delete(file);
+
+		JSONObject result = new JSONObject();
+		result.put("message", "첨부파일이 삭제되었습니다.");
+		
+		return result;
+	}
     
 }

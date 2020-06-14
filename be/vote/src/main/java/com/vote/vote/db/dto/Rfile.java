@@ -30,7 +30,16 @@ public class Rfile {
     @Column(nullable=true)
     private String filename;
 
-    public Integer getHotclibid() {
+    
+    public int getFileid() {
+		return fileid;
+	}
+
+	public void setFileid(int fileid) {
+		this.fileid = fileid;
+	}
+
+	public Integer getHotclibid() {
         return hotclibid;
     }
 

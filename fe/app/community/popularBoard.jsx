@@ -141,6 +141,7 @@ class Modal extends Component{
       handleCloseModal(){
 
         this.setState({modal:false});
+        this.setState({previewURL:''});
       };  
 
       checkImage(event){

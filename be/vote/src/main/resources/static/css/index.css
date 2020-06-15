@@ -3,6 +3,11 @@ body {
     margin:0px;
     font-family: none !important;
 }
+#logoutButton{
+    color: white;
+    background: none;
+    border: none;
+}
 header{
     overflow: hidden;
     position: relative;

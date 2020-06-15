@@ -463,7 +463,6 @@ public class VoteController {
 						Integer.parseInt(axiosData.get("select").toString())
 					);							
 
-
 					
 					VoterHash voterHash = new VoterHash();
 					voterHash.setMemberId(userDetails.getR_ID());

@@ -20,7 +20,9 @@
     color:purple;
 }
 
-
+.resetProgram{
+    margin-top: 10px;
+}
 /* voteIdexItem 에서 부르는 ItemCard2vertical 의 크기 */
 .vote_index_item{
     display: inline-block;

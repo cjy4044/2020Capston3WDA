@@ -95,6 +95,11 @@ class Index extends Component{
         this.getVoteItemWithOptionPaging();
 
     }
+    optionReset(){
+        this.options.program = 0;
+        this.setUrl();
+        this.getVoteItemWithOptionPaging();
+    }
 
     render(){
         const clickTypes = document.getElementsByClassName("type")
@@ -115,7 +120,7 @@ class Index extends Component{
 
         return(
             <div>
-                <h2 className="voteIndexPageTitle">Vote List</h2>
+                {/* <h2 className="voteIndexPageTitle">Vote List</h2> */}
                 <div className="vote_options_select_div">
                     <div className="options">
                         <div className="voteSort">&#60;정렬&#62;</div>
@@ -125,9 +130,11 @@ class Index extends Component{
                             <div className="voteState type" title="1" onClick={this.clickTag.bind(this,1)}>진행중인 투표</div>
                             <div className="voteState type" title="2" onClick={this.clickTag.bind(this,2)}>마감된 투표</div>
                         </div>
+                        
                         <div id="program_option"className="vote_option_div">
                             {/* componentDidMount 에서 추가 */}
                         </div>
+                        <div className="resetProgram" onClick={this.optionReset.bind(this)}>프로그램 정렬 초기화</div>
                     </div>
                     <div className="search_vote">
                         <input type="text" id="searchInput"/>

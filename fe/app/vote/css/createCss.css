@@ -112,6 +112,10 @@
     .candidateItem{
         display: table;
         grid-template-columns: none;
+        margin: auto;
+    }
+    .imgDiv{
+        text-align: -webkit-center;
     }
     .grid{
         display: block;
@@ -121,12 +125,17 @@
         width: 90%;
     }
     .candidateInfo{
-        width: 50%;
+        width: 90%;
     }
     .candidateTable{
         display: block;
         padding: 0;
         
+    }
+    .candidateImg{
+        width: 90%;
+        height: 90%;
+        margin-top: 5px;
     }
     .tagInput{
         width:50%;

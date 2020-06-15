@@ -9,6 +9,8 @@ th:fragment="layout(content,js,title)">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/layout.css">
     <script type="text/javascript" th:replace="${js}"></script>
+    
+  
         <!-- <link rel="stylesheet" href="/css/notUseSide.css"> -->
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -23,6 +25,18 @@ th:fragment="layout(content,js,title)">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="/js/mobileSidBar.js"></script>
 
+    <!-- 게시판, 채팅박스 -->
+    <link rel="stylesheet" href="/css/boardstyle.css">
+    <link rel="stylesheet" href="/css/contents.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/board.common.css">
+    <link rel="stylesheet" href="/css/featherlight.css">
+    <link rel="stylesheet" href="/css/moblie.css">
+    <link rel="stylesheet" href="/shop/css/bootstrap.min.css">
+    <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<link href="/css/chat.css" rel="stylesheet">
+	<script src="/js/chat.js"></script>
 	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 	
@@ -38,7 +52,7 @@ th:fragment="layout(content,js,title)">
                     <img  th:if="${#authentication.principal.img}" th:src="${#authentication.principal.img}" width="25" height="25">
                     <img th:unless="${#authentication.principal.img}" src="/img/defaultProfile.png" width="25" height="25">
                 </div>
-                <span sec:authentication="principal.name"></span><span> 님</span> 
+                <span id="username" sec:authentication="principal.name"></span><span> 님</span> 
                 <a></a>
                 <form class="top_form"action="/logout" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -108,7 +122,7 @@ th:fragment="layout(content,js,title)">
                             <div class="drop">
                                 <a href="#">팬클럽</a>
                                 <a href="/hotclib">주간Hot Clip</a>
-                                <a href="#">방청권응모</a>
+                                <a href="/audience/list">방청권응모</a>
                             </div>
                         </div>
                         <a href="#" class="sideMenu">
@@ -154,7 +168,7 @@ th:fragment="layout(content,js,title)">
                         <div class="drop">
                             <a href="#">팬클럽</a>
                             <a href="/hotclib">주간Hot Clip</a>
-                            <a href="#">방청권응모</a>
+                            <a href="/audience/list">방청권응모</a>
                         </div>
                     </div>
                     <a href="/shop/index">
@@ -218,9 +232,27 @@ th:fragment="layout(content,js,title)">
             </a>
         </div>
 
-        <div class="min-address">
+        <!-- <div class="min-address">
             <div>2020 RIRO.com</div>
-        </div>
+        </div> -->
+
+        <div class="l_c_h">
+            <div class="c_h">
+                <div class="left_c">
+                    <div class="left right_c left_icons">
+                        <a href="#" class="mini">+</a>
+                    </div>
+                    <div class="left center_icons">RIRO CHAT !</div>
+                </div>
+            </div>
+            <div class="chat_container">
+                <ul id="messages"></ul>
+                <form id="chatform" action="">
+                    <input id="chatinput" autoComplete="nope" ></input>
+                    <button id="chatbutton">Send</button>
+                </form>
+            </div>
+        </div >
     </footer>
 </body>
 </html>

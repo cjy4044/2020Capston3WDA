@@ -68,7 +68,7 @@ input[type=text]:focus,input[type=password]:focus,  textarea:focus,select:focus 
 #tnb a:focus, #tnb a:hover {color:#000;}
 #tnb .tnb_admin a{color:#ff0000;}
 #tnb .tnb_left{float:left}
-#tnb .tnb_left a{;padding:0 14px}
+#tnb .tnb_left a{padding:0; }
 #tnb .tnb_cart{border-right:1px solid #ddd;}
 #tnb .tnb_community{border-right:1px solid #ddd}
 #tnb .tnb_community i{font-size:15px}
@@ -167,7 +167,7 @@ a.gnb_2da:hover{background:#000; color:#fff;padding-left:18px;-webkit-transition
 #page_title.subTopBg_07{background-image:URL("../img/subTopBg_07.jpg");} /* 일곱번째 대메뉴에서 출력될 이미지 */
 #page_title.subTopBg_0N{background-image:URL("");} /* n번째 대메뉴에서 출력될 이미지를 추가해 주세요 */
 
-#container {float:right;width:75%;min-height:200px;height:auto !important;height:auto; font-size:1em;zoom:1}
+#container {float:right;width:100%;min-height:200px;height:auto !important;height:auto; font-size:1em;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 #sideBar {float:left;width:20%;}

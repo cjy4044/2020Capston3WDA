@@ -27,26 +27,21 @@ public class MemberRepositoryImpl implements MemberRepository {
     private QADetail aDetail = QADetail.aDetail;
 
     @Override
-    public List<Member> getInfo() {
+    public List<Member> getInfo(int ai) {
         // TODO Auto-generated method stub
 
         JPAQueryFactory query = new JPAQueryFactory(em);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-
+        booleanBuilder.and(aDetail.applyId.eq(ai));
         List<Member> list = query
         .select(Projections.fields(Member.class,
-        member.no,
-        member.userid,
-        member.gender,
-        member.birth,
-        member.nickname,
-        member.addr,
-        member.addr2,
         member.name,
         member.phone
         ))
+        .distinct()
         .from(member)
         .join(aDetail).on(member.no.eq(aDetail.rId))
+        .where(booleanBuilder)
         .fetch();
 
 

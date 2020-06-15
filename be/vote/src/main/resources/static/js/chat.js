@@ -19,8 +19,10 @@ $(document).ready(function() {
         $(".c_h").click(function(e) {
             if ($(".chat_container").is(":visible")) {
                 $(".c_h .right_c .mini").text("+")
+                $(".l_c_h").css('width', 'auto') 
             } else {
                 $(".c_h .right_c .mini").text("-")
+                $(".l_c_h").css('width', '300px')          
             }
             $(".chat_container").slideToggle("slow");
             return false

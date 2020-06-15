@@ -58,8 +58,8 @@ public class AudienceController {
     @Autowired
     public MemberRepositoryImpl mr;
     
-
     private AudienceService audienceService;
+
     @Autowired
     ADetailRepository aDetailRepository;
 
@@ -131,7 +131,7 @@ public class AudienceController {
         }
     }
 
-    // ---------------------------------관리자
+    // --------------------------------------------------------관리자
     // 게시글 업로드(관리자)
     @GetMapping("/create")
     public String mUpload(Model model) {
@@ -174,16 +174,36 @@ public class AudienceController {
     }
 
     // 게시글 삭제
-    // @GetMapping("/delete/{applyId}")
-    // public String delete(@PathVariable int applyId, Model model){
-    // model.addAttribute("applyId", applyId); 
-    // return "/delete";
-    // }
-    @PostMapping("/{applyId}")
-    public String mDelete(@PathVariable int applyId) {
-        audienceJpaRepository.deleteById(applyId);
-        return "redirect:/audience/";
+    @GetMapping("/delete/{applyId}")
+    public String delete(@PathVariable int applyId, Model model){
+    aDetailRepository.deleteByApplyId(applyId);
+    audienceJpaRepository.deleteById(applyId);
+    return "redirect:/audience/mlist";
     }
+
+    // 게시글 수정
+    @GetMapping("/update/{applyId}")
+    public String update(@PathVariable int applyId, Model model){       
+        model.addAttribute("audience", audienceJpaRepository.findById(applyId));
+        model.addAttribute("newAudience", new Audience());
+        return "audience/mUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(@Valid Audience audience, BindingResult bindingResult, SessionStatus sessionStatus,
+    Principal principal, Model model, RedirectAttributes redirAttrs,
+    @RequestParam(name = "filename") MultipartFile filename){  
+       System.out.println(audience.getApplyId());
+       System.out.println(audience.getATitle());
+       storageService.store2(filename);
+       audienceJpaRepository.audienceUpdate(audience.getATitle(), audience.getAStartdate(), audience.getAEnddate(), 
+       audience.getARecruits(), audience.getALimit(), audience.getAPrice(), storageService.store2(filename), audience.getAContent(), 
+       audience.getApplyId());
+       System.out.println("수정햇엉");
+       
+       return "redirect:/audience/mlist";  
+    }
+
 
     // 내가 작성한 게시글(관리자)
     @GetMapping(value = { "/mlist" })

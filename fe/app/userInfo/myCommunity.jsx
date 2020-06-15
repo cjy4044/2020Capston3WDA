@@ -6,6 +6,7 @@ import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
 import './Modal.css';
+import '../smart.css';
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -87,7 +88,7 @@ class MyCommunity extends Component {
                      })}
              
                 </div>
-                       <button onClick={this.handleOpenModal.bind(this)}>추가</button>
+                       <button className="add" onClick={this.handleOpenModal.bind(this)}>추가</button>
 
                   {this.state.modal && (
                    <div className="MyModal"> 

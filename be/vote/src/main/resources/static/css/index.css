@@ -292,6 +292,26 @@ contents div.contents{
     width: 80%;
     margin:auto;
 }
+@media(max-width:1770px){
+     /* 모바일 사이드바 */
+     #mobileSidBarButton{
+        display: inline;
+        position: absolute;
+        right: 5%;
+        top: 13%;
+        background-color: #E0E0F8;
+        /* border: none; */
+        border: 0;
+        border-radius: 15;
+        border-radius: 10px;
+        padding: 10px;
+        z-index:9999;
+    }
+    
+}
+.w3-animate-left{
+    position: absolute !important;
+    left: 0 !important;}
 @media(max-width:790px){
     nav{
         /* display: block !important; */

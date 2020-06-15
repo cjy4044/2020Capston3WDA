@@ -2,11 +2,11 @@
 </body>
 </html>
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{main_layout::layout(~{::content},_,~{::title})}" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>방청권 응모</title>
     <link rel="stylesheet" href="/css/boardstyle.css">
     <link rel="stylesheet" href="/css/contents.css">
     <link rel="stylesheet" href="/css/default.css">
@@ -104,10 +104,6 @@
             </fieldset>
             <!-- } 게시판 검색 끝 -->
         </div>
-
-
-
-
         <!-- 페이지 -->
         <!-- <nav class="pg_wrap" th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
         last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})"><span class="pg"><span class="sound_only">열린</span><strong
@@ -121,8 +117,6 @@
                 <a href="" class="pg_page pg_end">맨끝</a>
             </span>
         </nav> -->
-
-
         <nav style="text-align: center;">
             <ul class="pagination"
                 th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
@@ -158,11 +152,9 @@
         </nav>
 
         <!-- } 게시판 목록 끝 -->
-
-
     </div>
-
+  </content>
 </body>
-</content>
+
 
 </html>

@@ -1,5 +1,21 @@
+@media screen and (max-width: 710px) {
+	.l_c_h {
+		width: auto;
+		position: fixed;
+		bottom: 0;
+		right: 0px;
+		border-radius: 3px;
+		z-index: 5000;
+		display: block;
+		background-color: rgb(182, 140, 221);
+	}
+
+
+}
+
+
 .l_c_h {
-	width: 300px;
+	width: auto;
 	position: fixed;
 	bottom: 0;
 	right: 0px;

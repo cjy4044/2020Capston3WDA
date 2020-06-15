@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{main_layout::layout(~{::content},~{::script},~{::title})}" >
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>게시글</title>
     <link rel="stylesheet" href="/css/boardstyle.css">
     <link rel="stylesheet" href="/css/contents.css">
     <link rel="stylesheet" href="/css/default.css">
@@ -17,6 +17,7 @@
 </head>
 
 <body>
+    <content>
     <div id="container">
 
         <script src="http://sample.paged.kr/purewhite/js/viewimageresize.js"></script>
@@ -24,12 +25,12 @@
         <!-- 게시물 읽기 시작 { -->
 
         <article id="bo_v" style="width:100%">
-            <header>
+            
                 <h2 id="bo_v_title">
                     <span class="bo_v_tit" th:text="${audience.aTitle}">
                         웹진형 게시판입니다.</span>
                 </h2>
-            </header>
+            
 
             <section id="bo_v_info">
                 <h2>페이지 정보</h2>
@@ -438,6 +439,7 @@
         <!-- } 게시글 읽기 끝 -->
 
     </div>
+</content>
 </body>
 
 </html>

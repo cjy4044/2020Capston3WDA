@@ -1,0 +1,19 @@
+@media(max-width:1770px){
+    .smart{display: none !important;}
+    .col-lg-12{padding-left:0px !important;}
+    #page-content-wrapper{padding : 0px !important;}
+    #tablebox{
+        margin: auto !important;
+        width: 100% !important;
+        text-align : -webkit-center;
+    }
+    .community_item{
+        margin: auto !important;
+        width: 100% !important;
+    }
+    .add{
+        margin-top: 15px;
+    }
+
+}
+

@@ -13,6 +13,8 @@ import Pagination from '@material-ui/lab/Pagination';
 
 import './profileIndex.css';
 
+import '../smart.css';
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
@@ -52,16 +54,16 @@ class UserIndex extends Component {
                                 <TableRow>
                                             <TableCell>번호</TableCell>
                                             <TableCell>프로필사진</TableCell>
-                                            <TableCell>성명</TableCell>
+                                            <TableCell className="smart">성명</TableCell>
                                             <TableCell>아이디</TableCell>
-                                            <TableCell>닉네임</TableCell>
-                                            <TableCell>성별</TableCell>
-                                            <TableCell>생년월일</TableCell>
-                                            <TableCell>연락처</TableCell>
-                                            <TableCell>가입일</TableCell>
-                                            <TableCell>주소</TableCell>
-                                            <TableCell>상세주소</TableCell>
-                                            <TableCell>포인트</TableCell>
+                                            <TableCell className="smart">닉네임</TableCell>
+                                            <TableCell className="smart">성별</TableCell>
+                                            <TableCell className="smart">생년월일</TableCell>
+                                            <TableCell className="smart">연락처</TableCell>
+                                            <TableCell className="smart">가입일</TableCell>
+                                            <TableCell className="smart">주소</TableCell>
+                                            <TableCell className="smart">상세주소</TableCell>
+                                            <TableCell className="smart">포인트</TableCell>
                                             <TableCell>권한번호</TableCell>
                                 </TableRow>
                                 </TableHead>
@@ -94,18 +96,18 @@ class Index extends Component{
                         return (
                             
                             <TableRow key={'div'+index}>
-                                <TableCell key={index}>{p.r_id}</TableCell>
+                                <TableCell  key={index}>{p.r_id}</TableCell>
                                 <TableCell><img id="profile" src={p.profile} alt="profile"/></TableCell>
-                                <TableCell>{p.username}</TableCell>
+                                <TableCell className="smart">{p.username}</TableCell>
                                 <TableCell>{p.userid}</TableCell>
-                                <TableCell>{p.nickname}</TableCell>
-                                <TableCell>{p.gender}</TableCell>
-                                <TableCell>{p.birth}</TableCell>
-                                <TableCell>{p.phone}</TableCell>
-                                <TableCell>{p.joindate}</TableCell>
-                                <TableCell>{p.addr}</TableCell>
-                                <TableCell>{p.addr2}</TableCell>
-                                <TableCell>{p.point}</TableCell>
+                                <TableCell className="smart">{p.nickname}</TableCell>
+                                <TableCell className="smart">{p.gender}</TableCell>
+                                <TableCell className="smart">{p.birth}</TableCell>
+                                <TableCell className="smart">{p.phone}</TableCell>
+                                <TableCell className="smart">{p.joindate}</TableCell>
+                                <TableCell className="smart">{p.addr}</TableCell>
+                                <TableCell className="smart">{p.addr2}</TableCell>
+                                <TableCell className="smart">{p.point}</TableCell>
                                 <TableCell>{p.role}</TableCell>
                             </TableRow>
                             

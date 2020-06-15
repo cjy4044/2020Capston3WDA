@@ -213,9 +213,9 @@ public class AudienceController {
             System.out.println(audience.getApplyId());
             // Program program = pg.findByPK("미스트롯");
             
-            List<Member> list = mr.getInfo2(1);
+            // List<Member> list = mr.getInfo2(1);
 
-            System.out.println(list);
+            // System.out.println(list);
             
         } catch (Exception e) {
             // TODO Auto-generated catch block

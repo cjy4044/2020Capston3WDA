@@ -194,6 +194,7 @@ public class AudienceController {
 
         Page<Audience> boardList = audienceJpaRepository.findAllByrId(pageable, member.getNo());
         model.addAttribute("boardList", boardList);
+        
         return "audience/mList";
     }
 
@@ -211,26 +212,16 @@ public class AudienceController {
     @GetMapping("/showRecruits")
     public String showList(Model model, Audience audience, Principal principal) {
         
-        try {
-            System.out.println(audience.getApplyId());
-             Program program = pg.findByPK("화성인");
-            
-
-            List<Member> list = mr.getInfo();
-            
-            for (Member s: list) {
-                System.out.println(s.toString());
-            }
+            List<Member> list = new ArrayList<>();
+            list = mr.getInfo(audience.getApplyId());
+            model.addAttribute("list", list);
+            // for (Member s: list) {
+            //     System.out.println(s.toString());
+            // }
 
           
 
-            
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace(); 
-        }
-       
-        // System.out.println(list);
+        System.out.println(list);
         return "audience/showRecruits";
     }
         

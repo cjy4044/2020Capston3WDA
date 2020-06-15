@@ -5,11 +5,16 @@ class BlockChain extends React.Component {
     render() {
         return (
           <div>
-              <div>블록체인이란?</div>
+              
 
               <div className="introduceRIROVote">
-                <div>RIRO 블록체인 소개 및 투표 확인</div>
-                <div>투표 확인</div>
+                <div><h3>블록체인이란?</h3></div>
+                <a href="https://www.youtube.com/watch?v=BKLfMx5hscI&t=143s">블록체인이 무엇인지 확인하러 가기</a><br/>
+                <div><h3>RIRO 블록체인 소개 및 투표 확인</h3></div><br/>
+                <div>RIRO 는 카카오의 클레이튼 이라는 블록체인을 사용하였습니다.</div><br/>
+                <a href="https://www.youtube.com/watch?v=vSbMehFESos">기대되는 클레이튼 (영상 바로가기)</a><br/>
+                <a href="https://www.youtube.com/watch?v=3TzMub6OM6o&t=380s">상세설명 (영상 바로가기)</a><br/><br/>
+                <div><h3>투표 확인</h3></div>
                 <div>원하는 투표를 눌러서, 투표 정보를 봅시다.</div>
                 <img src="/img/blockChain/selectVote.png"/>
                 <div>진행중인 투표에 투표를 해봅시다. (후보 3번에 투표를 해 보았습니다.)</div>

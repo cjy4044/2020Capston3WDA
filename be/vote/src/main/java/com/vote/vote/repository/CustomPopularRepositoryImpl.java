@@ -72,8 +72,21 @@ public class CustomPopularRepositoryImpl implements CustomPopularRepository{
        return popularList.size();
 	}
     
-    
-   
+    @Override
+    public List<Popular> getCandidates(int ... ids){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        for(int i = 0; i<ids.length; i++){
+            booleanBuilder.or(pm.id.eq(ids[i]));
+        }
+
+
+        List<Popular> popularList =  query.select(pm).from(pm).where(booleanBuilder).fetch();
+        return popularList;
+    }
 
 
 

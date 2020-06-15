@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// 블록체인 투표
 			.antMatchers(HttpMethod.GET,"/vote").permitAll()//  투표페이지 
 			.antMatchers("/vote/program/axios").permitAll()// 투표 index (투표목록)
+			.antMatchers("/vote/programAndPop/axios").hasAnyAuthority("2")// 프로그램 목록(투표목록)			
 			.antMatchers(HttpMethod.GET,"/vote/axios").permitAll()//  투표페이지 
 			.antMatchers("/vote/axios/**").hasAnyAuthority("0","1","2","3")//투표 정보..
 			.antMatchers("/vote/{voteId}/**").hasAnyAuthority("0","1","2","3")

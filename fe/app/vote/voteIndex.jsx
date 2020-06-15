@@ -15,12 +15,14 @@ class Index extends Component{
         this.url = "/vote/axios?page="+(this.options.page-1)+"&size="+this.options.size+"&sort="+this.options.sort+"&state="+this.options.type+"&program="+this.options.program+"&text="+this.options.text;
         
     }
+    
     async componentDidMount(){
         this.getVoteItemWithOptionPaging();
 
         let {data} = await axios.get('/vote/program/axios')
         var parentsDiv = document.getElementById("program_option")
 
+        console.log("프로그램 목록",data);
         const programOptionTitle = document.createElement("div");
         programOptionTitle.innerHTML = "프로그램 ▶ "
         programOptionTitle.className ="voteType"
@@ -55,6 +57,7 @@ class Index extends Component{
         // this.componentDidMount();
         this.getVoteItemWithOptionPaging();
     }
+
     clickProgramName(id){
         // console.log("프로그램 클릭  id : "+id);
         this.options.page = 1;

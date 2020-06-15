@@ -107,7 +107,7 @@ public class AudienceController {
     public String result(Audience audience, Principal principal, ADetail aDetail) {
         Member member = memberRepository.findByUserid(principal.getName());
 
-        aDetail.setApplyId(audience.getApplyId());
+        aDetail.setApplyId(audience.getApplyId());  
         aDetail.setRId(member.getNo());
         // aDetaiId.setApplyId(audience.getApplyId());
         // aDetaiId.setRId(member.getNo());
@@ -169,7 +169,7 @@ public class AudienceController {
             // rfileRepository.saveAndFlush(rfile);
             //sessionStatus.setComplete();
             System.out.println("게시글업로드완료");
-            return "redirect:/audience/mList";
+            return "redirect:/audience/mlist";
         }
     }
 

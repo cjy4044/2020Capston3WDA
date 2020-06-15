@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{main_layout::layout(~{::content},_,'글쓰기')}" >
 
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <content>
     <div id="container">
         <!-- skin : theme/webzine -->
         <section id="bo_w">
@@ -243,6 +244,8 @@
         <!-- } 게시물 작성/수정 끝 -->
 
     </div>
+
+</content>
 </body>
 
 </html>

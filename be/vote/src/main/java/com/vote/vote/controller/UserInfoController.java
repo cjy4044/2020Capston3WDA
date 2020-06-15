@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.customSelect.CustomPrd;
+import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Company;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
@@ -35,7 +36,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -353,14 +353,14 @@ public class UserInfoController {
 	@ResponseBody
 	public JSONArray voterVoteListAxios(Principal user, @PageableDefault Pageable pageable){// 내가 투표한 투표 리스트  정보
 		Member member = memberRepository.findByUserid(user.getName());
-		// System.out.println("memer id :"+member.getNo());
-		List<Vote>  votes = customVoteRepository.getVotesByR_id(pageable, member.getNo());
-		int count = customVoteRepository.getVotesByR_idCount(member.getNo());
+		
+
+		CustomVote cv = customVoteRepository.getVotesByR_id(pageable, member.getNo());
 
 		
 		JSONArray result = new JSONArray();
 
-		for(Vote vote : votes){
+		for(Vote vote : cv.getVotes()){
 			JSONObject voteInfo = new JSONObject();
 			voteInfo.put("no", vote.getId());
 			voteInfo.put("title", vote.getTitle());
@@ -369,7 +369,7 @@ public class UserInfoController {
 			voteInfo.put("resultTime",vote.getLongResultShowTime());
 			result.add(voteInfo);
 		}
-		result.add(count);
+		result.add(cv.getCount());
 		
 		return result;
 	}
@@ -388,14 +388,15 @@ public class UserInfoController {
 	public JSONArray manageVoteAxios(Principal user, @PageableDefault Pageable pageable){// 내가 투표한 투표 리스트  정보
 		Member member = memberRepository.findByUserid(user.getName());
 		
-		List<Vote>  votes = customVoteRepository.getMyVotes(pageable, member.getNo());
-		int count = customVoteRepository.getMyVotesCount(member.getNo());
+		CustomVote cv = customVoteRepository.getMyVotes(pageable, member.getNo());
+		// List<Vote>  votes = customVoteRepository.getMyVotes(pageable, member.getNo());
+		// int count = customVoteRepository.getMyVotesCount(member.getNo());
 
 		// System.out.println("ㅁㅁㅁㅁ"+votes);
 		
 		JSONArray result = new JSONArray();
 
-		for(Vote vote : votes){
+		for(Vote vote : cv.getVotes()){
 			JSONObject voteInfo = new JSONObject();
 			voteInfo.put("no", vote.getId());
 			voteInfo.put("title", vote.getTitle());
@@ -404,7 +405,7 @@ public class UserInfoController {
 			voteInfo.put("resultTime",vote.getLongResultShowTime());
 			result.add(voteInfo);
 		}
-		result.add(count);
+		result.add(cv.getCount());
 		
 		return result;
 	}

@@ -15,12 +15,14 @@ class Index extends Component{
         this.url = "/vote/axios?page="+(this.options.page-1)+"&size="+this.options.size+"&sort="+this.options.sort+"&state="+this.options.type+"&program="+this.options.program+"&text="+this.options.text;
         
     }
+    
     async componentDidMount(){
         this.getVoteItemWithOptionPaging();
 
         let {data} = await axios.get('/vote/program/axios')
         var parentsDiv = document.getElementById("program_option")
 
+        console.log("프로그램 목록",data);
         const programOptionTitle = document.createElement("div");
         programOptionTitle.innerHTML = "프로그램 ▶ "
         programOptionTitle.className ="voteType"
@@ -55,6 +57,7 @@ class Index extends Component{
         // this.componentDidMount();
         this.getVoteItemWithOptionPaging();
     }
+
     clickProgramName(id){
         // console.log("프로그램 클릭  id : "+id);
         this.options.page = 1;
@@ -92,6 +95,11 @@ class Index extends Component{
         this.getVoteItemWithOptionPaging();
 
     }
+    optionReset(){
+        this.options.program = 0;
+        this.setUrl();
+        this.getVoteItemWithOptionPaging();
+    }
 
     render(){
         const clickTypes = document.getElementsByClassName("type")
@@ -112,7 +120,7 @@ class Index extends Component{
 
         return(
             <div>
-                <h2 className="voteIndexPageTitle">Vote List</h2>
+                {/* <h2 className="voteIndexPageTitle">Vote List</h2> */}
                 <div className="vote_options_select_div">
                     <div className="options">
                         <div className="voteSort">&#60;정렬&#62;</div>
@@ -122,12 +130,14 @@ class Index extends Component{
                             <div className="voteState type" title="1" onClick={this.clickTag.bind(this,1)}>진행중인 투표</div>
                             <div className="voteState type" title="2" onClick={this.clickTag.bind(this,2)}>마감된 투표</div>
                         </div>
+                        
                         <div id="program_option"className="vote_option_div">
                             {/* componentDidMount 에서 추가 */}
                         </div>
+                        <div className="resetProgram" onClick={this.optionReset.bind(this)}>프로그램 정렬 초기화</div>
                     </div>
                     <div className="search_vote">
-                        <input type="text" id="searchInput"/>
+                        <input type="text" id="searchInput" placeholder="투표 제목으로 검색"/>
                         <button type="click" className="searchButton"onClick={this.onSearchEvnet.bind(this)}>검색</button>
                     </div>
                 </div>

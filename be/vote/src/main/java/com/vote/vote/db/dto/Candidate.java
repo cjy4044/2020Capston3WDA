@@ -28,6 +28,9 @@ public class Candidate{
     @Column(nullable=false)
     private String img;
 
+    @Column(name="pop_id",nullable=true)
+    private int popId;
+
     @Column(nullable=true)
     private String info;
 
@@ -64,6 +67,14 @@ public class Candidate{
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public int getPopId() {
+        return popId;
+    }
+
+    public void setPopId(int popId) {
+        this.popId = popId;
     }
 
 

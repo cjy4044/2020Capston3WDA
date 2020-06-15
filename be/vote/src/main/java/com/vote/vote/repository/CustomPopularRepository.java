@@ -22,5 +22,6 @@ public interface CustomPopularRepository{
     
     public long CountByPid(int popularid);
  
+    public List<Popular> getCandidates(int ... ids);
     
 }

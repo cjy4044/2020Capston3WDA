@@ -9,16 +9,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Candidate;
+import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
+import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.db.dto.Voter;
 import com.vote.vote.db.dto.VoterHash;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CandidateJpaRepository;
+import com.vote.vote.repository.CustomPopularRepository;
 import com.vote.vote.repository.CustomVoteRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.repository.VoteJpaRepository;
 import com.vote.vote.repository.VoterHashJpaRepository;
 import com.vote.vote.repository.VoterJpaRepository;
@@ -35,7 +41,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,6 +78,15 @@ public class VoteController {
 	@Autowired
 	private VoterHashJpaRepository voterHashRepository;
 
+	@Autowired
+	private ProgramManagerJpaRepository pManagerRepository;
+
+	@Autowired
+	private PopularJpaRepository popRepository;
+
+	@Autowired
+	private CustomPopularRepository customPopRepository;
+	
 
 	public Klaytn klaytn = new Klaytn();
 
@@ -110,13 +124,13 @@ public class VoteController {
 		}
 		
 		
-		// List<Vote> votes = customVoteRepositoy.customFindVotes(nowTime,type,page);
-		List<Vote> votes = customVoteRepository.customFindVotes(nowTime,page,type, program,searchText);
-		long count = customVoteRepository.getFindVotesCount();
+		CustomVote cv = customVoteRepository.customFindVotes(nowTime,page,type, program,searchText);
 
-		JSONArray json = createVoteList(votes);
+
+
+		JSONArray json = createVoteList(cv.getVotes());
 		
-		json.add(json.size(),count);
+		json.add(json.size(),cv.getCount());
 
 		return json;
 	}
@@ -150,21 +164,27 @@ public class VoteController {
 	public String create(Model model) {
 		return "vote/create";
 	}
-
 	@ResponseBody
 	@RequestMapping(value={"/program/axios","/program/axios/"})
-	public JSONArray createAxios() {
+	public List<Program> indexAxios(@Nullable Authentication authentication) {// 프로그램 목록
 		
+		List<Program> program = programJpaRepository.findAll();
+
+		return program;
+	}
+	@ResponseBody
+	@RequestMapping(value={"/programAndPop/axios","/programAndPop/axios/"})
+	public JSONArray createAxios(@Nullable Authentication authentication) {// 프로그램 정보 및 인기인정보
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		ProgramManager pManager = pManagerRepository.findById(userDetails.getR_ID());
+		List<Popular> populars = popRepository.findByPid(pManager.getProgramId());
 		JSONArray result = new JSONArray();
 
-		List<Program> programList = programJpaRepository.findAll();
+		Program program = programJpaRepository.findById(pManager.getProgramId());
 
-		for(Program program : programList){
-			JSONObject json = new JSONObject();
-			json.put("id", program.getId());
-			json.put("name",program.getName());
-			result.add(json);
-		}
+		result.add(program);
+		result.add(populars);
 
 		return result;
 	}
@@ -172,13 +192,14 @@ public class VoteController {
 	@RequestMapping(value={"","/"}, method=RequestMethod.POST)
 	public String store(
 		@RequestParam(name="title") String title, // 투표 이름
-		@RequestParam(name="file") MultipartFile[] file, // 후보자 사진
-		@RequestParam(name="name") ArrayList<String> names, // 후보자 이름
+		// @RequestParam(name="file") MultipartFile[] file, // 후보자 사진
+		// @RequestParam(name="name") ArrayList<String> names, // 후보자 이름
+		@RequestParam(name="candidate") int[] candidate, // 인기인(후보자) 번호
 		@RequestParam(name="count") int count, // 후보자 수
 		@RequestParam(name="startTime") String startTime, // 시작시간
 		@RequestParam(name="endTime") String endTime, // 마감 시간
 		@RequestParam(name="thumbnail") MultipartFile thumbnail, // 섬네일
-		@RequestParam(name="program_id") int programId, // 프로그램 id 
+		// @RequestParam(name="program_id") int programId, // 프로그램 id 
 		@RequestParam(name="info") ArrayList<String> infos, // 후보자 설명,
 		@RequestParam(name="selectNum") int selectNum,// 선발인원
 		@RequestParam(name="voteCanNum") int voteCanNum,// 다중투표 수
@@ -194,13 +215,13 @@ public class VoteController {
 		// String thumbnailPath = StringUtils.cleanPath(thumbnail.getOriginalFilename());
 		String thumbnailPath = storageService.store2(thumbnail);
 
-		ArrayList<String> fileName = new ArrayList<String>();
+		// ArrayList<String> fileName = new ArrayList<String>();
 		
-		for(int i=0;i<file.length;i++){
+		// for(int i=0;i<file.length;i++){
 			// storageService.store(file[i]);   // 파일 저장
 			// fileName.add(StringUtils.cleanPath(file[i].getOriginalFilename()));		// 파일 이름을 배열에 저장
-			fileName.add( storageService.store2(file[i]) );
-		}
+		// 	fileName.add( storageService.store2(file[i]) );
+		// }
 
 		Vote data = new Vote();
 
@@ -208,13 +229,17 @@ public class VoteController {
 		String startTime_set = startTime.replaceAll("[^0-9]","");
 		String endTime_set = endTime.replaceAll("[^0-9]","");
 
+		ProgramManager pManager = pManagerRepository.findById(userDetails.getR_ID());
+
 		data.setTitle(title);
 		data.setMemberId(userDetails.getR_ID());
 		data.setCount(count);
 		data.setStartTime(startTime_set);
 		data.setEndTIme(endTime_set);
 		data.setThumbnail(thumbnailPath);
-		data.setProgramId(programId);
+
+		data.setProgramId(pManager.getProgramId());
+
 		data.setSelectNum(selectNum);
 		data.setVoteCanNum(voteCanNum);
 		data.setShowState(showState);
@@ -224,12 +249,14 @@ public class VoteController {
         
         
         for(int i=0; i<count;i++){
-            Candidate candidate =  new Candidate();
-            candidate.setVoteId(data.getId());
-            candidate.setImg(fileName.get(i));
-			candidate.setName(names.get(i));
-			candidate.setInfo(infos.get(i));
-            candidateRepository.saveAndFlush(candidate);
+			Candidate cnd =  new Candidate();
+			Popular pp = popRepository.findById(candidate[i]);
+			cnd.setVoteId(data.getId());
+			cnd.setName(pp.getName());
+			cnd.setImg(pp.getImg());
+			cnd.setPopId(candidate[i]);
+			cnd.setInfo(infos.get(i));
+            candidateRepository.saveAndFlush(cnd);
         }
         
 		
@@ -311,20 +338,11 @@ public class VoteController {
 		// Vote vote = voteRepository.findById(voteId);
 		// Vote_img img = vote_imgRepository.findById(vote.getImg());
 		// Vote_name name = vote_nameRepository.findById(vote.getName());
-		ArrayList<Candidate> candidateList = candidateRepository.findByVoteId(voteId);
+		List<Candidate> candidateList = candidateRepository.findByVoteId(voteId);
 		
         
 		JSONArray array = new JSONArray();
         
-        // ArrayList<String> names = new ArrayList<String>();
-		// ArrayList<String> imgs = new ArrayList<String>();
-        
-        // for(int i=0; i<candidateList.size();i++){
-        //     names.add(candidateList.get(i).getName());
-        //     imgs.add(candidateList.get(i).getImg());
-		// }
-		
-
 
 		for(int i=0; i<candidateList.size();i++){
 			JSONObject item = new JSONObject();
@@ -494,10 +512,13 @@ public class VoteController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		Vote vote = voteRepository.findById(voteId);
-		ArrayList<Candidate> candidateList = candidateRepository.findByVoteId(voteId);
+		List<Candidate> candidateList = candidateRepository.findByVoteId(voteId);
 
         ArrayList names= new ArrayList();
-        
+		
+		
+
+
         for(Candidate candidate: candidateList){
             names.add(candidate.getName());
         }

@@ -77,7 +77,7 @@ class PrdList extends React.Component {
     }
     async remove(prdId){
         
-        if(!confirm("정말로 해당 투표를 삭제하시겠습니까?"))
+        if(!confirm("정말로 해당 상품을 삭제하시겠습니까?"))
             return;
         axios.delete('/shop/product/'+prdId)
         

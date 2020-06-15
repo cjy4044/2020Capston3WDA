@@ -177,7 +177,7 @@ class VoteResult extends Component {
     }
 
     modalOn(){
-        console.log(this.state.userAdd)
+       
         this.setState({modal : 0})
     }
     modalOff(){

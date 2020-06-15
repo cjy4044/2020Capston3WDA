@@ -137,7 +137,7 @@ class Index extends Component{
                         <div className="resetProgram" onClick={this.optionReset.bind(this)}>프로그램 정렬 초기화</div>
                     </div>
                     <div className="search_vote">
-                        <input type="text" id="searchInput"/>
+                        <input type="text" id="searchInput" placeholder="투표 제목으로 검색"/>
                         <button type="click" className="searchButton"onClick={this.onSearchEvnet.bind(this)}>검색</button>
                     </div>
                 </div>

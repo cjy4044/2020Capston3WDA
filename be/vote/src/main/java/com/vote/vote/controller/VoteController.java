@@ -9,24 +9,25 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Candidate;
 import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
+import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Vote;
 import com.vote.vote.db.dto.Voter;
 import com.vote.vote.db.dto.VoterHash;
-import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.klaytn.Klaytn;
 import com.vote.vote.repository.CandidateJpaRepository;
+import com.vote.vote.repository.CustomPopularRepository;
 import com.vote.vote.repository.CustomVoteRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
+import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.repository.VoteJpaRepository;
 import com.vote.vote.repository.VoterHashJpaRepository;
 import com.vote.vote.repository.VoterJpaRepository;
-import com.vote.vote.repository.ProgramManagerJpaRepository;
-import com.vote.vote.repository.PopularJpaRepository;
-import com.vote.vote.repository.CustomPopularRepository;
 import com.vote.vote.service.StorageService;
 
 import org.joda.time.LocalDate;
@@ -40,7 +41,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -124,13 +124,13 @@ public class VoteController {
 		}
 		
 		
-		// List<Vote> votes = customVoteRepositoy.customFindVotes(nowTime,type,page);
-		List<Vote> votes = customVoteRepository.customFindVotes(nowTime,page,type, program,searchText);
-		long count = customVoteRepository.getFindVotesCount();
+		CustomVote cv = customVoteRepository.customFindVotes(nowTime,page,type, program,searchText);
 
-		JSONArray json = createVoteList(votes);
+
+
+		JSONArray json = createVoteList(cv.getVotes());
 		
-		json.add(json.size(),count);
+		json.add(json.size(),cv.getCount());
 
 		return json;
 	}

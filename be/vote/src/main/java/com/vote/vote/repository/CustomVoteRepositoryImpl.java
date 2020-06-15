@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.QVote;
 import com.vote.vote.db.dto.QVoter;
 import com.vote.vote.db.dto.Vote;
@@ -36,7 +37,7 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     @Override
-    public List<Vote> customFindVotes(String time, Pageable page, int state, int program, String text){//시간
+    public CustomVote customFindVotes(String time, Pageable page, int state, int program, String text){//시간
         JPAQueryFactory query = new JPAQueryFactory(em);
 
 
@@ -72,16 +73,18 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
         
         List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).orderBy(vote.id.desc()).where(booleanBuilder).fetch();
 
-        count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
+        Long count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
     
         
-
+        CustomVote cv = new CustomVote();
+        cv.setVotes(voteList);
+        cv.setCount(count.intValue());
        
-        return voteList;
+        return cv;
         
     }
     @Override
-    public List<Vote> getVotesByR_id(Pageable page, int r_id){
+    public CustomVote getVotesByR_id(Pageable page, int r_id){
         JPAQueryFactory query = new JPAQueryFactory(em);
 
 
@@ -96,39 +99,18 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
                     .where(voter.memberId.eq(r_id)))));
 
         List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).orderBy(vote.id.desc()).where(booleanBuilder).fetch();
-        // System.out.println("voteList:"+voteList);
-        // count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
-
-        return voteList;
-    }
-    @Override
-    public int getVotesByR_idCount(int r_id){
-        JPAQueryFactory query = new JPAQueryFactory(em);
+        Long count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
 
 
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-        
-
-        booleanBuilder.and(vote.id.in((
-            JPAExpressions
-                    .select(voter.voteId)
-                    .from(voter)
-                    .where(voter.memberId.eq(r_id)))));
-
-        List<Vote> voteList =  query.select(vote).from(vote).where(booleanBuilder).fetch();
-        // System.out.println("voteList:"+voteList);
-        // count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();
-
-        return voteList.size();
-    }
-    @Override
-    public long getFindVotesCount(){
-        return count;
+        CustomVote cv = new CustomVote();
+        cv.setVotes(voteList);
+        cv.setCount(count.intValue());
+        return cv;
     }
 
+
     @Override
-    public List<Vote> getMyVotes(Pageable page, int r_id){
+    public CustomVote getMyVotes(Pageable page, int r_id){
 
         System.out.println("아이디: "+r_id);
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -140,28 +122,15 @@ public class CustomVoteRepositoryImpl extends QuerydslRepositorySupport implemen
 
 
         List<Vote> voteList =  query.select(vote).from(vote).offset(page.getOffset()).limit(page.getPageSize()).orderBy(vote.id.desc()).where(booleanBuilder).fetch();
-        
+        Long count = query.select(vote).from(vote).where(booleanBuilder).fetchCount();        
         // System.out.println(" 개수 :"+voteList);
+        CustomVote cv = new CustomVote();
+        cv.setVotes(voteList);
+        cv.setCount(count.intValue());
 
-        return voteList;
+
+        return cv;
     }
-    @Override
-    public int getMyVotesCount(int r_id){
-
-        System.out.println("아이디: "+r_id);
-        JPAQueryFactory query = new JPAQueryFactory(em);
-
-
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-        booleanBuilder.and(vote.memberId.eq(r_id));
-
-
-        List<Vote> voteList =  query.select(vote).from(vote).where(booleanBuilder).fetch();
-        
-        // System.out.println(" 개수 :"+voteList);
-
-        return voteList.size();
-    }
+    
     
 }

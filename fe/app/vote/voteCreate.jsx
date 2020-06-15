@@ -11,61 +11,80 @@ class VoteCreate extends React.Component {
   
   constructor(props){
     super(props);
-    // this.changeSelect = this.changeSelect.bind(this);
     this.candidateNum = 0;
     this.check = 1; //후보자 수 체크를 하지 않은 상태 : 1, 체크함 : 0
     this.candidateCheck = 1;
-    this.childTag = '<div class="grid">'+
-    '<table class="candidateTable">'+
-      '<tbody>'+
-        '<tr>'+
-          '<td rowSpan="2">'+
-            '<div class="imgDiv">'+
-              '<img class="candidateImg" src="/uploads/검정고무신.png"  alt=""/>'+
-            '</div>'+
-          '</td>'+
-          '<td>'+
-            '<input type="text" name="name" placeholder="이름" required/>'+
-            '<input type="file" class="fileImg" name="file" required/>'+
-          '</td>'+
-        '</tr>'+
-        '<tr>'+
-          '<td>'+
-            '<textarea type="text" class="candidateInfo"placeholder="내용을 입력하세요"  name="info" required></textarea>'+
-          '</td>'+
-        '</tr>'+
-        '<tr>'+
-          '<td></td>'+
-          '<td><div class="tag">태그</div><input class="tagInput"type="text" placeholder="#태그" required/></td>'+
-        '</tr>'+
-    '</tbody>'+
-  '</table>'+
-'</div>';
-    
+    this.candidates = [];
+
   }
     changeCandidateNum(num){
-        console.log(num)
+      console.log(num)
 
-        var tag = this.childTag
+    var childTag1 =         
+    '<td rowSpan="2">'+
+        '<div class="imgDiv">'+
+          '<img class="candidateImg" src="/uploads/'+this.candidates[0].img+'"  alt=""/>'+
+        '</div>'+
+    '</td>';
+      
+
+    var childTag2 =  
+    '<tr>'+
+      '<td>'+
+        '<textarea type="text" class="candidateInfo"placeholder="내용을 입력하세요"  name="info" required></textarea>'+
+      '</td>'+
+    '</tr>';
+
+
+
+      $("#candidateInfoItem").empty();
+      for(var i = 0 ; i<num; i ++){
+        var topDiv = $(document.createElement("div"));
+        topDiv.attr("class","grid");
+        var topTable = $(document.createElement("table"));
+        topTable.attr("class","candidateTable");
+        var topTbody = $(document.createElement("tbody"));
+        var topTr = $(document.createElement("tr"));
+        var selectTd = $(document.createElement("td"));
         
-        $("#candidateInfoItem").empty();
-        for(var i = 1 ; i<num; i ++){
-          tag += this.childTag
-        }
         
-        $("#candidateInfoItem").append($(tag))
-            $('.fileImg').bind('change',function (e){
-            console.log("e:"+e.target.files[0].name);
-            var reader = new FileReader();
-            reader.readAsDataURL( e.target.files[0] );
-            reader.onloadend = function (){
-              e.target.parentElement.previousSibling.firstChild.firstChild.src = reader.result
-            }
+        
+
+        topTr.append($(childTag1));
+        var selectCandidate = $(document.createElement("select"));
             
-            // .closest("tr").find('img[class="candidateImg"]').src = e.target.files[0]
-        })
+        selectCandidate.attr("name","candidate")
+        selectCandidate.attr("class","candidateSelect")
+
+    
+        console.log(this.candidates)
+        this.candidates.map((candidate,index)=>{
+          var option = $(document.createElement("option"));
+          option.val(candidate.id);
+          option.text(candidate.name);
+          option.attr("img",candidate.img);
+
+          selectCandidate.append(option)
+          
+        });
+        selectTd.append($(selectCandidate))
+        topTr.append(selectTd);
+        topTbody.append(topTr)
+        topTbody.append($(childTag2));
+        topTable.append(topTbody);
+        topDiv.append(topTable);
+        $("#candidateInfoItem").append(topDiv);
+      }
+      
+      $(".candidateSelect").bind("change",function(e){
         
+        e.target.parentElement.previousSibling.firstChild.firstChild.src = "/uploads/"+$(e.target).find("option:selected").attr("img")
+      });
+      
     }
+
+
+
     candidateGener(e){
       e.preventDefault();
       var numStr =  /^[0-9]*$/
@@ -86,26 +105,23 @@ class VoteCreate extends React.Component {
       
 
 
-      
       this.changeCandidateNum(num)
       
     }
 
 
     async componentDidMount(){    
-      let {data} = await axios.get('/vote/program/axios');
+      let {data} = await axios.get('/vote/programAndPop/axios');
       console.log(data);
       
-      var select  = document.getElementById("program_select");
-      
-      data.map((program,index)=>{
-        var option = document.createElement("option");
-        option.value = program.id;
-        option.text = program.name;
-        if(index == 0)
-          option.defaultSelected = true;
-        select.appendChild(option);
-      })
+      var pName  = document.getElementById("program_name");
+      pName.innerHTML = data[0].name;
+
+      if(data[1].length == 0){
+        return alert("인기인이 없는 프로그램입니다.");
+      }
+      this.candidates = data[1];
+      console.log(this.candidates)
             
   }
   fileImg(e){
@@ -187,8 +203,7 @@ class VoteCreate extends React.Component {
                     <tr>
                       <td>프로그램</td>
                       <td>
-                        <select id="program_select"  name="program_id" required>                
-                        </select>
+                        <div id="program_name"></div>
                       </td>
                     </tr>
                     <tr>

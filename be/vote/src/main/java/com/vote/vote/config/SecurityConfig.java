@@ -31,13 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// 블록체인 투표
 			.antMatchers(HttpMethod.GET,"/vote").permitAll()//  투표페이지 
 			.antMatchers("/vote/program/axios").permitAll()// 투표 index (투표목록)
+			.antMatchers("/vote/programAndPop/axios").hasAnyAuthority("2")// 프로그램 목록(투표목록)			
 			.antMatchers(HttpMethod.GET,"/vote/axios").permitAll()//  투표페이지 
-			.antMatchers("/vote/axios/**").hasAnyAuthority("0","1")//투표 정보..
+			.antMatchers("/vote/axios/**").hasAnyAuthority("0","1","2")//투표 정보..
 			.antMatchers("/vote/{voteId}/**").hasAnyAuthority("0","1","2")
-			.antMatchers("/vote/result/**").hasAnyAuthority("0","1")
-			.antMatchers("/vote/create/**").hasAnyAuthority("1")// 투표 생성뷰 vote/{} 이거 때문에 작동 안하는 듯.
-			.antMatchers(HttpMethod.POST,"/vote").hasAnyAuthority("1")// 투표 생성
-			.antMatchers(HttpMethod.DELETE,"/vote/*/").hasAnyAuthority("1")// 투표 삭제
+			.antMatchers("/vote/result/**").hasAnyAuthority("0","1","2")
+			.antMatchers("/vote/create/**").hasAnyAuthority("1","2")// 투표 생성뷰 vote/{} 이거 때문에 작동 안하는 듯.
+			.antMatchers(HttpMethod.POST,"/vote").hasAnyAuthority("1","2")// 투표 생성
+			.antMatchers(HttpMethod.DELETE,"/vote/*/").hasAnyAuthority("1","2")// 투표 삭제
 
 			// 소개 
 			.antMatchers("/introduce/**").permitAll()

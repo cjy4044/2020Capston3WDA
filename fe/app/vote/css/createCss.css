@@ -41,6 +41,7 @@
 .candidateImg{
     width: 100%;
     border-radius: 15px;
+    max-height: 110px;
 }
 .candidateInfo{
     width: 410px;

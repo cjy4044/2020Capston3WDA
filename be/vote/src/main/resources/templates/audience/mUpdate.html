@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{main_layout::layout(~{::content},_,'글쓰기')}" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{main_layout::layout(~{::content},_,'글 수정')}" >
 
 <head>
     <meta charset="UTF-8">
@@ -21,7 +21,7 @@
             <h2 class="sound_only">웹진형게시판 글쓰기</h2>
 
             <!-- 게시물 작성/수정 시작 { -->
-            <form name="fwrite" id="fwrite" th:action="@{/audience/create}" method="post" enctype="multipart/form-data"
+            <form name="fwrite" id="fwrite" th:action="@{/audience/update}" method="post" enctype="multipart/form-data"
                 autocomplete="off" style="width:100%">
                 <!-- onsubmit="return fwrite_submit(this);" -->
                 <!-- <input type="hidden" name="uid" value="20060618071533">
@@ -53,7 +53,7 @@
                 <div class="write_div">
                     <label for="wr_homepage" class="sound_only">제목</label>
                     <input type="text" name="aTitle" value="" id="wr_homepage" class="frm_input full_input" size="50"
-                        placeholder="제목">
+                        placeholder="제목" th:placeholder=${audience.aTitle}>
                 </div>
 
                 <div class="bo_w_info write_div">
@@ -70,27 +70,27 @@
                 <div class="write_div">
                     <label for="wr_homepage" class="sound_only">추첨인원</label>
                     <input type="text" name="aRecruits" value="" id="wr_homepage" class="frm_input full_input" size="50"
-                        placeholder="추첨인원">
+                        placeholder="추첨인원" th:placeholder=${audience.aRecruits}>
                 </div>
 
                 <div class="write_div">
                     <label for="wr_homepage" class="sound_only">응모제한횟수</label>
                     <input type="text" name="aLimit" value="" id="wr_homepage" class="frm_input full_input" size="50"
-                        placeholder="응모제한횟수">
+                        placeholder="응모제한횟수" th:placeholder=${audience.aLimit}>
                 </div>
 
                 <div class="write_div">
                     <label for="wr_homepage" class="sound_only">응모시 소모포인트</label>
                     <input type="text" name="aPrice" value="" id="wr_homepage" class="frm_input full_input" size="50"
-                        placeholder="응모시 소모포인트">
+                        placeholder="응모시 소모포인트" th:placeholder=${audience.aPrice}>
                 </div>
 
                 <div class="write_div">
                     <label for="wr_homepage" class="sound_only">내용</label>
                     <input type="text" name="aContent" value="" id="wr_homepage" class="frm_input full_input"
-                        style="height: 300px;" size="50" placeholder="방청 제한연령, 티켓 배부장소, 유의사항 등 자세하게 적어주세요.">
+                        style="height: 300px;" size="50" placeholder="내용" th:value=${audience.aContent}>
                 </div>
-
+                <input style="visibility: hidden;" name="applyId" th:value=${audience.applyId}>
 
 
 
@@ -161,7 +161,7 @@
 
 
                 <div class="btn_confirm write_div">
-                    <a href="/audience/list" class="btn_cancel btn">취소</a>
+                    <a href="/audience/mlist" class="btn_cancel btn">취소</a>
                     <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn">
                 </div>
             </form>

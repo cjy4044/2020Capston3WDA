@@ -116,13 +116,13 @@
                         <button id="delete-btn">삭제</button>
                     </form> -->
 
-                    <li><a href="./board.php?bo_table=webzine&amp;page=" class="btn_b01 btn"><i class="fa fa-list"
+                    <li><a href="/audience/mlist" class="btn_b01 btn"><i class="fa fa-list"
                                 aria-hidden="true"></i> 목록</a></li>
-                    <li><a href="./write.php?bo_table=webzine" class="btn_b02 btn"><i class="fa fa-pencil"
+                    <li><a href="/audience/create" class="btn_b02 btn"><i class="fa fa-pencil"
                                 aria-hidden="true"></i> 글쓰기</a></li>
-                    <li><a href="./write.php?bo_table=webzine" class="btn_b02 btn"><i class="fa fa-pencil"
+                    <li><a href="#" th:href="@{'/audience/update/' + ${audience.applyId}}" class="btn_b02 btn"><i class="fa fa-pencil"
                                 aria-hidden="true"></i> 글수정</a></li>
-                    <li><a href="./write.php?bo_table=webzine" class="btn_b02 btn"><i class="fa fa-pencil"
+                    <li><a href="#" th:href="@{'/audience/delete/' + ${audience.applyId}}" class="btn_b02 btn"><i class="fa fa-pencil"
                                 aria-hidden="true"></i> 글삭제</a></li>
                 </ul>
 

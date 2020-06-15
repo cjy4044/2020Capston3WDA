@@ -31,7 +31,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
           </div>
           <button>검색</button>
           </form>
-
+       
    <div class="gi" th:each="hotclib:${hotclibList}" >
    <img class= "hi" th:src="@{'/uploads/' + ${hotclib.filename2}}">
    <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li>
@@ -41,9 +41,9 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
    <li>작성자: <span sec:authentication="principal.name"></span></li>
    
    </div>
-  
+  <div>
    <input type="button" value="영상 업로드" onclick="location.href='hotclib/upload'">
-  
+  </div>
      
    <nav style="text-align: center;">
     <ul class="pagination"
@@ -78,6 +78,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
          </li>
        </ul>
      </nav>
+    
     </content>
   </body>
 </html>

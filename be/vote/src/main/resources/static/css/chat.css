@@ -310,20 +310,24 @@
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	height: 330px;
+	height: 100%;
 	overflow-y: auto;
 
 }
 
 #messages li {
     padding: 5px 10px;
-	background-color: #f1ddfe;
-	
+	background-color: #f1ddfe;	
 }
 
-#messages li:nth-child(odd) {
-	background: #e6e6fa;
+#messages #user{
+	background-color: #e6e6fa;
+    text-align : right;
 }
+
+/* #messages li:nth-child(odd) {
+	background: #e6e6fa;
+} */
 
 ul {
     scrollbar-width: none;

@@ -8,10 +8,17 @@ $(document).ready(function() {
             return false;
         });
         socket.on('chat message', function(msg) {
-        	
-        	console.log($("#username").text());
+            var username = $("#username").text();
+            var url = msg;
+            const num = url.split(' : ');
+            var param = num[num.length-2];
+
+            if(username==param)
+            $('#messages').append($('<li id=user>').text(msg));
+            else
             $('#messages').append($('<li>').text(msg));
             $("#messages").scrollTop($("#messages")[0].scrollHeight);
+
         });
     });
     

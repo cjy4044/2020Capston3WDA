@@ -80,8 +80,8 @@ public class HotclibController {
 		// rfileRepository.findByFilename(rfile.getFilename());
 		// int page1 = (pageable1.getPageNumber() == 0) ? 0 : (pageable1.getPageNumber() - 1); 
 		// pageable1 = PageRequest.of(page1, 10, Sort.by(Sort.Direction.DESC, "replyid"));
-		ArrayList<Rfile> rfile = rfileRepository.findByHotclibid(hotclibid);
-		model.addAttribute("rfile", rfile);
+		Rfile rfile = rfileRepository.findByHotclibid(hotclibid);
+     	model.addAttribute("rfile", rfile);
 		model.addAttribute("hotclib", hotclibRepository.findById(hotclibid));	
 		List<Reply> reply = replyRepository.findByHotclibid(hotclibid);
 		model.addAttribute("replyList", reply);

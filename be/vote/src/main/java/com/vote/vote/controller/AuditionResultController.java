@@ -111,10 +111,9 @@ public class AuditionResultController {
             auditionResult.setRid(member.getNo());
 //            audience.setADate(new Date());
             auditionResult.setRfile(filenamePath);
-            auditionResultRepository.saveAndFlush(auditionResult);
-
+ 
 			auditionResult.setRdate(new Date());
-			auditionResultRepository.save(auditionResult);
+			auditionResultRepository.saveAndFlush(auditionResult);
 
             // 파일 저장
             storageService.store(filename);

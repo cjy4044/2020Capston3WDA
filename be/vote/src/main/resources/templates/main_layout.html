@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-secutiry"
-th:fragment="layout(content,js,title)">
+th:fragment="layout(content,js,title,link)">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@ th:fragment="layout(content,js,title)">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/layout.css">
     <script type="text/javascript" th:replace="${js}"></script>
-    
+<link rel="stylesheet" th:replace="${link}">
   
         <!-- <link rel="stylesheet" href="/css/notUseSide.css"> -->
     
@@ -26,13 +26,8 @@ th:fragment="layout(content,js,title)">
     <script src="/js/mobileSidBar.js"></script>
 
     <!-- 게시판, 채팅박스 -->
-    <link rel="stylesheet" href="/css/boardstyle.css">
-    <link rel="stylesheet" href="/css/contents.css">
-    <link rel="stylesheet" href="/css/default.css">
-    <link rel="stylesheet" href="/css/board.common.css">
-    <link rel="stylesheet" href="/css/featherlight.css">
-    <link rel="stylesheet" href="/css/moblie.css">
-    <!-- <link rel="stylesheet" href="/shop/css/bootstrap.min.css"> -->
+    
+    <link rel="stylesheet" href="/shop/css/bootstrap.min.css">
     <script src="http://localhost:4000/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<link href="/css/chat.css" rel="stylesheet">

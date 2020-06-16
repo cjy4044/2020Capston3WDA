@@ -92,12 +92,12 @@ class PrdList extends React.Component {
             return (
                 <TableRow key={'div'+index}>
                              
-                    <TableCell key={index}>{prd.product_ID}</TableCell>
-                    <TableCell><a href="#">{prd.p_NAME}</a></TableCell>
+                    <TableCell key={index}>{prd.productid}</TableCell>
+                    <TableCell><a href={"/shop/product/"+prd.productid}>{prd.p_NAME}</a></TableCell>
                     <TableCell>{prd.p_PRICE}</TableCell>
                     <TableCell>{prd.p_STOCK}</TableCell>
                     <TableCell>{endDate[0]}</TableCell>
-                    <TableCell><button onClick={this.remove.bind(this,prd.product_ID)}>삭제</button></TableCell>
+                    <TableCell><button onClick={this.remove.bind(this,prd.productid)}>삭제</button></TableCell>
                
                 </TableRow>
                

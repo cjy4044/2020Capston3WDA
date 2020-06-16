@@ -20,10 +20,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Prd {
 
     @Id
-    @Column(nullable = false)
+    @Column(name="product_id",nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_SEQ_GENERATOR")
     @SequenceGenerator(name="PRODUCT_SEQ_GENERATOR", sequenceName="PRODUCT_SEQ", allocationSize = 1)
-    private int PRODUCT_ID;
+    private int PRODUCTID;
     @Column(nullable = true)
     private int PROGRAM_ID;
     @Column(nullable = true)
@@ -54,13 +54,6 @@ public class Prd {
     private int P_STOCK;
 
 
-    public int getPRODUCT_ID() {
-        return this.PRODUCT_ID;
-    }
-
-    public void setPRODUCT_ID(int PRODUCT_ID) {
-        this.PRODUCT_ID = PRODUCT_ID;
-    }
 
     public int getPROGRAM_ID() {
         return this.PROGRAM_ID;
@@ -156,5 +149,13 @@ public class Prd {
 
     public void setP_STOCK(int p_STOCK) {
         P_STOCK = p_STOCK;
+    }
+
+    public int getPRODUCTID() {
+        return PRODUCTID;
+    }
+
+    public void setPRODUCTID(int pRODUCTID) {
+        PRODUCTID = pRODUCTID;
     }
 }

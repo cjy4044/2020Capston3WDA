@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Prd;
 import com.vote.vote.db.dto.PrdCategory;
 import com.vote.vote.db.dto.PrdCategoryD;
@@ -14,6 +15,7 @@ import com.vote.vote.db.dto.PrdOption;
 import com.vote.vote.db.dto.PrdSize;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.repository.Asdf;
+import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.PrdCateDJpaRepository;
 import com.vote.vote.repository.PrdCategoryDJpaRepository;
 import com.vote.vote.repository.PrdCategoryJpaRepository;
@@ -38,7 +40,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
 
 
 
@@ -76,6 +77,11 @@ public class ShopController {
 
 	@Autowired
 	private PrdOptionJpaRepository pOptionRepository;
+
+	@Autowired
+	private MemberJpaRepository memberRepository;
+	
+
 	
 	@RequestMapping("/shop/index")
 	public String index(Model model,Principal user) {
@@ -169,14 +175,14 @@ public class ShopController {
 		
 
 		PrdImage prdImg = new PrdImage();
-		prdImg.setProductId(product.getPRODUCT_ID());
+		prdImg.setProductId(product.getPRODUCTID());
 		prdImg.setProductImage(file1Name);
 		prdImg.setImageState("0");// 대표 이미지 0	
 		pImageRepository.saveAndFlush(prdImg);
 
 		for(String name: file2Name){
 			PrdImage Img = new PrdImage();
-			Img.setProductId(product.getPRODUCT_ID());
+			Img.setProductId(product.getPRODUCTID());
 			Img.setProductImage(name);
 			Img.setImageState("0");// 대표 이미지 0	
 			pImageRepository.saveAndFlush(Img);
@@ -186,7 +192,7 @@ public class ShopController {
 			if(file3Name != null){
 				for(String name: file3Name){
 					PrdImage Img = new PrdImage();
-					Img.setProductId(product.getPRODUCT_ID());
+					Img.setProductId(product.getPRODUCTID());
 					Img.setProductImage(name);
 					Img.setImageState("0");// 대표 이미지 0	
 					pImageRepository.saveAndFlush(Img);
@@ -206,7 +212,7 @@ public class ShopController {
 					PrdOption pOption = new PrdOption();
 					pOption.setColorId(optionColor[i]);
 					pOption.setSizeId(optionSize[i]);
-					pOption.setProductId(product.getPRODUCT_ID());
+					pOption.setProductId(product.getPRODUCTID());
 					pOption.setoPrice(optionPrice[i]);
 					pOption.setoTitle(optionTitle[i]);
 					pOption.setpStock(optionStock[i]);
@@ -250,6 +256,35 @@ public class ShopController {
 		return categorys;
 	}
 
+	@RequestMapping(value={"/shop/product/{prdId}","/shop/product/{prdId}/"}, method=RequestMethod.GET)
+	public String prdShow(@PathVariable("prdId") int prdId){
+
+		return "/shop/prdShow";
+
+	}
+	@RequestMapping(value={"/shop/product/axios/{prdId}","/shop/product/axios/{prdId}/"}, method=RequestMethod.GET)
+	@ResponseBody
+	public JSONArray prdShowAxios(@PathVariable("prdId") int prdId){
+		Prd prd = prdRepository.findByPRODUCTID(prdId);
+		List<PrdImage> img = pImageRepository.findByProductId(prdId);
+		List<PrdOption> option = pOptionRepository.findByProductId(prdId);
+		List<PrdColor> color = prdColorRepository.findAll();
+		List<PrdSize> size = prdSizeRepository.findAll();
+
+		Member member = memberRepository.findByNo(prd.getP_MANAGER());
+		
+		JSONArray result = new JSONArray();
+
+		result.add(0,prd);// 상품정보
+		result.add(1,img);// 상품 이미지
+		result.add(2,option);// 옵션 정보
+		result.add(3,color);// 색상 리스트
+		result.add(4,size); // 사이즈 리스트
+		result.add(5,member); // 판매자 정보
+
+		return result;
+
+	}
 	@RequestMapping(value={"/shop/product/{prdId}","/shop/product/{prdId}/"}, method=RequestMethod.DELETE)
 	@ResponseBody
 	public void prdDelete(@PathVariable("prdId") int prdId){

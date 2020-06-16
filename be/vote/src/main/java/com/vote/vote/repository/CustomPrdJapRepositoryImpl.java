@@ -35,7 +35,7 @@ public class CustomPrdJapRepositoryImpl implements CustomPrdJapRepository {
         List<Prd> prdList  = query.select(prd).from(prd)
         .offset(page.getOffset())
         .limit(page.getPageSize())
-        .orderBy(prd.PRODUCT_ID.desc())
+        .orderBy(prd.PRODUCTID.desc())
         .where(booleanBuilder).fetch();  
 
         long count =  query.select(prd).from(prd).where(booleanBuilder).fetchCount();  

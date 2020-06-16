@@ -33,7 +33,7 @@ public class AsdfImpl extends QuerydslRepositorySupport implements Asdf  {
         JPAQueryFactory query = new JPAQueryFactory(em);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        List<Prd> prd2 = query.select(prd).from(prd).offset(0).limit(6).orderBy(prd.PRODUCT_ID.desc()).where(booleanBuilder).fetch();
+        List<Prd> prd2 = query.select(prd).from(prd).offset(0).limit(6).orderBy(prd.PRODUCTID.desc()).where(booleanBuilder).fetch();
         return prd2;
     }
 

@@ -56,7 +56,7 @@ public class AuditionResultController {
 	
 	@GetMapping("/auditionresult/list")
 	public String result(Model model, @PageableDefault Pageable pageable){
-		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber()-1); 
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "resultid"));
 		model.addAttribute("auditionresultlist", auditionResultRepository.findAll(pageable));
 		return "auditionresult/list";

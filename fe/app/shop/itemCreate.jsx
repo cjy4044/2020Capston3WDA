@@ -171,14 +171,14 @@ class ItemCreate extends React.Component {
                             <label>대표 이미지</label>    
                             <input type="file" name="file1" required/>
                             <label>부가 이미지</label>    
-                            <input type="file" name="file2" required/>
+                            <input type="file" name="file2" multiple required/>
                             <div>재고</div>
                             <input type="number" name="stock" placeholder="개수" min="1"/>개
                             <div>개당 가격</div>
                             <input type="number" name="price" placeholder="가격" min="1"/>원
                             <div> 선택 항목 </div>
                             <label>상세 이미지</label>    
-                            <input type="file" name="file3"/>
+                            <input type="file" name="file3"multiple/>
                         </div>
                         <div>
                             <div>옵션</div>

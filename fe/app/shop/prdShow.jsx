@@ -16,7 +16,7 @@ var param = num[num.length-1];
 class PrdShow extends React.Component {
     constructor(props){
         super(props)
-        this.state ={sum:0, sub:[], prd:{}, option:[], color:[],size:[], manager:{}};
+        this.state ={sum:0, sub:[], info:[],prd:{}, option:[], color:[],size:[], manager:{}};
         this.colorTag;
         
     }
@@ -26,18 +26,23 @@ class PrdShow extends React.Component {
 
         var sum;
         var sub = [];
+        var info = []; // 설명이미지
         data[1].map((img,index)=>{
-            if(img.imageState ==0)
+            if(img.imageState == 0)
                 sum = img;
-            else(img.imageState ==1)
+            else if(img.imageState == 1)
                 sub.push(img);
+            else if(img.imageState ==2)
+                info.push(img)
+            
         });
+        // console.log("sub:"+sub);
 
-        this.setState({sum:sum, sub:sub, prd:data[0], option:data[2], color:data[3], size:data[4], manager:data[5]})
+        this.setState({sum:sum, sub:sub, prd:data[0], option:data[2], color:data[3], size:data[4], manager:data[5], info:info})
 
         console.log(data);
         this.setOption();
-        
+        this.createDefaultImg();
     }
     setOption(){
         var div = $('#optionSelect')
@@ -57,26 +62,41 @@ class PrdShow extends React.Component {
             select.append(option);
         }
         
-        
-
-
-
         div.append(select);
+    }
+
+    defaultImg(e){
+        e.target.src = "/shop/imgs/이미지준비중.png"
+    }
+
+    createDefaultImg(){
+        var div = $(".sub")
+        console.log(this.state.sub)
+        this.state.sub.map((img,index)=>{
+            var imgTag = $(document.createElement("img"));
+            console.log(img)
+            imgTag.attr("src",'/uploads/'+img.productImage)
+            imgTag.attr("class","subImg");
+
+            div.append(imgTag);
+        })
+        
     }
 
     render() {
         var prd = this.state.prd;
+        
         return (
             <div className="topDiv">
                 <div className="grid">
                     <div className="imgs" >
                         <div className="sum">
-                        <img src={"/uploads/"+this.state.sum.productImage} style={{width:200, height:200}}></img>
+                        <img src={"/uploads/"+this.state.sum.productImage} ></img>
                         </div>
                         <div className="sub">
-                            <img src="#" alt="X" style={{width:50, height:50}}></img>
-                            <img src="#" alt="X" style={{width:50, height:50}}></img>
-                            <img src="#" alt="X" style={{width:50, height:50}}></img>
+                            {/* <img src="/shop/imgs/이미지준비중.png"  style={{width:50, height:50}}></img>
+                            <img src="/shop/imgs/이미지준비중.png" style={{width:50, height:50}}></img>
+                            <img src="/shop/imgs/이미지준비중.png" style={{width:50, height:50}}></img> */}
                         </div>
                     </div>
                     <div className="itemInfo">
@@ -92,10 +112,22 @@ class PrdShow extends React.Component {
                     <div>
                         {/* 상세 설명 부분 */}
                         <div>상세 세부 설명 ....</div>
-                        <div>{prd.p_DETAIL}</div>
+                        <div>
+                            <div id="infoImage">
+                            {
+                                this.state.info.map((img, index)=>{
+                                    console.log(img)
+                                    return <img className="infoImage" key={img.no}src={"/uploads/"+img.productImage}></img>
+                                })
+                            }
+
+                            </div>
+                            <div>{prd.p_DETAIL}</div>
+                        </div>
+                        
                     </div>
-                    <div>판매자: </div>
-                    <div>판매자 연락처: </div>
+                    <div>판매자: {this.state.manager.name}</div>
+                    <div>판매자 연락처: {this.state.manager.phone?this.state.manager.phone:"X"}</div>
                 </div>
             </div>
             

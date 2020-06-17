@@ -120,7 +120,7 @@ public class ShopController {
 		@RequestParam("info2") String info2, // 상세설명
 		@RequestParam("price") int price, // 가격
 		@RequestParam("stock") int stock, // 재고 
-		@RequestParam("file1") MultipartFile file1,//대표이미지
+		@RequestParam("file1") MultipartFile[] file1,//대표이미지
 		@RequestParam("file2") MultipartFile[] file2,//부가 이미지
 		@Nullable @RequestParam("file3") MultipartFile[] file3, // 설명이미지endTime,
 		@Nullable @RequestParam("optionColor") int[] optionColor,
@@ -150,53 +150,64 @@ public class ShopController {
 		product.setP_PRICE(price); // 상품 가격
 		product.setP_STATE("0"); // 상품 판매 상태   (임시)
 		product.setP_ENDDATE(endTime); // 상품 판매 종료 날짜
-		product.setP_STOCK(stock);
+		product.setP_STOCK(stock);	
 		prdRepository.saveAndFlush(product);
 
 
+		System.out.println("상품저장 완료");
+		System.out.println("상품 id : "+product.getPRODUCTID());
 		// 상품 이미지 저장
 
 		ArrayList<String> file2Name = new ArrayList<String>();
 		ArrayList<String> file3Name = new ArrayList<String>();
 		
 		
-		String file1Name= storageService.store2(file1);
+		String file1Name= storageService.store2(file1[0]);
 
 
 		// // 파일 저장
-		for(int i=0;i<file2.length;i++){
+		for(int i=0;i<file2.length;i++){ // 최대 서브 파일 3개
 			file2Name.add(storageService.store2(file2[i]));		// 파일 저장 및 파일 이름을 배열에 저장
 		}
 
 		for(int i=0;i<file3.length;i++){
-			file3Name.add(storageService.store2(file2[i]));		// 파일 저장 및 파일 이름을 배열에 저장
+			file3Name.add(storageService.store2(file3[i]));		// 파일 저장 및 파일 이름을 배열에 저장
+			
 		}
 
-		
+		System.out.println("file2"+file2Name.toArray());
+		System.out.println("file3"+file3Name.toArray());
 
 		PrdImage prdImg = new PrdImage();
 		prdImg.setProductId(product.getPRODUCTID());
 		prdImg.setProductImage(file1Name);
 		prdImg.setImageState("0");// 대표 이미지 0	
 		pImageRepository.saveAndFlush(prdImg);
+		System.out.println("1번 저장 완료");
+		System.out.println("file1 :"+file1Name);
 
+		System.out.println("ㅁㅁㅁ");
 		for(String name: file2Name){
 			PrdImage Img = new PrdImage();
+			System.out.println("ㅇㅇㅇ");
 			Img.setProductId(product.getPRODUCTID());
 			Img.setProductImage(name);
-			Img.setImageState("0");// 대표 이미지 0	
+			System.out.println("일일이 출력 file2 :"+name);
+			Img.setImageState("1");// 대표 이미지 0	
 			pImageRepository.saveAndFlush(Img);
 		}
-
+		System.out.println("2번 저장 완료");
 		try{ // 상품 설명 이미지는 선택 사항
 			if(file3Name != null){
 				for(String name: file3Name){
 					PrdImage Img = new PrdImage();
 					Img.setProductId(product.getPRODUCTID());
 					Img.setProductImage(name);
-					Img.setImageState("0");// 대표 이미지 0	
+					System.out.println("일일이 출력 file3 :"+name);
+					Img.setImageState("2");// 설명이미지.
 					pImageRepository.saveAndFlush(Img);
 				}
+				System.out.println("3번 저장 완료");
 			}
 			
 		}catch(NullPointerException e){
@@ -259,7 +270,7 @@ public class ShopController {
 	@RequestMapping(value={"/shop/product/{prdId}","/shop/product/{prdId}/"}, method=RequestMethod.GET)
 	public String prdShow(@PathVariable("prdId") int prdId){
 
-		return "/shop/prdShow";
+		return "shop/prdShow";
 
 	}
 	@RequestMapping(value={"/shop/product/axios/{prdId}","/shop/product/axios/{prdId}/"}, method=RequestMethod.GET)

@@ -32,8 +32,6 @@ public class AuditionCon {
 		    @Column(nullable=true,name="f_addr")
 		    private String faddr;
 		    
-		    @Column(nullable=true,name="f_addr2")
-		    private String faddr2;
 		    
 		    @Column(nullable=true,name="f_education")
 		    private String feducation;
@@ -137,13 +135,7 @@ public class AuditionCon {
 				this.faddr = faddr;
 			}
 
-			public String getFaddr2() {
-				return faddr2;
-			}
-
-			public void setFaddr2(String faddr2) {
-				this.faddr2 = faddr2;
-			}
+	
 
 			public String getFeducation() {
 				return feducation;

@@ -63,8 +63,14 @@
                             <tr>
                                 <th>성별</th>
                                 <td>
+                                    <h4>
+                                        남성<input type="radio" name="fgender" value="m">
+                                        여성<input type="radio" name="fgender" value="g">
+                                    </h4>
+                              </td>
+                                <!-- <td>
                                     <input type="text" name="fgender">
-                                </td>
+                                </td> -->
                                 
                                 <th>키</th>
                                 <td>
@@ -99,6 +105,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <input type="hidden" name="confirm" value="n">
                 </div>
                 <tr>
                     <td colspan="3">
@@ -111,6 +118,7 @@
                         <input type="button" value="직업 추가" onclick="job_add();">
                     </td>
                 </tr>  
+                
             </form>
          <!--    <script>
             

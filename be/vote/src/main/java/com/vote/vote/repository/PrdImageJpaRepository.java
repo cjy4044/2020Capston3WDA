@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PrdImageJpaRepository extends JpaRepository<PrdImage, Integer>{
     List<PrdImage> findByProductId(int p_id);
+
+    List<PrdImage> findByProductIdAndImageState(int p_id, String state);
     
 }

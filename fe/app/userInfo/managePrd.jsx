@@ -55,6 +55,7 @@ class ManagePrd extends React.Component{
                                     <TableCell>가격</TableCell>
                                     <TableCell>재고</TableCell>
                                     <TableCell>판매종료 날짜</TableCell>
+                                    <TableCell>수정</TableCell>
                                     <TableCell>삭제</TableCell>
                                 </TableRow>
                                 </TableHead>
@@ -87,17 +88,18 @@ class PrdList extends React.Component {
 
     render() {
         return  this.props.data.map((prd,index)=>{
-            var endDate = prd.p_ENDDATE.split(" ");
+            var endDate = prd.endDate.split(" ");
             
             return (
                 <TableRow key={'div'+index}>
                              
-                    <TableCell key={index}>{prd.productid}</TableCell>
-                    <TableCell><a href={"/shop/product/"+prd.productid}>{prd.p_NAME}</a></TableCell>
-                    <TableCell>{prd.p_PRICE}</TableCell>
-                    <TableCell>{prd.p_STOCK}</TableCell>
+                    <TableCell key={index}>{prd.productId}</TableCell>
+                    <TableCell><a href={"/shop/product/"+prd.productId}>{prd.name}</a></TableCell>
+                    <TableCell>{prd.price}</TableCell>
+                    <TableCell>{prd.stock}</TableCell>
                     <TableCell>{endDate[0]}</TableCell>
-                    <TableCell><button onClick={this.remove.bind(this,prd.productid)}>삭제</button></TableCell>
+                    <TableCell><a href={"/shop/edit/"+prd.productId}>수정</a></TableCell>
+                    <TableCell><button onClick={this.remove.bind(this,prd.productId)}>삭제</button></TableCell>
                
                 </TableRow>
                

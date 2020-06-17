@@ -14,4 +14,5 @@ import org.springframework.lang.Nullable;
 public interface PrdCategoryJpaRepository extends JpaRepository<PrdCategory,String>{
     
     
+    
 }

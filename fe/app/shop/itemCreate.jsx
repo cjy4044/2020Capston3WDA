@@ -188,7 +188,7 @@ class ItemCreate extends React.Component {
                         </div>
                         <div>
                             <button>상품 등록</button>
-                            <button>취소</button>
+                            <a href="/userInfo/manage/product">취소</a>
                         </div>
                     </div>
                 </div>

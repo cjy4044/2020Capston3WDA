@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import javax.validation.Valid;
 
+import com.google.gson.JsonObject;
 import com.vote.vote.db.dto.ADetaiId;
 import com.vote.vote.db.dto.ADetail;
 import com.vote.vote.db.dto.Audience;
@@ -46,6 +47,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+
 import org.springframework.util.StringUtils;
 
 @Controller
@@ -230,19 +235,30 @@ public class AudienceController {
 
     // 응모인원 리스트 ajax
     @GetMapping("/showRecruits")
-    public String showList(Model model, Audience audience, Principal principal) {
+    @ResponseBody
+    public JSONObject showList(Model model, Audience audience, Principal principal) {
         
+            System.out.println(audience.getApplyId());
             List<Member> list = new ArrayList<>();
             list = mr.getInfo(audience.getApplyId());
-            model.addAttribute("list", list);
-            // for (Member s: list) {
-            //     System.out.println(s.toString());
-            // }
+            
+            System.out.println(list);
+            JSONObject obj = new JSONObject();
+            JSONArray array = new JSONArray();
+            JSONObject finalobj = new JSONObject();
+            for(Member list2:list){
+                obj = new JSONObject();	
+                obj.put("name", list2.getName());
+                obj.put("phone", list2.getPhone());
+                array.add(obj);
+            } 
+            
+            // String jsonstring = finalobj.toString();
+            // System.out.println(jsonstring);
+            System.out.println(finalobj);
 
-          
-
-        System.out.println(list);
-        return "audience/showRecruits";
+        
+        return finalobj;
     }
         
 

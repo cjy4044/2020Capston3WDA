@@ -74,11 +74,9 @@ public class StorageService {
 				String add = "("+count+")";
 				str.insert(filename.indexOf("."), add);
 				count++;
-				System.out.println("while 문"+ str.toString());
 			}
 			
 			try (InputStream inputStream = file.getInputStream()) {     
-				System.out.println("확인1: "+ str.toString());
 				Files.copy(inputStream, this.rootLocation.resolve(str.toString()),      
 				StandardCopyOption.REPLACE_EXISTING);   // 중복된 이름의 사진이 들어올 경우 덮어 쓰는 형식으로 해당 위치에 복사함
 			} 
@@ -88,7 +86,6 @@ public class StorageService {
 			throw new StorageException("저장 실패 "+filename, e);
 		}
 
-		System.out.println("확인2: "+ str.toString());
 		return str.toString();
 	}
 

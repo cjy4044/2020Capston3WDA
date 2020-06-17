@@ -23,139 +23,152 @@ public class Prd {
     @Column(name="product_id",nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_SEQ_GENERATOR")
     @SequenceGenerator(name="PRODUCT_SEQ_GENERATOR", sequenceName="PRODUCT_SEQ", allocationSize = 1)
-    private int PRODUCTID;
-    @Column(nullable = true)
-    private int PROGRAM_ID;
-    @Column(nullable = true)
-    private int CATEGORY_ID;
-    @Column(nullable = true)
-    private String P_NAME;
-    @Column(nullable = true)
-    private int P_PRICE;
-    @Column(nullable = true)
-    private String P_CONTENT;
-    @Column(nullable = true)
-    private String P_DETAIL;
-    @Column(nullable = true)
-    private String P_UPLOAD;
-    @Column(nullable = true)
-    private String P_STATE;
+    private int productId;
+    @Column(name="PROGRAM_ID", nullable = true)
+    private int programId;
+    @Column(name="CATEGORY_ID", nullable = true)
+    private int categoryId;
+    @Column(name="P_NAME", nullable = true)
+    private String name;
+    @Column(name="P_PRICE", nullable = true)
+    private int price;
+    @Column(name="P_CONTENT", nullable = true)
+    private String content;
+    @Column(name="P_DETAIL", nullable = true)
+    private String detail;
+    @Column(name="P_UPLOAD", nullable = true)
+    private String upload;
+    @Column(name="P_STATE", nullable = true)
+    private String state;
 
-    @Column(nullable = true)
-    private String P_ENDDATE;
+    @Column(name="P_ENDDATE", nullable = true)
+    private String  endDate;
 
-    @Column(nullable = true)
-    private int P_MANAGER;
+    @Column(name="P_MANAGER", nullable = true)
+    private int manager;
 
-    @Column(nullable = true)
-    private int product_category_d;
+    @Column(name="product_category_d", nullable = true)
+    private int categoryD;
     
-    @Column(nullable= true)
-    private int P_STOCK;
+    @Column(name="P_STOCK", nullable= true)
+    private int stock;
+
+	@Column(name="IMAGE", nullable= false)
+	private String img;
+	
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
+	public int getProgramId() {
+		return programId;
+	}
+
+	public void setProgramId(int programId) {
+		this.programId = programId;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public String getUpload() {
+		return upload;
+	}
+
+	public void setUpload(String upload) {
+		this.upload = upload;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getManager() {
+		return manager;
+	}
+
+	public void setManager(int manager) {
+		this.manager = manager;
+	}
+
+	public int getCategoryD() {
+		return categoryD;
+	}
+
+	public void setCategoryD(int categoryD) {
+		this.categoryD = categoryD;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 
 
-    public int getPROGRAM_ID() {
-        return this.PROGRAM_ID;
-    }
-
-    public void setPROGRAM_ID(int PROGRAM_ID) {
-        this.PROGRAM_ID = PROGRAM_ID;
-    }
-
-    public int getCATEGORY_ID() {
-        return this.CATEGORY_ID;
-    }
-
-    public void setCATEGORY_ID(int CATEGORY_ID) {
-        this.CATEGORY_ID = CATEGORY_ID;
-    }
-
-    public String getP_NAME() {
-        return this.P_NAME;
-    }
-
-    public void setP_NAME(String P_NAME) {
-        this.P_NAME = P_NAME;
-    }
-
-    public int getP_PRICE() {
-        return this.P_PRICE;
-    }
-
-    public void setP_PRICE(int P_PRICE) {
-        this.P_PRICE = P_PRICE;
-    }
-
-    public String getP_CONTENT() {
-        return this.P_CONTENT;
-    }
-
-    public void setP_CONTENT(String P_CONTENT) {
-        this.P_CONTENT = P_CONTENT;
-    }
-
-    public String getP_DETAIL() {
-        return this.P_DETAIL;
-    }
-
-    public void setP_DETAIL(String P_DETAIL) {
-        this.P_DETAIL = P_DETAIL;
-    }
-
-    public String getP_UPLOAD() {
-        return this.P_UPLOAD;
-    }
-
-    public void setP_UPLOAD(String P_UPLOAD) {
-        this.P_UPLOAD = P_UPLOAD;
-    }
-
-    public String getP_STATE() {
-        return this.P_STATE;
-    }
-
-    public void setP_STATE(String P_STATE) {
-        this.P_STATE = P_STATE;
-    }
-
-    public String getP_ENDDATE() {
-        return this.P_ENDDATE;
-    }
-
-    public void setP_ENDDATE(String P_ENDDATE) {
-        this.P_ENDDATE = P_ENDDATE;
-    }
-
-    public int getP_MANAGER() {
-        return this.P_MANAGER;
-    }
-
-    public void setP_MANAGER(int P_MANAGER) {
-        this.P_MANAGER = P_MANAGER;
-    }
-
-    public int getProduct_category_d() {
-        return product_category_d;
-    }
-
-    public void setProduct_category_d(int product_category_d) {
-        this.product_category_d = product_category_d;
-    }
-
-    public int getP_STOCK() {
-        return P_STOCK;
-    }
-
-    public void setP_STOCK(int p_STOCK) {
-        P_STOCK = p_STOCK;
-    }
-
-    public int getPRODUCTID() {
-        return PRODUCTID;
-    }
-
-    public void setPRODUCTID(int pRODUCTID) {
-        PRODUCTID = pRODUCTID;
-    }
+   
 }

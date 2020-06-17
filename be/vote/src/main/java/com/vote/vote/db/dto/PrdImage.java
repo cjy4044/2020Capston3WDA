@@ -15,9 +15,12 @@ import javax.persistence.Table;
 public class PrdImage {
 
     @Id
-    @Column(name="product_id",nullable = false)
+    @Column(name="p_img_no",nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRODUCT_IMAGE_SEQ_GENERATOR")
     @SequenceGenerator(name="PRODUCT_IMAGE_SEQ_GENERATOR", sequenceName="PRODUCT_IMAGE_SEQ", allocationSize = 1)
+    private int no;
+
+    @Column(name="product_id",nullable = false)
     private int productId;
 
     @Column(name="product_image",nullable = false)
@@ -48,5 +51,13 @@ public class PrdImage {
 
     public void setImageState(String imageState) {
         this.imageState = imageState;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }

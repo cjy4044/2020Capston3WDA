@@ -59,6 +59,7 @@ module.exports = {
     popularBoardCreate: path.join(__dirname,'./app/community/popularBoardCreate.jsx'),
     managePrd : path.join(__dirname,'./app/userInfo/managePrd.jsx'),
     prdShow : path.join(__dirname,'./app/shop/prdShow.jsx'),
+    shopItemEdit : path.join(__dirname,"./app/shop/itemEdit.jsx"),
 
 
   },

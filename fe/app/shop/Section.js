@@ -5,9 +5,11 @@ import CateTab from './CateTab';
 import Item2 from './Item2';
 export default class Section extends React.Component {
     
-    
+    constructor(props){
+        super(props)
+    }
     render() {
-        console.log(this.props.data);
+        console.log(this.props.data[0]);
         return (
             <section>
                 <div className="container">
@@ -17,25 +19,29 @@ export default class Section extends React.Component {
                         </div>
                         
                         <div className="col-sm-9 padding-right"> {/* 오른쪽 신상품... 상품목록 */}
-                            <NewItem data={this.props.data}></NewItem>
-                            <CateTab></CateTab>
+                            {/*  신상품 */}
+                            {/* <NewItem data={this.props.data}></NewItem> */}
+
+                            {/* 카테고리별 아이템, 5개씩 */}
+                            <CateTab data={this.props.data[0]}/>
 
                             <div className="recommended_items">
                                 <h2 className="title text-center">recommended items</h2>
 
                                 <div id="recommended-item-carousel" className="carousel slide" data-ride="carousel">
                                     <div className="carousel-inner">
-                                        <div className="item active">
+                                        {/*  추천상품 */}
+                                        <div className="item active"> 
+                                            {/* <Item2></Item2>
                                             <Item2></Item2>
                                             <Item2></Item2>
-                                            <Item2></Item2>
-                                            <Item2></Item2>
+                                            <Item2></Item2> */}
                                         </div>
                                         <div className="item">
+                                            {/* <Item2></Item2>
+                                             <Item2></Item2>
                                             <Item2></Item2>
-                                            <Item2></Item2>
-                                            <Item2></Item2>
-                                            <Item2></Item2>
+                                            <Item2></Item2>  */}
                                         </div>
                                     </div>
                                     <a className="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">

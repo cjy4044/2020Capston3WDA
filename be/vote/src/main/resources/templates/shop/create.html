@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'새 상품 등록')}">
+th:replace="~{main_layout::layout(~{::content},_,'새 상품 등록',_)}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <content>
-        <form method="post" enctype="multipart/form-data" action="/vote">
+        
             <div id="shopItemCreate"></div>
             <script src="/assets/shopItemCreate.js"></script>
-        </form>
+        
     </content>
 </body>
 </html>

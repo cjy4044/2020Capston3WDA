@@ -38,8 +38,17 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판',_)
 			<td th:text="${auditionCon.fname}"></td>
 			<td sec:authentication="principal.name"></span><span> 님</span></td>
 			<td th:text="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"></td>
-			<td th:text="${auditionCon.confirm}"></td>
-  
+			<!-- th:if 조건문 o 가 맞을때, td 합격을 출력-->
+			<th:block th:if="${auditionCon.confirm} == 'o'">
+				<td th:text="합격"></td>
+			</th:block>
+			<!-- th:unless 위 if 조건문이 틀릴때, 아래 td 불합격을 출력 -->
+			<th:block th:if="${auditionCon.confirm} == 'x'">
+				<td th:text="불합격"></td>
+			</th:block>
+			<th:block th:if="${auditionCon.confirm} == 'n'">
+				<td th:text="접수중"></td>
+			</th:block>
 
 		</tr>
 	
@@ -96,10 +105,10 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판',_)
 					</a>
 				</li>
 			</ul>
-		  
+			
 		</nav>
 			
-		
+
        </content>
 
 </body>

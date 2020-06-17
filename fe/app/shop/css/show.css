@@ -16,5 +16,19 @@
 }
 .itemDetails{
     margin: auto;
-    width: 56%;
+    width: 68%;
+}
+.sum{
+    width: 250px;
+    /* height: 300px; */
+    max-height: 250px;
+    overflow: hidden;
+}
+.sum img {
+    width: 100%;
+}
+
+.subImg{
+    width: 50px;
+    height: 50px;
 }

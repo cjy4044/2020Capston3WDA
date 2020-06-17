@@ -1,31 +1,22 @@
 package com.vote.vote.controller;
 
 
-import java.io.IOException;
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.vote.vote.config.CustomUserDetails;
-import com.vote.vote.db.dto.Company;
-import com.vote.vote.db.dto.Hotclib;
+import com.vote.vote.db.customSelect.CustomAudience;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.PopularBoard;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.db.dto.Rfile;
-import com.vote.vote.db.dto.Vote;
-import com.vote.vote.klaytn.Klaytn;
-import com.vote.vote.repository.CompanyJpaRepository;
+import com.vote.vote.db.customSelect.CustomHotclib;
+import com.vote.vote.db.customSelect.CustomAudience;
+import com.vote.vote.repository.CustomAudienceRepository;
+import com.vote.vote.repository.CustomHotClibRepository;
 import com.vote.vote.repository.CustomPopularBoardRepository;
 import com.vote.vote.repository.CustomPopularRepository;
 import com.vote.vote.repository.MemberJpaRepository;
@@ -34,21 +25,13 @@ import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.repository.RfileRepository;
-import com.vote.vote.service.KakaoAPIService;
 import com.vote.vote.service.StorageService;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.minidev.json.JSONObject;
 
@@ -91,6 +73,12 @@ public class CommunityController {
 	
 	@Autowired
 	RfileRepository rfileRepository;
+
+	@Autowired
+	CustomHotClibRepository customHotclibRepository;
+
+	@Autowired
+	CustomAudienceRepository customAudienceRepository;
 	
 	
     @RequestMapping(value={"","/"})
@@ -131,9 +119,9 @@ public class CommunityController {
     	model.addAttribute("programName", program.getName());
     	
 		return "community/detailIndex";
-	}	
+	}
     
-    @RequestMapping(value={"/{program}/axios","/{program}/axios/"}, method = RequestMethod.GET) // 해당 프로그램 인기인 정보
+    @RequestMapping(value={"/{program}/axios","/{program}/axios/"}, method = RequestMethod.GET) // 해당 프로그램 정보
   	@ResponseBody
   	public JSONObject detailProgramAxios(@PathVariable("program") int programNum ){
   	
@@ -155,7 +143,7 @@ public class CommunityController {
     
     @RequestMapping(value={"/{program}/popular/axios","/{program}/popular/axios/"}) // 
   	@ResponseBody
-  	public JSONArray  popularAxios(@PathVariable("program") int programNum, @PageableDefault Pageable pageable){
+  	public JSONArray  popularAxios(@PathVariable("program") int programNum, @PageableDefault Pageable pageable){// 프로그램 인기인 정보
   	
       	
       	List<Popular> populares = customPopularRepository.findByPid(programNum, pageable);
@@ -179,7 +167,24 @@ public class CommunityController {
 
 		return json;
     
-    }
+	}
+	@RequestMapping(value={"/{program}/hotclip/axios","/{program}/hotclip/axios/"}) // 
+  	@ResponseBody
+  	public CustomHotclib  hotclibAxios(@PathVariable("program") int programNum, @PageableDefault Pageable pageable){// 핫클립 정보
+		CustomHotclib ch = customHotclibRepository.getProgramHotclibs(programNum, pageable);
+		System.out.println("핫클립 정보");
+		return ch;
+    
+	}
+	@RequestMapping(value={"/{program}/audience/axios","/{program}/audience/axios/"}) // 
+  	@ResponseBody
+  	public CustomAudience  audienceAxios(@PathVariable("program") int programNum, @PageableDefault Pageable pageable){// 방청권 정보
+		// CustomAudience ca = customAudienceRepository.getProgramAudiences(programNum, pageable);
+		CustomAudience ca = customAudienceRepository.getProgramAudiences(programNum, pageable);
+		System.out.println("방청권 정보");
+      	return ca;
+    
+	}
     
     @RequestMapping(value={"/{program}/{popular}","/{program}/{popular}/"})
    	public String popularBoard(@PathVariable("program") int programNum,

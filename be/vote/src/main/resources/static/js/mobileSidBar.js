@@ -18,11 +18,11 @@ function w3_open() {
 		
 		if(userRole=="1"||userRole=="2"){ //관리자 또는 매니저
 		//오디션관리
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>오디션개설</a></div>");}	
+		$("#mobileMenus").append("<div class='sideMenu'><a href='/audition/list'>오디션개설</a></div>");}	
 		
 		if(userRole=="1"||userRole=="2"||userRole=="3"){ //관리자 또는 매니저 또는 심사위원
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>예선심사</a></div>");
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>심사결과</a></div>");}	
+		$("#mobileMenus").append("<div class='sideMenu'><a href='/audition_con/list'>예선심사</a></div>");
+		$("#mobileMenus").append("<div class='sideMenu'><a href='/auditionresult/list'>심사결과</a></div>");}	
 		
 		if(userRole=="1"||userRole=="2"){ //관리자 또는 매니저
 		//투표관리

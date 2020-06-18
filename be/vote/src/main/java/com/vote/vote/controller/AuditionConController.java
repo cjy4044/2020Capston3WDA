@@ -115,9 +115,7 @@ public class AuditionConController {
 			) {
 		
 		AuditionCon auditionCon = new AuditionCon();
-//		Audition audition = new Audition();
-//		audition.setAuditionid(audition.getAuditionid());
-//		auditionCon.setAuditionid(audition.getAuditionid());
+
 		model.addAttribute("auditionCon",new AuditionCon());
 		return "audition_con/form";
 	}
@@ -129,9 +127,7 @@ public class AuditionConController {
 			Principal principal, Model model, RedirectAttributes redirAttrs,
             @RequestParam(name = "filename") MultipartFile filename	) {
 		
-		
-//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        CustomUserDetails sessionUser = (CustomUserDetails)principal;
+
 		
 		if(bindingResult.hasErrors()) {
 			return "/audition_con/form";
@@ -145,38 +141,30 @@ public class AuditionConController {
 			
 		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
             Member member = memberRepository.findByUserid(principal.getName());
-//            ProgramManager pm = pmRepository.findById(member.getNo());
+
 			
             // 게시글저장
-//            audition.setStartdate(pm.getProgramId());
+
             auditioncon.setRid(member.getNo());
-//            audience.setADate(new Date());
+
             auditioncon.setFprofile(filenamePath);
             
             auditionConRepository.saveAndFlush(auditioncon);
 
           auditioncon.setFdate(new Date());
-//			System.out.println(auditionCon.toString());
+
 			auditionConRepository.save(auditioncon);
-//			sessionStatus.setComplete();
+
             
             
             // 파일 저장
             storageService.store(filename);
-            // rfile.setApplyid(audience.getApplyId());
-            // rfile.setFilename(filenamePath);
-            // rfileRepository.saveAndFlush(rfile);
+
             sessionStatus.setComplete();
             System.out.println("게시글업로드완료");
             return "redirect:/audition_con/list";
             
-            
-            
-//			audition.setRid(sessionUser.getR_ID());
-//			System.out.println(audition.toString());
-//			auditionRepository.save(audition);
-//			sessionStatus.setComplete();
-//			return "redirect:/audition/list";
+
 		}
 	}
 	
@@ -289,13 +277,13 @@ public class AuditionConController {
 	public String update(Model model, @PathVariable int formid){
 		AuditionCon auditioncon = auditionConRepository.findByFormid(formid);
 		model.addAttribute("auditionCon", auditioncon);		
-		return "audition_con/update";
+		return "audition_con/list";
 	}
 
 	@PostMapping("/audition_con/update/{formid}")
 	public String update(AuditionCon auditioncon, BindingResult bindingResult){
 		if (bindingResult.hasErrors()) {
-			return "/audition_con/update";
+			return "/audition_con/list";
 		} else {
 			
 			auditionConRepository.save(auditioncon).getFormid();

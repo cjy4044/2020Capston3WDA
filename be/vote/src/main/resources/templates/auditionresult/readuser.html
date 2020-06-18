@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
+th:replace="~{main_layout::layout(~{::content},_,'오디션 결과 게시글',_)}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,8 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
     [[${auditionResult.rfile}]]</a>
 
       
-      </span><br><br>
+      </span>
+      <br><br>
 <table>
  <tr>
                 <th>내용 : </th>
@@ -47,7 +48,6 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
             <!--    <td><textarea cols="150" rows="20" placeholder="내용을 입력하세요. " name="a_content"></textarea></td> -->
             </tr>
 </table>
-	
 <br><br>
 	
 	
@@ -56,18 +56,11 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
 	
 	
 	
-    <div>
-    <button>
-        <a href="" th:href="@{'/auditionresult/update/' + ${auditionResult.Resultid}}">수정</a> 
-    </button>
-             <form id="delete-form" th:action="@{'/auditionresult/' + ${auditionResult.Resultid}}" method="post">
-            <input type="hidden" name="_method" value="delete"/> 
-            <button id="delete-btn">삭제</button>
-        </form>
-        
-	<button>
-        <a href="" th:href="@{/auditionresult/list}">게시글 목록</a>
-</button>
+	
+	
+	<div>
+<button>
+		<a href="" th:href="@{/auditionresult/listuser}">게시글 목록</a></button>
 	</div>
 </body>
 </content>

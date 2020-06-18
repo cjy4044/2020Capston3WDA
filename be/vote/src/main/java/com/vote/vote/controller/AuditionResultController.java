@@ -61,6 +61,14 @@ public class AuditionResultController {
 		model.addAttribute("auditionresultlist", auditionResultRepository.findAll(pageable));
 		return "auditionresult/list";
 	}
+
+	@GetMapping("/auditionresult/listuser")
+	public String resultuser(Model model, @PageableDefault Pageable pageable){
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber()-1); 
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "resultid"));
+		model.addAttribute("auditionresultlist", auditionResultRepository.findAll(pageable));
+		return "auditionresult/listuser";
+	}
 	
 	
 	
@@ -80,6 +88,14 @@ public class AuditionResultController {
 		AuditionResult auditionResult = auditionResultRepository.findByResultid(resultid);
 		auditionResultRepository.save(auditionResult);
 		return "auditionresult/read";
+	}
+
+	@GetMapping("/auditionresult/readuser/{resultid}")
+	public String readuser(Model model, @PathVariable int resultid){
+		model.addAttribute("auditionResult", auditionResultRepository.findByResultid(resultid));
+		AuditionResult auditionResult = auditionResultRepository.findByResultid(resultid);
+		auditionResultRepository.save(auditionResult);
+		return "auditionresult/readuser";
 	}
 	
 	

@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'게시글 작성',_)}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설 게시글 등록',_)}">
 <head>
- <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"> -->
-   
-
+    <!-- 사이드바 -->
+    <script src="/js/side/userInfoSide.js"></script>
 </head>
-  
+<content>
 <body>
 
-
-    <content>
 
 <form th:action="@{/audition/write}" method="post" enctype="multipart/form-data">  
 
@@ -21,7 +18,7 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 작성',_)}">
         </th:block>   -->
         
     <div class="container">
-<table class="table table-bordered">
+<table class="table table-bordered" >
     <thead>
         <caption><h1> 게시글 작성</h1> </caption>
         
@@ -66,10 +63,11 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 작성',_)}">
                     <input type="reset" value="취소" onclick="history.back();">                 </td>
             </tr>  
             
-</div>
+        </div>
 			 </form>
 	 
-       </content>
+       
 
 </body>
+</content>
 </html>

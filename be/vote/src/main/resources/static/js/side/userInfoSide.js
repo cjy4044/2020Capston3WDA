@@ -22,11 +22,11 @@
 		
 		if(userRole=="1"||userRole=="2"){ //관리자 또는 매니저
 		//오디션관리
-		$("#side").append("<li><a href='#'>오디션개설</a></li>");}	
+		$("#side").append("<li><a href='/audition/list'>오디션개설</a></li>");}	
 		
 		if(userRole=="1"||userRole=="2"||userRole=="3"){ //관리자 또는 매니저 또는 심사위원
-		$("#side").append("<li><a href='#'>예선심사</a></li>");
-		$("#side").append("<li><a href='#'>심사결과</a></li>");}	
+		$("#side").append("<li><a href='/audition_con/list'>예선심사</a></li>");
+		$("#side").append("<li><a href='/auditionresult/list'>심사결과</a></li>");}	
 		
 		if(userRole=="1"||userRole=="2"){ //관리자 또는 매니저
 		//투표관리

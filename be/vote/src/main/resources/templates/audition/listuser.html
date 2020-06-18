@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설',_)}">
+th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)}"></html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 사이드바 -->
-    <script src="/js/side/userInfoSide.js"></script>
 </head>
   
 <body>
@@ -44,7 +42,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설',_)
 			<tr th:each="audition:${auditionlist}">
 			<td th:text="${audition.auditionid}"></td>
 			<!--  <td th:text="${audition.a_title}"></td> -->
-			<td><a href="" th:href="@{'/audition/read/' + ${audition.auditionid}}" th:text="${audition.atitle}"></a></td>
+			<td><a href="" th:href="@{'/audition/readuser/' + ${audition.auditionid}}" th:text="${audition.atitle}"></a></td>
 			<td th:text="${audition.acategory}"></td>
 			<td th:text="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}"></td>
 			<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
@@ -63,14 +61,9 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설',_)
 		
 		</table>
 		<div>
-		
-
-              <input type="button" value="등록" onclick="location.href='/audition/write'"/>
-                                    </td>
-       
             	
-                <td>
-              <input type="button" value="처음으로" onclick="location.href='/audition/list'"/>
+            <td>
+              <input type="button" value="처음으로" onclick="location.href='/audition/listuser'"/>
                                     </td>
            <center>
 		<form action="/audition/serch" method="GET">

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
+th:replace="~{main_layout::layout(~{::content},_,'오디션 결과 게시판',_)}"></html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 사이드바 -->
-    <script src="/js/side/userInfoSide.js"></script>
 </head>
 <body>
 
@@ -30,7 +28,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 		<tbody>
 		<tr th:each="auditionResult:${auditionresultlist}">
 			<td th:text="${auditionResult.resultid}"></td>
-			<td><a href="" th:href="@{'/auditionresult/read/' + ${auditionResult.resultid}}" th:text="${auditionResult.rtitle}"></a></td>
+			<td><a href="" th:href="@{'/auditionresult/readuser/' + ${auditionResult.resultid}}" th:text="${auditionResult.rtitle}"></a></td>
 			<td th:text="${#dates.format(auditionResult.rdate, 'yyyy-MM-dd')}"></td>
 			<td sec:authentication="principal.name"></span><span> 님</span></td>
   
@@ -44,13 +42,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
         
         <div>
             
-                <td>
-              <input type="button" value="등록" onclick="location.href='/auditionresult/write'"/>
-                                    </td>
-       
-            	<tr>
-            
-              <input type="button" value="처음으로" onclick="location.href='/auditionresult/list'"/>
+              <input type="button" value="처음으로" onclick="location.href='/auditionresult/listuser'"/>
                                     </td>
             </tr>
             <center>

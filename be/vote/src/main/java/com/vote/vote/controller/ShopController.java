@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Mybag;
 import com.vote.vote.db.dto.Prd;
 import com.vote.vote.db.dto.PrdCategory;
 import com.vote.vote.db.dto.PrdCategoryD;
@@ -14,9 +15,12 @@ import com.vote.vote.db.dto.PrdImage;
 import com.vote.vote.db.dto.PrdOption;
 import com.vote.vote.db.dto.PrdSize;
 import com.vote.vote.db.dto.ProgramManager;
+import com.vote.vote.db.customSelect.CustomMybag;
 import com.vote.vote.repository.Asdf;
+import com.vote.vote.repository.CustomMybagRepository;
 import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.MybagJpaRepository;
 import com.vote.vote.repository.PrdCateDJpaRepository;
 import com.vote.vote.repository.PrdCategoryDJpaRepository;
 import com.vote.vote.repository.PrdCategoryJpaRepository;
@@ -29,12 +33,14 @@ import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,6 +93,12 @@ public class ShopController {
 	@Autowired
 	private CustomPrdJapRepository customPrdRepository;
 	
+	@Autowired
+	private MybagJpaRepository mybagRepository;
+
+	@Autowired
+	private CustomMybagRepository customMybagRepository;
+
 	@RequestMapping("/shop/index")
 	public String index(Model model,Principal user) {
 //		model.addAttribute("username",user.getName());
@@ -229,7 +241,14 @@ public class ShopController {
 
 		try{
 			// 상품 옵션 저장
-
+			PrdOption defaultOption = new PrdOption();
+			defaultOption.setColorId(0);
+			defaultOption.setSizeId(0);
+			defaultOption.setProductId(product.getProductId());
+			defaultOption.setoPrice(0);
+			defaultOption.setoTitle("기본");
+			defaultOption.setpStock(stock);
+			pOptionRepository.saveAndFlush(defaultOption);
 			if(optionColor != null){
 				for(int i =0; i<optionColor.length; i++){
 					PrdOption pOption = new PrdOption();
@@ -290,7 +309,8 @@ public class ShopController {
 	@RequestMapping(value={"/shop/edit/{prdId}/axios","/shop/edit/{prdId}/axios"}) // 상품 수정 뷰
 	public JSONObject editPrdAxios(@PathVariable("prdId") int p_id){
 		Prd prd = prdRepository.findByProductId(p_id);
-		List<PrdOption> option = pOptionRepository.findByProductId(p_id);
+		List<PrdOption> option = pOptionRepository.findByProductIdOrderByOptionIdAsc(p_id);
+		option.remove(0);
 		List<PrdImage> img = pImageRepository.findByProductId(p_id);
 
 		JSONObject json = new JSONObject();
@@ -340,7 +360,8 @@ public class ShopController {
 			}
 			prdRepository.saveAndFlush(prd);
 			
-			List<PrdOption> options = pOptionRepository.findByProductId(p_id);
+			List<PrdOption> options = pOptionRepository.findByProductIdOrderByOptionIdAsc(p_id);
+			options.remove(0);// 기본 옵션은 수정할 필요가 없음.
 			if(optionColor != null){// 옵션이 있다면.
 
 				if(optionColor.length > options.size()){ // 옵션수가 증가한 경우.
@@ -510,7 +531,7 @@ public class ShopController {
 	public JSONArray prdShowAxios(@PathVariable("prdId") int prdId){
 		Prd prd = prdRepository.findByProductId(prdId);
 		List<PrdImage> img = pImageRepository.findByProductId(prdId);
-		List<PrdOption> option = pOptionRepository.findByProductId(prdId);
+		List<PrdOption> option = pOptionRepository.findByProductIdOrderByOptionIdAsc(prdId);
 		List<PrdColor> color = prdColorRepository.findAll();
 		List<PrdSize> size = prdSizeRepository.findAll();
 
@@ -536,5 +557,62 @@ public class ShopController {
 		prdRepository.deleteById(prdId);
 
 	}
+
+	// 장바구니
+	@RequestMapping(value={"/shop/{prdId}/mybag","/shop/{prdId}/mybag/"}, produces = "application/json") //Axios
+	@ResponseBody
+	public JSONObject addMybag(
+		@Nullable @PathVariable("prdId") int p_id, 
+		// @RequestParam("optionId") String optionId,
+		// @RequestParam("quantity") String quantity,
+		@RequestBody Mybag mybag,// json 데이터는 class 로 받아야 하는 듯.
+		Principal user, 
+		@Nullable Authentication authentication){ // 상품을 장바구니에 추가.
+
+
+			JSONObject json = new JSONObject();
+		try{
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+		
+			mybag.setProductId(p_id); //상품 id 
+			// mybag.setOptionId(Integer.parseInt(optionId)); // 옵션 id
+			// mybag.setQuantity(Integer.parseInt(quantity)); // 수량
+			mybag.setUserId(userDetails.getR_ID()); //유저 아이디
+			mybagRepository.saveAndFlush(mybag);
+
+			json.put("success", "장바구니에 추가되었습니다.");
+			return json;
+
+			
+			}catch(Exception e){
+				json.put("error","장바구니 추가에 실패했습니다.");
+				return json;
+			}
+	}
+	
+		@RequestMapping(value={"/shop/mybag","/shop/mybag/"})
+		public String showMybag(){
+
+
+			return "/shop/mybag";
+
+		}
+
+		@ResponseBody
+		@RequestMapping(value={"/shop/mybag/axios","/shop/mybag/axios/"}, method=RequestMethod.GET)
+		public CustomMybag showMybagAxios(
+			@Nullable Authentication authentication,
+			@PageableDefault Pageable page
+		) {
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			CustomMybag mybags = customMybagRepository.getMybag(userDetails.getR_ID(), page);
+
+
+
+			return mybags;
+		}
+		
 
 }

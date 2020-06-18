@@ -92,6 +92,14 @@ public class AuditionController {
 				return "audition/list";
 	}
 
+	@GetMapping("/audition/serchuser")
+	public String serchuser(@RequestParam(value="keyword") String keyword, Model model) {
+		List<Audition> audition = auditionRepository.findByAtitle(keyword);
+		
+				model.addAttribute("auditionlist", audition);
+				
+				return "audition/listuser";
+	}
 	
 
 

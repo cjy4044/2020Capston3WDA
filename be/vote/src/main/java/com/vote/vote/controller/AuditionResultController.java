@@ -80,6 +80,15 @@ public class AuditionResultController {
 				
 				return "auditionresult/list";
 	}
+
+	@GetMapping("/auditionresult/serchuser")
+	public String serchuser(@RequestParam(value="keyword") String keyword, Model model) {
+		List<AuditionResult> auditionresult = auditionResultRepository.findByRtitle(keyword);
+		
+				model.addAttribute("auditionresultlist", auditionresult);
+				
+				return "auditionresult/listuser";
+	}
 	
 
 	@GetMapping("/auditionresult/read/{resultid}")

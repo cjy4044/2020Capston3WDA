@@ -70,26 +70,21 @@
                         <input type="hidden" id="applyId" name="applyId" value="" th:value="${audience.applyId}">
                         <input type="button" value="응모인원보기" id="showRecruits" class="btn_submit btn">
                     </form> -->
-                        <input type="button" value="응모인원보기" id="showRecruits" class="btn_submit btn">
+                        <input type="button" value="응모인원보기" id="showList" class="btn_submit btn">
                         <form style="text-align: -webkit-center; display: inline;">
                             <input type="hidden" id="applyId" name="applyId" value="" th:value="${audience.applyId}">
                             <input type="hidden" id="aLimit" name="w" value="" th:value="${audience.aLimit}">
-                            <input type="hidden" id="aPrice" name="bo_table" value="webzine"
-                                th:value="${audience.aPrice}">
-                            <input type="submit" value="추첨인원보기" id="showRecruits" class="btn_submit btn">
+                            <input type="hidden" id="aPrice" name="bo_table" value="webzine" th:value="${audience.aPrice}">
+                            <input type="hidden" id="aRecruits" name="bo_table" value="webzine" th:value="${audience.aRecruits}">
+                            <input type="button" value="추첨인원보기" id="showResult" class="btn_submit btn">
                         </form>
                     </div>
 
-
+                <div>
                     <div id="list"></div>
-                    <br>
-                    <table id="table">
-                        <tr>
-                            <th>이름</th>
-                            <th>성별</th>
-                            <th>이메일</th>
-                        </tr>
-                    </table>
+                    <div id="result"></div>
+                </div>
+                    
 
                 </section>
 

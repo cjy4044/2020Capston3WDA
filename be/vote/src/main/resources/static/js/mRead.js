@@ -1,45 +1,60 @@
-$(document).ready(function(){
-    
+$(document).ready(function () {
+
     var audience = {
-        applyId : $('#applyId').val()
+        applyId: $('#applyId').val(),
+        aRecruits: $('#aRecruits').val()
     }
-    console.log($('#applyId').val());
-    $('#showRecruits').click(function(){
+
+    //응모인원 리스트 출력 ajax
+    $('#showList').click(function () {
         $.ajax({
-            url: "/audience/showRecruits",
+            url: "/audience/showList",
             type: "get",
             dataType: 'json',
-            data : audience,
-            success: function(data){
-        
-                console.log(data);
-                // var tableData = "";
-
-                // $.each(data.member[0], function(index, value) {
-                //     console.log(index);
-                //     console.log("value : " + value);
-                //     tableData += '<tr>';
-                //     tableData += '<td>'+value+'</td>';
-                //     tableData += '<td>'+value+'</td>';
-                //     tableData += '</tr>';
-                // });
-    
-                // $("#list").append(tableData);
-        
+            data: audience,
+            success: function (data) {
+                var tableData = "";
+                $.each(data, function (key, value) {
+                    tableData += '<tr>';
+                    tableData += '<td>' + value.name + '</td>';
+                    tableData += '<td>' + value.phone + '</td>';
+                    tableData += '</tr>';
+                });
+                $("#list").append(tableData);
             },
-        
-            error:function(request,status,error){
-                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-               }
-        
-    
-        
-          });
+            error: function (request, status, error) {
+                alert("code = " + request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+            }
+        });
     })
-       
-    
-    
-    
+
+    $('#showResult').click(function () {
+        $.ajax({
+            url: "/audience/showResult",
+            type: "get",
+            dataType: 'json',
+            data: audience,
+            success: function (data) {
+                var tableData = "";
+                $.each(data, function (key, value) {
+                    tableData += '<tr>';
+                    tableData += '<td>' + value.name + '</td>';
+                    tableData += '<td>' + value.phone + '</td>';
+                    tableData += '</tr>';
+                });
+
+                $("#list").append(tableData);
+
+            },
+            error: function (request, status, error) {
+                alert("code = " + request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+            }
+        });
+    })
+
+
+
+
 
 })
 

@@ -11,14 +11,10 @@ th:replace="~{main_layout::layout(~{::content},_,'수정 하는곳')}">
 		<table border="1">
 			
 			<tr>
-				<th><label for="h_content">내용</label></th>
-				<td><input name="h_content" th:value="${hotclib.h_content}" /></td>
+				<th><label for="r_content">내용</label></th>
+				<td><input name="r_content" th:value="${reply.r_content}" /></td>
 			</tr>			
 		</table>
-		<div>
-            <input type="submit" value="수정하기" /> 
-            <a href="" th:href="@{/hotclib}">목록</a>
-		</div>
 	</form>
 </body>
 </content>

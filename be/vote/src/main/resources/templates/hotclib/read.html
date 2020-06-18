@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <content>
 	<style>
+
+		#modal{
+			display: none;
+		}
 		.gi{
 		  border: 1px solid #ccc;
 		  padding: 5px;
-	 width: 250px;
+	 width: 780px;
 	 margin: 10px ;
-	 display: inline-block;
+	 display:block;
 	 text-align:left;
 		}
 	  </style>
 <body>
 	<div>
 		<tr>		
-			<video controls th:src="@{'/uploads/' + ${rfile.filename}}" width="800" height="500"></video>
+		<video controls th:src="@{'/uploads/' + ${rfile.filename}}" width="800" height="500"></video>
 			
 		</tr>
 	</div>
@@ -46,59 +50,61 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 			</form>
 			</div>
 
-			<form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
+			 <form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
 				<tr>댓글테스트
 				<td><input type="textarea" placeholder="내용을 입력하세요" name="r_content"></td>
-					<input type="submit" value="등록">
+					<input type="submit" value="등록" ><hr>
 			</tr>
-			</form> 
-		   댓글 
-		 <div class="container">
-			<label for="content">댓글입력</label>
-			<form name="commentInsertForm"  id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
-				<div class="input-group">
-								  
-				   <input type="text"  class="form-control" id="r_content" name="r_content" placeholder="내용을 입력하세요.">
-				   <input type="submit" value="등록">	
-				   <span class="input-group-btn">
-				   </span>
-				  </div>
-			</form>
-		</div>
-	
-	
+			</form>  
+		    
+		
 	
 
-	
-	
 
-	<tr th:each="reply:${replyList}">
+	<tr th:each="reply:${replyList}" varStatus="vs">
 		
 			<p>
 			 
-			    <li>작성자<td sec:authentication="principal.name"></span></li>
-				<li>작성일자<td th:text="${reply.r_date}"></td></li>
-				<li>내용<td th:text="${reply.r_content}"></td></li>
-						
+			    <li>작성자 : <td sec:authentication="principal.name"></span></li>
+				<li>작성일자 : <td th:text="${reply.r_date}"></td></li>
+				<li>내용 : <td th:text="${reply.r_content}"></td></li>
 					<div>
-					
-				<form id="replydelete-form"  method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">						
-					<input type="hidden" name="_method" value="replydelete"/>
-					<button id="replydelete">삭제</button>
-				</form>
-			
-				<form id="replyupdate-form"  method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">							
-					<input type="hidden" name="_method" value="replyupdate"/>
-					<button id="replyupdate">수정</button>
-
-					
-				</form>
-				  </div>
-	</p>
-	</tr>
-
+						<form id="replydelete-form"  method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">						
+							<input type="hidden" name="_method" value="replydelete"/>
+							<button id="replydelete">댓글삭제</button>
+						</form>
+					<div id="root[vs.index]">
+						<button type="button" data-rno="${replyList.replyid}" id="1btn">댓글수정</button> 
+						</div>
+						<div id="modal[vs.index]">
+							<form id="replyupdate-form"  method="POST" th:action="@{'/hotclib/replyupdate/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">		
+							<div class="modal_content">
+								<h5>댓글수정하는곳</h5>
+								<input type="textarea" placeholder="내용을 입력하세요" name="r_content">
+								<input type="submit" value="등록" >
+								<button type="button" id="2btn">닫기</button>
+							</div>
+							</form>
+							
+						</div>
+						</div>
+						
+						<hr>
+					</p>
+				</tr>
+	
+<script>
+	
+	$("#1btn").click(function(){
+        $("#modal[vs.index]").fadeIn(500);
+    });
+   
+     $("#2btn").click(function(){
+        $("#modal[vs.index]").fadeOut(500);
+    });      
+    
+</script>
 </body>
-
 </content>
 </html>
 

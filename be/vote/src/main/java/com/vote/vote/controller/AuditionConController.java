@@ -58,7 +58,7 @@ public class AuditionConController {
 	
 
 	
-	@GetMapping("//audition_con/list")
+	@GetMapping("/audition_con/list")
 	public String audition(Model model, @PageableDefault Pageable pageable){
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "formid"));
@@ -162,7 +162,7 @@ public class AuditionConController {
 
             sessionStatus.setComplete();
             System.out.println("게시글업로드완료");
-            return "redirect:/audition_con/list";
+            return "redirect:/audition/complete";
             
 
 		}

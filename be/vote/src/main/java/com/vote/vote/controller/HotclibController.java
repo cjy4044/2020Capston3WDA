@@ -41,11 +41,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
 public class HotclibController {
-	
+
 	@Autowired
 	private HotclibRepository hotclibRepository;
 
@@ -64,24 +65,30 @@ public class HotclibController {
 	@Autowired
 	private ProgramManagerJpaRepository pmRepository;
 
-	//게시글 리스트 보여주기
+	// 게시글 리스트 보여주기
 	@GetMapping("/hotclib")
-	public String hotclib(Model model, @PageableDefault Pageable pageable){
-		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
-        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hotclibid"));
+	public String hotclib(Model model, @PageableDefault Pageable pageable) {
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hotclibid"));
 		model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
 		model.addAttribute("rfile", rfileRepository.findAll());
 		return "hotclib/list";
 	}
 
-	//댓글 리스트,게시글 상세보기
+	@GetMapping("/hotclib/list1")
+	public String hotclib1(Model model, @PageableDefault Pageable pageable){
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hcountview"));
+		model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
+		return "hotclib/list1";
+		
+	}
+	// 댓글 리스트,게시글 상세보기
 	@GetMapping("/hotclib/read/{hotclibid}")
-	public String read(Model model, @PathVariable int hotclibid){
-		// rfileRepository.findByFilename(rfile.getFilename());
-		// int page1 = (pageable1.getPageNumber() == 0) ? 0 : (pageable1.getPageNumber() - 1); 
-		// pageable1 = PageRequest.of(page1, 10, Sort.by(Sort.Direction.DESC, "replyid"));
+	public String read(Model model, @PathVariable int hotclibid) {
 		Rfile rfile = rfileRepository.findByHotclibid(hotclibid);
-     	model.addAttribute("rfile", rfile);
+		model.addAttribute("rfile", rfile);
+
 		model.addAttribute("hotclib", hotclibRepository.findById(hotclibid));	
 		List<Reply> reply = replyRepository.findByHotclibid(hotclibid);
 		model.addAttribute("replyList", reply);
@@ -92,7 +99,7 @@ public class HotclibController {
 		return "hotclib/read";
 	}
 
-	//댓글등록
+//	댓글등록
 	@PostMapping("/hotclib/read/{hotclibid}")
 	public String read(Reply reply,
 	@PathVariable int hotclibid,
@@ -105,6 +112,13 @@ public class HotclibController {
 			
 		reply.setR_date(new Date());	
 		replyRepository.saveAndFlush(reply);
+		
+		// replyRepository.findById(reply.getReplyid());
+		// reply.setR_content(reply.getR_content());
+		// replyRepository.save(reply);
+
+		// Hotclib hotclib = new Hotclib();
+		// hotclib.setHotclibid(hotclibid);
 		sessionStatus.setComplete();
 		
 		return "redirect:/hotclib/read/{hotclibid}";
@@ -163,14 +177,12 @@ public class HotclibController {
 	//게시글삭제
 	@PostMapping("/hotclib/{hotclibid}")
 	public String delete(@PathVariable int hotclibid, Integer fileid, Integer replyid){
-		rfileRepository.deleteById(fileid);
-		replyRepository.deleteById(replyid);
 		hotclibRepository.deleteById(hotclibid);
 		return "redirect:/hotclib";
 	
 	}
 
-	//검색
+	//제목으로 검색
 	@GetMapping("/hotclib/search")
 	public String search(@RequestParam(value="keyword") String keyword, Model model){
 		List<Hotclib> hotclib = hotclibRepository.findByHtitle(keyword);
@@ -204,22 +216,34 @@ public class HotclibController {
 		replyRepository.deleteById(replyid);
 		Hotclib hotclib = new Hotclib();
 		hotclib.setHotclibid(hotclibid);
+		
 		return "redirect:/hotclib/read/{hotclibid}";
 	}
 
-	// @GetMapping("/hotclib/read/{hotclibid}/{replyid}")
-	// public String replyupdate(@PathVariable int hotclibid, @PathVariable int replyid, Model model){
-	// 	Hotclib hotclib = hotclibRepository.findById(hotclibid);
-	// 	model.addAttribute("hotclib", hotclib);		
-	// 	return "hotclib/read/{hotclibid}";
+	//댓글수정
+	@GetMapping("/hotclib/replyupdate/{hotclibid}/{replyid}")
+	public String replyupdate(@PathVariable int hotclibid, @PathVariable int replyid, Model model){
+		Hotclib hotclib = hotclibRepository.findById(hotclibid);
+		model.addAttribute("hotclib", hotclib);		
+		return "hotclib/read/{hotclibid}";
 	
-	// }
+	}
 	
-	//댓글수정 해야하는데;;
-	@PutMapping("/hotclib/read/{hotclibid}")
-	public String replyupdate(Model model, @PathVariable int hotclibid,Reply reply){
+	//댓글수정
+	@PostMapping("/hotclib/replyupdate/{hotclibid}/{replyid}")
+	public String replyupdate(Model model, 
+	@PathVariable int hotclibid,
+	@PathVariable int replyid,
+	Reply reply,
+	Principal principal){
+		String userid = principal.getName(); 
+		Member member = memberRepository.findByUserid(userid); 
+		int r_id = member.getNo();
+		reply.setR_id(r_id);
+
 		replyRepository.findById(reply.getReplyid());
 		reply.setR_content(reply.getR_content());
+		reply.setR_date(new Date());	
 		replyRepository.save(reply);
 
 		Hotclib hotclib = new Hotclib();

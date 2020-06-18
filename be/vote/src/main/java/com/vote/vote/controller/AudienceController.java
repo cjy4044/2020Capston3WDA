@@ -2,12 +2,15 @@ package com.vote.vote.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import javax.validation.Valid;
 
+import com.google.gson.JsonObject;
 import com.vote.vote.db.dto.ADetaiId;
 import com.vote.vote.db.dto.ADetail;
 import com.vote.vote.db.dto.Audience;
@@ -46,6 +49,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+
 import org.springframework.util.StringUtils;
 
 @Controller
@@ -229,20 +236,61 @@ public class AudienceController {
     }
 
     // 응모인원 리스트 ajax
-    @GetMapping("/showRecruits")
-    public String showList(Model model, Audience audience, Principal principal) {
+    @GetMapping("/showList")
+    @ResponseBody
+    public JSONArray showList(Model model, Audience audience) {
         
+            
             List<Member> list = new ArrayList<>();
             list = mr.getInfo(audience.getApplyId());
-            model.addAttribute("list", list);
-            // for (Member s: list) {
-            //     System.out.println(s.toString());
-            // }
+            
+            System.out.println(list);
+            JSONObject obj = new JSONObject();
+            JSONArray array = new JSONArray();
+            for(Member list2:list){
+                obj = new JSONObject();	
+                obj.put("name", list2.getName());
+                obj.put("phone", list2.getPhone());
+                array.add(0, obj);
+            }         
+        return array;
+    }
 
-          
+    // 추첨인원(결과) 리스트 ajax
+    @GetMapping("/showResult")
+    @ResponseBody
+    public JSONArray showResult(Model model, Audience audience) {
+            int people = audience.getARecruits();                       //뽑을인원
+            List<Member> list = new ArrayList<>();
+            List<Member> result = new ArrayList<>();
+            HashSet<Member> result2 = new HashSet<>();
+            List<Member> result3 = new ArrayList<>();
+            list = mr.getInfoNoDistincList(audience.getApplyId()); 
+            JSONObject obj = new JSONObject();
+            JSONArray array = new JSONArray(); 
 
-        System.out.println(list);
-        return "audience/showRecruits";
+            if(people >= list.size()){                          //추첨인원이 응모인원보다 적거나 같을 때
+                list = mr.getInfo(audience.getApplyId());
+                for(Member list2:list){
+                    obj = new JSONObject();	
+                    obj.put("name", list2.getName());
+                    obj.put("phone", list2.getPhone());
+                    array.add(obj);
+                }         
+                return array;
+            } else {                                         
+                while(result.size() < people){
+                double randomValue = Math.random();
+                int ran = (int)(randomValue * list.size());
+                result.add(list.remove(ran));
+                    // for(Member data : result){
+                    //     if(!result3.contains(data))
+                    //     result3.add(data);
+                    // }
+                }
+                    
+            }
+        return array;
     }
         
 

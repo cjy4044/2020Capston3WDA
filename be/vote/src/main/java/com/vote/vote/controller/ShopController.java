@@ -524,7 +524,6 @@ public class ShopController {
 		result.add(3,color);// 색상 리스트
 		result.add(4,size); // 사이즈 리스트
 		result.add(5,member); // 판매자 정보
-
 		return result;
 
 	}

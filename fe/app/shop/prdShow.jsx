@@ -111,7 +111,19 @@ class PrdShow extends React.Component {
         
         
     }
+    order(){
+        
+        if($('#quantity').val() == null || $('#quantity').val() <= 0)
+            return alert("수량을 입력해주세요.");
 
+        if(!confirm("해당 상품을 구매하시겠습니까?"))
+            return
+
+        
+        location.href =
+        "/shop/order?productId="+this.state.prd.productId+"&optionId="+$('#selectOption').val()+"&quantity="+$('#quantity').val()
+
+    }
     render() {
         var prd = this.state.prd;
         
@@ -135,12 +147,12 @@ class PrdShow extends React.Component {
                         <div>옵션</div>
                         <div id="optionSelect"></div>
                         <div>수량</div>
-                        <div><input type="number" id="quantity" min="1" max="9999" onChange={this.sumPriceSet.bind(this)}/></div>
+                        <div><input type="number" id="quantity" min="1" max="9999" defaultValue="1" onChange={this.sumPriceSet.bind(this)}/></div>
                         <div>총 가격</div>
                         <h3 id="sumPrice">{prd.price}원</h3>
                         
-                        <input type="button" value="장바구니 추가" onClick={this.addMybag.bind(this)}/><input  type="button" value="구매"/>
-
+                        <input type="button" value="장바구니 추가" onClick={this.addMybag.bind(this)}/>
+                        <input type="button" value="구매" onClick={this.order.bind(this)}/>
                     </div>
                 </div>
                 <div className="itemDetails">

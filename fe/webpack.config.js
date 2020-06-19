@@ -62,6 +62,7 @@ module.exports = {
     shopItemEdit : path.join(__dirname,"./app/shop/itemEdit.jsx"),
     mybag : path.join(__dirname,"./app/shop/mybag.jsx"),
     order : path.join(__dirname,"./app/shop/order.jsx"),
+    buySuccess : path.join(__dirname,"./app/shop/buySuccess.jsx"),
   },
   output: {
     path: PATHS.build,

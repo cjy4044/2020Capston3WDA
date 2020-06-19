@@ -30,7 +30,7 @@ public class CustomMybagRepositoryImpl implements CustomMybagRepository {
     private QPrdOption option = QPrdOption.prdOption;
 
     @Override
-    public CustomBagSelect getMybag(int r_id, Pageable page) {
+    public CustomBagSelect getMybag(int r_id) {//, Pageable page
 
         JPAQueryFactory query = new JPAQueryFactory(em); // 실제로 쿼리 되는 문장?
 
@@ -59,9 +59,9 @@ public class CustomMybagRepositoryImpl implements CustomMybagRepository {
         .join(option).on(prd.productId.eq(option.productId))
         .join(mybag).on(prd.productId.eq(mybag.productId))
         .where(booleanBuilder)
-        .offset(page.getOffset()).limit(page.getPageSize())
         .orderBy(mybag.id.desc())
         .fetch();
+        // .offset(page.getOffset()).limit(page.getPageSize())
 
         Long count = 
             query.select(Projections.bean(CustomBagPrd.class, 

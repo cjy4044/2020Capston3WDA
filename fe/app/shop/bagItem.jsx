@@ -6,6 +6,7 @@ export default class BagItem extends React.Component {
         return this.props.data? this.props.data.map((prd, index) => {
             return (
                 <div key={index}>
+                    <input type="checkbox"  onClick={this.props.check.bind(this,this.props.this,index)}/>
                     <a href={"/shop/product/"+prd.productId}>
                         <img src={"/uploads/"+prd.img}></img>
                         <div>상품명: {prd.name}</div>

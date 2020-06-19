@@ -24,6 +24,8 @@ import com.vote.vote.repository.CustomMybagRepository;
 import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.MybagJpaRepository;
+import com.vote.vote.repository.OrderJpaRepository;
+import com.vote.vote.repository.OrderListJpaRepository;
 import com.vote.vote.repository.PrdCateDJpaRepository;
 import com.vote.vote.repository.PrdCategoryDJpaRepository;
 import com.vote.vote.repository.PrdCategoryJpaRepository;
@@ -101,6 +103,13 @@ public class ShopController {
 
 	@Autowired
 	private CustomMybagRepository customMybagRepository;
+
+	@Autowired
+	private OrderJpaRepository orderRepository;
+
+	@Autowired
+	private OrderListJpaRepository orderListRepository;
+
 
 	@RequestMapping("/shop/index")
 	public String index(Model model,Principal user) {
@@ -610,7 +619,8 @@ public class ShopController {
 		) {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-			CustomBagSelect mybags = customMybagRepository.getMybag(userDetails.getR_ID(), page);
+			// CustomBagSelect mybags = customMybagRepository.getMybag(userDetails.getR_ID(), page);
+			CustomBagSelect mybags = customMybagRepository.getMybag(userDetails.getR_ID());
 
 
 
@@ -676,21 +686,53 @@ public class ShopController {
 		
 		@RequestMapping(value={"/shop/order","/shop/order/"}, method=RequestMethod.POST)
 		public String productBuy(
-			@RequestParam("productId") int[] productId, //상품 id
-			@RequestParam("optionId") int[] optionId, //옵션 id
-			@RequestParam("count") int[] count, // 수량
+			@RequestParam("productId") int[] productIds, //상품 id
+			@RequestParam("optionId") int[] optionIds, //옵션 id
+			@RequestParam("count") int[] quantitys, // 수량
 			@RequestParam("addr") String addr, // 도로명 주소
 			@RequestParam("addr2") String addr2, // 상세주소
 			@RequestParam("receiver") String receiver, //수취인
 			@RequestParam("phone") String phone, // 수취인 연락처
 			@Nullable Authentication authentication 
 			) {
-				
-				Order order = new Order();
-				
-				OrderList orderList = new OrderList();
+				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-			return "redirect:/shop/index";
+				Order order = new Order();
+				order.setrId(userDetails.getR_ID());
+				order.setAddr(addr);
+				order.setAddr2(addr2);
+				// order.setInvoice(invoice);
+				order.setPhone(phone);
+				order.setReceiver(receiver);
+				
+				orderRepository.saveAndFlush(order);
+				
+				int sumPrice = 0;
+				for(int i=0;i<productIds.length;i++){
+
+					Prd prd = prdRepository.findByProductId(productIds[i]);
+					PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
+
+					OrderList orderList = new OrderList();
+					
+					orderList.setCount(quantitys[i]);
+					orderList.setOptionId(option.getOptionId());
+					orderList.setOrderId(order.getOrderId());
+					orderList.setPrice((prd.getPrice()+option.getoPrice())*quantitys[i]);
+					sumPrice += orderList.getPrice();
+					orderListRepository.saveAndFlush(orderList);
+				}
+				order.setPrice(sumPrice);
+				orderRepository.saveAndFlush(order);
+
+			return "redirect:/shop/buySuccess";
 		}
+
+		@RequestMapping(value={"/shop/order/ok","/shop/order/ok/"}, method=RequestMethod.GET)
+		public String orderBuyOk() {
+
+			return "/shop/buySuccess";
+		}
+		
 		
 }

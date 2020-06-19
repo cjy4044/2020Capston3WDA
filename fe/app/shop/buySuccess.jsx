@@ -20,8 +20,8 @@ class BuySuccess extends React.Component {
         return (
             <div>
                 <h2>상품 구매 완료</h2>
-                <a href="#">주문목록으로 가기</a>
-                <a href="/">홈으로 가기</a>
+                <a href="/shop/orderList">주문목록으로 가기</a>
+                <a href="/shop/index">홈으로 가기</a>
             </div>
             
         )

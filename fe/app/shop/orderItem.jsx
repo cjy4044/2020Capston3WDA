@@ -15,6 +15,7 @@ export default class Item2 extends React.Component {
                         <div>상품명: {prd.name}</div>
                         <div>옵션: {prd.optionName}</div>
                         <div>개수: {prd.count}</div>
+                        <div>가격: {(prd.price + prd.oPrice)*prd.count}</div>
                         <input type="hidden" name="productId" value={prd.id}/>
                         <input type="hidden" name="optionId" value={prd.optionId}/>
                         <input type="hidden" name="count" value={prd.count}/>

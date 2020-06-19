@@ -9,6 +9,7 @@ import com.vote.vote.db.customSelect.CustomBagSelect;
 import com.vote.vote.db.customSelect.CustomOrderInfo;
 import com.vote.vote.db.customSelect.CustomOrderList;
 import com.vote.vote.db.customSelect.CustomOrderListSelect;
+import com.vote.vote.db.customSelect.CustomOrderUpdate;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Mybag;
 import com.vote.vote.db.dto.Order;
@@ -709,18 +710,21 @@ public class ShopController {
 			) {
 				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-				Order order = new Order();
-				order.setrId(userDetails.getR_ID());
-				order.setAddr(addr);
-				order.setAddr2(addr2);
-				// order.setInvoice(invoice);
-				order.setPhone(phone);
-				order.setReceiver(receiver);
 				
-				orderRepository.saveAndFlush(order);
 				
 				int sumPrice = 0;
 				for(int i=0;i<productIds.length;i++){
+
+					Order order = new Order();
+					order.setrId(userDetails.getR_ID());
+					order.setAddr(addr);
+					order.setAddr2(addr2);
+					// order.setInvoice(invoice);
+					order.setPhone(phone);
+					order.setReceiver(receiver);
+					order.setPrice(sumPrice);
+					order.setState("0");
+					orderRepository.saveAndFlush(order);
 
 					Prd prd = prdRepository.findByProductId(productIds[i]);
 					PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
@@ -732,11 +736,10 @@ public class ShopController {
 					orderList.setOrderId(order.getOrderId());
 					orderList.setPrice((prd.getPrice()+option.getoPrice())*quantitys[i]);
 					orderList.setProductId(prd.getProductId());
-					sumPrice += orderList.getPrice();
+					
 					orderListRepository.saveAndFlush(orderList);
 				}
-				order.setPrice(sumPrice);
-				orderRepository.saveAndFlush(order);
+				
 
 				
 				
@@ -777,23 +780,58 @@ public class ShopController {
 		}
 
 		// 주문 상세 뷰
-		@RequestMapping(value={"/shop/orderShow","/shop/orderShow/"}, method=RequestMethod.GET) 
-		public String orderShow(@Nullable Authentication authentication) { 
-		
-			return null;
+		@RequestMapping(value={"/shop/orderShow/{orderListId}","/shop/orderShow/{orderListId}/"}, method=RequestMethod.GET) 
+		public String orderShow(@PathVariable("orderListId") int listId, Model model){ 
+			model.addAttribute("listId", listId);
+			return "/shop/orderShow";
 		}
 
 		// 주문 상세 데이터 Axios
 		@ResponseBody
-		@RequestMapping(value={"/shop/orderShow/axios","/shop/orderShow/axios/"}, method=RequestMethod.GET)
-		public CustomOrderListSelect orderShowAxios(@Nullable Authentication authentication) {
+		@RequestMapping(value={"/shop/orderShow/{orderListId}/axios","/shop/orderShow/{orderListId}/axios/"}, method=RequestMethod.GET)
+		public CustomOrderListSelect orderShowAxios(@PathVariable("orderListId") int listId) {
 
-			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			// CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-			CustomOrderListSelect orderItems =  customOrderListRepository.getOrderListbyOrderId(userDetails.getR_ID());
+			CustomOrderListSelect orderItems =  customOrderListRepository.getOrderListbyOrderListId(listId);
 
 			return orderItems;
 		}
 		
+		@ResponseBody
+		@RequestMapping(value={"/shop/orderShow/{orderId}/axios","/shop/orderShow/{orderId}/axios"}, method=RequestMethod.PUT)
+		public JSONObject orderUpdateAxios(@PathVariable("orderId") int orderId, @RequestBody CustomOrderUpdate info) {
+
+			JSONObject result = new JSONObject();
+
+			// System.out.println("info : "+info.getInvoice());
+			// System.out.println("info : "+info.getState());
+
+			try{
+				System.out.println(orderId);
+				Order order = orderRepository.findByOrderId(orderId);
+
+				String invoice = info.getInvoice();
+				if(info.getInvoice().length() == 0){
+					invoice = "0";
+				}
+				
+				order.setInvoice(invoice);
+				order.setState(info.getState());
+
+				orderRepository.saveAndFlush(order);	
+				result.put("success", "주문 정보 수정 완료");
+			}catch(Exception e){
+				e.printStackTrace();
+				result.put("error","오류발생! 주문 정보 수정에 실패했습니다.");
+			}
+			
+
+			
+
+			return result;
+		}
+		
 		
 }
+

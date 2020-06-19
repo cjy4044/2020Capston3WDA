@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.customSelect.CustomOrderListSelect;
 import com.vote.vote.db.customSelect.CustomPrd;
 import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Company;
@@ -15,6 +16,7 @@ import com.vote.vote.db.dto.Vote;
 import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.CustomCompanyRepository;
 import com.vote.vote.repository.CustomMemberRepository;
+import com.vote.vote.repository.CustomOrderListRepository;
 import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.CustomProgramRepository;
 import com.vote.vote.repository.CustomVoteRepository;
@@ -86,6 +88,8 @@ public class UserInfoController {
 	@Autowired
 	private CustomPrdJapRepository customPrdRepository;
 
+	@Autowired
+	private CustomOrderListRepository customOrderListRepository;
 
 	//개인정보
 	@RequestMapping(value={"","/"})
@@ -639,6 +643,20 @@ public class UserInfoController {
 				System.out.println("등록 상품 목록에서 오류 발생.");
 				return null;
 			}
+		}
+
+		@RequestMapping(value={"/manage/order","/manage/order/"}, method=RequestMethod.GET)
+		public String manageOrder() {
+
+			return "/userInfo/manageOrder";
+		}
+		@ResponseBody
+		@RequestMapping(value={"/manage/order/axios","/manage/order/axios/"}, method=RequestMethod.GET)
+		public CustomOrderListSelect manageOrderAxios(@Nullable Authentication authentication, @PageableDefault Pageable page) {
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			CustomOrderListSelect items = customOrderListRepository.getOrderListByManagerId(userDetails.getR_ID(),page);
+			
+			return items;
 		}
 
 }

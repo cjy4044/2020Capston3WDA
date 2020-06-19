@@ -80,6 +80,7 @@ class Mybag extends React.Component {
         return (
             <div>
                 <div> 장바구니 </div>
+                <div><a href="/shop/orderList">주문 목록</a></div>
                 <div>
                     <div>
                         <BagItem data={this.state.mybags} event={this.deleteItem} check={this.check} this={this}/>

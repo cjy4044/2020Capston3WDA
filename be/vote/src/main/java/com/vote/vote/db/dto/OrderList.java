@@ -31,6 +31,8 @@ public class OrderList {
     @Column(nullable = false)
     private int price;
 
+    @Column(name="product_id", nullable =false)
+    private int productId;
 
     public int getOrderListId() {
         return orderListId;
@@ -70,5 +72,13 @@ public class OrderList {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

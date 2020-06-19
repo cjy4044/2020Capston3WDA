@@ -18,6 +18,7 @@ export default class Item2 extends React.Component {
                         <input type="hidden" name="productId" value={prd.id}/>
                         <input type="hidden" name="optionId" value={prd.optionId}/>
                         <input type="hidden" name="count" value={prd.count}/>
+                        <input type="hidden" name="bagId" value={prd.bagId}/>
                     </div>
                  )
             })

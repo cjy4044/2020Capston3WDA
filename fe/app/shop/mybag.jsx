@@ -69,6 +69,7 @@ class Mybag extends React.Component {
         for(var i =0;i<this.buyItems.length; i++){
             var data =this.state.mybags[this.buyItems[i]]
             this.buyUrl += "productId="+data.productId+"&optionId="+data.optionId+"&quantity="+data.quantity
+            this.buyUrl +="&bagId="+data.id
             this.buyUrl +="&"
         }
         window.location.href = this.buyUrl;

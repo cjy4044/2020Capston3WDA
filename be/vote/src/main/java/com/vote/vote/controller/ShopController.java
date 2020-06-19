@@ -7,6 +7,8 @@ import java.util.List;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.customSelect.CustomBagSelect;
 import com.vote.vote.db.customSelect.CustomOrderInfo;
+import com.vote.vote.db.customSelect.CustomOrderList;
+import com.vote.vote.db.customSelect.CustomOrderListSelect;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Mybag;
 import com.vote.vote.db.dto.Order;
@@ -21,6 +23,7 @@ import com.vote.vote.db.dto.PrdSize;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.repository.Asdf;
 import com.vote.vote.repository.CustomMybagRepository;
+import com.vote.vote.repository.CustomOrderListRepository;
 import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.repository.MybagJpaRepository;
@@ -109,6 +112,9 @@ public class ShopController {
 
 	@Autowired
 	private OrderListJpaRepository orderListRepository;
+
+	@Autowired
+	private CustomOrderListRepository customOrderListRepository;
 
 
 	@RequestMapping("/shop/index")
@@ -659,7 +665,8 @@ public class ShopController {
 		@RequestMapping(value={"/shop/order/axios","/shop/order/axios/"}, method=RequestMethod.GET)
 		public List<CustomOrderInfo> orderProductInfo(@RequestParam("productId") int[] productIds, // 주문 뷰에 상품 정보 보냄.
 		@RequestParam("optionId") int[] optionIds,
-		@RequestParam("quantity") int[] quantitys
+		@RequestParam("quantity") int[] quantitys,
+		@Nullable @RequestParam("bagId") int[] bagId
 		) {
 			List<CustomOrderInfo> infos = new ArrayList<CustomOrderInfo>();
 
@@ -677,6 +684,10 @@ public class ShopController {
 				item.setoPrice(option.getoPrice());
 				item.setCount(quantitys[i]);
 
+				if(bagId != null){
+					item.setBagId(bagId[i]);
+				}
+				
 				infos.add(item);
 			}
 
@@ -693,6 +704,7 @@ public class ShopController {
 			@RequestParam("addr2") String addr2, // 상세주소
 			@RequestParam("receiver") String receiver, //수취인
 			@RequestParam("phone") String phone, // 수취인 연락처
+			@Nullable @RequestParam("bagId") int[] bagId,
 			@Nullable Authentication authentication 
 			) {
 				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -719,19 +731,68 @@ public class ShopController {
 					orderList.setOptionId(option.getOptionId());
 					orderList.setOrderId(order.getOrderId());
 					orderList.setPrice((prd.getPrice()+option.getoPrice())*quantitys[i]);
+					orderList.setProductId(prd.getProductId());
 					sumPrice += orderList.getPrice();
 					orderListRepository.saveAndFlush(orderList);
 				}
 				order.setPrice(sumPrice);
 				orderRepository.saveAndFlush(order);
 
-			return "redirect:/shop/buySuccess";
+				
+				
+				
+				if(bagId[0] != 0){// bagId 값이 넘어오지 않으면, [ 0 ]  으로 초기화 되는 듯 하다. @Nullable
+
+					for(int id : bagId){
+						
+						mybagRepository.deleteById(id);
+					}
+				}
+
+			return "redirect:/shop/order/ok";
 		}
 
 		@RequestMapping(value={"/shop/order/ok","/shop/order/ok/"}, method=RequestMethod.GET)
 		public String orderBuyOk() {
 
 			return "/shop/buySuccess";
+		}
+
+		// 주문 리스트 뷰
+		@RequestMapping(value={"/shop/orderList","/shop/orderList/"}, method=RequestMethod.GET)
+		public String orderList() {
+			return "/shop/orderList";
+		}
+
+		// 주문 리스트 데이터 Axios
+		@ResponseBody
+		@RequestMapping(value="/shop/orderList/axios", method=RequestMethod.GET) 
+		public CustomOrderListSelect orderListAxios(@Nullable Authentication authentication, @PageableDefault Pageable page) {
+
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			CustomOrderListSelect orderList =  customOrderListRepository.getOrderListbyUserId(userDetails.getR_ID(), page);
+
+			return orderList;
+		}
+
+		// 주문 상세 뷰
+		@RequestMapping(value={"/shop/orderShow","/shop/orderShow/"}, method=RequestMethod.GET) 
+		public String orderShow(@Nullable Authentication authentication) { 
+		
+			return null;
+		}
+
+		// 주문 상세 데이터 Axios
+		@ResponseBody
+		@RequestMapping(value={"/shop/orderShow/axios","/shop/orderShow/axios/"}, method=RequestMethod.GET)
+		public CustomOrderListSelect orderShowAxios(@Nullable Authentication authentication) {
+
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			CustomOrderListSelect orderItems =  customOrderListRepository.getOrderListbyOrderId(userDetails.getR_ID());
+
+			return orderItems;
 		}
 		
 		

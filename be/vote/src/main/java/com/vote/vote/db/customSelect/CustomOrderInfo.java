@@ -10,7 +10,8 @@ public class CustomOrderInfo {
     private int optionId; // 옵션 아이디
     private String optionName;// 옵션명
     private int oPrice; //옵션 추가금액
-    private int count; // 개수
+	private int count; // 개수
+	private int bagId;
 	public int getId() {
 		return id;
 	}
@@ -58,6 +59,14 @@ public class CustomOrderInfo {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public int getBagId() {
+		return bagId;
+	}
+
+	public void setBagId(int bagId) {
+		this.bagId = bagId;
 	}
 
 

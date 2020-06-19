@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PrdOptionJpaRepository extends JpaRepository<PrdOption, Integer> {
 
-    List<PrdOption> findByProductId(int p_id);
+    List<PrdOption> findByProductIdOrderByOptionIdAsc(int p_id);
+    PrdOption findByOptionId(int optionId);
     
 }

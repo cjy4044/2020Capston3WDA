@@ -52,14 +52,13 @@ class PrdShow extends React.Component {
 
         var option = $(document.createElement("option"));
         
-        option.val(0)
-        option.text("기본")
-        option.attr("addPrice",0);
-        select.append(option);
         for(var i=0; i<this.state.option.length;i++){
             var option = $(document.createElement("option"));
             option.val(this.state.option[i].optionId)
-            option.text(this.state.option[i].oTitle+"\t\t\t\t +"+this.state.option[i].oPrice+"원")
+            if(i==0)
+                option.text(this.state.option[i].oTitle) // 기본옵션일 경우.
+            else 
+                option.text(this.state.option[i].oTitle+"\t\t\t\t +"+this.state.option[i].oPrice+"원") //추가옵션일 경우.
             option.attr("addPrice",this.state.option[i].oPrice);
             select.append(option);
         }
@@ -69,6 +68,7 @@ class PrdShow extends React.Component {
 
     sumPriceSet(){
         var sum = this.state.prd.price + parseInt($('#selectOption option:selected').attr("addPrice"))
+        var sum = sum * $("#quantity").val();
         $("#sumPrice").html(sum+"원")
         
     }
@@ -85,12 +85,51 @@ class PrdShow extends React.Component {
         })
         
     }
+    async addMybag(){// 장바구니 추가.
 
+        console.log($('#quantity').val());
+        if($('#quantity').val() == null || $('#quantity').val() <= 0)
+            return alert("수량을 입력해주세요.");
+
+        if(!confirm("장바구니에 추가하시겠습니까?"))
+            return;
+        
+        let {data} = await axios.post("/shop/"+this.state.prd.productId+"/mybag",{
+
+                optionId : $('#selectOption').val(),
+                quantity : $('#quantity').val()
+
+        });
+        
+        if(data.success){
+            if(confirm(data.success+"\n장바구니로 이동하시겠습니까?")){
+                location.href = "/shop/mybag"
+            }
+        }else{
+            alert("장바구니 추가에 실패했습니다.");
+        }
+        
+        
+    }
+    order(){
+        
+        if($('#quantity').val() == null || $('#quantity').val() <= 0)
+            return alert("수량을 입력해주세요.");
+
+        if(!confirm("해당 상품을 구매하시겠습니까?"))
+            return
+
+        
+        location.href =
+        "/shop/order?productId="+this.state.prd.productId+"&optionId="+$('#selectOption').val()+"&quantity="+$('#quantity').val()
+
+    }
     render() {
         var prd = this.state.prd;
         
         return (
             <div className="topDiv">
+                <div><a href="/shop/mybag">장바구니</a></div>
                 <div className="grid">
                     <div className="imgs" >
                         <div className="sum">
@@ -105,12 +144,15 @@ class PrdShow extends React.Component {
                         <div>제품 설명:{prd.content}</div>
                         <div>재고: {prd.stock} 개</div>
                         <div>가격: {prd.price} 원</div>
+                        <div>옵션</div>
                         <div id="optionSelect"></div>
+                        <div>수량</div>
+                        <div><input type="number" id="quantity" min="1" max="9999" defaultValue="1" onChange={this.sumPriceSet.bind(this)}/></div>
                         <div>총 가격</div>
                         <h3 id="sumPrice">{prd.price}원</h3>
                         
-                        <input type="button" value="장바구니 추가"/><input  type="button" value="구매"/>
-
+                        <input type="button" value="장바구니 추가" onClick={this.addMybag.bind(this)}/>
+                        <input type="button" value="구매" onClick={this.order.bind(this)}/>
                     </div>
                 </div>
                 <div className="itemDetails">
@@ -141,3 +183,4 @@ class PrdShow extends React.Component {
 }
 
 ReactDOM.render(<PrdShow/>,document.getElementById('prdShow'));
+

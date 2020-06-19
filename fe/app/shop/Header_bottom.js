@@ -17,6 +17,7 @@ class Header_bottom extends React.Component {
                             </div>
                             <div className="mainmenu pull-left">
                                 <ul className="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="/" className="active">RIRO 홈</a></li>
                                     <li><a href="/shop/index" className="active">홈</a></li>
                                     <li className="dropdown"><a href="#">굿즈샵<i className="fa fa-angle-down"></i></a>
                                         <ul role="menu" className="sub-menu">
@@ -24,14 +25,14 @@ class Header_bottom extends React.Component {
 
                                         </ul>
                                     </li>
-                                    <li className="dropdown"><a href="#">QnA<i className="fa fa-angle-down"></i></a>
+                                    {/* <li className="dropdown"><a href="#">QnA<i className="fa fa-angle-down"></i></a>
                                         <ul role="menu" className="sub-menu">
                                             <li><a href="">자주 묻는 질문</a></li>
                                             <li><a href="">1:1 문의하기</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="">이벤트</a></li>
-                                    <li><a href="">공지사항</a></li>
+                                    <li><a href="">공지사항</a></li> */}
                                 </ul>
                             </div>
                         </div>

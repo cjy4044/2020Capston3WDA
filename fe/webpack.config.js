@@ -60,8 +60,13 @@ module.exports = {
     managePrd : path.join(__dirname,'./app/userInfo/managePrd.jsx'),
     prdShow : path.join(__dirname,'./app/shop/prdShow.jsx'),
     shopItemEdit : path.join(__dirname,"./app/shop/itemEdit.jsx"),
-
-
+    mybag : path.join(__dirname,"./app/shop/mybag.jsx"),
+    order : path.join(__dirname,"./app/shop/order.jsx"),
+    buySuccess : path.join(__dirname,"./app/shop/buySuccess.jsx"),
+    orderList : path.join(__dirname,"./app/shop/orderList.jsx"),
+    orderShow : path.join(__dirname,"./app/shop/orderShow.jsx"),
+    manageOrder : path.join(__dirname,"./app/userInfo/manageOrder.jsx"),
+    
   },
   output: {
     path: PATHS.build,

@@ -44,16 +44,16 @@
 		//굿즈샵관리
 		$("#side").append("<li><a href='/userInfo/manage/product'>상품관리</a></li>");	 
 		$("#side").append("<li><a href='/shop/create'>상품등록</a></li>");	 
-		$("#side").append("<li><a href='#'>주문관리</a></li>");	 
+		$("#side").append("<li><a href='/userInfo/manage/order'>주문관리</a></li>");	 
 		$("#side").append("<li><a href='#'>판매추이</a></li>");	
 		    
 		//채팅관리
 		$("#side").append("<li><a href='#'>채팅방관리</a></li>");	}	
 			
 		$("#side").append("<li><a href='/userInfo/voter'>나의투표</a></li>");
-		$("#side").append("<li><a href='#'>나의주문</a></li>");
-		$("#side").append("<li><a href='#'>장바구니</a></li>");
-		$("#side").append("<li><a href='#'>구매내역</a></li>");
+		$("#side").append("<li><a href='/shop/orderList'>나의주문</a></li>");
+		$("#side").append("<li><a href='/shop/mybag'>장바구니</a></li>");
+		// $("#side").append("<li><a href='#'>구매내역</a></li>");
 	   
 		    
 	}

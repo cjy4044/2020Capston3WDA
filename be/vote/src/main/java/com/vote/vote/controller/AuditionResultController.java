@@ -123,6 +123,9 @@ public class AuditionResultController {
 		if(bindingResult.hasErrors()) {
 			return "/auditionresult/write";
 		} else if(filename.isEmpty()) {
+			Member member = memberRepository.findByUserid(principal.getName());
+			auditionResult.setRid(member.getNo());
+			auditionResult.setRusername(member.getName());
 			auditionResult.setRdate(new Date());
 			auditionResultRepository.save(auditionResult);
 			sessionStatus.setComplete();
@@ -131,7 +134,7 @@ public class AuditionResultController {
 			
 		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
             Member member = memberRepository.findByUserid(principal.getName());
-			
+			auditionResult.setRusername(member.getName());
             // 게시글저장
             auditionResult.setRid(member.getNo());
 //            audience.setADate(new Date());

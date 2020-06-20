@@ -30,7 +30,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 결과 게시판',_)
 			<td th:text="${auditionResult.resultid}"></td>
 			<td><a href="" th:href="@{'/auditionresult/readuser/' + ${auditionResult.resultid}}" th:text="${auditionResult.rtitle}"></a></td>
 			<td th:text="${#dates.format(auditionResult.rdate, 'yyyy-MM-dd')}"></td>
-			<td sec:authentication="principal.name"></span><span> 님</span></td>
+			<td><span th:text="${auditionResult.rusername}"></span><span>님</span></td>
   
 
 		</tr>

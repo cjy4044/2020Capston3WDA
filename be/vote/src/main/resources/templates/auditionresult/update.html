@@ -29,6 +29,7 @@ th:replace="~{main_layout::layout(~{::content},_,'수정하기',_)}">
                 <th><label for="rcontent">내용</label></th>
                 <td><input type="text" name="rcontent" style=" width:1040px; height:300px;" th:value="${auditionResult.rcontent}" /></td>
             </tr>
+            <input type="hidden" name="rusername" th:value="${audition.rusername}" />
 </table>
 
 </table>

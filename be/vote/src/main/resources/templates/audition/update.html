@@ -31,13 +31,12 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설 게
 				
                 <th><label for="aissue">발표일 : </label></th>
 				<td><input type="date" name="aissue" th:value="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"> /></td>
-                
             </tr>
             <tr>
                 <th><label for="atitle">제목 : </label></th>
 				<td><input type="text" name="atitle" th:value="${audition.atitle}" /></td>
             </tr>
-           
+            <input type="hidden" name="ausername" th:value="${audition.ausername}" />
           
          
     </tbody>

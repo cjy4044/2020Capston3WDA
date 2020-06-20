@@ -50,7 +50,8 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설',_)
 			<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
 			<td th:text="${audition.arecruits}+ 명"></td>
 			<td th:text="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"></td>
-			<td sec:authentication="principal.name"></span><span> 님</span></td>
+            <!-- <td sec:authentication="principal.name"></span><span> 님</span></td> -->
+            <td><span th:text="${audition.ausername}"></span><span>님</span></td>
 			
 			
   

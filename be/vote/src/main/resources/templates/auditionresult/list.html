@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'오디션 결과 게시판',_)}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 <head>
- <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"> -->
-   
-
+    <!-- 사이드바 -->
+    <script src="/js/side/userInfoSide.js"></script>
 </head>
-  
 <body>
 
 
@@ -45,11 +43,11 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 결과 게시판',_)
         </table>
         
         <div>
-            <span style="float:right;">
+            
                 <td>
               <input type="button" value="등록" onclick="location.href='/auditionresult/write'"/>
                                     </td>
-            </span>
+       
             	<tr>
             
               <input type="button" value="처음으로" onclick="location.href='/auditionresult/list'"/>

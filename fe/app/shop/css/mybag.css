@@ -1,0 +1,8 @@
+.webzineList > ul > li .list_img {
+    display: block;
+    float: left;
+    margin: 0 15px 0 0;
+    width: 20%;
+    max-width: 120px;
+    overflow: hidden;
+}

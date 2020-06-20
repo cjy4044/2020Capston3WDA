@@ -38,7 +38,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
     [[${auditionResult.rfile}]]</a>
 
       
-      </span>
+      </span><br><br>
 <table>
  <tr>
                 <th>내용 : </th>
@@ -48,6 +48,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
             </tr>
 </table>
 	
+<br><br>
 	
 	
 	
@@ -55,17 +56,18 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
 	
 	
 	
-	
-	<div>
+    <div>
+    <button>
         <a href="" th:href="@{'/auditionresult/update/' + ${auditionResult.Resultid}}">수정</a> 
-        
+    </button>
              <form id="delete-form" th:action="@{'/auditionresult/' + ${auditionResult.Resultid}}" method="post">
             <input type="hidden" name="_method" value="delete"/> 
             <button id="delete-btn">삭제</button>
         </form>
         
-	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
-		<a href="" th:href="@{/auditionresult/list}">목록</a>
+	<button>
+        <a href="" th:href="@{/auditionresult/list}">게시글 목록</a>
+</button>
 	</div>
 </body>
 </content>

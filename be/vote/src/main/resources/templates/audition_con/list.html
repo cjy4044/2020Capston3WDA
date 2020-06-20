@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판',_)}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 <head>
- <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css"> -->
-        <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
-   
-
+    <!-- 사이드바 -->
+    <script src="/js/side/userInfoSide.js"></script>
 </head>
   
 <body>
@@ -25,7 +23,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판',_)
 		<tr>
 			<th>No</th>
 			<th>제목</th>
-			<th>신청서이름</th>
+			<!-- <th>신청서이름</th> -->
 			<th>아이디</th>
 			<th>접수일</th>
 			<th>심사결과</th>
@@ -35,7 +33,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 심사 게시판',_)
 		<tr th:each="auditionCon:${auditionconlist}">
 			<td th:text="${auditionCon.formid}"></td>
 			<td><a href="" th:href="@{'/audition_con/read/' + ${auditionCon.formid}}" th:text="${auditionCon.ftitle}"></a></td>
-			<td th:text="${auditionCon.fname}"></td>
+			<!-- <td th:text="${auditionCon.fname}"></td> -->
 			<td sec:authentication="principal.name"></span><span> 님</span></td>
 			<td th:text="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"></td>
 			<!-- th:if 조건문 o 가 맞을때, td 합격을 출력-->

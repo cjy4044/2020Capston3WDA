@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{main_layout::layout(~{::content},_,'신청 폼',_)}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-</head>
-
-
-<body>
+    </head>
 <content>
+<body>
+    
+
     <style>
-.im{
-weidht:100px;
-height:100px;}</style>
+        .im{
+        weidht:100px;
+        height:100px;}</style>
 
 <form th:action="@{'/audition_con/update/' + ${auditionCon.formid}}" method="post"> 
 	<table class="table table-bordered">
@@ -142,52 +141,7 @@ if (check = "o") {
 } else if (check = "x") {
     document.querySelector(".x").checked = true;
 }
-	       if(auditionCon.fhobby==)
-                function career_add() {
-                    var career = '<tr>' +
-                                    '<th>경력</th>' +
-                                    '<td>' +
-                                        '<input type="text" name="fcarrer">' +
-                                    '</td>' +
-                                '</tr>';
-                    $('.table_body').append(career)
-                }
-                function motive_add() {
-                    var career = '<tr>' +
-                                    '<th>지원동기</th>' +
-                                    '<td>' +
-                                        '<input type="text" name="fmotive">' +
-                                    '</td>' +
-                                '</tr>';
-                    $('.table_body').append(career)
-                }
-                function category_add() {
-                    var career = '<tr>' +
-                                    '<th>지원부문</th>' +
-                                    '<td>' +
-                                        '<input type="text" name="fcategory">' +
-                                    '</td>' +
-                                '</tr>';
-                    $('.table_body').append(career)
-                }
-                function introduction_add() {
-                    var career = '<tr>' +
-                                    '<th>자기소개</th>' +
-                                    '<td>' +
-                                        '<input type="text" name="fintroduction">' +
-                                    '</td>' +
-                                '</tr>';
-                    $('.table_body').append(career)
-                }
-                function job_add() {
-                    var career = '<tr>' +
-                                    '<th>직업</th>' +
-                                    '<td>' +
-                                        '<input type="text" name="fjob">' +
-                                    '</td>' +
-                                '</tr>';
-                    $('.table_body').append(career)
-                }
+	     
             </script>
 </body>
 </content>

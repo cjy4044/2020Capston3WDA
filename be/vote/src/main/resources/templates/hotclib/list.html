@@ -10,6 +10,15 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
  
    <content>
      <style>
+       .hell{
+         position: relative;
+         left: 1150px;
+         bottom:  390px;
+       }
+       .search{
+         position: relative;
+         left: 1018px;
+       }
        .hi{
          width: 250px;
          height: 250px;
@@ -23,17 +32,22 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
     display: inline-block;
     text-align:left;
        }
-     </style>
- 
+     </style> 
+
+<button type="button" >조회순</button>
+<button>최신순</button>
         <form action="/hotclib/search" method="get">
           <div class="search">
-          <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
-          </div>
+          <input name="keyword" type="text" placeholder="제목을 입력해주세요">
           <button>검색</button>
+        </div>
           </form>
+        
        
    <div class="gi" th:each="hotclib:${hotclibList}" >
-   <img class= "hi" th:src="@{'/uploads/' + ${hotclib.filename2}}">
+     <a href=""  th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
+   <img class= "hi" th:src="@{'/uploads/' + ${hotclib.filename2}}"  >
+  </a>
    <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li>
    <li>제목: <a href="" th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}" th:text="${hotclib.htitle}"></a></li>
    <li>작성일: <span th:utext="${hotclib.h_date}"></span></li>
@@ -41,7 +55,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
    <li>작성자: <span sec:authentication="principal.name"></span></li>
    
    </div>
-  <div>
+  <div class="hell">
    <input type="button" value="영상 업로드" onclick="location.href='hotclib/upload'">
   </div>
      
@@ -81,4 +95,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
     
     </content>
   </body>
+  <script>
+    
+  </script>
 </html>

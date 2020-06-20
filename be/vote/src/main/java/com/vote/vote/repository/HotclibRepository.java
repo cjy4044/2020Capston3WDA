@@ -16,6 +16,7 @@ public interface HotclibRepository extends JpaRepository<Hotclib, Integer>{
   public Hotclib deleteById(int hotclibid);
   public ArrayList<Hotclib> findByHtitle(String keyword);
   
+  
  // public Hotclib findByRid(int rid);
 
 } 

@@ -1,24 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설 게시글',_)}">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-
+    <!-- 사이드바 -->
+    <script src="/js/side/userInfoSide.js"></script>
 </head>
 <content>
 <body>
-<!--     <table border="1">
-		<tr>
-			<th>제목</th>
-			<td th:text="${audition.a_title}">제목입니다.</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td th:text="${audition.a_category}">분야입니다.</td>
-		</tr>
-	</table> -->
+
 	<table class="table table-bordered; margin:auto; text-align:center;">
    
     <tbody>
@@ -45,7 +36,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
                   [[${audition.afile}]]</a>
 
 					
-					</span>
+					</span><br><br>
 				
 <table><br>
  <tr>
@@ -58,7 +49,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
             </tr>
             
            
-</table>
+</table><br><br>
 	
 
 	
@@ -82,15 +73,16 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 된 글',_)}">
 	
 	
 	<div>
+        <button>
         <a href="" th:href="@{'/audition/update/' + ${audition.auditionid}}">수정</a> 
-        
+    </button>
              <form id="delete-form" th:action="@{'/audition/' + ${audition.auditionid}}" method="post">
             <input type="hidden" name="_method" value="delete"/> 
             <button id="delete-btn">삭제</button>
         </form>
         
 	<!--	<a href="" th:href="@{'/hotclib/delete/' + ${hotclib.hotclibid}}">삭제</a> -->
-		<a href="" th:href="@{/audition/list}">목록</a>
+		<button><a href="" th:href="@{/audition/list}">게시글 목록</a></button>
 	</div>
 
 </body>

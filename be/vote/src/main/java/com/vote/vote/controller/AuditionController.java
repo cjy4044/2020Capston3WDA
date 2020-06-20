@@ -66,6 +66,14 @@ public class AuditionController {
 		model.addAttribute("auditionlist", auditionRepository.findAll(pageable));
 		return "audition/list";
 	}
+
+	@GetMapping("/audition/listuser")
+	public String auditionuser(Model model, @PageableDefault Pageable pageable){
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
+		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "auditionid"));
+		model.addAttribute("auditionlist", auditionRepository.findAll(pageable));
+		return "audition/listuser";
+	}
 	
 	@RequestMapping("/audition/complete")
 	public String com(Model model) {
@@ -84,6 +92,14 @@ public class AuditionController {
 				return "audition/list";
 	}
 
+	@GetMapping("/audition/serchuser")
+	public String serchuser(@RequestParam(value="keyword") String keyword, Model model) {
+		List<Audition> audition = auditionRepository.findByAtitle(keyword);
+		
+				model.addAttribute("auditionlist", audition);
+				
+				return "audition/listuser";
+	}
 	
 
 
@@ -94,6 +110,15 @@ public class AuditionController {
 		auditionRepository.save(audition);
 
 		return "audition/read";
+	}
+
+	@GetMapping("/audition/readuser/{auditionid}")
+	public String readuser(Model model, @PathVariable int auditionid){
+		model.addAttribute("audition", auditionRepository.findByAuditionid(auditionid));
+		Audition audition = auditionRepository.findByAuditionid(auditionid);
+		auditionRepository.save(audition);
+
+		return "audition/readuser";
 	}
 	
 	

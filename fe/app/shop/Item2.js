@@ -18,7 +18,7 @@ export default class Item2 extends React.Component {
                                         <h2></h2>
                                         <p>{prd.name}</p>
                                     </a>
-                                    <a href="#"className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>장바구니에 추가</a>
+                                    {/* <a href="#"className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>장바구니에 추가</a> */}
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{main_layout::layout(~{::content},~{::script},'내가 쓴 게시글', ~{::link})}" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{main_layout::layout(~{::content},~{::script},'내가 쓴 게시글', ~{::link})}">
 
 <head>
     <meta charset="UTF-8">
@@ -18,79 +19,83 @@
 
 <body>
     <content>
-    <div id="container">
+        <div id="container">
 
-        <script src="http://sample.paged.kr/purewhite/js/viewimageresize.js"></script>
+            <script src="http://sample.paged.kr/purewhite/js/viewimageresize.js"></script>
 
-        <!-- 게시물 읽기 시작 { -->
+            <!-- 게시물 읽기 시작 { -->
 
-        <article id="bo_v" style="width:100%">
-            
+            <article id="bo_v" style="width:100%">
+
                 <h2 id="bo_v_title">
                     <span class="bo_v_tit" th:text="${audience.aTitle}">
                         웹진형 게시판입니다.</span>
                 </h2>
-            
-
-            <section id="bo_v_info">
-                <h2>페이지 정보</h2>
-                <span class="sound_only">작성자</span> <strong><span class="sv_member"
-                        th:text="${audience.rId}">웹사이팅</span></strong>
-                <span class="sound_only">댓글</span><strong><a href="#bo_vc"> <i class="fa fa-commenting-o"
-                            aria-hidden="true"></i> 0건</a></strong>
-                <span class="sound_only">조회</span><strong th:text="${audience.aViewCount}"><i class="fa fa-eye"
-                        aria-hidden="true"></i> 393회</strong>
-                <strong class="if_date" th:text="${audience.aDate}"><span class="sound_only">작성일</span><i
-                        class="fa fa-clock-o" aria-hidden="true"></i> 18-02-07 09:23</strong>
-            </section>
-
-            <section id="bo_v_atc">
-                <h2 id="bo_v_atc_title">본문</h2>
 
 
-                <div id="bo_v_img">
-                    <img src="#" th:src="@{'/uploads/' + ${audience.img}}" alt="">
-                </div>
+                <section id="bo_v_info">
+                    <h2>페이지 정보</h2>
+                    <span class="sound_only">작성자</span> <strong><span class="sv_member"
+                            th:text="${audience.rId}">웹사이팅</span></strong>
+                    <span class="sound_only">댓글</span><strong><a href="#bo_vc"> <i class="fa fa-commenting-o"
+                                aria-hidden="true"></i> 0건</a></strong>
+                    <span class="sound_only">조회</span><strong th:text="${audience.aViewCount}"><i class="fa fa-eye"
+                            aria-hidden="true"></i> 393회</strong>
+                    <strong class="if_date" th:text="${audience.aDate}"><span class="sound_only">작성일</span><i
+                            class="fa fa-clock-o" aria-hidden="true"></i> 18-02-07 09:23</strong>
+                </section>
 
-                <!-- 본문 내용 시작 { -->
+                <section id="bo_v_atc">
+                    <h2 id="bo_v_atc_title">본문</h2>
 
-                <label>응모기간&nbsp;&nbsp;</label><span
-                    th:text="@{${audience.aStartdate} + '  ~  ' + ${audience.aEnddate}}"></span><br>
-                <label>추첨인원&nbsp;&nbsp;</label><span th:text="@{${audience.aRecruits} + '  명  '}"></span><br>
-                <label>응모제한&nbsp;&nbsp;</label><span th:text="@{${audience.aLimit} + '  회  '}"></span><br>
-                <label>응모시 소모 포인트&nbsp;&nbsp;</label><span th:text="@{${audience.aPrice} + ' p  '}"></span><br>
-                <label>세부내용&nbsp;&nbsp;</label><br>
-                <div id="bo_v_con">
-                    <p th:text="${audience.aContent}"></p>
-                </div>
-                <!-- } 본문 내용 끝 -->
-                <div style="text-align: -webkit-center">
-                    <form style="text-align: -webkit-center; display: inline;">
+
+                    <div id="bo_v_img">
+                        <img src="#" th:src="@{'/uploads/' + ${audience.img}}" alt="">
+                    </div>
+
+                    <!-- 본문 내용 시작 { -->
+
+                    <label>응모기간&nbsp;&nbsp;</label><span
+                        th:text="@{${audience.aStartdate} + '  ~  ' + ${audience.aEnddate}}"></span><br>
+                    <label>추첨인원&nbsp;&nbsp;</label><span th:text="@{${audience.aRecruits} + '  명  '}"></span><br>
+                    <label>응모제한&nbsp;&nbsp;</label><span th:text="@{${audience.aLimit} + '  회  '}"></span><br>
+                    <label>응모시 소모 포인트&nbsp;&nbsp;</label><span th:text="@{${audience.aPrice} + ' p  '}"></span><br>
+                    <label>세부내용&nbsp;&nbsp;</label><br>
+                    <div id="bo_v_con">
+                        <p th:text="${audience.aContent}"></p>
+                    </div>
+                    <!-- } 본문 내용 끝 -->
+                    <div style="text-align: -webkit-center">
+                        <!-- <form style="text-align: -webkit-center; display: inline;">
                         <input type="hidden" id="applyId" name="applyId" value="" th:value="${audience.applyId}">
                         <input type="button" value="응모인원보기" id="showRecruits" class="btn_submit btn">
-                    </form>
-                    <form style="text-align: -webkit-center; display: inline;">
-                        <input type="hidden" id="applyId" name="applyId" value="" th:value="${audience.applyId}">
-                        <input type="hidden" id="aLimit" name="w" value="" th:value="${audience.aLimit}">
-                        <input type="hidden" id="aPrice" name="bo_table" value="webzine" th:value="${audience.aPrice}">
-                        <input type="submit" value="추첨인원보기" id="showRecruits" class="btn_submit btn">
-                    </form>
+                    </form> -->
+                        <input type="button" value="응모인원보기" id="showList" class="btn_submit btn">
+                        <form style="text-align: -webkit-center; display: inline;">
+                            <input type="hidden" id="applyId" name="applyId" value="" th:value="${audience.applyId}">
+                            <input type="hidden" id="aLimit" name="w" value="" th:value="${audience.aLimit}">
+                            <input type="hidden" id="aPrice" name="bo_table" value="webzine" th:value="${audience.aPrice}">
+                            <input type="hidden" id="aRecruits" name="bo_table" value="webzine" th:value="${audience.aRecruits}">
+                            <input type="button" value="추첨인원보기" id="showResult" class="btn_submit btn">
+                        </form>
+                    </div>
+
+                <div>
+                    <div id="list"></div>
+                    <div id="result"></div>
                 </div>
-                
-                
-                <div id="list">
-                </div>
+                    
 
-            </section>
+                </section>
 
-            <div id="bo_v_share">
+                <div id="bo_v_share">
 
-                <!--  추천 비추천 시작 { -->
-                <!-- }  추천 비추천 끝 -->
+                    <!--  추천 비추천 시작 { -->
+                    <!-- }  추천 비추천 끝 -->
 
 
 
-                <!-- <div class="bo_v_snswr">
+                    <!-- <div class="bo_v_snswr">
         <button type="button" class="btn btn_b03 btn_share"><i class="fa fa-share-alt" aria-hidden="true"></i> SNS공유</button>
         
         <ul id="bo_v_sns">
@@ -99,52 +104,54 @@
             <li><a href="http://sample.paged.kr/purewhite/bbs/sns_send.php?longurl=http%3A%2F%2Fsample.paged.kr%2Fpurewhite%2Fbbs%2Fboard.php%3Fbo_table%3Dwebzine%26wr_id%3D7&amp;title=%EC%9B%B9%EC%A7%84%ED%98%95+%EA%B2%8C%EC%8B%9C%ED%8C%90%EC%9E%85%EB%8B%88%EB%8B%A4.&amp;sns=gplus" target="_blank" class="sns_g"><img src="http://sample.paged.kr/purewhite/plugin/sns/icon/gplus.png" alt="구글플러스로 보내기" width="20"></a></li>
             </ul>
         </div> -->
-            </div>
+                </div>
 
 
 
 
-            <!-- 게시물 상단 버튼 시작 { -->
-            <div id="bo_v_top">
+                <!-- 게시물 상단 버튼 시작 { -->
+                <div id="bo_v_top">
 
-                <ul class="bo_v_left">
-                </ul>
+                    <ul class="bo_v_left">
+                    </ul>
 
-                <ul class="bo_v_com">
-                    <!-- <form id="delete-form" th:action="@{'/audience/' + ${audience.applyId}}" method="post">
+                    <ul class="bo_v_com">
+                        <!-- <form id="delete-form" th:action="@{'/audience/' + ${audience.applyId}}" method="post">
                         <input type="hidden" name="_method" value="delete" />
                         <button id="delete-btn">삭제</button>
                     </form> -->
 
-                    <li><a href="/audience/mlist" class="btn_b01 btn"><i class="fa fa-list"
-                                aria-hidden="true"></i> 목록</a></li>
-                    <li><a href="/audience/create" class="btn_b02 btn"><i class="fa fa-pencil"
-                                aria-hidden="true"></i> 글쓰기</a></li>
-                    <li><a href="#" th:href="@{'/audience/update/' + ${audience.applyId}}" class="btn_b02 btn"><i class="fa fa-pencil"
-                                aria-hidden="true"></i> 글수정</a></li>
-                    <li><a href="#" th:href="@{'/audience/delete/' + ${audience.applyId}}" class="btn_b02 btn"><i class="fa fa-pencil"
-                                aria-hidden="true"></i> 글삭제</a></li>
-                </ul>
+                        <li><a href="/audience/mlist" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i>
+                                목록</a></li>
+                        <li><a href="/audience/create" class="btn_b02 btn"><i class="fa fa-pencil"
+                                    aria-hidden="true"></i> 글쓰기</a></li>
+                        <li><a href="#" th:href="@{'/audience/update/' + ${audience.applyId}}" class="btn_b02 btn"><i
+                                    class="fa fa-pencil" aria-hidden="true"></i> 글수정</a></li>
+                        <li><a href="#" th:href="@{'/audience/delete/' + ${audience.applyId}}" class="btn_b02 btn"><i
+                                    class="fa fa-pencil" aria-hidden="true"></i> 글삭제</a></li>
+                    </ul>
 
-                <ul class="bo_v_nb">
-                    <li class="btn_prev transOJ"><a href="./board.php?bo_table=webzine&amp;wr_id=8"><i
-                                class="fa fa-arrow-left" aria-hidden="true"></i> <span class="sound_only"> 이전글</span>
-                            <b>웹진형 게시판입니다. </b></a> </li>
-                    <li class="btn_next transOJ"> <a href="./board.php?bo_table=webzine&amp;wr_id=6"><i
-                                class="fa fa-arrow-right" aria-hidden="true"></i> <span class="sound_only">다음글 </span>
-                            <b>웹진형 게시판 공지사항입니다. </b></a> </li>
-                </ul>
-            </div>
-            <!-- } 게시물 상단 버튼 끝 -->
+                    <ul class="bo_v_nb">
+                        <li class="btn_prev transOJ"><a href="./board.php?bo_table=webzine&amp;wr_id=8"><i
+                                    class="fa fa-arrow-left" aria-hidden="true"></i> <span class="sound_only">
+                                    이전글</span>
+                                <b>웹진형 게시판입니다. </b></a> </li>
+                        <li class="btn_next transOJ"> <a href="./board.php?bo_table=webzine&amp;wr_id=6"><i
+                                    class="fa fa-arrow-right" aria-hidden="true"></i> <span class="sound_only">다음글
+                                </span>
+                                <b>웹진형 게시판 공지사항입니다. </b></a> </li>
+                    </ul>
+                </div>
+                <!-- } 게시물 상단 버튼 끝 -->
 
 
-            <!-- <script>
+                <!-- <script>
                 // 글자수 제한
                 var char_min = parseInt(0); // 최소
                 var char_max = parseInt(0); // 최대
             </script> -->
-            <!-- 댓글 시작 { -->
-            <!-- <hr class="dashHr">
+                <!-- 댓글 시작 { -->
+                <!-- <hr class="dashHr">
             <button type="button" class="cmt_btn"><i class="fa fa-commenting-o" aria-hidden="true"></i> 댓글목록 <i
                     class="fa fa-chevron-up" aria-hidden="true"></i><i class="fa fa-chevron-down"
                     aria-hidden="true"></i> </button>
@@ -152,10 +159,10 @@
                 <h2>댓글목록</h2>
                 <p id="bo_vc_empty">등록된 댓글이 없습니다.</p>
             </section> -->
-            <!-- } 댓글 끝 -->
+                <!-- } 댓글 끝 -->
 
-            <!-- 댓글 쓰기 시작 { -->
-            <!-- <aside id="bo_vc_w" class="bo_vc_w">
+                <!-- 댓글 쓰기 시작 { -->
+                <!-- <aside id="bo_vc_w" class="bo_vc_w">
                 <h2>댓글쓰기</h2>
 
                 <form name="fviewcomment" id="fviewcomment"
@@ -370,14 +377,14 @@
                     });
                 });
             </script> -->
-            <!-- } 댓글 쓰기 끝 -->
-            <!-- <script src="http://sample.paged.kr/purewhite/js/md5.js"></script>
+                <!-- } 댓글 쓰기 끝 -->
+                <!-- <script src="http://sample.paged.kr/purewhite/js/md5.js"></script>
 
 
         </article> -->
-            <!-- } 게시판 읽기 끝 -->
+                <!-- } 게시판 읽기 끝 -->
 
-            <!-- <script>
+                <!-- <script>
 
             function board_move(href) {
                 window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
@@ -444,10 +451,10 @@
                 );
             }
         </script> -->
-            <!-- } 게시글 읽기 끝 -->
+                <!-- } 게시글 읽기 끝 -->
 
-    </div>
-</content>
+        </div>
+    </content>
 </body>
 
 </html>

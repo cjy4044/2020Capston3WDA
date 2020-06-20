@@ -5,7 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vote.vote.config.CustomUserDetails;
+import com.vote.vote.db.customSelect.CustomBagSelect;
+import com.vote.vote.db.customSelect.CustomOrderInfo;
+import com.vote.vote.db.customSelect.CustomOrderList;
+import com.vote.vote.db.customSelect.CustomOrderListSelect;
+import com.vote.vote.db.customSelect.CustomOrderUpdate;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Mybag;
+import com.vote.vote.db.dto.Order;
+import com.vote.vote.db.dto.OrderList;
 import com.vote.vote.db.dto.Prd;
 import com.vote.vote.db.dto.PrdCategory;
 import com.vote.vote.db.dto.PrdCategoryD;
@@ -15,8 +23,13 @@ import com.vote.vote.db.dto.PrdOption;
 import com.vote.vote.db.dto.PrdSize;
 import com.vote.vote.db.dto.ProgramManager;
 import com.vote.vote.repository.Asdf;
+import com.vote.vote.repository.CustomMybagRepository;
+import com.vote.vote.repository.CustomOrderListRepository;
 import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.MybagJpaRepository;
+import com.vote.vote.repository.OrderJpaRepository;
+import com.vote.vote.repository.OrderListJpaRepository;
 import com.vote.vote.repository.PrdCateDJpaRepository;
 import com.vote.vote.repository.PrdCategoryDJpaRepository;
 import com.vote.vote.repository.PrdCategoryJpaRepository;
@@ -29,12 +42,14 @@ import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,6 +102,22 @@ public class ShopController {
 	@Autowired
 	private CustomPrdJapRepository customPrdRepository;
 	
+	@Autowired
+	private MybagJpaRepository mybagRepository;
+
+	@Autowired
+	private CustomMybagRepository customMybagRepository;
+
+	@Autowired
+	private OrderJpaRepository orderRepository;
+
+	@Autowired
+	private OrderListJpaRepository orderListRepository;
+
+	@Autowired
+	private CustomOrderListRepository customOrderListRepository;
+
+
 	@RequestMapping("/shop/index")
 	public String index(Model model,Principal user) {
 //		model.addAttribute("username",user.getName());
@@ -229,7 +260,14 @@ public class ShopController {
 
 		try{
 			// 상품 옵션 저장
-
+			PrdOption defaultOption = new PrdOption();
+			defaultOption.setColorId(0);
+			defaultOption.setSizeId(0);
+			defaultOption.setProductId(product.getProductId());
+			defaultOption.setoPrice(0);
+			defaultOption.setoTitle("기본");
+			defaultOption.setpStock(stock);
+			pOptionRepository.saveAndFlush(defaultOption);
 			if(optionColor != null){
 				for(int i =0; i<optionColor.length; i++){
 					PrdOption pOption = new PrdOption();
@@ -290,7 +328,8 @@ public class ShopController {
 	@RequestMapping(value={"/shop/edit/{prdId}/axios","/shop/edit/{prdId}/axios"}) // 상품 수정 뷰
 	public JSONObject editPrdAxios(@PathVariable("prdId") int p_id){
 		Prd prd = prdRepository.findByProductId(p_id);
-		List<PrdOption> option = pOptionRepository.findByProductId(p_id);
+		List<PrdOption> option = pOptionRepository.findByProductIdOrderByOptionIdAsc(p_id);
+		option.remove(0);
 		List<PrdImage> img = pImageRepository.findByProductId(p_id);
 
 		JSONObject json = new JSONObject();
@@ -340,7 +379,8 @@ public class ShopController {
 			}
 			prdRepository.saveAndFlush(prd);
 			
-			List<PrdOption> options = pOptionRepository.findByProductId(p_id);
+			List<PrdOption> options = pOptionRepository.findByProductIdOrderByOptionIdAsc(p_id);
+			options.remove(0);// 기본 옵션은 수정할 필요가 없음.
 			if(optionColor != null){// 옵션이 있다면.
 
 				if(optionColor.length > options.size()){ // 옵션수가 증가한 경우.
@@ -510,7 +550,7 @@ public class ShopController {
 	public JSONArray prdShowAxios(@PathVariable("prdId") int prdId){
 		Prd prd = prdRepository.findByProductId(prdId);
 		List<PrdImage> img = pImageRepository.findByProductId(prdId);
-		List<PrdOption> option = pOptionRepository.findByProductId(prdId);
+		List<PrdOption> option = pOptionRepository.findByProductIdOrderByOptionIdAsc(prdId);
 		List<PrdColor> color = prdColorRepository.findAll();
 		List<PrdSize> size = prdSizeRepository.findAll();
 
@@ -524,7 +564,6 @@ public class ShopController {
 		result.add(3,color);// 색상 리스트
 		result.add(4,size); // 사이즈 리스트
 		result.add(5,member); // 판매자 정보
-
 		return result;
 
 	}
@@ -537,4 +576,261 @@ public class ShopController {
 
 	}
 
+	// 장바구니
+	@RequestMapping(value={"/shop/{prdId}/mybag","/shop/{prdId}/mybag/"}, produces = "application/json") //Axios
+	@ResponseBody
+	public JSONObject addMybag(
+		@Nullable @PathVariable("prdId") int p_id, 
+		// @RequestParam("optionId") String optionId,
+		// @RequestParam("quantity") String quantity,
+		@RequestBody Mybag mybag,// json 데이터는 class 로 받아야 하는 듯.
+		Principal user, 
+		@Nullable Authentication authentication){ // 상품을 장바구니에 추가.
+
+
+			JSONObject json = new JSONObject();
+		try{
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+		
+			mybag.setProductId(p_id); //상품 id 
+			// mybag.setOptionId(Integer.parseInt(optionId)); // 옵션 id
+			// mybag.setQuantity(Integer.parseInt(quantity)); // 수량
+			mybag.setUserId(userDetails.getR_ID()); //유저 아이디
+			mybagRepository.saveAndFlush(mybag);
+
+			json.put("success", "장바구니에 추가되었습니다.");
+			return json;
+
+			
+			}catch(Exception e){
+				json.put("error","장바구니 추가에 실패했습니다.");
+				return json;
+			}
+	}
+	
+		@RequestMapping(value={"/shop/mybag","/shop/mybag/"})
+		public String showMybag(){
+
+
+			return "/shop/mybag";
+
+		}
+
+		@ResponseBody
+		@RequestMapping(value={"/shop/mybag/axios","/shop/mybag/axios/"}, method=RequestMethod.GET)
+		public CustomBagSelect showMybagAxios(
+			@Nullable Authentication authentication,
+			@PageableDefault Pageable page
+		) {
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			// CustomBagSelect mybags = customMybagRepository.getMybag(userDetails.getR_ID(), page);
+			CustomBagSelect mybags = customMybagRepository.getMybag(userDetails.getR_ID());
+
+
+
+			return mybags;
+		}
+		@ResponseBody
+		@RequestMapping(value={"/shop/mybag/{bagId}","/shop/mybag/{bagId}"}, method=RequestMethod.DELETE)
+		public JSONObject mybagItemDelete(@PathVariable("bagId") int id) {
+
+			// 유효성 검사로, 자신의 장바구니 아이템인지 확인하는 소스 추가 가능.
+			JSONObject result = new JSONObject();
+
+			
+
+			try{
+				mybagRepository.deleteById(id);
+				result.put("success", "장바구니에서 삭제되었습니다.");
+
+			}catch(Exception e){
+				System.out.println("장바구니 아이템 삭제중 오류 발생");
+				result.put("error", "삭제에 실패하였습니다.");
+			}	
+			
+			
+			return result;
+
+		}
+		
+		@RequestMapping(value={"/shop/order","/shop/order/"}, method=RequestMethod.GET)
+		public String order() {
+			
+			return "/shop/order";
+		}
+
+		@ResponseBody
+		@RequestMapping(value={"/shop/order/axios","/shop/order/axios/"}, method=RequestMethod.GET)
+		public List<CustomOrderInfo> orderProductInfo(@RequestParam("productId") int[] productIds, // 주문 뷰에 상품 정보 보냄.
+		@RequestParam("optionId") int[] optionIds,
+		@RequestParam("quantity") int[] quantitys,
+		@Nullable @RequestParam("bagId") int[] bagId
+		) {
+			List<CustomOrderInfo> infos = new ArrayList<CustomOrderInfo>();
+
+			for(int i=0; i<productIds.length; i++){
+				CustomOrderInfo item = new CustomOrderInfo();
+				Prd prd = prdRepository.findByProductId(productIds[i]);
+				PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
+
+				item.setId(prd.getProductId());
+				item.setName(prd.getName());
+				item.setImg(prd.getImg());
+				item.setOptionId(option.getOptionId());
+				item.setOptionName(option.getoTitle());
+				item.setPrice(prd.getPrice());
+				item.setoPrice(option.getoPrice());
+				item.setCount(quantitys[i]);
+
+				if(bagId != null){
+					item.setBagId(bagId[i]);
+				}
+				
+				infos.add(item);
+			}
+
+
+			return infos;
+		}
+		
+		@RequestMapping(value={"/shop/order","/shop/order/"}, method=RequestMethod.POST)
+		public String productBuy(
+			@RequestParam("productId") int[] productIds, //상품 id
+			@RequestParam("optionId") int[] optionIds, //옵션 id
+			@RequestParam("count") int[] quantitys, // 수량
+			@RequestParam("addr") String addr, // 도로명 주소
+			@RequestParam("addr2") String addr2, // 상세주소
+			@RequestParam("receiver") String receiver, //수취인
+			@RequestParam("phone") String phone, // 수취인 연락처
+			@Nullable @RequestParam("bagId") int[] bagId,
+			@Nullable Authentication authentication 
+			) {
+				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+				
+				
+				int sumPrice = 0;
+				for(int i=0;i<productIds.length;i++){
+
+					Order order = new Order();
+					order.setrId(userDetails.getR_ID());
+					order.setAddr(addr);
+					order.setAddr2(addr2);
+					// order.setInvoice(invoice);
+					order.setPhone(phone);
+					order.setReceiver(receiver);
+					order.setPrice(sumPrice);
+					order.setState("0");
+					orderRepository.saveAndFlush(order);
+
+					Prd prd = prdRepository.findByProductId(productIds[i]);
+					PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
+
+					OrderList orderList = new OrderList();
+					
+					orderList.setCount(quantitys[i]);
+					orderList.setOptionId(option.getOptionId());
+					orderList.setOrderId(order.getOrderId());
+					orderList.setPrice((prd.getPrice()+option.getoPrice())*quantitys[i]);
+					orderList.setProductId(prd.getProductId());
+					
+					orderListRepository.saveAndFlush(orderList);
+				}
+				
+
+				
+				
+				
+				if(bagId[0] != 0){// bagId 값이 넘어오지 않으면, [ 0 ]  으로 초기화 되는 듯 하다. @Nullable
+
+					for(int id : bagId){
+						
+						mybagRepository.deleteById(id);
+					}
+				}
+
+			return "redirect:/shop/order/ok";
+		}
+
+		@RequestMapping(value={"/shop/order/ok","/shop/order/ok/"}, method=RequestMethod.GET)
+		public String orderBuyOk() {
+
+			return "/shop/buySuccess";
+		}
+
+		// 주문 리스트 뷰
+		@RequestMapping(value={"/shop/orderList","/shop/orderList/"}, method=RequestMethod.GET)
+		public String orderList() {
+			return "/shop/orderList";
+		}
+
+		// 주문 리스트 데이터 Axios
+		@ResponseBody
+		@RequestMapping(value="/shop/orderList/axios", method=RequestMethod.GET) 
+		public CustomOrderListSelect orderListAxios(@Nullable Authentication authentication, @PageableDefault Pageable page) {
+
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			CustomOrderListSelect orderList =  customOrderListRepository.getOrderListbyUserId(userDetails.getR_ID(), page);
+
+			return orderList;
+		}
+
+		// 주문 상세 뷰
+		@RequestMapping(value={"/shop/orderShow/{orderListId}","/shop/orderShow/{orderListId}/"}, method=RequestMethod.GET) 
+		public String orderShow(@PathVariable("orderListId") int listId, Model model){ 
+			model.addAttribute("listId", listId);
+			return "/shop/orderShow";
+		}
+
+		// 주문 상세 데이터 Axios
+		@ResponseBody
+		@RequestMapping(value={"/shop/orderShow/{orderListId}/axios","/shop/orderShow/{orderListId}/axios/"}, method=RequestMethod.GET)
+		public CustomOrderListSelect orderShowAxios(@PathVariable("orderListId") int listId) {
+
+			// CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			CustomOrderListSelect orderItems =  customOrderListRepository.getOrderListbyOrderListId(listId);
+
+			return orderItems;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value={"/shop/orderShow/{orderId}/axios","/shop/orderShow/{orderId}/axios"}, method=RequestMethod.PUT)
+		public JSONObject orderUpdateAxios(@PathVariable("orderId") int orderId, @RequestBody CustomOrderUpdate info) {
+
+			JSONObject result = new JSONObject();
+
+			// System.out.println("info : "+info.getInvoice());
+			// System.out.println("info : "+info.getState());
+
+			try{
+				System.out.println(orderId);
+				Order order = orderRepository.findByOrderId(orderId);
+
+				String invoice = info.getInvoice();
+				if(info.getInvoice().length() == 0){
+					invoice = "0";
+				}
+				
+				order.setInvoice(invoice);
+				order.setState(info.getState());
+
+				orderRepository.saveAndFlush(order);	
+				result.put("success", "주문 정보 수정 완료");
+			}catch(Exception e){
+				e.printStackTrace();
+				result.put("error","오류발생! 주문 정보 수정에 실패했습니다.");
+			}
+			
+
+			
+
+			return result;
+		}
+		
+		
 }
+

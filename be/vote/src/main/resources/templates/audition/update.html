@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'수정하기',_)}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'오디션 개설 게시글 수정',_)}">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 사이드바 -->
+    <script src="/js/side/userInfoSide.js"></script>
 </head>
 <content>
 <body>  	   
@@ -48,7 +50,7 @@ th:replace="~{main_layout::layout(~{::content},_,'수정하기',_)}">
 </table>
 		<div>
             <input type="submit" value="수정하기" /> 
-            <a href="" th:href="@{/audition/list}">목록</a>
+            <input type="reset" value="이전으로" onclick="history.back();"> 
 		</div>
 	</form>
 </body>

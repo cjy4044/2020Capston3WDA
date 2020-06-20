@@ -55,7 +55,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
 
    <li>작성일: <span th:utext="${hotclib.h_date}"></span></li>
    <li>조회수: <span th:utext="${hotclib.hviewcount}"></span></li>
-   <li>작성자: <span sec:authentication="principal.name"></span></li>
+   <li>작성자: <span th:utext="${hotclib.husername}"sec:authentication="principal.name"></span></li>
    <!-- <td>권한<span sec:authentication="principal.authorities"></span></td> -->
    </div>
   
@@ -65,7 +65,7 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
     </div>
     </sec:authorize>
 
-
+    
    <nav style="text-align: center;">
     <ul class="pagination"
      th:with="start=${T(Math).floor(hotclibList.number/10)*10 + 1},

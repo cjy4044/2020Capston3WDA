@@ -58,17 +58,17 @@ function setFilename2(event) {
          }
 
          
-         function setFilename(event) {
-   var reader = new FileReader();
+  //        function setFilename(event) {
+  //  var reader = new FileReader();
    
-    reader.onload = function(event) { 
-      var video = document.createElement("video");
-       video.setAttribute("src", event.target.result);
-        document.querySelector("div#preview2").appendChild(video);
-         };
+  //   reader.onload = function(event) { 
+  //     var video = document.createElement("video");
+  //      video.setAttribute("src", event.target.result);
+  //       document.querySelector("div#preview2").appendChild(video);
+  //        };
 
-         reader.readAsDataURL(event.target.files[0]); 
-         }
+  //        reader.readAsDataURL(event.target.files[0]); 
+  //        }
 
 
         </script>

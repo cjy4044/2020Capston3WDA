@@ -111,7 +111,7 @@ class Index extends Component {
             </div>  
             <br/><br/>
             <div id="hotclib">
-                <div><h3>핫클립</h3></div><br/>
+                <div><h3 >핫클립</h3></div><br/>
                 <HotclibItem data={this.state.hotclib}/><br/><br/><br/>
                 <Pagination count={this.state.count2} page={this.state.pageNum2} onChange={this.pagenation2.bind(this)}style={{placeContent : "center"}}> </Pagination>
             </div>

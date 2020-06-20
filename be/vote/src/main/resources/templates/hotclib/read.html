@@ -38,20 +38,20 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글조회',_)}">
 			<tr>
 				<li>조회수: <span th:utext="${hotclib.hviewcount}"></span></li>
 			</tr>
-			<li>작성자: <span sec:authentication="principal.name"></span></li>
+			<li>작성자: <span th:utext="${hotclib.husername}"></span></li>
 		</div>
 	
 		<div>
 			<a href="" th:href="@{/hotclib}">목록</a><br>
 		</div>
-			<sec:authorize access ="hasRole('2')"> 
+			<!-- <sec:authorize access ="hasRole('2')"> 
 			<span><a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a></span>
 			
 			<form id="delete-form" th:action="@{'/hotclib/' + ${hotclib.hotclibid}}" method="post">
 				<input type="hidden" name="_method" value="delete"/>
 				<button id="delete-btn">삭제</button>
 			</form>
-			</sec:authorize>
+			</sec:authorize> -->
 		
 			 <form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
 				<tr>댓글테스트
@@ -68,7 +68,7 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글조회',_)}">
 		
 			<p>
 			 
-			    <li>작성자 : <td sec:authentication="principal.name"></span></li>
+			    <li>작성자 : <td th:text="${reply.rusername}"></span></li>
 				<li>작성일자 : <td th:text="${reply.r_date}"></td></li>
 				<li>내용 : <td th:text="${reply.r_content}"></td></li>
 					<div>

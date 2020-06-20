@@ -38,6 +38,9 @@ public class Reply {
     @Column(nullable=true)
     private Integer r_id;
 
+    @Column(nullable=true, name="r_username")
+    private String rusername;
+    
     public int getReplyid() {
         return replyid;
     }
@@ -93,6 +96,14 @@ public class Reply {
 
     public void setHotclibid(int hotclibid) {
         this.hotclibid = hotclibid;
+    }
+
+    public String getRusername() {
+        return rusername;
+    }
+
+    public void setRusername(String rusername) {
+        this.rusername = rusername;
     }
 
     

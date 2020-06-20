@@ -82,14 +82,14 @@ public class HotclibController {
 		return "hotclib/list1";
 	}
 
-	// @GetMapping("/hotclib/list1")
+	// @GetMapping("/list1")
 	// public String hotclib1(Model model, @PageableDefault Pageable pageable){
 	// 	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 	// 	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hcountview"));
 	// 	model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
 	// 	return "hotclib/list1";
-		
-	//  }
+	// }
+	
 	// 댓글 리스트,게시글 상세보기
 	@GetMapping("/hotclib/read/{hotclibid}")
 	public String read(Model model, @PathVariable int hotclibid) {
@@ -117,6 +117,7 @@ public class HotclibController {
 			int r_id = member.getNo();
 			reply.setR_id(r_id);
 			
+			reply.setRusername(member.getName());	
 		reply.setR_date(new Date());	
 		replyRepository.saveAndFlush(reply);
 		Hotclib hotclib = hotclibRepository.findById(hotclibid);
@@ -157,8 +158,10 @@ public class HotclibController {
 		String filename2Path = storageService.store2(filename2);
 		Member member = memberRepository.findByUserid(principal.getName());
 		ProgramManager pm = pmRepository.findById(member.getNo());
+		
 		Hotclib hotclib= new Hotclib();
 		// //핫클립 테이블에 프로그램아이디, 사용자아이디, 날짜, 파일이름2저장
+		hotclib.setHusername(member.getName());
 		hotclib.setProgramid(pm.getProgramId());
 		hotclib.setNo(member.getNo());
 		hotclib.setHtitle(htitle);

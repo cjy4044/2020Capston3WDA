@@ -56,6 +56,8 @@ public class Hotclib {
     @Column(nullable=true, name="program_id")
     private Integer programid;
     
+    @Column(nullable=true, name="h_username")
+    private String husername;
  
     public String getHtitle() {
         return htitle;
@@ -147,6 +149,14 @@ public class Hotclib {
 
     public String toString(){
         return filename2;
+    }
+
+    public String getHusername() {
+        return husername;
+    }
+
+    public void setHusername(String husername) {
+        this.husername = husername;
     }
 
 

@@ -267,6 +267,7 @@ public class AudienceController {
         JSONObject obj = new JSONObject();
         List<JSONObject> array = new ArrayList<>();
 
+        array = new ArrayList<>();
         if (people >= list.size()) { // 추첨인원이 응모인원보다 적거나 같을 때
             list = mr.getInfo(audience.getApplyId());
             for (Member list2 : list) {
@@ -276,40 +277,41 @@ public class AudienceController {
                 array.add(obj);
             }
             return null;
+
         } else {
             while (result.size() < people) {
                 double randomValue = Math.random();
                 int ran = (int) (randomValue * list.size());
                 result.add(list.remove(ran));
-                // for(Member data : result){
-                // if(!result3.contains(data))
-                // result3.add(data);
-                // }
+            }
+            boolean state = false;
+            array = new ArrayList<>();
+            obj = new JSONObject();
+            for (Member list2 : list) {
+                state = true;
+                for (int i = 0; i < array.size(); i++) {
+                    state = true;
+                    if (array.get(i).get("name").equals(list2.getName())) {
+                        state = false;
+                        System.out.println("중복!");
+                        break;
+                    }
+                }
+                if (!state)
+                    continue;
+                obj = new JSONObject();
+                obj.put("name", list2.getName());
+                obj.put("phone", list2.getPhone());
+                array.add(obj);
+
             }
 
-            
-           
-                for (Member list2 : list) {
-                    boolean state = true;
-                    for (int i = 0; i < array.size(); i++) {
-                        System.out.println(array.get(i).get("name"));
-                        System.out.println(list2.getName());
-                        if (array.get(i).get("name").equals(list2.getName())) {
-                            state = false;
-                            System.out.println("중복");
-                            break;
-                        }
-                    }
-                    if (!state)
-                        continue;
-                    obj = new JSONObject();
-                    obj.put("name", list2.getName());
-                    obj.put("phone", list2.getPhone());
-                    array.add(obj);
-
-                }
-                System.out.println(array);
-           
+            while (people != array.size()) {
+            }
+            System.out.println(array.size() == people);
+            System.out.println(people);
+            System.out.println(array.size());
+            System.out.println(array);
 
         }
         return null;

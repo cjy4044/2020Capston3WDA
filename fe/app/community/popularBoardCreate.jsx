@@ -8,9 +8,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import Pagination from '@material-ui/lab/Pagination';
-
-
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');

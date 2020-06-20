@@ -11,7 +11,6 @@ import TableCell from '@material-ui/core/TableCell';
 import Pagination from '@material-ui/lab/Pagination';
 
 import TextField from '@material-ui/core/TextField';
-import FilledInput from '@material-ui/core/FilledInput';
 
 import './Modal.css';
 

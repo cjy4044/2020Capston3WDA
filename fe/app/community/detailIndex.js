@@ -104,12 +104,11 @@ class Index extends Component {
         return(
         <div className="community_item">
             
-            <div id="popular">
-                <div><h3>인기인</h3></div><br/>
-                <PopularItem data={this.state.popular}/><br/><br/><br/>
-                <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}style={{placeContent : "center"}}> </Pagination>
-                   
-            </div>
+            <div id="audience">
+                <div><h3>방청권</h3></div><br/>
+                <AudienceItem data={this.state.audience}/><br/><br/><br/>
+                <Pagination count={this.state.count3} page={this.state.pageNum3} onChange={this.pagenation3.bind(this)}style={{placeContent : "center"}}> </Pagination>
+            </div>  
             <br/><br/>
             <div id="hotclib">
                 <div><h3>핫클립</h3></div><br/>
@@ -117,11 +116,13 @@ class Index extends Component {
                 <Pagination count={this.state.count2} page={this.state.pageNum2} onChange={this.pagenation2.bind(this)}style={{placeContent : "center"}}> </Pagination>
             </div>
             <br/><br/>
-            <div id="audience">
-                <div><h3>방청권</h3></div><br/>
-                <AudienceItem data={this.state.audience}/><br/><br/><br/>
-                <Pagination count={this.state.count3} page={this.state.pageNum3} onChange={this.pagenation3.bind(this)}style={{placeContent : "center"}}> </Pagination>
+            <div id="popular">
+                <div><h3>인기인</h3></div><br/>
+                <PopularItem data={this.state.popular}/><br/><br/><br/>
+                <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}style={{placeContent : "center"}}> </Pagination>
+                   
             </div>
+         
          </div> )
     }
 }

@@ -65,7 +65,13 @@ class Mybag extends React.Component {
             // 1, 2, 3, 4, 10, 11
             // return b-a : 내림차순
         });
-        
+        for(var i=0;i<this.buyItems.length; i++){
+            var data =this.state.mybags[this.buyItems[i]]
+            if(data.pStock < data.quantity){
+                return alert("해당 상품의 재고가 부족합니다.\n상품명: "+data.name+"\재고: "+data.pStock)
+            }
+        }
+
         for(var i =0;i<this.buyItems.length; i++){
             var data =this.state.mybags[this.buyItems[i]]
             this.buyUrl += "productId="+data.productId+"&optionId="+data.optionId+"&quantity="+data.quantity

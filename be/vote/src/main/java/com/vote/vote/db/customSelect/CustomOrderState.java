@@ -29,6 +29,7 @@ public class CustomOrderState {
     private int three;
     private int four;
     private int five;
+    private String image;
 
 
 
@@ -98,8 +99,9 @@ public class CustomOrderState {
         this.five = five;
     }
 
-    public CustomOrderState(BigDecimal product_id, String name, BigDecimal sum, BigDecimal one, BigDecimal two, BigDecimal three, BigDecimal four, BigDecimal five) {
+    public CustomOrderState(BigDecimal product_id, String name,String image , BigDecimal sum, BigDecimal one, BigDecimal two, BigDecimal three, BigDecimal four, BigDecimal five) {
         this.product_id = product_id.intValue();
+        this.image = image;
         this.name = name;
         this.sum = sum.intValue();
         this.one = one.intValue();
@@ -107,6 +109,14 @@ public class CustomOrderState {
         this.three = three.intValue();
         this.four = four.intValue();
         this.five = five.intValue();
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

@@ -687,30 +687,6 @@ public class UserInfoController {
 
 			List<CustomOrderState> result = customOrderReopsitoy.getOrderStateByManagerId(userDetails.getR_ID());
 
-			// List<Object> state =orderRepository.getOrderState(userDetails.getR_ID());
-
-			// List<CustomOrderState> result = new ArrayList<CustomOrderState>();
-			// System.out.println(state);
-			// for(Object item: state){
-			// 	Gson gson = new Gson();
-			// 	String items = gson.toJson(item);
-			// 	JsonParser parser = new JsonParser();
-			// 	JsonElement element = parser.parse(items);
-			// 	JsonArray array = element.getAsJsonArray();
-				
-			// 	CustomOrderState dto = new CustomOrderState();
-			// 	dto.setProduct_id(Integer.parseInt(array.get(0).toString()));
-			// 	dto.setName(array.get(1).toString());
-			// 	dto.setSum(Integer.parseInt(array.get(2).toString()));
-			// 	dto.setOne(Integer.parseInt(array.get(3).toString()));
-			// 	dto.setTwo(Integer.parseInt(array.get(4).toString()));
-			// 	dto.setThree(Integer.parseInt(array.get(5).toString()));
-			// 	dto.setFour(Integer.parseInt(array.get(6).toString()));
-			// 	dto.setFive(Integer.parseInt(array.get(6).toString()));
-
-			// 	result.add(dto);
-			// }
-
 
 			return result;
 		}

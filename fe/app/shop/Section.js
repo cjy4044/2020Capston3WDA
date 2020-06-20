@@ -2,14 +2,15 @@ import React from 'react';
 import LeftSidebar from './LeftSidebar';
 import NewItem from './NewItem';
 import CateTab from './CateTab';
-import Item2 from './Item2';
+import Item2 from './Item2'; 
 export default class Section extends React.Component {
     
     constructor(props){
         super(props)
     }
     render() {
-        console.log(this.props.data[0]);
+        console.log("ㅁㅁㅁ"+this.props.data);
+        console.log("111"+this.props.data[1]);
         return (
             <section>
                 <div className="container">
@@ -32,16 +33,10 @@ export default class Section extends React.Component {
                                     <div className="carousel-inner">
                                         {/*  추천상품 */}
                                         <div className="item active"> 
-                                            {/* <Item2></Item2>
-                                            <Item2></Item2>
-                                            <Item2></Item2>
-                                            <Item2></Item2> */}
+                                            <Item2 data={this.props.data[1]}/>
                                         </div>
-                                        <div className="item">
-                                            {/* <Item2></Item2>
-                                             <Item2></Item2>
-                                            <Item2></Item2>
-                                            <Item2></Item2>  */}
+                                        <div className="item active"> 
+                                            <Item2 data={this.props.data[2]}/>
                                         </div>
                                     </div>
                                     <a className="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">

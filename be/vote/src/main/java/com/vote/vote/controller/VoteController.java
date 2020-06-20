@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Candidate;
+import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
@@ -86,6 +87,9 @@ public class VoteController {
 
 	@Autowired
 	private CustomPopularRepository customPopRepository;
+
+	@Autowired
+	private MemberJpaRepository memberRepository;
 	
 
 	public Klaytn klaytn = new Klaytn();
@@ -383,6 +387,7 @@ public class VoteController {
 
 		// @Nullable Authentication authentication
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		Member member = memberRepository.findByNo(userDetails.getR_ID());
 		
 
 		System.out.println(axiosData.get("select"));  // 사용자가 뽑은 사람의 번호
@@ -422,38 +427,42 @@ public class VoteController {
 				try {
 					
 					int age = 2; 
-					System.out.println("회원 birth :"+userDetails.getBIRTH());
-					if(!userDetails.getBIRTH().equals("2")){ ////19990122....
-						System.out.println(userDetails.getBIRTH());
-						int y = Integer.parseInt(nowTime.substring(0, 4));
-						int m = Integer.parseInt(nowTime.substring(4, 6));
-						int d = Integer.parseInt(nowTime.substring(6, 8));
-						
-						
-						String[] cut = userDetails.getBIRTH().split(" ");
-						String[] birth = cut[0].split("-");
-						
-						LocalDate birthdate = new LocalDate(
-							Integer.parseInt(birth[0]), 
-							Integer.parseInt(birth[1]), 
-							Integer.parseInt(birth[2])
-						);
-						
-						LocalDate now = new LocalDate(
-							y, 
-							m, 
-							d
-						); 
-						Years nowAge = Years.yearsBetween(birthdate, now);
-						age = nowAge.getYears()/10;
+					// System.out.println("회원 birth :"+userDetails.getBIRTH());
+					if(member.getBirth() != null){
+						// if(!userDetails.getBIRTH().equals("2")){ ////19990122....
+							System.out.println(member.getBirth());
+							int y = Integer.parseInt(nowTime.substring(0, 4));
+							int m = Integer.parseInt(nowTime.substring(4, 6));
+							int d = Integer.parseInt(nowTime.substring(6, 8));
+							
+							
+							String[] cut = member.getBirth().split(" ");
+							String[] birth = cut[0].split("-");
+							
+							LocalDate birthdate = new LocalDate(
+								Integer.parseInt(birth[0]), 
+								Integer.parseInt(birth[1]), 
+								Integer.parseInt(birth[2])
+							);
+							
+							LocalDate now = new LocalDate(
+								y, 
+								m, 
+								d
+							); 
+							Years nowAge = Years.yearsBetween(birthdate, now);
+							age = nowAge.getYears()/10;
+						// }
+						System.out.println("계산한 나이: "+age);
 					}
+					
 					
 					if(age <= 0)
 						age = 2;
 					else if (age > 5)
 						age = 5;
 
-					
+					System.out.println("투표자 나이---------: "+age);
 					// String address, long time, int age, int gender, int select
 					JSONObject message = klaytn.klaytnSend3(
 						vote.getAddress(), 

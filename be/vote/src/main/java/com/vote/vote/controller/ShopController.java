@@ -118,6 +118,8 @@ public class ShopController {
 	private CustomOrderListRepository customOrderListRepository;
 
 
+	
+
 	@RequestMapping("/shop/index")
 	public String index(Model model,Principal user) {
 //		model.addAttribute("username",user.getName());
@@ -133,11 +135,19 @@ public class ShopController {
 		
 		JSONArray json = new JSONArray();
 		json.add(0,customPrdRepository.getCategorySelect(4)); // 카테고리별로 4개 씩.
-		
+		json.add(1,customPrdRepository.getRecommendPrd(1,4));
+		json.add(2,customPrdRepository.getRecommendPrd(5,8));
 
 		return json;
 
 	}
+
+	@RequestMapping("/shop/list")
+	public String shopList() {
+
+		return "/shop/shop_list";
+	}
+
 
 	@RequestMapping("/shop/cart")
 	public String cart() {
@@ -380,7 +390,11 @@ public class ShopController {
 			prdRepository.saveAndFlush(prd);
 			
 			List<PrdOption> options = pOptionRepository.findByProductIdOrderByOptionIdAsc(p_id);
+			PrdOption defaultOption = options.get(0);
+			defaultOption.setpStock(stock);
+			pOptionRepository.saveAndFlush(defaultOption);
 			options.remove(0);// 기본 옵션은 수정할 필요가 없음.
+
 			if(optionColor != null){// 옵션이 있다면.
 
 				if(optionColor.length > options.size()){ // 옵션수가 증가한 경우.
@@ -694,7 +708,10 @@ public class ShopController {
 
 			return infos;
 		}
-		
+		@RequestMapping(value={"/shop/order/error","/shop/order/error"})
+		public String error(){
+			return "/shop/orderError";
+		}
 		@RequestMapping(value={"/shop/order","/shop/order/"}, method=RequestMethod.POST)
 		public String productBuy(
 			@RequestParam("productId") int[] productIds, //상품 id
@@ -709,7 +726,28 @@ public class ShopController {
 			) {
 				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-				
+				//재고 감소, 검증
+
+				for(int i=0; i<optionIds.length; i++){
+					PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
+					if( !(option.getpStock() < quantitys[i]) ){//재고가 있므면.
+						option.setpStock( option.getpStock() - quantitys[i]);
+						
+
+						if(option.getoTitle().equals("기본")){
+							System.out.println("기본옵션임");
+							Prd prd = prdRepository.findByProductId(option.getProductId());
+							prd.setStock(prd.getStock()-quantitys[i]);
+							prdRepository.saveAndFlush(prd);
+						}
+						
+						pOptionRepository.saveAndFlush(option);
+
+					}else{
+						return "redirect:/shop/order/error";
+					}
+				}
+
 				
 				int sumPrice = 0;
 				for(int i=0;i<productIds.length;i++){

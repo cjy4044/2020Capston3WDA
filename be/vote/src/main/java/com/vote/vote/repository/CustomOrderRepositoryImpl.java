@@ -37,7 +37,7 @@ public class CustomOrderRepositoryImpl implements CustomOrderReopsitoy {
 
         // booleanBuilder.and(order.rId.eq(managerId));
         String sql = 
-        "select l.product_id ,p.p_name name, count(*)  sum, "+
+        "select l.product_id ,p.p_name name,  TO_CHAR(DBMS_LOB.SUBSTR(p.image, 4000))  image, count(*)  sum, "+
         "count ( case when o.orderdate between add_months(sysdate,-1) and sysdate then 1 end) one, "+
         "count ( case when o.orderdate between add_months(sysdate,-2) and add_months(sysdate,-1) then 1 end) two, "+
         "count ( case when o.orderdate between add_months(sysdate,-3) and add_months(sysdate,-2) then 1 end) three, "+
@@ -47,7 +47,7 @@ public class CustomOrderRepositoryImpl implements CustomOrderReopsitoy {
         "where o.order_id = l.order_id "+
         "and l.product_id = p.product_id "+
         "and  l.product_id in (select product_id from product where p_manager = "+managerId+") "+
-        "group by l.product_id, p.p_name ";
+        "group by l.product_id, p.p_name, TO_CHAR(DBMS_LOB.SUBSTR(p.image, 4000)) ";
 
         Query nativeQuery  = em.createNativeQuery(sql);
         // .setParameter("mId", managerId);

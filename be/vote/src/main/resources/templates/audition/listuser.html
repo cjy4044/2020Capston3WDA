@@ -48,7 +48,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
 			<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
 			<td th:text="${audition.arecruits}+ 명"></td>
 			<td th:text="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"></td>
-			<td sec:authentication="principal.name"></span><span> 님</span></td>
+            <td><span th:text="${audition.ausername}"></span><span>님</span></td>
 			
 			
   

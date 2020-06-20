@@ -64,6 +64,8 @@ public class AuditionController {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
 		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "auditionid"));
 		model.addAttribute("auditionlist", auditionRepository.findAll(pageable));
+		
+		
 		return "audition/list";
 	}
 
@@ -135,12 +137,15 @@ public class AuditionController {
             @RequestParam(name = "filename") MultipartFile filename	) {
 		
 		
-//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        CustomUserDetails sessionUser = (CustomUserDetails)principal;
+	// 	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    //    CustomUserDetails sessionUser = (CustomUserDetails)principal;
 		
 		if(bindingResult.hasErrors()) {
 			return "/audition/write";
 		} else if(filename.isEmpty()) {
+			Member member = memberRepository.findByUserid(principal.getName());
+			audition.setRid(member.getNo());
+			audition.setAusername(member.getName());
 			auditionRepository.save(audition);
 			sessionStatus.setComplete();
 			return "redirect:/audition/list";
@@ -152,7 +157,8 @@ public class AuditionController {
 			
             // 게시글저장
 //            audition.setStartdate(pm.getProgramId());
-            audition.setRid(member.getNo());
+			audition.setRid(member.getNo());
+			audition.setAusername(member.getName());
 //            audience.setADate(new Date());
             audition.setAfile(filenamePath);
             auditionRepository.saveAndFlush(audition);

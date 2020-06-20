@@ -47,6 +47,8 @@ public class AuditionResult {
 		@Column(nullable=true, name="r_file")
 	    private String rfile;
 
+		@Column(nullable=true, name="r_username")
+	    private String rusername;
 
 		public int getResultid() {
 			return resultid;
@@ -124,6 +126,16 @@ public class AuditionResult {
 		public void setRfile(String rfile) {
 			this.rfile = rfile;
 		}
+
+		public String getRusername() {
+			return rusername;
+		}
+
+		public void setRusername(String rusername) {
+			this.rusername = rusername;
+		}
+
+	
 	    
 	    
 	    

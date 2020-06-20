@@ -96,7 +96,10 @@ public class AuditionCon {
 		    private String fuserphone;
 		    
 		    @Column(nullable=true,name="f_usermail")
-		    private String fusermail;
+			private String fusermail;
+			
+			@Column(nullable=true,name="username")
+		    private String username;
 		    
 		    
 		    
@@ -307,6 +310,14 @@ public class AuditionCon {
 		    
 			public String toString() {
 				return ""+rid;
+			}
+
+			public String getUsername() {
+				return username;
+			}
+
+			public void setUsername(String username) {
+				this.username = username;
 			}
 		    
 		    

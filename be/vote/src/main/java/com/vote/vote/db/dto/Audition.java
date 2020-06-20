@@ -32,7 +32,10 @@ public class Audition {
 	    private String acontent;
 	    
 	    @Column(nullable=true,name="a_category")
-	    private String acategory;
+		private String acategory;
+		
+		@Column(nullable=true,name="a_username")
+	    private String ausername;
 
 //	    @Temporal(TemporalType.TIMESTAMP)
 	    @DateTimeFormat(pattern="yyyy-MM-dd")
@@ -155,6 +158,14 @@ public class Audition {
 
 		public String toString() {
 			return ""+rid;
+		}
+
+		public String getAusername() {
+			return ausername;
+		}
+
+		public void setAusername(String ausername) {
+			this.ausername = ausername;
 		}
 	    
 

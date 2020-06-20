@@ -132,6 +132,9 @@ public class AuditionConController {
 		if(bindingResult.hasErrors()) {
 			return "/audition_con/form";
 		} else if(filename.isEmpty()) {
+			Member member = memberRepository.findByUserid(principal.getName());
+			auditioncon.setRid(member.getNo());
+			auditioncon.setUsername(member.getName());
 			auditioncon.setFdate(new Date());
 			System.out.println(auditioncon.toString());
 			auditionConRepository.save(auditioncon);
@@ -141,7 +144,7 @@ public class AuditionConController {
 			
 		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
             Member member = memberRepository.findByUserid(principal.getName());
-
+			auditioncon.setUsername(member.getName());
 			
             // 게시글저장
 

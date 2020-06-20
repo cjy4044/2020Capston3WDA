@@ -75,14 +75,21 @@ public class HotclibController {
 		return "hotclib/list";
 	}
 
-	@GetMapping("/hotclib/list1")
-	public String hotclib1(Model model, @PageableDefault Pageable pageable){
-		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hcountview"));
-		model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
+	//관리자페이지 핫클립관리
+	@GetMapping("/hotclib/manager")
+	public String mhotclib(Model model){
+		model.addAttribute("hotclibList1", hotclibRepository.findAll());
 		return "hotclib/list1";
-		
 	}
+
+	// @GetMapping("/hotclib/list1")
+	// public String hotclib1(Model model, @PageableDefault Pageable pageable){
+	// 	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+	// 	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "hcountview"));
+	// 	model.addAttribute("hotclibList", hotclibRepository.findAll(pageable));
+	// 	return "hotclib/list1";
+		
+	//  }
 	// 댓글 리스트,게시글 상세보기
 	@GetMapping("/hotclib/read/{hotclibid}")
 	public String read(Model model, @PathVariable int hotclibid) {
@@ -112,7 +119,10 @@ public class HotclibController {
 			
 		reply.setR_date(new Date());	
 		replyRepository.saveAndFlush(reply);
-		
+		Hotclib hotclib = hotclibRepository.findById(hotclibid);
+
+		hotclib.setHreplycount(hotclib.getHreplycount() + 1);
+		hotclibRepository.save(hotclib);
 		// replyRepository.findById(reply.getReplyid());
 		// reply.setR_content(reply.getR_content());
 		// replyRepository.save(reply);
@@ -140,6 +150,7 @@ public class HotclibController {
 		@RequestParam(name="filename") MultipartFile filename,
 		@RequestParam(name="htitle") String htitle,
 		@RequestParam(name="h_content") String h_content,
+		@RequestParam(name="h_reply") String h_reply,
 		RedirectAttributes redirAttrs,
 		SessionStatus sessionStatus,
 		Principal principal){
@@ -152,6 +163,7 @@ public class HotclibController {
 		hotclib.setNo(member.getNo());
 		hotclib.setHtitle(htitle);
 		hotclib.setH_content(h_content);
+		hotclib.setH_reply(h_reply);
 		hotclib.setH_date(new Date());		
 		hotclib.setFilename2(filename2Path);
 		hotclibRepository.saveAndFlush(hotclib);  // 저장하고 커밋까지 Flush
@@ -164,7 +176,7 @@ public class HotclibController {
 		
 		rfileRepository.saveAndFlush(rfile);
 		sessionStatus.setComplete();
-		return "redirect:/hotclib";
+		return "redirect:/community";
 		}
 		
 	//게시글삭제
@@ -214,9 +226,11 @@ public class HotclibController {
 	@PostMapping("/hotclib/read/{hotclibid}/{replyid}")
 	public String replydelete(@PathVariable int hotclibid, @PathVariable int replyid, Model model){
 		replyRepository.deleteById(replyid);
-		Hotclib hotclib = new Hotclib();
+		Hotclib hotclib = hotclibRepository.findById(hotclibid);
 		hotclib.setHotclibid(hotclibid);
 		
+		hotclib.setHreplycount(hotclib.getHreplycount()- 1);
+		hotclibRepository.save(hotclib);
 		return "redirect:/hotclib/read/{hotclibid}";
 	}
 

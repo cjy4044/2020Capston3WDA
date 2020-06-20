@@ -39,7 +39,7 @@ function w3_open() {
 		if(userRole=="2")
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/myProgram/'>프로그램관리</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/myCommunity/'>팬클럽관리</a></div>");	 
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>핫클립관리</a></div>");	 
+		$("#mobileMenus").append("<div class='sideMenu'><a href='/hotclib/upload'>핫클립관리</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>방첨권추첨</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>팬클럽관리</a></div>");
 		    

@@ -1,4 +1,4 @@
-
+<!-- 
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org/extras/spring-security"
 th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
@@ -8,42 +8,26 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
 </head>
 <body>
  
-   <content>
-     <style>
-       .hell{
-         position: relative;
-         left: 1150px;
-         bottom:  390px;
-       }
-       .search{
-         position: relative;
-         left: 1018px;
-       }
-       .hi{
-         width: 250px;
-         height: 250px;
-        
-       }
-       .gi{
-         border: 1px solid #ccc;
-         padding: 5px;
-    width: 250px;
-    margin: 10px ;
-    display: inline-block;
-    text-align:left;
-       }
-     </style>
+   <content>-->
      
-  <button type="button" >조회순</button>
-  <button>최신순</button>
-        <form action="/hotclib/search" method="get">
-          <div class="search">
-          <input name="keyword" type="text" placeholder="제목을 입력해주세요">
-          <button>검색</button>
-        </div>
-          </form>
-          <bu>
-       
+    <table id="gcTable" class="tablesorter">
+      <thead>
+      <tr>
+         <th>제목</th>
+         <th>작성일</th>
+         <th>조회순</th>
+      </tr>
+      </thead>
+      <tbody>
+       <tr>
+         <tr th:each="hotclib : ${hotclibList}"></tr>
+           <td><th:text="${hotclib.htitle}"></td>
+       </tr>
+    
+      </tbody>
+   </table>
+  
+      <!-- 
    <div class="gi" th:each="hotclib:${hotclibList}" >
    <img class= "hi" th:src="@{'/uploads/' + ${hotclib.filename2}}"  >
    <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li>
@@ -93,4 +77,4 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립')}">
     
     </content>
   </body>
-</html>
+</html> -->

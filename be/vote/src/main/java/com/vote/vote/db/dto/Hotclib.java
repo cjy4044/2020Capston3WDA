@@ -44,8 +44,8 @@ public class Hotclib {
     @Column(nullable=true, name="h_view_count")
     private int hviewcount;
 
-    @Column(nullable=true)
-    private int h_reply_count;
+    @Column(nullable=true, name="h_reply_count")
+    private int hreplycount;
     
     @Column(nullable=true)
     private String h_reply;
@@ -105,12 +105,12 @@ public class Hotclib {
         this.hviewcount = hviewcount;
     }
 
-    public int getH_reply_count() {
-        return h_reply_count;
+    public int getHreplycount() {
+        return hreplycount;
     }
 
-    public void setH_reply_count(int h_reply_count) {
-        this.h_reply_count = h_reply_count;
+    public void setHreplycount(int hreplycount) {
+        this.hreplycount = hreplycount;
     }
 
     public String getH_reply() {

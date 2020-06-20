@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org/extras/spring-security"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
 <head>
     <meta charset="UTF-8">
@@ -10,15 +11,15 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
  
    <content>
      <style>
-       .hell{
+       /* .hell{
          position: relative;
          left: 1150px;
          bottom:  390px;
-       }
-       .search{
+       } */
+       /* .search{ 
          position: relative;
          left: 1018px;
-       }
+       } */
        .hi{
          width: 250px;
          height: 250px;
@@ -34,8 +35,8 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
        }
      </style> 
 
-<button type="button" >조회순</button>
-<button>최신순</button>
+<button id="btnCreatDtOrder" class="w20p order color-red" data-datanm="creatdt">최신순</button>
+<button id="btnPointOrder" class="w20p order" data-datanm="point">조회순</button>
         <form action="/hotclib/search" method="get">
           <div class="search">
           <input name="keyword" type="text" placeholder="제목을 입력해주세요">
@@ -43,22 +44,28 @@ th:replace="~{main_layout::layout(~{::content},_,'주간 핫클립',_)}">
         </div>
           </form>
         
-       
+          
    <div class="gi" th:each="hotclib:${hotclibList}" >
      <a href=""  th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
    <img class= "hi" th:src="@{'/uploads/' + ${hotclib.filename2}}"  >
   </a>
-   <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li>
-   <li>제목: <a href="" th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}" th:text="${hotclib.htitle}"></a></li>
+   <!-- <li>게시물번호: <span th:utext="${hotclib.hotclibid}"></span></li> -->
+   <li>제목: <a href="" th:href="@{'/hotclib/read/' + ${hotclib.hotclibid}}" th:text="${hotclib.htitle}" ></a> (<span style="color: red;" th:text="${hotclib.hreplycount}"></span>)</li>
+   
+
    <li>작성일: <span th:utext="${hotclib.h_date}"></span></li>
    <li>조회수: <span th:utext="${hotclib.hviewcount}"></span></li>
    <li>작성자: <span sec:authentication="principal.name"></span></li>
-   
+   <!-- <td>권한<span sec:authentication="principal.authorities"></span></td> -->
    </div>
-  <div class="hell">
-   <input type="button" value="영상 업로드" onclick="location.href='hotclib/upload'">
-  </div>
-     
+  
+   <sec:authorize access="hasRole('2')">
+     <div>
+      <sapn><a class="btn btn-lg btn-primary" onclick="location.href='hotclib/upload'">영상업로드</a></sapn>
+    </div>
+    </sec:authorize>
+
+
    <nav style="text-align: center;">
     <ul class="pagination"
      th:with="start=${T(Math).floor(hotclibList.number/10)*10 + 1},

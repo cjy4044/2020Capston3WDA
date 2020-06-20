@@ -1,7 +1,7 @@
 package com.vote.vote.repository;
 
-
 import java.util.ArrayList;
+import java.util.List;
 
 import com.vote.vote.db.dto.Hotclib;
 
@@ -14,7 +14,8 @@ public interface HotclibRepository extends JpaRepository<Hotclib, Integer>{
   public ArrayList<Hotclib> findAll();
   public Hotclib findById(int hotclibid);
   public Hotclib deleteById(int hotclibid);
-  public ArrayList<Hotclib> findByHtitle(String keyword);
+  public List<Hotclib> findByHtitle(String keyword);
+  public Hotclib findByHreplycount(int hreplycount);
   
   
  // public Hotclib findByRid(int rid);

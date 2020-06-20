@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)}"></html>
+th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +39,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
 		</tr>
 		</thead>
 		<tbody>
-			<tr th:each="audition:${auditionlist}">
+			<tr th:each="audition:${auditionuserlist}">
 			<td th:text="${audition.auditionid}"></td>
 			<!--  <td th:text="${audition.a_title}"></td> -->
 			<td><a href="" th:href="@{'/audition/readuser/' + ${audition.auditionid}}" th:text="${audition.atitle}"></a></td>
@@ -66,7 +66,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
               <input type="button" value="처음으로" onclick="location.href='/audition/listuser'"/>
                                     </td>
            <center>
-		<form action="/audition/serch" method="GET">
+		<form action="/audition/serchuser" method="GET">
 		   
 		        <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
 		    
@@ -81,32 +81,32 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
     <nav style=text-align: center; >
 
     <ul class="pagination"
-        th:with="start=${T(Math).floor(auditionlist.number/10)*10 + 1},
-                    last=(${start + 9 < auditionlist.totalPages ? start + 9 : auditionlist.totalPages})">
+        th:with="start=${T(Math).floor(auditionuserlist.number/10)*10 + 1},
+                    last=(${start + 9 < auditionuserlist.totalPages ? start + 9 : auditionuserlist.totalPages})">
         <li>
-            <a th:href="@{/audition/list(page=1)}" aria-label="First">
+            <a th:href="@{/auditionuser/list(page=1)}" aria-label="First">
                 <span aria-hidden="true">First</span>
             </a>
         </li>
 
-        <li th:class="${auditionlist.first} ? 'disabled'">
-            <a th:href="${auditionlist.first} ? '#' :@{/audition/list(page=${auditionlist.number})}" aria-label="Previous">
+        <li th:class="${auditionuserlist.first} ? 'disabled'">
+            <a th:href="${auditionuserlist.first} ? '#' :@{/auditionuser/list(page=${auditionuserlist.number})}" aria-label="Previous">
                 <span aria-hidden="true">&lt;</span>
             </a>
         </li>
 
-        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == auditionlist.number + 1} ? 'active'">
-            <a th:text="${page}" th:href="@{/audition/list(page=${page})}"></a>
+        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == auditionuserlist.number + 1} ? 'active'">
+            <a th:text="${page}" th:href="@{/auditionuser/list(page=${page})}"></a>
         </li>
 
-        <li th:class="${auditionlist.last} ? 'disabled'">
-            <a th:href="${auditionlist.last} ? '#' : @{/audition/list(page=${auditionlist.number + 2})}" aria-label="Next">
+        <li th:class="${auditionuserlist.last} ? 'disabled'">
+            <a th:href="${auditionuserlist.last} ? '#' : @{/auditionuser/list(page=${auditionuserlist.number + 2})}" aria-label="Next">
                 <span aria-hidden="true">&gt;</span>
             </a>
         </li>
 
         <li>
-            <a th:href="@{/audition/list(page=${auditionlist.totalPages})}" aria-label="Last">
+            <a th:href="@{/audition/listuser(page=${auditionuserlist.totalPages})}" aria-label="Last">
                 <span aria-hidden="true">Last</span>
             </a>
         </li>

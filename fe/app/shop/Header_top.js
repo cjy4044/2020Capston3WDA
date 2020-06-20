@@ -9,8 +9,7 @@ class Header_top extends React.Component {
                         <div className="col-sm-6">
                             <div className="contactinfo">
                                 <ul className="nav nav-pills">
-                                    <li><a href="#"> RIRO MAIN</a></li>
-                                    <li><a href="#">이건 리액트임</a></li>
+                                    <li><a href="/"> RIRO MAIN</a></li>
                                 </ul>
                             </div>
                         </div>

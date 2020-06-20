@@ -71,7 +71,7 @@ public class AuditionController {
 	public String auditionuser(Model model, @PageableDefault Pageable pageable){
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); 
 		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "auditionid"));
-		model.addAttribute("auditionlist", auditionRepository.findAll(pageable));
+		model.addAttribute("auditionuserlist", auditionRepository.findAll(pageable));
 		return "audition/listuser";
 	}
 	
@@ -96,7 +96,7 @@ public class AuditionController {
 	public String serchuser(@RequestParam(value="keyword") String keyword, Model model) {
 		List<Audition> audition = auditionRepository.findByAtitle(keyword);
 		
-				model.addAttribute("auditionlist", audition);
+				model.addAttribute("auditionuserlist", audition);
 				
 				return "audition/listuser";
 	}

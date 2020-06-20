@@ -58,13 +58,13 @@ import org.springframework.util.StringUtils;
 @Controller
 @RequestMapping("/audience")
 public class AudienceController {
-   
+
     @Autowired
     CustomProgramRepositoryImpl pg;
-    
+
     @Autowired
     public MemberRepositoryImpl mr;
-    
+
     private AudienceService audienceService;
 
     @Autowired
@@ -114,7 +114,7 @@ public class AudienceController {
     public String result(Audience audience, Principal principal, ADetail aDetail) {
         Member member = memberRepository.findByUserid(principal.getName());
 
-        aDetail.setApplyId(audience.getApplyId());  
+        aDetail.setApplyId(audience.getApplyId());
         aDetail.setRId(member.getNo());
         // aDetaiId.setApplyId(audience.getApplyId());
         // aDetaiId.setRId(member.getNo());
@@ -174,7 +174,7 @@ public class AudienceController {
             // rfile.setApplyid(audience.getApplyId());
             // rfile.setFilename(filenamePath);
             // rfileRepository.saveAndFlush(rfile);
-            //sessionStatus.setComplete();
+            // sessionStatus.setComplete();
             System.out.println("게시글업로드완료");
             return "redirect:/audience/mlist";
         }
@@ -182,15 +182,15 @@ public class AudienceController {
 
     // 게시글 삭제
     @GetMapping("/delete/{applyId}")
-    public String delete(@PathVariable int applyId, Model model){
-    aDetailRepository.deleteByApplyId(applyId);
-    audienceJpaRepository.deleteById(applyId);
-    return "redirect:/audience/mlist";
+    public String delete(@PathVariable int applyId, Model model) {
+        aDetailRepository.deleteByApplyId(applyId);
+        audienceJpaRepository.deleteById(applyId);
+        return "redirect:/audience/mlist";
     }
 
     // 게시글 수정
     @GetMapping("/update/{applyId}")
-    public String update(@PathVariable int applyId, Model model){       
+    public String update(@PathVariable int applyId, Model model) {
         model.addAttribute("audience", audienceJpaRepository.findById(applyId));
         model.addAttribute("newAudience", new Audience());
         return "audience/mUpdate";
@@ -198,19 +198,18 @@ public class AudienceController {
 
     @PostMapping("/update")
     public String update(@Valid Audience audience, BindingResult bindingResult, SessionStatus sessionStatus,
-    Principal principal, Model model, RedirectAttributes redirAttrs,
-    @RequestParam(name = "filename") MultipartFile filename){  
-       System.out.println(audience.getApplyId());
-       System.out.println(audience.getATitle());
-       storageService.store2(filename);
-       audienceJpaRepository.audienceUpdate(audience.getATitle(), audience.getAStartdate(), audience.getAEnddate(), 
-       audience.getARecruits(), audience.getALimit(), audience.getAPrice(), storageService.store2(filename), audience.getAContent(), 
-       audience.getApplyId());
-       System.out.println("수정햇엉");
-       
-       return "redirect:/audience/mlist";  
-    }
+            Principal principal, Model model, RedirectAttributes redirAttrs,
+            @RequestParam(name = "filename") MultipartFile filename) {
+        System.out.println(audience.getApplyId());
+        System.out.println(audience.getATitle());
+        storageService.store2(filename);
+        audienceJpaRepository.audienceUpdate(audience.getATitle(), audience.getAStartdate(), audience.getAEnddate(),
+                audience.getARecruits(), audience.getALimit(), audience.getAPrice(), storageService.store2(filename),
+                audience.getAContent(), audience.getApplyId());
+        System.out.println("수정햇엉");
 
+        return "redirect:/audience/mlist";
+    }
 
     // 내가 작성한 게시글(관리자)
     @GetMapping(value = { "/mlist" })
@@ -221,7 +220,7 @@ public class AudienceController {
 
         Page<Audience> boardList = audienceJpaRepository.findAllByrId(pageable, member.getNo());
         model.addAttribute("boardList", boardList);
-        
+
         return "audience/mList";
     }
 
@@ -239,20 +238,19 @@ public class AudienceController {
     @GetMapping("/showList")
     @ResponseBody
     public JSONArray showList(Model model, Audience audience) {
-        
-            
-            List<Member> list = new ArrayList<>();
-            list = mr.getInfo(audience.getApplyId());
-            
-            System.out.println(list);
-            JSONObject obj = new JSONObject();
-            JSONArray array = new JSONArray();
-            for(Member list2:list){
-                obj = new JSONObject();	
-                obj.put("name", list2.getName());
-                obj.put("phone", list2.getPhone());
-                array.add(0, obj);
-            }         
+
+        List<Member> list = new ArrayList<>();
+        list = mr.getInfo(audience.getApplyId());
+
+        System.out.println(list);
+        JSONObject obj = new JSONObject();
+        JSONArray array = new JSONArray();
+        for (Member list2 : list) {
+            obj = new JSONObject();
+            obj.put("name", list2.getName());
+            obj.put("phone", list2.getPhone());
+            array.add(0, obj);
+        }
         return array;
     }
 
@@ -260,38 +258,63 @@ public class AudienceController {
     @GetMapping("/showResult")
     @ResponseBody
     public JSONArray showResult(Model model, Audience audience) {
-            int people = audience.getARecruits();                       //뽑을인원
-            List<Member> list = new ArrayList<>();
-            List<Member> result = new ArrayList<>();
-            HashSet<Member> result2 = new HashSet<>();
-            List<Member> result3 = new ArrayList<>();
-            list = mr.getInfoNoDistincList(audience.getApplyId()); 
-            JSONObject obj = new JSONObject();
-            JSONArray array = new JSONArray(); 
+        int people = audience.getARecruits(); // 뽑을인원
+        List<Member> list = new ArrayList<>();
+        List<Member> result = new ArrayList<>();
+        HashSet<Member> result2 = new HashSet<>();
+        List<Member> result3 = new ArrayList<>();
+        list = mr.getInfoNoDistincList(audience.getApplyId());
+        JSONObject obj = new JSONObject();
+        List<JSONObject> array = new ArrayList<>();
 
-            if(people >= list.size()){                          //추첨인원이 응모인원보다 적거나 같을 때
-                list = mr.getInfo(audience.getApplyId());
-                for(Member list2:list){
-                    obj = new JSONObject();	
-                    obj.put("name", list2.getName());
-                    obj.put("phone", list2.getPhone());
-                    array.add(obj);
-                }         
-                return array;
-            } else {                                         
-                while(result.size() < people){
-                double randomValue = Math.random();
-                int ran = (int)(randomValue * list.size());
-                result.add(list.remove(ran));
-                    // for(Member data : result){
-                    //     if(!result3.contains(data))
-                    //     result3.add(data);
-                    // }
-                }
-                    
+        array = new ArrayList<>();
+        if (people >= list.size()) { // 추첨인원이 응모인원보다 적거나 같을 때
+            list = mr.getInfo(audience.getApplyId());
+            for (Member list2 : list) {
+                obj = new JSONObject();
+                obj.put("name", list2.getName());
+                obj.put("phone", list2.getPhone());
+                array.add(obj);
             }
-        return array;
+            return null;
+
+        } else {
+            while (result.size() < people) {
+                double randomValue = Math.random();
+                int ran = (int) (randomValue * list.size());
+                result.add(list.remove(ran));
+            }
+            boolean state = false;
+            array = new ArrayList<>();
+            obj = new JSONObject();
+            for (Member list2 : list) {
+                state = true;
+                for (int i = 0; i < array.size(); i++) {
+                    state = true;
+                    if (array.get(i).get("name").equals(list2.getName())) {
+                        state = false;
+                        System.out.println("중복!");
+                        break;
+                    }
+                }
+                if (!state)
+                    continue;
+                obj = new JSONObject();
+                obj.put("name", list2.getName());
+                obj.put("phone", list2.getPhone());
+                array.add(obj);
+
+            }
+
+            while (people != array.size()) {
+            }
+            System.out.println(array.size() == people);
+            System.out.println(people);
+            System.out.println(array.size());
+            System.out.println(array);
+
+        }
+        return null;
     }
-        
 
 }

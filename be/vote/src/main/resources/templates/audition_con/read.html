@@ -79,8 +79,8 @@ th:replace="~{main_layout::layout(~{::content},_,'신청 폼',_)}">
 	
 	<center>
 	<h4>
-	합격<input type="radio" id="o" class="o" name="confirm" value="o">
-	불합격<input type="radio" id="x" class="x" name="confirm" value="x">
+	합격<input type="radio" id="o" class="o" name="confirm" value="합격">
+	불합격<input type="radio" id="x" class="x" name="confirm" value="불합격">
 </h4>
         <script>
 
@@ -95,9 +95,9 @@ th:replace="~{main_layout::layout(~{::content},_,'신청 폼',_)}">
                 var check = document.querySelector(".test").value
 
                 // check가 o 일때,
-                if (check == "o") {
+                if (check == "합격") {
                     document.querySelector(".o").checked = true;
-                } else if (check == "x") {
+                } else if (check == "불합격") {
                     // check 가 x 일때,
                     document.querySelector(".x").checked = true;
                 }

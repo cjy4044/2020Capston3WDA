@@ -27,14 +27,14 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 			<!-- <th>아이디</th> -->
 			<th>신청자</th>
 			<th>접수일</th>
-			<!-- <th>심사결과</th> -->
-			<th>
+			<th>심사결과</th>
+			<!-- <th>
 			<form:select path="searchCondition" >
             <form:option value="2" >전체</form:option>
              <form:option value="1" label ="전공"  />
              <form:option value="0" label="교양" />
 			</form:select>
-		</th>
+		</th> -->
 			<!-- <th>
 			<select name="confirmm">
 				<option value="">심사결과</option>
@@ -52,18 +52,18 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 			<!-- <td th:text="${auditionCon.fname}"></td> -->
 			<td><span th:text="${auditionCon.username}"></span><span>님</span></td>
 			<td th:text="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"></td>
-			<!-- <td th:text="${auditionCon.confirm}"></td> -->
+			<td th:text="${auditionCon.confirm}"></td>
 			<!-- th:if 조건문 o 가 맞을때, td 합격을 출력-->
-			<th:block th:if="${auditionCon.confirm} == 'o'">
+			<!-- <th:block th:if="${auditionCon.confirm} == 'o'">
 				<td th:text="합격"></td>
-			</th:block>
+			</th:block> -->
 			<!-- th:unless 위 if 조건문이 틀릴때, 아래 td 불합격을 출력 -->
-			<th:block th:if="${auditionCon.confirm} == 'x'">
+			<!-- <th:block th:if="${auditionCon.confirm} == 'x'">
 				<td th:text="불합격"></td>
 			</th:block>
 			<th:block th:if="${auditionCon.confirm} == 'n'">
 				<td th:text="접수중"></td>
-			</th:block>
+			</th:block> -->
 
 		</tr>
 	

@@ -27,19 +27,11 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳',_)}">
 
          <fieldset>
                 댓글공개
-                허용 <input type="radio" name="open" value="open" checked />
-                비허용 <input type="radio" name="close" value="close" />
+                허용 <input type="radio" name="h_reply" value="0" checked />
+                비허용 <input type="radio" name="h_reply" value="1" />
             </fieldset>
 
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">프로그램선택
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a href="#">HTML</a></li>
-              <li><a href="#">CSS</a></li>
-              <li><a href="#">JavaScript</a></li>
-            </ul>
-          </div>
+         
             썸네일선택<input class="gg" type="file" id="filename2" name="filename2" onchange="setFilename2(event);"/>
             <div id ='preview'> 
               <!--미리보는공간-->

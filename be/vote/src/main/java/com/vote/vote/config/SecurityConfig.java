@@ -47,6 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/shop/**").permitAll()//  쇼핑몰
 			.antMatchers("/shop/create").hasAnyAuthority("1","2")// 상품 생성
 			
+			//핫클립
+			.antMatchers("/hotclib/upload").hasAnyAuthority("2")	//등록
+			.antMatchers("/hotclib/update/**").hasAnyAuthority("2")	//수정
+			.antMatchers("/hotclib/delete/**").hasAnyAuthority("2") //삭제
+			
 
 			// .antMatchers("/vote/axios").permitAll()
 			// .antMatchers("/vote/axios/**").hasRole("USER")

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org/extras/spring-security"
+th:replace="~{main_layout::layout(~{::content},_,'게시글조회',_)}">
 <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 <head>
     <meta charset="UTF-8">
@@ -43,13 +43,16 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 	
 		<div>
 			<a href="" th:href="@{/hotclib}">목록</a><br>
-			<a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a> 
+		</div>
+			<sec:authorize access ="hasRole('2')"> 
+			<span><a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a></span>
+			
 			<form id="delete-form" th:action="@{'/hotclib/' + ${hotclib.hotclibid}}" method="post">
 				<input type="hidden" name="_method" value="delete"/>
 				<button id="delete-btn">삭제</button>
 			</form>
-			</div>
-
+			</sec:authorize>
+		
 			 <form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
 				<tr>댓글테스트
 				<td><input type="textarea" placeholder="내용을 입력하세요" name="r_content"></td>
@@ -71,10 +74,10 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 					<div>
 						<form id="replydelete-form"  method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">						
 							<input type="hidden" name="_method" value="replydelete"/>
-							<button id="replydelete">댓글삭제</button>
+							<button class="btn btn-lg btn-danger" id="replydelete">댓글삭제</button>
 						</form>
 					<div id="root[vs.index]">
-						<button type="button" data-rno="${replyList.replyid}" id="1btn">댓글수정</button> 
+						<button class="btn btn-lg btn-default" type="button" data-rno="${replyList.replyid}" id="1btn">댓글수정</button> 
 						</div>
 						<div id="modal[vs.index]">
 							<form id="replyupdate-form"  method="POST" th:action="@{'/hotclib/replyupdate/' + ${hotclib.hotclibid}+'/' + ${reply.replyid}}">		
@@ -92,7 +95,7 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
 						<hr>
 					</p>
 				</tr>
-	
+				
 <script>
 	
 	$("#1btn").click(function(){
@@ -104,6 +107,7 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글 조회')}">
     });      
     
 </script>
+
 </body>
 </content>
 </html>

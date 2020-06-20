@@ -66,6 +66,7 @@ module.exports = {
     orderList : path.join(__dirname,"./app/shop/orderList.jsx"),
     orderShow : path.join(__dirname,"./app/shop/orderShow.jsx"),
     manageOrder : path.join(__dirname,"./app/userInfo/manageOrder.jsx"),
+    manageOrderState : path.join(__dirname,"./app/userInfo/manageOrderState.jsx"), 
     
   },
   output: {

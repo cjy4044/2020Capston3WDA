@@ -1,10 +1,16 @@
 package com.vote.vote.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.customSelect.CustomOrderListSelect;
+import com.vote.vote.db.customSelect.CustomOrderState;
 import com.vote.vote.db.customSelect.CustomPrd;
 import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Company;
@@ -17,11 +23,13 @@ import com.vote.vote.repository.CompanyJpaRepository;
 import com.vote.vote.repository.CustomCompanyRepository;
 import com.vote.vote.repository.CustomMemberRepository;
 import com.vote.vote.repository.CustomOrderListRepository;
+import com.vote.vote.repository.CustomOrderReopsitoy;
 import com.vote.vote.repository.CustomPrdJapRepository;
 import com.vote.vote.repository.CustomProgramRepository;
 import com.vote.vote.repository.CustomVoteRepository;
 import com.vote.vote.repository.JudgeJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
+import com.vote.vote.repository.OrderJpaRepository;
 import com.vote.vote.repository.PopularJpaRepository;
 import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
@@ -90,6 +98,12 @@ public class UserInfoController {
 
 	@Autowired
 	private CustomOrderListRepository customOrderListRepository;
+
+	@Autowired
+	private OrderJpaRepository orderRepository;
+
+	@Autowired
+	private CustomOrderReopsitoy customOrderReopsitoy;
 
 	//개인정보
 	@RequestMapping(value={"","/"})
@@ -659,4 +673,46 @@ public class UserInfoController {
 			return items;
 		}
 
+
+		@RequestMapping(value={"/manage/manageOrderState","/manage/manageOrderState/"}, method=RequestMethod.GET)
+		public String orderState() {
+
+			return "/userInfo/orderState";
+		}
+		@ResponseBody
+		@RequestMapping(value={"/manage/manageOrderState/axios","/manage/manageOrderState/axios/"}, method=RequestMethod.GET)
+		public List<CustomOrderState>  orderStateAxios(@Nullable Authentication authentication) {
+
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+			List<CustomOrderState> result = customOrderReopsitoy.getOrderStateByManagerId(userDetails.getR_ID());
+
+			// List<Object> state =orderRepository.getOrderState(userDetails.getR_ID());
+
+			// List<CustomOrderState> result = new ArrayList<CustomOrderState>();
+			// System.out.println(state);
+			// for(Object item: state){
+			// 	Gson gson = new Gson();
+			// 	String items = gson.toJson(item);
+			// 	JsonParser parser = new JsonParser();
+			// 	JsonElement element = parser.parse(items);
+			// 	JsonArray array = element.getAsJsonArray();
+				
+			// 	CustomOrderState dto = new CustomOrderState();
+			// 	dto.setProduct_id(Integer.parseInt(array.get(0).toString()));
+			// 	dto.setName(array.get(1).toString());
+			// 	dto.setSum(Integer.parseInt(array.get(2).toString()));
+			// 	dto.setOne(Integer.parseInt(array.get(3).toString()));
+			// 	dto.setTwo(Integer.parseInt(array.get(4).toString()));
+			// 	dto.setThree(Integer.parseInt(array.get(5).toString()));
+			// 	dto.setFour(Integer.parseInt(array.get(6).toString()));
+			// 	dto.setFive(Integer.parseInt(array.get(6).toString()));
+
+			// 	result.add(dto);
+			// }
+
+
+			return result;
+		}
+		
 }

@@ -47,7 +47,7 @@ function w3_open() {
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/manage/product'>상품관리</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/shop/create'>상품등록</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/manage/order'>주문관리</a></div>");	 
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>판매추이</a></div>");	
+		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/manage/manageOrderState'>판매추이</a></div>");	
 		    
 		//채팅관리
 		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>채팅방관리</a></div>");	}	

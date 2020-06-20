@@ -44,7 +44,13 @@ class OrderShow extends React.Component {
                     <div>수취자 연락처: {prd.phone}</div>
                     <div>도로명 주소:{prd.addr}</div>
                     <div>상세 주소:{prd.addr2}</div>
-                    <div>운송장 번호: {prd.invoice?prd.invoice:'등록되지 않음.'}</div>
+                    <div>운송장 번호: {
+                    prd.invoice?prd.invoice==0?
+                    '확인전':prd.invoice==1?
+                    '확인': prd.invoice==2?
+                    '배송중:':prd.invoice==3?
+                    '배송완료':prd.invoice==4?
+                    '확인바람':'확인바람':'확인전'}</div>
                     <div>주문상태: {prd.state?prd.state:'등록되지 않음.'}</div>
                 </div>
                 

@@ -40,6 +40,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST,"/vote").hasAnyAuthority("1","2")// 투표 생성
 			.antMatchers(HttpMethod.DELETE,"/vote/*/").hasAnyAuthority("1","2")// 투표 삭제
 
+
+			//방청권
+			.antMatchers("/audience/mlist/**").hasAnyAuthority("0","1","2")
+			.antMatchers("/audience/mread/**").hasAnyAuthority("0","1","2")
+			.antMatchers("/audience/update/**").hasAnyAuthority("0","1","2")
+			.antMatchers("/audience/showList").hasAnyAuthority("0","1","2")
+			.antMatchers("/audience/showResult").hasAnyAuthority("0","1","2")
+			.antMatchers("/audience/delete/**").hasAnyAuthority("0","1","2")
+			.antMatchers("/audience/list/**").permitAll()
+			.antMatchers("/introduce/read/**").permitAll()
+			.antMatchers("/introduce/apply/**").permitAll()
+
+			
+			
+
 			// 소개 
 			.antMatchers("/introduce/**").permitAll()
 

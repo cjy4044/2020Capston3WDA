@@ -43,6 +43,7 @@ import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
 
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -272,6 +273,7 @@ public class ShopController {
 		product.setEndDate(endTime); // 상품 판매 종료 날짜
 		product.setStock(stock);	
 		product.setImg(file1Name);
+		System.out.println(product.toString());
 		prdRepository.saveAndFlush(product);
 
 
@@ -448,6 +450,7 @@ public class ShopController {
 				String file1Name= storageService.store2(file1[0]); // 대표사진
 				prd.setImg(file1Name);
 			}
+			System.out.println(prd.toString());
 			prdRepository.saveAndFlush(prd);
 			
 			List<PrdOption> options = pOptionRepository.findByProductIdOrderByOptionIdAsc(p_id);
@@ -802,9 +805,11 @@ public class ShopController {
 							
 							System.out.println(productItem5.toString());
 							try{
+								// StringUtil dateError = new StringUtil(productItem5.getEndDate());
 
-								productItem5.setStock(0);
-								prdRepository.save(productItem5);
+								productItem5.setEndDate(productItem5.getEndDate().split(" ")[0]);
+								productItem5.setStock(option.getpStock());
+								prdRepository.saveAndFlush(productItem5);
 							}catch(Exception e){
 								e.printStackTrace();
 							}

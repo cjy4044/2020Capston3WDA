@@ -90,10 +90,21 @@ class PrdShow extends React.Component {
         console.log($('#quantity').val());
         if($('#quantity').val() == null || $('#quantity').val() <= 0)
             return alert("수량을 입력해주세요.");
+        var state = true;
+        this.state.option.map((option)=>{
+            if(option.optionId == $('#selectOption').val()){
+                if(option.pStock <  $('#quantity').val()){
+                    state = false
+                    return alert("재고가 부족합니다.\n재고: "+option.pStock +"개");
+                }
+            }
+        })
+        if(!state) return;
 
         if(!confirm("장바구니에 추가하시겠습니까?"))
             return;
         
+
         let {data} = await axios.post("/shop/"+this.state.prd.productId+"/mybag",{
 
                 optionId : $('#selectOption').val(),
@@ -115,7 +126,17 @@ class PrdShow extends React.Component {
         
         if($('#quantity').val() == null || $('#quantity').val() <= 0)
             return alert("수량을 입력해주세요.");
-
+        var state = true;
+        this.state.option.map((option)=>{
+            if(option.optionId == $('#selectOption').val()){
+                if(option.pStock <  $('#quantity').val()){
+                    state = false
+                    return alert("재고가 부족합니다.\n재고: "+option.pStock +"개");
+                    
+                }
+            }
+        })
+        if(!state) return;
         if(!confirm("해당 상품을 구매하시겠습니까?"))
             return
 

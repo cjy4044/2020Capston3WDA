@@ -167,6 +167,12 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.10.6</version>
 		</dependency>
+		<!-- jpa  dto mapping library ( native query ) -->
+		<dependency>
+			<groupId>ch.simas.qlrm</groupId>
+			<artifactId>qlrm</artifactId>
+			<version>1.7.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

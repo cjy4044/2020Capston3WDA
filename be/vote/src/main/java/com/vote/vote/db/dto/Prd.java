@@ -168,6 +168,14 @@ public class Prd {
 		this.img = img;
 	}
 
+	@Override
+	public String toString() {
+		return "Prd [categoryD=" + categoryD + ", categoryId=" + categoryId + ", content=" + content + ", detail="
+				+ detail + ", endDate=" + endDate + ", img=" + img + ", manager=" + manager + ", name=" + name
+				+ ", price=" + price + ", productId=" + productId + ", programId=" + programId + ", state=" + state
+				+ ", stock=" + stock + ", upload=" + upload + "]";
+	}
+
 
 
    

@@ -242,7 +242,7 @@ public class AudienceController {
         List<Member> list = new ArrayList<>();
         list = mr.getInfo(audience.getApplyId());
 
-        System.out.println(list);
+      
         JSONObject obj = new JSONObject();
         JSONArray array = new JSONArray();
         for (Member list2 : list) {
@@ -264,7 +264,6 @@ public class AudienceController {
         list = mr.getInfoNoDistincList(audience.getApplyId());
         JSONObject obj = new JSONObject();
         JSONArray array = new JSONArray();
-
         if (people >= list.size()) {
             list = mr.getInfo(audience.getApplyId());
             for (Member list2 : list) {
@@ -277,16 +276,15 @@ public class AudienceController {
 
         } else {
 
-            while (result.size() <= people) {
+            while (result2.size() < people) {
                 double randomValue = Math.random();
                 int ran = (int) (randomValue * list.size());
                 result.add(list.remove(ran));
-                
                 for(int i=0; i<result.size(); i++) {
-                    if(!result2.contains(result.get(i)))
+                    if(!result2.contains(result.get(i))){
                         result2.add(result.get(i));
+                    }      
                 }
-
             }
             System.out.println(result2);
             for (Member list2 : result2) {
@@ -298,68 +296,4 @@ public class AudienceController {
         }
         return array;
     }
-
-    // 추첨인원(결과) 리스트 ajax return List<json>
-    // @GetMapping("/showResult")
-    // @ResponseBody
-    // public JSONArray showResult(Model model, Audience audience) {
-    // int people = audience.getARecruits();
-    // List<Member> list = new ArrayList<>();
-    // List<Member> result = new ArrayList<>();
-    // HashSet<Member> result2 = new HashSet<>();
-    // List<Member> result3 = new ArrayList<>();
-    // list = mr.getInfoNoDistincList(audience.getApplyId());
-    // JSONObject obj = new JSONObject();
-    // List<JSONObject> array = new ArrayList<>();
-
-    // array = new ArrayList<>();
-    // if (people >= list.size()) {
-    // list = mr.getInfo(audience.getApplyId());
-    // for (Member list2 : list) {
-    // obj = new JSONObject();
-    // obj.put("name", list2.getName());
-    // obj.put("phone", list2.getPhone());
-    // array.add(obj);
-    // }
-    // return null;
-
-    // } else {
-    // while (result.size() < people) {
-    // double randomValue = Math.random();
-    // int ran = (int) (randomValue * list.size());
-    // result.add(list.remove(ran));
-    // }
-    // boolean state = false;
-    // array = new ArrayList<>();
-    // obj = new JSONObject();
-    // for (Member list2 : list) {
-    // state = true;
-    // for (int i = 0; i < array.size(); i++) {
-    // state = true;
-    // if (array.get(i).get("name").equals(list2.getName())) {
-    // state = false;
-    // System.out.println("중복!");
-    // break;
-    // }
-    // }
-    // if (!state)
-    // continue;
-    // obj = new JSONObject();
-    // obj.put("name", list2.getName());
-    // obj.put("phone", list2.getPhone());
-    // array.add(obj);
-
-    // }
-
-    // while (people != array.size()) {
-    // }
-    // System.out.println(array.size() == people);
-    // System.out.println(people);
-    // System.out.println(array.size());
-    // System.out.println(array);
-
-    // }
-    // return null;
-    // }
-
 }

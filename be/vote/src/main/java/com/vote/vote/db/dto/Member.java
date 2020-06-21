@@ -1,5 +1,7 @@
 package com.vote.vote.db.dto;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,22 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @Table(name="r_user")
 public class Member{
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Member)) {
+            return false;
+        }
+        Member member = (Member) o;
+        return no == member.no && Objects.equals(userid, member.userid) && Objects.equals(password, member.password) && Objects.equals(name, member.name) && Objects.equals(gender, member.gender) && Objects.equals(birth, member.birth) && Objects.equals(nickname, member.nickname) && Objects.equals(profile, member.profile) && Objects.equals(phone, member.phone) && Objects.equals(joindate, member.joindate) && Objects.equals(addr, member.addr) && Objects.equals(addr2, member.addr2) && point == member.point && Objects.equals(role, member.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(no, userid, password, name, gender, birth, nickname, profile, phone, joindate, addr, addr2, point, role);
+    }
 
     @Id
     @Column(name="r_id", nullable=false)

@@ -3,6 +3,7 @@ package com.vote.vote.repository;
 import java.util.List;
 
 import com.vote.vote.db.customSelect.CustomPrd;
+import com.vote.vote.db.customSelect.CustomPrdByOption;
 import com.vote.vote.db.customSelect.CustomPrdCategorySelect;
 import com.vote.vote.db.customSelect.CustomPrdRecommend;
 
@@ -15,4 +16,6 @@ public interface CustomPrdJapRepository {
     public CustomPrdCategorySelect getCategorySelect(int number);
 
     public List<CustomPrdRecommend> getRecommendPrd(int start, int end);
+
+    public CustomPrd getPrdsByCategory(int categoryId, int categoryDId,String search,int programId,Pageable page);
 }

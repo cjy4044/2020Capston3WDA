@@ -3,6 +3,7 @@ import LeftSidebar from './LeftSidebar';
 import NewItem from './NewItem';
 import CateTab from './CateTab';
 import Item2 from './Item2'; 
+import './css/section.css'
 export default class Section extends React.Component {
     
     constructor(props){
@@ -15,11 +16,12 @@ export default class Section extends React.Component {
             <section>
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-3"> {/* 왼쪽 카테고리, 프로그램 별... */} 
-                            <LeftSidebar></LeftSidebar>
-                        </div>
+                        {/* <div className="col-sm-3">  */}
+                        {/* 왼쪽 카테고리, 프로그램 별... */} 
+                            {/* <LeftSidebar></LeftSidebar> */}
+                        {/* </div> */}
                         
-                        <div className="col-sm-9 padding-right"> {/* 오른쪽 신상품... 상품목록 */}
+                        <div className="items"> {/* 오른쪽 신상품... 상품목록 */}
                             {/*  신상품 */}
                             {/* <NewItem data={this.props.data}></NewItem> */}
 

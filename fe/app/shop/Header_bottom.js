@@ -39,7 +39,7 @@ class Header_bottom extends React.Component {
                         <div className="col-sm-3">
 
                             <div className="search_box pull-right">
-                                <input type="text" placeholder="Search" />
+                                {/* <input type="text" placeholder="Search" /> */}
                             </div>
                         </div>
                     </div>

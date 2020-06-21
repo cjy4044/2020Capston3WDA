@@ -7,9 +7,9 @@ import java.util.List;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.customSelect.CustomBagSelect;
 import com.vote.vote.db.customSelect.CustomOrderInfo;
-import com.vote.vote.db.customSelect.CustomOrderList;
 import com.vote.vote.db.customSelect.CustomOrderListSelect;
 import com.vote.vote.db.customSelect.CustomOrderUpdate;
+import com.vote.vote.db.customSelect.CustomPrd;
 import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Mybag;
 import com.vote.vote.db.dto.Order;
@@ -22,6 +22,7 @@ import com.vote.vote.db.dto.PrdImage;
 import com.vote.vote.db.dto.PrdOption;
 import com.vote.vote.db.dto.PrdSize;
 import com.vote.vote.db.dto.ProgramManager;
+import com.vote.vote.db.dto.Program;
 import com.vote.vote.repository.Asdf;
 import com.vote.vote.repository.CustomMybagRepository;
 import com.vote.vote.repository.CustomOrderListRepository;
@@ -38,6 +39,7 @@ import com.vote.vote.repository.PrdImageJpaRepository;
 import com.vote.vote.repository.PrdJpaRepository;
 import com.vote.vote.repository.PrdOptionJpaRepository;
 import com.vote.vote.repository.PrdSizeJpaRepository;
+import com.vote.vote.repository.ProgramJpaRepository;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
 
@@ -118,7 +120,8 @@ public class ShopController {
 	private CustomOrderListRepository customOrderListRepository;
 
 
-	
+	@Autowired
+	private ProgramJpaRepository programRepository;
 
 	@RequestMapping("/shop/index")
 	public String index(Model model,Principal user) {
@@ -142,18 +145,76 @@ public class ShopController {
 
 	}
 
-	@RequestMapping("/shop/list")
+	@RequestMapping(value={"/shop/list","/shop/list"})
 	public String shopList() {
-
+		
+		
 		return "/shop/shop_list";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/shop/list/axios")//기본 리스트, 옵션 선택, 페이지네이션
+	public CustomPrd shopListAxios(
+		@Nullable @RequestParam("categoryId")	Integer categoryId,
+		@Nullable @RequestParam("categoryDId") Integer categoryDId,
+		@Nullable @RequestParam("search") String search,
+		@Nullable @RequestParam("programId") Integer programId,
+		@PageableDefault Pageable page
+		){
+		System.out.println(("카테고리별 아이템 요청"));
+		int category = 0;
+		int categoryD = 0;
+		int program = 0;
+		String text = " ";
+		
+		
 
+		if(categoryId != null ){
+			category = categoryId.intValue();
+		}
+		if(categoryDId != null){
+			categoryD = categoryDId.intValue();
+		}
+		if(search != null){
+			text = search;
+		}
+		if(programId != null ){
+			program = programId.intValue();
+		}
 
-	@RequestMapping("/shop/cart")
-	public String cart() {
+		CustomPrd prds = customPrdRepository.getPrdsByCategory(category, categoryD, text, program, page);
 
-		return "asdf";
+		return prds;
 	}
+	@ResponseBody
+	@RequestMapping("/shop/categorySet")
+	public JSONArray categorySet(){
+		List<PrdCategoryD> categoryD1 =  prdCategoryDRepository.findByCategory(1);
+		List<PrdCategoryD> categoryD2 =  prdCategoryDRepository.findByCategory(2);
+		List<PrdCategoryD> categoryD3 =  prdCategoryDRepository.findByCategory(3);
+		List<PrdCategoryD> categoryD4 =  prdCategoryDRepository.findByCategory(4);
+		List<PrdCategoryD> categoryD5 =  prdCategoryDRepository.findByCategory(5);
+		List<PrdCategoryD> categoryD6 =  prdCategoryDRepository.findByCategory(6);
+		List<Program> programs = programRepository.findAll();
+		JSONArray result = new JSONArray();
+		result.add(0,categoryD1);
+		result.add(1,categoryD2);
+		result.add(2,categoryD3);
+		result.add(3,categoryD4);
+		result.add(4,categoryD5);
+		result.add(5,categoryD6);
+		result.add(6,programs);
+
+		return result;
+	}
+
+	// @RequestMapping("/shop/cart")
+	// public String cart() {
+
+	// 	return "asdf";
+	// }
+
+
 	@RequestMapping(value={"/shop/create","/shop/create/"})
 	public String create(){// 상품 생성 뷰
 
@@ -725,7 +786,7 @@ public class ShopController {
 			@Nullable Authentication authentication 
 			) {
 				CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-
+				
 				//재고 감소, 검증
 
 				for(int i=0; i<optionIds.length; i++){
@@ -736,9 +797,18 @@ public class ShopController {
 
 						if(option.getoTitle().equals("기본")){
 							System.out.println("기본옵션임");
-							Prd prd = prdRepository.findByProductId(option.getProductId());
-							prd.setStock(prd.getStock()-quantitys[i]);
-							prdRepository.saveAndFlush(prd);
+							Prd productItem5 = prdRepository.findByProductId(option.getProductId());			
+							
+							
+							System.out.println(productItem5.toString());
+							try{
+
+								productItem5.setStock(0);
+								prdRepository.save(productItem5);
+							}catch(Exception e){
+								e.printStackTrace();
+							}
+							
 						}
 						
 						pOptionRepository.saveAndFlush(option);

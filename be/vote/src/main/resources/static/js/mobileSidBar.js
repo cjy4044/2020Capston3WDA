@@ -38,8 +38,10 @@ function w3_open() {
 		if(userRole=="2")
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/myProgram/'>프로그램관리</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/myCommunity/'>팬클럽관리</a></div>");	 
-		$("#mobileMenus").append("<div class='sideMenu'><a href='/hotclib'>핫클립관리</a></div>");	 
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>방첨권추첨</a></div>");	 
+
+		$("#mobileMenus").append("<div class='sideMenu'><a href='hotclib'>핫클립관리</a></div>");	 
+		$("#mobileMenus").append("<div class='sideMenu'><a href='/audience/mlist'>방청권추첨</a></div>");	 
+
 		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>팬클럽관리</a></div>");
 		    
 		//굿즈샵관리

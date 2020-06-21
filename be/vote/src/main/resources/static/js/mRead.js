@@ -14,6 +14,7 @@ $(document).ready(function () {
             data: audience,
             success: function (data) {
                 var tableData = "";
+                $("#list").empty();
                 $.each(data, function (key, value) {
                     tableData += '<tr>';
                     tableData += '<td>' + value.name + '</td>';
@@ -29,12 +30,14 @@ $(document).ready(function () {
     })
 
     $('#showResult').click(function () {
+        alert("추첨시 추첨결과를 저장하고 재추첨할 수 없습니다. 추첨 하시겠습니까?")
         $.ajax({
             url: "/audience/showResult",
             type: "get",
             dataType: 'json',
             data: audience,
             success: function (data) {
+                $("#list").empty();
                 var tableData = "";
                 $.each(data, function (key, value) {
                     tableData += '<tr>';

@@ -37,12 +37,12 @@ public class CustomOrderRepositoryImpl implements CustomOrderReopsitoy {
 
         // booleanBuilder.and(order.rId.eq(managerId));
         String sql = 
-        "select l.product_id ,p.p_name name,  TO_CHAR(DBMS_LOB.SUBSTR(p.image, 4000))  image, count(*)  sum, "+
-        "count ( case when o.orderdate between add_months(sysdate,-1) and sysdate then 1 end) one, "+
-        "count ( case when o.orderdate between add_months(sysdate,-2) and add_months(sysdate,-1) then 1 end) two, "+
-        "count ( case when o.orderdate between add_months(sysdate,-3) and add_months(sysdate,-2) then 1 end) three, "+
-        "count ( case when o.orderdate between add_months(sysdate,-4) and add_months(sysdate,-3) then 1 end) four, "+
-        "count ( case when o.orderdate between add_months(sysdate,-5) and add_months(sysdate,-4) then 1 end) five "+
+        "select l.product_id ,p.p_name name,  TO_CHAR(DBMS_LOB.SUBSTR(p.image, 4000))  image, NVL(sum(l.count),0)   sum, "+
+        "NVL(sum( case when o.orderdate between add_months(sysdate,-1) and sysdate then l.count end ),0) one, "+
+        "NVL(sum ( case when o.orderdate between add_months(sysdate,-2) and add_months(sysdate,-1) then l.count end),0) two, "+
+        "NVL(sum ( case when o.orderdate between add_months(sysdate,-3) and add_months(sysdate,-2) then l.count end),0) three, "+
+        "NVL(sum ( case when o.orderdate between add_months(sysdate,-4) and add_months(sysdate,-3) then l.count end),0) four, "+
+        "NVL(sum ( case when o.orderdate between add_months(sysdate,-5) and add_months(sysdate,-4) then l.count end),0) five "+
         "from r_order o , orderlist l, product p "+
         "where o.order_id = l.order_id "+
         "and l.product_id = p.product_id "+

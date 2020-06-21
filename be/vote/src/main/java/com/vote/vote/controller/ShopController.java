@@ -824,8 +824,11 @@ public class ShopController {
 				}
 
 				
-				int sumPrice = 0;
+				
 				for(int i=0;i<productIds.length;i++){
+
+					Prd prd = prdRepository.findByProductId(productIds[i]);
+					PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
 
 					Order order = new Order();
 					order.setrId(userDetails.getR_ID());
@@ -834,12 +837,11 @@ public class ShopController {
 					// order.setInvoice(invoice);
 					order.setPhone(phone);
 					order.setReceiver(receiver);
-					order.setPrice(sumPrice);
+					order.setPrice((prd.getPrice()+option.getoPrice())*quantitys[i]);
 					order.setState("0");
 					orderRepository.saveAndFlush(order);
 
-					Prd prd = prdRepository.findByProductId(productIds[i]);
-					PrdOption option = pOptionRepository.findByOptionId(optionIds[i]);
+					
 
 					OrderList orderList = new OrderList();
 					

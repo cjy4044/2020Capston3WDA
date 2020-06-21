@@ -512,7 +512,6 @@ public class UserInfoController {
 
 		    }
 		 
-		 
 		 //팬클럽 관리
 			@RequestMapping(value={"/myCommunity"})
 			public String myCommunity() {        

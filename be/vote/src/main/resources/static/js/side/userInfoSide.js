@@ -47,7 +47,7 @@
 		$("#side").append("<li><a href='/userInfo/manage/product'>상품관리</a></li>");	 
 		$("#side").append("<li><a href='/shop/create'>상품등록</a></li>");	 
 		$("#side").append("<li><a href='/userInfo/manage/order'>주문관리</a></li>");	 
-		$("#side").append("<li><a href='#'>판매추이</a></li>");	
+		$("#side").append("<li><a href='/userInfo/manage/manageOrderState'>판매추이</a></li>");	
 		    
 		//채팅관리
 		$("#side").append("<li><a href='#'>채팅방관리</a></li>");	}	

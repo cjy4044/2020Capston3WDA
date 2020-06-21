@@ -19,7 +19,7 @@ const axios = require('axios');
 class Shop_index extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] }
+        this.state = { data: [], recommend: [] }
     }
 
     async componentDidMount() {

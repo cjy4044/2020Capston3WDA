@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import com.vote.vote.config.CustomUserDetails;
 import com.vote.vote.db.customSelect.CustomVote;
 import com.vote.vote.db.dto.Candidate;
+import com.vote.vote.db.dto.Member;
 import com.vote.vote.db.dto.Popular;
 import com.vote.vote.db.dto.Program;
 import com.vote.vote.db.dto.ProgramManager;
@@ -86,6 +87,9 @@ public class VoteController {
 
 	@Autowired
 	private CustomPopularRepository customPopRepository;
+
+	@Autowired
+	private MemberJpaRepository memberRepository;
 	
 
 	public Klaytn klaytn = new Klaytn();
@@ -383,6 +387,7 @@ public class VoteController {
 
 		// @Nullable Authentication authentication
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		Member member = memberRepository.findByNo(userDetails.getR_ID());
 		
 
 		System.out.println(axiosData.get("select"));  // 사용자가 뽑은 사람의 번호
@@ -422,38 +427,42 @@ public class VoteController {
 				try {
 					
 					int age = 2; 
-					System.out.println("회원 birth :"+userDetails.getBIRTH());
-					if(!userDetails.getBIRTH().equals("2")){ ////19990122....
-						System.out.println(userDetails.getBIRTH());
-						int y = Integer.parseInt(nowTime.substring(0, 4));
-						int m = Integer.parseInt(nowTime.substring(4, 6));
-						int d = Integer.parseInt(nowTime.substring(6, 8));
-						
-						
-						String[] cut = userDetails.getBIRTH().split(" ");
-						String[] birth = cut[0].split("-");
-						
-						LocalDate birthdate = new LocalDate(
-							Integer.parseInt(birth[0]), 
-							Integer.parseInt(birth[1]), 
-							Integer.parseInt(birth[2])
-						);
-						
-						LocalDate now = new LocalDate(
-							y, 
-							m, 
-							d
-						); 
-						Years nowAge = Years.yearsBetween(birthdate, now);
-						age = nowAge.getYears()/10;
+					// System.out.println("회원 birth :"+userDetails.getBIRTH());
+					if(member.getBirth() != null){
+						// if(!userDetails.getBIRTH().equals("2")){ ////19990122....
+							System.out.println(member.getBirth());
+							int y = Integer.parseInt(nowTime.substring(0, 4));
+							int m = Integer.parseInt(nowTime.substring(4, 6));
+							int d = Integer.parseInt(nowTime.substring(6, 8));
+							
+							
+							String[] cut = member.getBirth().split(" ");
+							String[] birth = cut[0].split("-");
+							
+							LocalDate birthdate = new LocalDate(
+								Integer.parseInt(birth[0]), 
+								Integer.parseInt(birth[1]), 
+								Integer.parseInt(birth[2])
+							);
+							
+							LocalDate now = new LocalDate(
+								y, 
+								m, 
+								d
+							); 
+							Years nowAge = Years.yearsBetween(birthdate, now);
+							age = nowAge.getYears()/10;
+						// }
+						System.out.println("계산한 나이: "+age);
 					}
+					
 					
 					if(age <= 0)
 						age = 2;
 					else if (age > 5)
 						age = 5;
 
-					
+					System.out.println("투표자 나이---------: "+age);
 					// String address, long time, int age, int gender, int select
 					JSONObject message = klaytn.klaytnSend3(
 						vote.getAddress(), 
@@ -524,8 +533,9 @@ public class VoteController {
 
 		JSONArray json = new JSONArray();
 		Long nowTime = Long.parseLong(getNowTime());
-
-		if(vote.getLongEndTime() > nowTime){// 진행중일 때,
+System.out.println("------------------테스트 1");
+		if(vote.getLongEndTime() > nowTime && nowTime >= vote.getLongStartTime()){// 진행중일 때,
+			System.out.println("------------------테스트 2");
 			if(vote.getShowState() != 0){ 		// 0 or 1   0 이면 실시간 결과 보여주고, 1 이면 안보여줌
 				json.add(0,"");
 				json.add(1,"");
@@ -537,10 +547,12 @@ public class VoteController {
 				json.add(7,"1");
 				json.add(8,"0");
 				json.add(9,"0");
+				System.out.println("------------------테스트 3");
 				return json;
 			}
 				
 		}else if(vote.getLongResultShowTime()> nowTime){// 투표 결과 공개시간이 아직 되지 않은 경우.
+			System.out.println("------------------테스트 4");
 				json.add(0,"");
 				json.add(1,"");
 				json.add(2,"");
@@ -552,20 +564,24 @@ public class VoteController {
 				json.add(8,"0");
 				json.add(9,"0");
 				return json;
-		}else if(vote.getShowState() == 1){
-			json.add(0,"");
-				json.add(1,"");
-				json.add(2,"");
-				json.add(3,"");
-				json.add(4,"");
-				json.add(5,"");
-				json.add(6,"");
-				json.add(7,"1");
-				json.add(8,"0");
-				json.add(9,"0");
-				return json;
 		}
-
+		// else if(vote.getLongResultShowTime()<= nowTime){
+		// 	if(vote.getShowState() == 1){
+		// 		System.out.println("------------------테스트 5");
+		// 		json.add(0,"");
+		// 			json.add(1,"");
+		// 			json.add(2,"");
+		// 			json.add(3,"");
+		// 			json.add(4,"");
+		// 			json.add(5,"");
+		// 			json.add(6,"");
+		// 			json.add(7,"1");
+		// 			json.add(8,"0");
+		// 			json.add(9,"0");
+		// 			return json;
+		// 	}
+		// }
+		System.out.println("------------------테스트 6");
 		try {
 			JSONArray result = klaytn.load3(vote.getAddress());   // 블록체인 소스 추가해서, 투표 결과 시간 에 맞게.
 			System.out.println("result: " +result);

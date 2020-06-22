@@ -98,11 +98,16 @@ class Shop_list extends React.Component {
     }
     
     setUrl(){
+        this.url =  "/shop/list/axios?&page="+(this.state.pageNum-1)+'&size='+8+'&sort=0';
+
         if(this.category!= 0){ // 카테고리 선색이 있는 상태로, 페이지 전환 시.
-            this.url = "/shop/list/axios?categoryId="+this.category+"&categoryDId="+this.categoryD+"&page="+(this.state.pageNum-1)+'&size='+8+'&sort="id"'
-        }else{//카테고리 없는 상태고, 페이지 전환시.
-            this.url =  "/shop/list/axios?&page="+(this.state.pageNum-1)+'&size='+8+'&sort=0';
+            this.url += "&categoryId="+this.category+"&categoryDId="+this.categoryD;
         }
+        if(this.program != 0) {// 프로그램 있는 상태에서, 페이징
+            this.url +=  "&programId="+this.program;
+        }
+        
+        
         if(this.text !=" "){// 검색어가 있으면, 
             this.url += "&search="+this.text;
         }

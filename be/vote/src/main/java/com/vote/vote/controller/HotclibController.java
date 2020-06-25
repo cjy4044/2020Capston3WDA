@@ -138,7 +138,7 @@ public class HotclibController {
 	}
 
 //게시글업로드
-	@GetMapping("/hotclib/upload")
+	@GetMapping("/userInfo/hotclib/upload")
 	public String upload(Model model){
 		model.addAttribute("hotclib", new Hotclib());
 		return "hotclib/upload";

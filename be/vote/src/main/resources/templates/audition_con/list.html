@@ -12,7 +12,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 
 
     <content>
- 
+		<link rel="stylesheet" href="/css/auditioncss.css" />
 
 
  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />-->
@@ -26,7 +26,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 			<!-- <th>신청서이름</th> -->
 			<!-- <th>아이디</th> -->
 			<th>신청자</th>
-			<th>접수일</th>
+			<th class="t23">접수일</th>
 			<th>심사결과</th>
 			<!-- <th>
 			<form:select path="searchCondition" >
@@ -35,13 +35,15 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
              <form:option value="0" label="교양" />
 			</form:select>
 		</th> -->
-			<!-- <th>
-			<select name="confirmm">
+		<!-- <th>
+		<form role="form" id="sendAddress" th:action=@{/sendAddress} method="post">
+			<select class="form-control" name="confirmm">
 				<option value="">심사결과</option>
-				<option value="o">합격</option>
-				<option value="x">불합격</option>
-				<option value="m">접수중</option>
+				<option name="합격"value="합격">합격</option>
+				<option name="불합격"value="불합격">불합격</option>
+				<option value="접수중">접수중</option>
 			</select>
+			</form>
 		</th> -->
 		</tr>
 		</thead>
@@ -51,7 +53,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 			<td><a href="" th:href="@{'/audition_con/read/' + ${auditionCon.formid}}" th:text="${auditionCon.ftitle}"></a></td>
 			<!-- <td th:text="${auditionCon.fname}"></td> -->
 			<td><span th:text="${auditionCon.username}"></span><span>님</span></td>
-			<td th:text="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"></td>
+			<td class="t23" th:text="${#dates.format(auditionCon.fdate, 'yyyy-MM-dd')}"></td>
 			<td th:text="${auditionCon.confirm}"></td>
 			<!-- th:if 조건문 o 가 맞을때, td 합격을 출력-->
 			<!-- <th:block th:if="${auditionCon.confirm} == 'o'">

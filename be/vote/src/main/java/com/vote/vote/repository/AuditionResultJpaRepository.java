@@ -12,5 +12,6 @@ public interface AuditionResultJpaRepository extends JpaRepository<AuditionResul
 	public ArrayList<AuditionResult> findAll();
 	public AuditionResult findByResultid(int resultid);
 	public ArrayList<AuditionResult> findByRtitle(String keyword);
+	public AuditionResult findByRfile(String rfile);
 }
 

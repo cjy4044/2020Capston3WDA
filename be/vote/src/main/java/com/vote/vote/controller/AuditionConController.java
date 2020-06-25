@@ -56,6 +56,21 @@ public class AuditionConController {
 	@Autowired
 	private AuditionJpaRepository auditionRepository;
 	
+	@RequestMapping("/sendAddress")
+	public String serch1(@RequestParam(value="confirm") String confirm, Model model) {
+		List<AuditionCon> auditioncon = auditionConRepository.findByConfirm(confirm);
+				System.out.println(confirm);
+				model.addAttribute("auditionconlist", auditioncon);
+				
+				return "audition_con/list";
+	}
+
+	// @RequestMapping(value={"/sendAddress"},method = RequestMethod.POST)
+	// public String messageCenterHome(Model model,HttpSession session,HttpServletRequest request) {
+
+	// 	String selectedCity= request.getParameter("confirm");
+	// 	return "/audition_con/list";
+	// }
 
 	
 	@GetMapping("/audition_con/list")

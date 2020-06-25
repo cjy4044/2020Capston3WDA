@@ -7,8 +7,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳',_)}">
 </head>
 <body>
     <content>   
-      <style>
-      </style>
+      <link rel="stylesheet" href="/css/hotclibupload.css"/>
         <form th:action="@{/hotclib/upload}" method="post" enctype="multipart/form-data">                
           <div>
             <tr>
@@ -19,7 +18,7 @@ th:replace="~{main_layout::layout(~{::content},_,'업로드 하는곳',_)}">
             <div>
 			<tr>
 				<th><label for="h_content">내용</label></th>
-                <td><textarea rows="8" cols="50" name="h_content" ></textarea></td>
+                <td><textarea class="contentarea" rows="8" cols="50" name="h_content" ></textarea></td>
             </tr>     
         </div>
             <tr>

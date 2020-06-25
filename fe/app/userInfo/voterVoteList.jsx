@@ -10,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 
 import Pagination from '@material-ui/lab/Pagination';
 
+import '../smart.css';
 import './voteTableCss.css';
 
 import jQuery from "jquery";
@@ -52,10 +53,10 @@ class VoteTable extends React.Component{
                             <Table size="small" id="myTable">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>번호</TableCell>
+                                    <TableCell className="smart">번호</TableCell>
                                     <TableCell>Title</TableCell>
-                                    <TableCell>시작시간</TableCell>
-                                    <TableCell>종료시간</TableCell>
+                                    <TableCell className="smart">시작시간</TableCell>
+                                    <TableCell className="smart">종료시간</TableCell>
                                     <TableCell>결과 발표시간</TableCell>
                                 </TableRow>
                                 </TableHead>
@@ -91,10 +92,10 @@ class VoterVoteList extends React.Component {
             return (
                 <TableRow key={'div'+index}>
                              
-                <TableCell>{vote.no}</TableCell>
+                <TableCell  className="smart">{vote.no}</TableCell>
                 <TableCell><a href={'/vote/'+vote.no}>{vote.title}</a></TableCell>
-                <TableCell>{stTime}</TableCell>
-                <TableCell>{edTime}</TableCell>
+                <TableCell className="smart">{stTime}</TableCell>
+                <TableCell className="smart">{edTime}</TableCell>
                 <TableCell>{rsTime}</TableCell>
                
              </TableRow>

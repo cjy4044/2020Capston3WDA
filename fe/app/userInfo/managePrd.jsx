@@ -11,6 +11,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import jQuery from "jquery";
 import './voteTableCss.css';
 
+import '../smart.css';
+
 window.$ = window.jQuery = jQuery;
 
 
@@ -50,11 +52,11 @@ class ManagePrd extends React.Component{
                             <Table size="small" id="myTable">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>번호</TableCell>
+                                    <TableCell className="smart">번호</TableCell>
                                     <TableCell>상품명</TableCell>
-                                    <TableCell>가격</TableCell>
+                                    <TableCell className="smart">가격</TableCell>
                                     <TableCell>재고</TableCell>
-                                    <TableCell>판매종료 날짜</TableCell>
+                                    <TableCell className="smart">판매종료 날짜</TableCell>
                                     <TableCell>수정</TableCell>
                                     <TableCell>삭제</TableCell>
                                 </TableRow>
@@ -93,11 +95,11 @@ class PrdList extends React.Component {
             return (
                 <TableRow key={'div'+index}>
                              
-                    <TableCell key={index}>{prd.productId}</TableCell>
+                    <TableCell className="smart" key={index} >{prd.productId}</TableCell>
                     <TableCell><a href={"/shop/product/"+prd.productId}>{prd.name}</a></TableCell>
-                    <TableCell>{prd.price}</TableCell>
+                    <TableCell className="smart" >{prd.price}</TableCell>
                     <TableCell>{prd.stock}</TableCell>
-                    <TableCell>{endDate[0]}</TableCell>
+                    <TableCell className="smart">{endDate[0]}</TableCell>
                     <TableCell><a href={"/shop/edit/"+prd.productId}>수정</a></TableCell>
                     <TableCell><button onClick={this.remove.bind(this,prd.productId)}>삭제</button></TableCell>
                

@@ -4,7 +4,8 @@ const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
-
+import './css/mybag.css'
+import './css/orderShow.css'
 
 
 class OrderShow extends React.Component {
@@ -31,7 +32,7 @@ class OrderShow extends React.Component {
         var prd = this.state.prd;
         if(prd.img){
             return (
-                <div>
+                <div className="bagItem">
                     <div>주문 상세</div>
                     <a href={"/shop/product/"+prd.productId}>
                         <img src={"/uploads/"+prd.img}/>

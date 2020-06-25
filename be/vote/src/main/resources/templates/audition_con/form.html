@@ -14,11 +14,12 @@
     </head>
     <body>
         <content>
+            <link rel="stylesheet" href="/css/formcss.css" />
             <form th:action="@{/audition_con/form} " method="post" name = "fname" enctype="multipart/form-data"> 
                 <div class="container">
                     <table class="table table-bordered">
                         <tbody class='table_body'>
-                            <tr>
+                            <tr >
                                 <th>성명</th>
                                 <td>
                                     <input type="text" name="fusername">
@@ -63,10 +64,11 @@
                             <tr>
                                 <th>성별</th>
                                 <td>
-                                    <h4>
+                                    
                                         남성<input type="radio" name="fgender" value="m">
+                                        <br>
                                         여성<input type="radio" name="fgender" value="g">
-                                    </h4>
+                                   
                               </td>
                                 <!-- <td>
                                     <input type="text" name="fgender">

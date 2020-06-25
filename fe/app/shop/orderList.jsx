@@ -5,7 +5,7 @@ import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
 import OrderListItem from './orderListItem.jsx'
-
+import './css/mybag.css'
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -51,8 +51,9 @@ class OrderList extends React.Component {
         return (
             <div>
                 주문 리스트
-
-                <OrderListItem data={this.state.prd}/>
+                <div className="items">
+                    <OrderListItem data={this.state.prd}/>
+                </div>
                 <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination>
             </div>
             

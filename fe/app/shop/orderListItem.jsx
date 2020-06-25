@@ -7,7 +7,8 @@ export default class OrderListItem extends React.Component {
         console.log(this.props.data);
         return this.props.data? this.props.data.map((prd, index) => {
             return (
-                <div key={index}>
+                <div className="bagItem" key={index}>
+                    
                     <a href={"/shop/orderShow/"+prd.orderListId}>
                         <img className="smartImg" src={"/uploads/"+prd.img}/>
                         <div>상품명: {prd.name}</div>

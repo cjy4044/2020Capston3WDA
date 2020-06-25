@@ -90,12 +90,12 @@ class Mybag extends React.Component {
                 <div> 장바구니 </div>
                 <div><a href="/shop/orderList">주문 목록</a></div>
                 <div>
-                    <div>
+                    <div className="items">
                         <BagItem data={this.state.mybags} event={this.deleteItem} check={this.check} this={this}/>
                         {/* <Pagination count={this.state.count} page={this.state.pageNum} onChange={this.pagenation.bind(this)}> </Pagination> */}
                     </div>
-                    <div>
-                        <div>총 상품 가격</div>
+                    <div className="centerOrderGo">
+                        <div className="sumPrice">총 상품 가격</div>
                         <div><input type="button" onClick={this.gotoBuy.bind(this)} value="주문하기"/></div>
                     </div>
                 </div>

@@ -1,0 +1,22 @@
+.pagenation{
+    /* place-content: center; */
+    display: table;
+}
+.search{
+    margin-bottom: 20px;
+ 
+}
+.searchBox{
+    float: right;
+}
+@media(max-width:940px){
+    .pagenation{
+        place-content: center;
+    }
+    .search{
+        text-align-last: center;
+    }
+    .searchBox{
+        float: none;
+    }
+}

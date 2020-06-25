@@ -1,13 +1,27 @@
-.webzineList > ul > li .list_img {
-    display: block;
-    float: left;
-    margin: 0 15px 0 0;
-    width: 20%;
-    max-width: 120px;
-    overflow: hidden;
+@media(max-width:940px){
+    .graphDiv{
+        overflow: scroll;
+    }
+    
+    .stateItem img{
+        max-width: 180px;
+    }
+    .page-content-wrapper{
+        padding: 0px !important;
+    }
 }
-
-.bagItem{
+.stateItem{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+    margin: 10px;
+    width: 60%
+}
+.itemDiv{
+    text-align: -webkit-center;
+}
+/* .bagItem{
     padding: 10px;
     border: 1px solid black;
     border-radius: 15px;
@@ -36,4 +50,4 @@
         max-width: 180px;
     }
     
-}
+} */

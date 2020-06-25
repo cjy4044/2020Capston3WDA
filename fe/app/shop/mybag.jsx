@@ -4,6 +4,8 @@ import BagItem from './bagItem.jsx';
 import Pagination from '@material-ui/lab/Pagination';
 import './css/mybag.css'
 
+
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
 import jQuery from "jquery";

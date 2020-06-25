@@ -10,7 +10,7 @@ export default class Item2 extends React.Component {
         if(this.props.data.length != 0){
             return this.props.data.map((prd, index) => {
                 return (
-                    <div key={index}>
+                    <div className="orderItem" key={index}>
                         <img src={"/uploads/"+prd.img}/>
                         <div>상품명: {prd.name}</div>
                         <div>옵션: {prd.optionName}</div>

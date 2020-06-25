@@ -1,4 +1,3 @@
-Y
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
 const regeneratorRuntime = require("regenerator-runtime");

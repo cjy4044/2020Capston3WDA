@@ -2,6 +2,9 @@ import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
 const regeneratorRuntime = require("regenerator-runtime");
 import jQuery from "jquery";
+
+import '../smart.css';
+
 window.$ = window.jQuery = jQuery;
 
 import './profileIndex.css';

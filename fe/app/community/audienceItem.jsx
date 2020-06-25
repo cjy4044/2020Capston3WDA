@@ -20,7 +20,7 @@ class Popular extends Component {
         return data.map((c,index)=>{
             return (
                 <div key={'div'+index} className="community_index_item">
-                    <a href={"/audience/mread/"+c.applyId}>
+                    <a href={"/audience/read/"+c.applyId}>
                      <ItemCard4 key={c.applyId} img={c.img} name={c.acontent} />
                     </a>
                  </div>

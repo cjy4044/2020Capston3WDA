@@ -12,6 +12,8 @@ import TableCell from '@material-ui/core/TableCell';
 import Pagination from '@material-ui/lab/Pagination';
 import './../programRegister/Modal.css';
 
+import '../smart.css';
+
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
   
@@ -54,17 +56,17 @@ class AllCompany extends Component {
                             <TableHead>
                                 <TableRow>
                                             <TableCell>번호</TableCell>
-                                            <TableCell>카테고리</TableCell>
+                                            <TableCell className="smart">카테고리</TableCell>
                                             <TableCell>프로그램명</TableCell>
-                                            <TableCell>예상시작기간</TableCell>
-                                            <TableCell>예상종료기간</TableCell>
+                                            <TableCell className="smart">예상시작기간</TableCell>
+                                            <TableCell className="smart">예상종료기간</TableCell>
                                             <TableCell>회원번호</TableCell>
-                                            <TableCell>사업자번호</TableCell>
-                                            <TableCell>회사명</TableCell>
-                                            <TableCell>회사정보</TableCell>
-                                            <TableCell>대표자성함</TableCell>
-                                            <TableCell>회사연락처</TableCell>
-                                            <TableCell>예상금액</TableCell>
+                                            <TableCell className="smart">사업자번호</TableCell>
+                                            <TableCell className="smart">회사명</TableCell>
+                                            <TableCell className="smart">회사정보</TableCell>
+                                            <TableCell className="smart">대표자성함</TableCell>
+                                            <TableCell className="smart">회사연락처</TableCell>
+                                            <TableCell className="smart">예상금액</TableCell>
                                             <TableCell>승인여부</TableCell>
                                 </TableRow>
                                 </TableHead>
@@ -136,17 +138,17 @@ class Index extends Component{
                             <TableRow key={'div'+index}>
                              
                                 <TableCell key={index}>{index+1}</TableCell>
-                                <TableCell>{c.c_category}</TableCell>
+                                <TableCell className="smart">{c.c_category}</TableCell>
                                 <TableCell>{c.c_program} </TableCell>
-                                <TableCell>{c.c_startdate}</TableCell>
-                                <TableCell>{c.c_enddate}</TableCell>
+                                <TableCell className="smart">{c.c_startdate}</TableCell>
+                                <TableCell className="smart">{c.c_enddate}</TableCell>
                                 <TableCell>{c.r_id}</TableCell>
-                                <TableCell>{c.c_id}</TableCell>
-                                <TableCell>{c.c_name}</TableCell>
-                                <TableCell>{c.c_content}</TableCell>
-                                <TableCell>{c.c_reader}</TableCell>
-                                <TableCell>{c.c_phone}</TableCell>
-                                <TableCell>{c.c_budget}</TableCell>
+                                <TableCell className="smart">{c.c_id}</TableCell>
+                                <TableCell className="smart">{c.c_name}</TableCell>
+                                <TableCell className="smart">{c.c_content}</TableCell>
+                                <TableCell className="smart">{c.c_reader}</TableCell>
+                                <TableCell className="smart">{c.c_phone}</TableCell>
+                                <TableCell className="smart">{c.c_budget}</TableCell>
                                 <TableCell>{c.c_confirm} <a onClick={this.sendSelect.bind(this,c)}>승인하기</a></TableCell>
                                
                              </TableRow>

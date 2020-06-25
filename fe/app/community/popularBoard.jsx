@@ -13,6 +13,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import TextField from '@material-ui/core/TextField';
 
 import './Modal.css';
+import '../smart.css';
 
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
@@ -83,9 +84,9 @@ class PopularBoard extends Component {
                                             <TableCell>번호</TableCell>
                                             <TableCell>제목</TableCell>
                                             <TableCell>작성자</TableCell>
-                                            <TableCell>댓글수</TableCell>
-                                            <TableCell>조회수</TableCell>
-                                            <TableCell>작성일</TableCell>
+                                            <TableCell className="smart">댓글수</TableCell>
+                                            <TableCell className="smart">조회수</TableCell>
+                                            <TableCell className="smart">작성일</TableCell>
 
                                 </TableRow>
                                 </TableHead>
@@ -101,9 +102,9 @@ class PopularBoard extends Component {
                                          <TableCell ><a href={`${param}/${c.id} `}>{c.title}</a></TableCell>
                                         {/* <TableCell><a onClick={this.handleOpenModal.bind(this,c)}>{c.title}</a></TableCell> */}
                                         <TableCell>{c.nickname}</TableCell>
-                                        <TableCell>{c.replyCount}</TableCell>
-                                        <TableCell>{c.viewCount} </TableCell>
-                                        <TableCell>{c.date}</TableCell>
+                                        <TableCell className="smart">{c.replyCount}</TableCell>
+                                        <TableCell className="smart">{c.viewCount} </TableCell>
+                                        <TableCell className="smart">{c.date}</TableCell>
                                         </TableRow>
                                         
                            

@@ -44,14 +44,14 @@ th:replace="~{main_layout::layout(~{::content},_,'게시글조회',_)}">
 		<div>
 			<a href="" th:href="@{/hotclib}">목록</a><br>
 		</div>
-			<!-- <sec:authorize access ="hasRole('2')"> 
+			 <sec:authorize access ="hasRole('2')"> 
 			<span><a href="" th:href="@{'/hotclib/update/' + ${hotclib.hotclibid}}">수정</a></span>
 			
 			<form id="delete-form" th:action="@{'/hotclib/' + ${hotclib.hotclibid}}" method="post">
 				<input type="hidden" name="_method" value="delete"/>
 				<button id="delete-btn">삭제</button>
 			</form>
-			</sec:authorize> -->
+			</sec:authorize>
 		
 			 <form id="replyList" method="post" th:action="@{'/hotclib/read/' + ${hotclib.hotclibid}}">
 				<tr>댓글테스트

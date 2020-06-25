@@ -6,7 +6,7 @@ const axios = require('axios');
 import jQuery from "jquery";
 
 import '../smart.css';
-
+import './css/itemEdit.css'
 window.$ = window.jQuery = jQuery;
 
 

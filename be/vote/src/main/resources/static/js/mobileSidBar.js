@@ -40,7 +40,6 @@ function w3_open() {
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/myCommunity/'>팬클럽관리</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/hotclib'>핫클립관리</a></div>");	 
 		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>방첨권추첨</a></div>");	 
-		$("#mobileMenus").append("<div class='sideMenu'><a href='#'>팬클럽관리</a></div>");
 		    
 		//굿즈샵관리
 		$("#mobileMenus").append("<div class='sideMenu'><a href='/userInfo/manage/product'>상품관리</a></div>");	 

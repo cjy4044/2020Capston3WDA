@@ -5,7 +5,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
-
+import '../smart.css';
 class VoteCreate extends React.Component {
 
   

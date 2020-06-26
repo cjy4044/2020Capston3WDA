@@ -248,15 +248,51 @@ public class AuditionController {
 		return "audition/update";
 	}
 
+	// @PostMapping("/audition/update/{auditionid}")
+	// public String update(Audition audition, BindingResult bindingResult){
+	// 	if (bindingResult.hasErrors()) {
+	// 		return "/audition/update";
+	// 	} else {
+			// auditionRepository.save(audition).getAuditionid();
+		// return "redirect:/audition/list";
+	// 	}
+	// }	
+
 	@PostMapping("/audition/update/{auditionid}")
-	public String update(Audition audition, BindingResult bindingResult){
-		if (bindingResult.hasErrors()) {
+	public String update(@Valid Audition audition, BindingResult bindingResult, SessionStatus sessionStatus,
+			Principal principal, Model model, RedirectAttributes redirAttrs,
+            @RequestParam(name = "filename") MultipartFile filename	) {
+
+		if(bindingResult.hasErrors()) {
 			return "/audition/update";
-		} else {
+		} else if(filename.isEmpty()) {
+			Member member = memberRepository.findByUserid(principal.getName());
+			audition.setRid(member.getNo());
+			audition.setAusername(member.getName());
+			auditionRepository.save(audition);
+			sessionStatus.setComplete();
 			auditionRepository.save(audition).getAuditionid();
-		return "redirect:/audition/list";
+			return "redirect:/audition/list";
+		} else {
+			
+		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+            Member member = memberRepository.findByUserid(principal.getName());
+//            ProgramManager pm = pmRepository.findById(member.getNo());
+			
+            // 게시글저장
+			audition.setRid(member.getNo());
+			audition.setAusername(member.getName());
+            audition.setAfile(filenamePath);
+            auditionRepository.saveAndFlush(audition).getAuditionid();
+
+            // 파일 저장
+            storageService.store(filename);
+            sessionStatus.setComplete();
+            System.out.println("게시글업로드완료");
+            return "redirect:/audition/list";
+
 		}
-	}	
+	}
 	
 	@GetMapping("/audition/delete/{auditionid}")
 	public String delete(@PathVariable int auditionid, Model model){

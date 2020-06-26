@@ -1,4 +1,3 @@
-Y
 import React, {Component}from 'react'
 import ReactDOM from 'react-dom';
 const regeneratorRuntime = require("regenerator-runtime");
@@ -8,6 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+
+import '../smart.css';
 
 import Pagination from '@material-ui/lab/Pagination';
 import jQuery from "jquery";

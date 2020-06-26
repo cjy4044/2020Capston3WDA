@@ -4,6 +4,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 </head>
   
 <body>
@@ -20,7 +21,7 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
     text-align:left;
        }
      </style>
-
+<link rel="stylesheet" href="/css/auditioncss.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <!-- <div id="auditionList"><</div>
     <script src="/assets/auditionList.js"></script> -->
@@ -30,11 +31,11 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
 
 			<th>글 번호</th>
 			<th>제목</th>
-			<th>분야</th>
-			<th>모집시작일</th>
-			<th>모집종료일</th>
-			<th>모집인원</th>
-			<th>발표일</th>
+			<th class="t23">분야</th>
+			<th class="t23">모집시작일</th>
+			<th class="t23">모집종료일</th>
+			<th class="t23">모집인원</th>
+			<th class="t23">발표일</th>
 			<th>작성자</th>
 		</tr>
 		</thead>
@@ -43,11 +44,11 @@ th:replace="~{main_layout::layout(~{::content},_,'오디션 신청 게시판',_)
 			<td th:text="${audition.auditionid}"></td>
 			<!--  <td th:text="${audition.a_title}"></td> -->
 			<td><a href="" th:href="@{'/audition/readuser/' + ${audition.auditionid}}" th:text="${audition.atitle}"></a></td>
-			<td th:text="${audition.acategory}"></td>
-			<td th:text="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}"></td>
-			<td th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
-			<td th:text="${audition.arecruits}+ 명"></td>
-			<td th:text="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"></td>
+			<td class="t23" th:text="${audition.acategory}"></td>
+			<td class="t23" th:text="${#dates.format(audition.astartdate, 'yyyy-MM-dd')}"></td>
+			<td class="t23" th:text="${#dates.format(audition.aenddate, 'yyyy-MM-dd')}"></td>
+			<td class="t23" th:text="${audition.arecruits}+ 명"></td>
+			<td class="t23" th:text="${#dates.format(audition.aissue, 'yyyy-MM-dd')}"></td>
             <td><span th:text="${audition.ausername}"></span><span>님</span></td>
 			
 			

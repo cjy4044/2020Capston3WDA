@@ -4,7 +4,11 @@ import './css/ItemCreate.css';
 const regeneratorRuntime = require("regenerator-runtime");
 const axios = require('axios');
 import jQuery from "jquery";
+
+import '../smart.css';
+import './css/itemEdit.css'
 window.$ = window.jQuery = jQuery;
+
 
 class ItemEdit extends React.Component {
     constructor(props){
@@ -217,7 +221,7 @@ class ItemEdit extends React.Component {
                         </div>
                         <div className="rightBox">
                             <div>대표이미지</div>
-                            <img src={this.data? "/uploads/"+this.data.prd.img:"#"}/>
+                            <img className="smartImg" src={this.data? "/uploads/"+this.data.prd.img:"#"}/>
                             <input type="file" name="file1"/>
                             <div>부가 이미지</div>
                             <div id="subImg"></div>

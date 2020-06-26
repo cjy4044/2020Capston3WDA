@@ -30,6 +30,7 @@ import com.vote.vote.db.dto.AuditionResult;
 import com.vote.vote.repository.AuditionResultJpaRepository;
 import com.vote.vote.repository.MemberJpaRepository;
 import com.vote.vote.db.dto.Member;
+import com.vote.vote.db.dto.Rfile;
 import com.vote.vote.repository.ProgramManagerJpaRepository;
 import com.vote.vote.service.StorageService;
 
@@ -174,16 +175,61 @@ public class AuditionResultController {
 		return "auditionresult/update";
 	}
 
+	// @PostMapping("/auditionresult/update/{resultid}")
+	// public String update(AuditionResult auditionResult, BindingResult bindingResult){
+	// 	if (bindingResult.hasErrors()) {
+	// 		return "/auditionresult/update";
+	// 	} else {
+	// 		auditionResult.setRmdate(new Date());
+	// 		auditionResultRepository.save(auditionResult).getResultid();
+	// 	return "redirect:/auditionresult/list";
+	// 	}
+	// }	
+
 	@PostMapping("/auditionresult/update/{resultid}")
-	public String update(AuditionResult auditionResult, BindingResult bindingResult){
-		if (bindingResult.hasErrors()) {
+	public String update1(@Valid AuditionResult auditionResult, BindingResult bindingResult, SessionStatus sessionStatus,
+			Principal principal, Model model, RedirectAttributes redirAttrs,
+            @RequestParam(name = "filename") MultipartFile filename	) {
+		
+		
+		if(bindingResult.hasErrors()) {
 			return "/auditionresult/update";
-		} else {
+		} else if(filename.isEmpty()) {
+			// AuditionResult auditionresult = auditionResultRepository.findByRfile(rfile);
+			Member member = memberRepository.findByUserid(principal.getName());
+			auditionResult.setRid(member.getNo());
+			auditionResult.setRusername(member.getName());
+			auditionResult.setRdate(new Date());
 			auditionResult.setRmdate(new Date());
+			// auditionResult.setRfile(Rfile);
+			sessionStatus.setComplete();
 			auditionResultRepository.save(auditionResult).getResultid();
 		return "redirect:/auditionresult/list";
+		} else {
+			
+		    String filenamePath = StringUtils.cleanPath(filename.getOriginalFilename());
+            Member member = memberRepository.findByUserid(principal.getName());
+			auditionResult.setRusername(member.getName());
+            // 게시글저장
+            auditionResult.setRid(member.getNo());
+//            audience.setADate(new Date());
+            auditionResult.setRfile(filenamePath);
+ 
+			auditionResult.setRdate(new Date());
+			auditionResultRepository.saveAndFlush(auditionResult).getResultid();
+
+
+            // 파일 저장
+            storageService.store(filename);
+            // rfile.setApplyid(audience.getApplyId());
+            // rfile.setFilename(filenamePath);
+            // rfileRepository.saveAndFlush(rfile);
+            sessionStatus.setComplete();
+            System.out.println("게시글업로드완료");
+            return "redirect:/auditionresult/list";
+            
 		}
-	}	
+	}
 	
 	@GetMapping("/auditionresult/delete/{resultid}")
 	public String delete(@PathVariable int resultid, Model model){

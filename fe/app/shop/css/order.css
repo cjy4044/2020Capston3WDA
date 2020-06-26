@@ -2,3 +2,12 @@
     display: grid;
     grid-template-columns: 40% 40%;
 }
+
+@media(max-width:940px){
+    .grid{
+        grid-template-columns: none;
+    }
+    .orderItem img{
+        max-width: 180px;
+    }
+}

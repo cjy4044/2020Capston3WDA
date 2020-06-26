@@ -1,14 +1,17 @@
 import React from 'react';
+import '../smart.css';
 
 export default class BagItem extends React.Component {
     render() {
         console.log(this.props.data);
         return this.props.data? this.props.data.map((prd, index) => {
             return (
-                <div key={index}>
-                    <input type="checkbox"  onClick={this.props.check.bind(this,this.props.this,index)}/>
+                <div className="bagItem" key={index}>
+                    <div className="bagCheckBox">
+                        <input type="checkbox"  onClick={this.props.check.bind(this,this.props.this,index)}/>
+                    </div>
                     <a href={"/shop/product/"+prd.productId}>
-                        <img src={"/uploads/"+prd.img}></img>
+                        <img className="smartImg" src={"/uploads/"+prd.img}></img>
                         <div>상품명: {prd.name}</div>
                     </a>
                     <div>옵션명: {prd.oTitle}</div>

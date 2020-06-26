@@ -11,6 +11,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import jQuery from "jquery";
 import './voteTableCss.css';
 
+import '../smart.css';
+
 import './manageOrder.css'
 window.$ = window.jQuery = jQuery;
 
@@ -80,14 +82,14 @@ class ManageOrder extends React.Component{
                             <Table size="small" id="myTable">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>상품번호</TableCell>
+                                    <TableCell className="smart">상품번호</TableCell>
                                     <TableCell>상품명</TableCell>
-                                    <TableCell>결재금액</TableCell>
+                                    <TableCell className="smart">결재금액</TableCell>
                                     <TableCell>수량</TableCell>
-                                    <TableCell>주문자 ID</TableCell>
-                                    <TableCell>주문자 이름</TableCell>
-                                    <TableCell>정보입력</TableCell>
-                                    <TableCell>상태</TableCell>
+                                    <TableCell className="smart">주문자 ID</TableCell>
+                                    <TableCell >주문자 이름</TableCell>
+                                    <TableCell >정보입력</TableCell>
+                                    <TableCell className="smart">상태</TableCell>
                                 </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -102,7 +104,7 @@ class ManageOrder extends React.Component{
                                 <div className="modalContentBox">
                                     <div className="modalItem">
                                         <div>주문 상세 정보</div>
-                                        <img id="orderImg" src={"/uploads/"+order.img}/>
+                                        <img className="smartImg" id="orderImg" src={"/uploads/"+order.img}/>
                                         <div>상품명: {order.name}</div>
                                         <div>옵션: {order.oTitle}</div>
                                         <div>수량: {order.count}</div>
@@ -141,14 +143,14 @@ class OrderList extends React.Component {
             return (
                 <TableRow key={'div'+index}>
                              
-                    <TableCell key={index}>{order.productId}</TableCell>
+                    <TableCell className="smart" key={index}>{order.productId}</TableCell>
                     <TableCell>{order.name}</TableCell>
-                    <TableCell>{order.itemPrice}</TableCell>
+                    <TableCell className="smart">{order.itemPrice}</TableCell>
                     <TableCell>{order.count}</TableCell>
-                    <TableCell>{order.rId}</TableCell>
+                    <TableCell className="smart">{order.rId}</TableCell>
                     <TableCell>{order.clientName}</TableCell>
                     <TableCell><input type="button" onClick={this.props.modal.bind(this,index,this.props.that)}value="입력하기"/></TableCell>
-                    <TableCell>
+                    <TableCell className="smart">
                         {
                             order.state == 0? '확인전':
                             order.state == 1? '확인':

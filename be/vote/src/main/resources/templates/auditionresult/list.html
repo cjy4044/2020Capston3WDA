@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
+th:replace="~{main_layout::layout(~{::content},~{::script},'심사결과등록',_)}">
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 
 
     <content>
-    
+        <link rel="stylesheet" href="/css/auditioncss.css" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <!-- <div id="auditionList"><</div>
@@ -22,7 +22,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 
 			<th>No</th>
 			<th>제목</th>
-			<th>등록일</th>
+			<th class="t23">등록일</th>
 			<th>작성자</th>
 			
 		</tr>
@@ -31,7 +31,7 @@ th:replace="~{main_layout::layout(~{::content},~{::script},'예선심사',_)}">
 		<tr th:each="auditionResult:${auditionresultlist}">
 			<td th:text="${auditionResult.resultid}"></td>
 			<td><a href="" th:href="@{'/auditionresult/read/' + ${auditionResult.resultid}}" th:text="${auditionResult.rtitle}"></a></td>
-			<td th:text="${#dates.format(auditionResult.rdate, 'yyyy-MM-dd')}"></td>
+			<td class="t23" th:text="${#dates.format(auditionResult.rdate, 'yyyy-MM-dd')}"></td>
 			<td><span th:text="${auditionResult.rusername}"></span><span>님</span></td>
   
 

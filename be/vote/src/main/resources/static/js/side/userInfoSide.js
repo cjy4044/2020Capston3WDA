@@ -39,8 +39,10 @@
 		$("#side").append("<li><a href='/userInfo/myProgram/'>프로그램관리</a></li>");	 
 		$("#side").append("<li><a href='/userInfo/myCommunity/'>팬클럽관리</a></li>");	 
 
+
 		$("#side").append("<li><a href='/hotclib'>핫클립관리</a></li>");	 
 		$("#side").append("<li><a href='/audience/mlist'>방청권추첨</a></li>");	 
+
 
 			    
 		//굿즈샵관리
